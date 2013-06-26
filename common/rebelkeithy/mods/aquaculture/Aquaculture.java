@@ -9,6 +9,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
 
 
 @Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION, dependencies = "required-after:Forge@[7.7.2.682,)")
@@ -25,7 +26,6 @@ public class Aquaculture
 	@SidedProxy(clientSide = "rebelkeithy.mods.aquaculture.ClientProxy", serverSide = "rebelkeithy.mods.aquaculture.CommonProxy")
 	public static CommonProxy proxy;
 	public static AquacultureTab tab;
-	
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
@@ -42,10 +42,12 @@ public class Aquaculture
 		
 		AquacultureRecipes.addRecipes();
 
-		EntityRegistry.registerModEntity(EntityCustomFishHook.class, "AquacultureFishHook", 0, this, 64, 1, false);
-		
-		tab.setItemID(AquacultureItems.IronFishingRod.itemID);
-		
-		proxy.registerModelRenderers();
+        AquacultureEnchants.init();
+
+        EntityRegistry.registerModEntity(EntityCustomFishHook.class, "AquacultureFishHook", 0, this, 64, 1, false);
+
+        tab.setItemID(AquacultureItems.IronFishingRod.itemID);
+
+        proxy.registerModelRenderers();
 	}
 }

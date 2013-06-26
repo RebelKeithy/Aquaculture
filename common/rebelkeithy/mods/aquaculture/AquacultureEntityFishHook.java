@@ -439,7 +439,7 @@ public class AquacultureEntityFishHook extends EntityFishHook
         return 0.0F;
     }
 
-    public int catchFish()
+    public int catchFish(ItemStack itemstack, EntityPlayer entityplayer)
     {
     	
         byte byte0 = 0;
