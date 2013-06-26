@@ -1,34 +1,23 @@
 package rebelkeithy.mods.aquaculture;
 
-import java.util.List;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenDesert;
-import net.minecraft.world.biome.BiomeGenForest;
-import net.minecraft.world.biome.BiomeGenHills;
-import net.minecraft.world.biome.BiomeGenMushroomIsland;
-import net.minecraft.world.biome.BiomeGenOcean;
-import net.minecraft.world.biome.BiomeGenPlains;
-import net.minecraft.world.biome.BiomeGenRiver;
-import net.minecraft.world.biome.BiomeGenTaiga;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.world.biome.*;
+import net.minecraftforge.common.MinecraftForge;
+import rebelkeithy.mods.aquaculture.events.FishingCastEvent;
+import rebelkeithy.mods.aquaculture.events.FishingCatchEvent;
+
+import java.util.List;
 
 public class EntityCustomFishHook extends EntityFishHook
 {
@@ -67,7 +56,7 @@ public class EntityCustomFishHook extends EntityFishHook
     private double velocityY;
     @SideOnly(Side.CLIENT)
     private double velocityZ;
-    
+
     private boolean isAdmin = false;
 
     public EntityCustomFishHook(World par1World)
@@ -108,8 +97,7 @@ public class EntityCustomFishHook extends EntityFishHook
         this.ignoreFrustumCheck = true;
     }
 
-    public EntityCustomFishHook(World par1World, EntityPlayer par2EntityPlayer)
-    {
+    public EntityCustomFishHook(World par1World, EntityPlayer par2EntityPlayer, ItemStack stack) {
         super(par1World, par2EntityPlayer);
         this.xTile = -1;
         this.yTile = -1;
@@ -134,17 +122,14 @@ public class EntityCustomFishHook extends EntityFishHook
         this.motionX = (double)(-MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * f);
         this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI) * f);
         this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI) * f);
-        this.calculateVelocity(this.motionX, this.motionY, this.motionZ, 1.5F, 1.0F);
+        this.calculateVelocity(this.motionX, this.motionY, this.motionZ, 1.5F, 1.0F, par2EntityPlayer, stack);
     }
 
-    public EntityCustomFishHook(World world, EntityPlayer entityplayer, boolean b) 
-    {
-    	this(world, entityplayer);
-    	
-    	isAdmin = b;
-	}
+    public EntityCustomFishHook(World world, EntityPlayer entityplayer, ItemStack stack, boolean b) {
+        this(world, entityplayer, stack);
 
-	protected void entityInit() {}
+        isAdmin = b;
+    }
 
     @SideOnly(Side.CLIENT)
 
@@ -159,8 +144,7 @@ public class EntityCustomFishHook extends EntityFishHook
         return par1 < d1 * d1;
     }
 
-    public void calculateVelocity(double par1, double par3, double par5, float par7, float par8)
-    {
+    public void calculateVelocity(double par1, double par3, double par5, float par7, float par8, EntityPlayer player, ItemStack stack) {
         float f2 = MathHelper.sqrt_double(par1 * par1 + par3 * par3 + par5 * par5);
         par1 /= (double)f2;
         par3 /= (double)f2;
@@ -171,9 +155,14 @@ public class EntityCustomFishHook extends EntityFishHook
         par1 *= (double)par7;
         par3 *= (double)par7;
         par5 *= (double)par7;
-        this.motionX = par1;
-        this.motionY = par3;
-        this.motionZ = par5;
+
+        FishingCastEvent event = new FishingCastEvent(Vec3.createVectorHelper(par1, par3, par5), player, stack);
+
+        MinecraftForge.EVENT_BUS.post(event);
+
+        this.motionX = event.velocity.xCoord;
+        this.motionY = event.velocity.yCoord;
+        this.motionZ = event.velocity.zCoord;
         float f3 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
         this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(par1, par5) * 180.0D / Math.PI);
         this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(par3, (double)f3) * 180.0D / Math.PI);
@@ -186,8 +175,7 @@ public class EntityCustomFishHook extends EntityFishHook
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9)
-    {
+    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9) {
         this.fishX = par1;
         this.fishY = par3;
         this.fishZ = par5;
@@ -210,11 +198,11 @@ public class EntityCustomFishHook extends EntityFishHook
         this.velocityY = this.motionY = par3;
         this.velocityZ = this.motionZ = par5;
     }
-    
+
     public boolean isFishingRod(ItemStack stack)
     {
     	int id = stack.itemID;
-    	
+
     	return id == AquacultureItems.IronFishingRod.itemID || id == AquacultureItems.AdminFishingRod.itemID;
     }
 
@@ -527,15 +515,15 @@ public class EntityCustomFishHook extends EntityFishHook
             else //if (this.ticksCatchable > 0)
             {
             	BiomeGenBase currentBiome = worldObj.getBiomeGenForCoords(MathHelper.floor_double(angler.posX), MathHelper.floor_double(angler.posZ));
-            
+
             	ItemStack fishLoot;
             	int count = 0;
             	do
             	{
-                	int roll = rand.nextInt(1000) + 1; 	
+                	int roll = rand.nextInt(1000) + 1;
 	            	if(currentBiome instanceof BiomeGenForest || currentBiome instanceof BiomeGenPlains || currentBiome instanceof BiomeGenRiver || currentBiome instanceof BiomeGenHills)
 	            	{
-	            		
+
 	    	            if (roll >= 1 && roll <= 150) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Bluegill");
 	    	            } else if (roll >= 151 && roll <= 300) {
@@ -783,14 +771,18 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else {
 	    	                fishLoot = new ItemStack(Item.appleRed);
 	    	            }
-	    	            
+
 	            	}
 	            	count++;
 	            	//System.out.println(fishLoot.itemID);
-	            	EntityItem entityitem = new EntityItem(worldObj, posX, posY, posZ, fishLoot);
-	            	
+
+                    FishingCatchEvent fishingCatchEvent = new FishingCatchEvent(this.angler.getCurrentEquippedItem(), this.angler, fishLoot);
+
+                    MinecraftForge.EVENT_BUS.post(fishingCatchEvent);
+                    EntityItem entityitem = new EntityItem(worldObj, posX, posY, posZ, fishingCatchEvent.fishCaught);
+
 	            	//System.out.println(count + " tries");
-	            	
+
 	                //EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Item.fishRaw));
 	                double d5 = this.angler.posX - this.posX;
 	                double d6 = this.angler.posY - this.posY;
