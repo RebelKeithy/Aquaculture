@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture;
+package rebelkeithy.mods.aquaculture.items;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.item.EnumArmorMaterial;

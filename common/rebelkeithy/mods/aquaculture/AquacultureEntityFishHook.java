@@ -108,7 +108,7 @@ public class AquacultureEntityFishHook extends EntityFishHook
         this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI) * f);
         this.calculateVelocity(this.motionX, this.motionY, this.motionZ, 1.5F, 1.0F);
     }
-
+/*
     protected void entityInit()
     {
     }
@@ -162,9 +162,6 @@ public class AquacultureEntityFishHook extends EntityFishHook
         velocityZ = motionZ = d2;
     }
 
-    /**
-     * Called to update the entity's position/logic.
-     */
     public void onUpdate()
     {
         super.onUpdate();
@@ -485,11 +482,11 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 801 && roll <= 825) {
 	            	fishLoot = new ItemStack(Item.stick);
 	            } else if (roll >= 826 && roll <= 850) {
-	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	            } else if (roll >= 851 && roll <= 875) {
 	            	fishLoot = new ItemStack(Item.bootsLeather);
 	            } else if (roll >= 876 && roll <= 895) {
-	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	            } else if (roll >= 896 && roll <= 925) {
 	            	fishLoot = new ItemStack(AquacultureItems.Box);
 	            } else if (roll >= 926 && roll <= 949) {
@@ -503,7 +500,7 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 991 && roll <= 999) {
 	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
 	            } else if (roll >= 1000) {
-	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	            	fishLoot = AquacultureItems.NeptuniumBar.getItemStack();
 	            } else {
 	                fishLoot = new ItemStack(Item.appleRed);
 	            }
@@ -522,11 +519,11 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 801 && roll <= 825) {
 	            	fishLoot = new ItemStack(Item.stick);
 	            } else if (roll >= 826 && roll <= 850) {
-	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	            } else if (roll >= 851 && roll <= 875) {
 	            	fishLoot = new ItemStack(Item.bootsLeather);
 	            } else if (roll >= 876 && roll <= 895) {
-	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	            } else if (roll >= 896 && roll <= 925) {
 	            	fishLoot = new ItemStack(AquacultureItems.Box);
 	            } else if (roll >= 926 && roll <= 949) {
@@ -540,7 +537,7 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 991 && roll <= 999) {
 	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
 	            } else if (roll >= 1000) {
-	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	            	fishLoot = AquacultureItems.NeptuniumBar.getItemStack();
 	            } else {
 	                fishLoot = new ItemStack(Item.appleRed);
 	            }
@@ -559,11 +556,11 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 801 && roll <= 825) {
 	            	fishLoot = new ItemStack(Item.stick);
 	            } else if (roll >= 826 && roll <= 850) {
-	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	            } else if (roll >= 851 && roll <= 875) {
 	            	fishLoot = new ItemStack(Item.bootsLeather);
 	            } else if (roll >= 876 && roll <= 895) {
-	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	            } else if (roll >= 896 && roll <= 925) {
 	            	fishLoot = new ItemStack(AquacultureItems.Box);
 	            } else if (roll >= 926 && roll <= 949) {
@@ -577,7 +574,7 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 991 && roll <= 999) {
 	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
 	            } else if (roll >= 1000) {
-	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	            	fishLoot = AquacultureItems.NeptuniumBar.getItemStack();
 	            } else {
 	                fishLoot = new ItemStack(Item.appleRed);
 	            }
@@ -602,11 +599,11 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 801 && roll <= 825) {
 	            	fishLoot = new ItemStack(Item.stick);
 	            } else if (roll >= 826 && roll <= 850) {
-	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	            } else if (roll >= 851 && roll <= 875) {
 	            	fishLoot = new ItemStack(Item.bootsLeather);
 	            } else if (roll >= 876 && roll <= 895) {
-	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	            } else if (roll >= 896 && roll <= 925) {
 	            	fishLoot = new ItemStack(AquacultureItems.Box);
 	            } else if (roll >= 926 && roll <= 949) {
@@ -620,7 +617,7 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 991 && roll <= 999) {
 	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
 	            } else if (roll >= 1000) {
-	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	            	fishLoot = AquacultureItems.NeptuniumBar.getItemStack();
 	            } else {
 	                fishLoot = new ItemStack(Item.appleRed);
 	            }
@@ -649,11 +646,11 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 801 && roll <= 825) {
 	            	fishLoot = new ItemStack(Item.stick);
 	            } else if (roll >= 826 && roll <= 850) {
-	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	            } else if (roll >= 851 && roll <= 875) {
 	            	fishLoot = new ItemStack(Item.bootsLeather);
 	            } else if (roll >= 876 && roll <= 895) {
-	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	            } else if (roll >= 896 && roll <= 925) {
 	            	fishLoot = new ItemStack(AquacultureItems.Box);
 	            } else if (roll >= 926 && roll <= 949) {
@@ -667,7 +664,7 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 991 && roll <= 999) {
 	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
 	            } else if (roll >= 1000) {
-	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	            	fishLoot = AquacultureItems.NeptuniumBar.getItemStack();
 	            } else {
 	                fishLoot = new ItemStack(Item.appleRed);
 	            }
@@ -691,11 +688,11 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 801 && roll <= 825) {
 	            	fishLoot = new ItemStack(Item.stick);
 	            } else if (roll >= 826 && roll <= 850) {
-	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	            } else if (roll >= 851 && roll <= 875) {
 	            	fishLoot = new ItemStack(Item.bootsLeather);
 	            } else if (roll >= 876 && roll <= 895) {
-	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	            } else if (roll >= 896 && roll <= 925) {
 	            	fishLoot = new ItemStack(AquacultureItems.Box);
 	            } else if (roll >= 926 && roll <= 949) {
@@ -709,7 +706,7 @@ public class AquacultureEntityFishHook extends EntityFishHook
 	            } else if (roll >= 991 && roll <= 999) {
 	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
 	            } else if (roll >= 1000) {
-	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	            	fishLoot = AquacultureItems.NeptuniumBar.getItemStack();
 	            } else {
 	                fishLoot = new ItemStack(Item.appleRed);
 	            }
@@ -739,4 +736,5 @@ public class AquacultureEntityFishHook extends EntityFishHook
         angler.fishEntity = null;
         return byte0;
     }
+    */
 }

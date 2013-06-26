@@ -1,9 +1,11 @@
 package rebelkeithy.mods.aquaculture;
 
+import net.minecraft.item.ItemStack;
+import rebelkeithy.mods.keithyutils.loot.WeightedLootSet;
+
 
 public class FishLoot 
 {
-	/*
 	WeightedLootSet fishLoot;
 	WeightedLootSet junkLoot;
 	
@@ -42,5 +44,4 @@ public class FishLoot
 	{
 		return junkLoot.getRandomLoot();
 	}
-	*/
 }

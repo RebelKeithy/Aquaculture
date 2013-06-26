@@ -1,7 +1,9 @@
-package rebelkeithy.mods.aquaculture;
+package rebelkeithy.mods.aquaculture.items;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rebelkeithy.mods.aquaculture.AquacultureItems;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -55,7 +57,7 @@ public class ItemFish extends ItemFood
 			Fish f = fish.get(i);
 			if(f.filletAmount != 0)
 			{
-				GameRegistry.addShapelessRecipe(new ItemStack(AquacultureItems.FishFillet, f.filletAmount), new ItemStack(itemID, 1, i));
+				GameRegistry.addShapelessRecipe(AquacultureItems.FishFillet.getItemStack(f.filletAmount), new ItemStack(itemID, 1, i));
 			}
 		}
 	}

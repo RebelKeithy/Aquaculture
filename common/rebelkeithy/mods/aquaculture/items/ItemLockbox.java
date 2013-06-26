@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture;
+package rebelkeithy.mods.aquaculture.items;
 
 import java.util.Random;
 
@@ -7,8 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import rebelkeithy.mods.keithyutils.metaitem.SubItem;
 
-public class ItemLockbox extends Item
+public class ItemLockbox extends SubItem
 {
 	Random rand = new Random();
 	
@@ -17,6 +18,7 @@ public class ItemLockbox extends Item
         super(par1);
     }
     
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
     	if(par2World.isRemote)
@@ -51,11 +53,4 @@ public class ItemLockbox extends Item
         --par1ItemStack.stackSize;
         return par1ItemStack;
     }
-
-    public String getTextureFile()
-    {
-        return texturePath;
-    }
-
-    public String texturePath;
 }

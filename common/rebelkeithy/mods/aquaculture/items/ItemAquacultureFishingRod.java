@@ -1,5 +1,6 @@
-package rebelkeithy.mods.aquaculture;
+package rebelkeithy.mods.aquaculture.items;
 
+import rebelkeithy.mods.aquaculture.EntityCustomFishHook;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -10,11 +11,11 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAdminFishingRod extends Item
+public class ItemAquacultureFishingRod extends Item
 {
 	public Icon usingIcon;
 	
-    public ItemAdminFishingRod(int i, int d)
+    public ItemAquacultureFishingRod(int i, int d)
     {
         super(i);
         setMaxDamage(d);
@@ -38,7 +39,7 @@ public class ItemAdminFishingRod extends Item
         if (entityplayer.fishEntity != null)
         {
             int i = entityplayer.fishEntity.catchFish();
-            //itemstack.damageItem(i, entityplayer);
+            itemstack.damageItem(i, entityplayer);
             entityplayer.swingItem();
 
         	if(!itemstack.hasTagCompound())
@@ -52,7 +53,7 @@ public class ItemAdminFishingRod extends Item
             world.playSoundAtEntity(entityplayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
             if (!world.isRemote)
             {
-                world.spawnEntityInWorld(new EntityCustomFishHook(world, entityplayer, true));
+                world.spawnEntityInWorld(new EntityCustomFishHook(world, entityplayer));
             }
             entityplayer.swingItem();
 
@@ -89,6 +90,6 @@ public class ItemAdminFishingRod extends Item
     {
         super.registerIcons(par1IconRegister);
         
-        usingIcon = par1IconRegister.registerIcon("Aquaculture:AdminFishingRodUsing");
+        usingIcon = par1IconRegister.registerIcon("Aquaculture:IronFishingRodUsing");
     }
 }

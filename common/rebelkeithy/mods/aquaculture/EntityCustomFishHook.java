@@ -536,7 +536,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	            	if(currentBiome instanceof BiomeGenForest || currentBiome instanceof BiomeGenPlains || currentBiome instanceof BiomeGenRiver || currentBiome instanceof BiomeGenHills)
 	            	{
 	            		
-	    	            if (roll >= 1 && roll <= 150) {
+	            		if (roll >= 1 && roll <= 150) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Bluegill");
 	    	            } else if (roll >= 151 && roll <= 300) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Bass");
@@ -551,29 +551,29 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 641 && roll <= 700) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Muskellunge");
 	    	            } else if (roll >= 701 && roll <= 800) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Algae);
+	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
 	    	            	fishLoot = new ItemStack(Item.stick);
 	    	            } else if (roll >= 826 && roll <= 850) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	    	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	    	            } else if (roll >= 851 && roll <= 875) {
 	    	            	fishLoot = new ItemStack(Item.bootsLeather);
 	    	            } else if (roll >= 876 && roll <= 895) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	    	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	    	            } else if (roll >= 896 && roll <= 925) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Box);
+	    	            	fishLoot = AquacultureItems.Box.getItemStack();
 	    	            } else if (roll >= 926 && roll <= 949) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Lockbox);
+	    	            	fishLoot = AquacultureItems.Lockbox.getItemStack();
 	    	            } else if (roll >= 950 && roll <= 959) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TreasureChest);
+	    	            	fishLoot = AquacultureItems.TreasureChest.getItemStack();
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
+	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	    	            	fishLoot = AquacultureItems.NeptunesBounty.getItemStack();
 	    	            } else {
 	    	                fishLoot = new ItemStack(Item.appleRed);
 	    	            }
@@ -588,29 +588,29 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 601 && roll <= 700) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Syndontis");
 	    	            } else if (roll >= 701 && roll <= 800) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Algae);
+	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
 	    	            	fishLoot = new ItemStack(Item.stick);
 	    	            } else if (roll >= 826 && roll <= 850) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	    	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	    	            } else if (roll >= 851 && roll <= 875) {
 	    	            	fishLoot = new ItemStack(Item.bootsLeather);
 	    	            } else if (roll >= 876 && roll <= 895) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	    	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	    	            } else if (roll >= 896 && roll <= 925) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Box);
+	    	            	fishLoot = AquacultureItems.Box.getItemStack();
 	    	            } else if (roll >= 926 && roll <= 949) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Lockbox);
+	    	            	fishLoot = AquacultureItems.Lockbox.getItemStack();
 	    	            } else if (roll >= 950 && roll <= 959) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TreasureChest);
+	    	            	fishLoot = AquacultureItems.TreasureChest.getItemStack();
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
+	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	    	            	fishLoot = AquacultureItems.NeptunesBounty.getItemStack();
 	    	            } else {
 	    	                fishLoot = new ItemStack(Item.appleRed);
 	    	            }
@@ -625,29 +625,29 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 601 && roll <= 700) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Rainbow Trout");
 	    	            } else if (roll >= 701 && roll <= 800) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Algae);
+	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
 	    	            	fishLoot = new ItemStack(Item.stick);
 	    	            } else if (roll >= 826 && roll <= 850) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	    	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	    	            } else if (roll >= 851 && roll <= 875) {
 	    	            	fishLoot = new ItemStack(Item.bootsLeather);
 	    	            } else if (roll >= 876 && roll <= 895) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	    	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	    	            } else if (roll >= 896 && roll <= 925) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Box);
+	    	            	fishLoot = AquacultureItems.Box.getItemStack();
 	    	            } else if (roll >= 926 && roll <= 949) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Lockbox);
+	    	            	fishLoot = AquacultureItems.Lockbox.getItemStack();
 	    	            } else if (roll >= 950 && roll <= 959) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TreasureChest);
+	    	            	fishLoot = AquacultureItems.TreasureChest.getItemStack();
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
+	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	    	            	fishLoot = AquacultureItems.NeptunesBounty.getItemStack();
 	    	            } else {
 	    	                fishLoot = new ItemStack(Item.appleRed);
 	    	            }
@@ -668,29 +668,29 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 641 && roll <= 700) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Squid");
 	    	            } else if (roll >= 701 && roll <= 800) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Algae);
+	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
 	    	            	fishLoot = new ItemStack(Item.stick);
 	    	            } else if (roll >= 826 && roll <= 850) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	    	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	    	            } else if (roll >= 851 && roll <= 875) {
 	    	            	fishLoot = new ItemStack(Item.bootsLeather);
 	    	            } else if (roll >= 876 && roll <= 895) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	    	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	    	            } else if (roll >= 896 && roll <= 925) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Box);
+	    	            	fishLoot = AquacultureItems.Box.getItemStack();
 	    	            } else if (roll >= 926 && roll <= 949) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Lockbox);
+	    	            	fishLoot = AquacultureItems.Lockbox.getItemStack();
 	    	            } else if (roll >= 950 && roll <= 959) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TreasureChest);
+	    	            	fishLoot = AquacultureItems.TreasureChest.getItemStack();
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
+	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	    	            	fishLoot = AquacultureItems.NeptunesBounty.getItemStack();
 	    	            } else {
 	    	                fishLoot = new ItemStack(Item.appleRed);
 	    	            }
@@ -715,29 +715,29 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 581 && roll <= 700) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Red Shrooma");
 	    	            } else if (roll >= 701 && roll <= 800) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Algae);
+	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
 	    	            	fishLoot = new ItemStack(Item.stick);
 	    	            } else if (roll >= 826 && roll <= 850) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	    	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	    	            } else if (roll >= 851 && roll <= 875) {
 	    	            	fishLoot = new ItemStack(Item.bootsLeather);
 	    	            } else if (roll >= 876 && roll <= 895) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	    	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	    	            } else if (roll >= 896 && roll <= 925) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Box);
+	    	            	fishLoot = AquacultureItems.Box.getItemStack();
 	    	            } else if (roll >= 926 && roll <= 949) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Lockbox);
+	    	            	fishLoot = AquacultureItems.Lockbox.getItemStack();
 	    	            } else if (roll >= 950 && roll <= 959) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TreasureChest);
+	    	            	fishLoot = AquacultureItems.TreasureChest.getItemStack();
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
+	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	    	            	fishLoot = AquacultureItems.NeptunesBounty.getItemStack();
 	    	            } else {
 	    	                fishLoot = new ItemStack(Item.appleRed);
 	    	            }
@@ -757,29 +757,29 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 641 && roll <= 700) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Muskellunge");
 	    	            } else if (roll >= 701 && roll <= 800) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Algae);
+	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
 	    	            	fishLoot = new ItemStack(Item.stick);
 	    	            } else if (roll >= 826 && roll <= 850) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Driftwood);
+	    	            	fishLoot = AquacultureItems.Driftwood.getItemStack();
 	    	            } else if (roll >= 851 && roll <= 875) {
 	    	            	fishLoot = new ItemStack(Item.bootsLeather);
 	    	            } else if (roll >= 876 && roll <= 895) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TinCan);
+	    	            	fishLoot = AquacultureItems.TinCan.getItemStack();
 	    	            } else if (roll >= 896 && roll <= 925) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Box);
+	    	            	fishLoot = AquacultureItems.Box.getItemStack();
 	    	            } else if (roll >= 926 && roll <= 949) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.Lockbox);
+	    	            	fishLoot = AquacultureItems.Lockbox.getItemStack();
 	    	            } else if (roll >= 950 && roll <= 959) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.TreasureChest);
+	    	            	fishLoot = AquacultureItems.TreasureChest.getItemStack();
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
 	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.MessageInABottle);
+	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
-	    	            	fishLoot = new ItemStack(AquacultureItems.NeptuniumBar);
+	    	            	fishLoot = AquacultureItems.NeptunesBounty.getItemStack();
 	    	            } else {
 	    	                fishLoot = new ItemStack(Item.appleRed);
 	    	            }

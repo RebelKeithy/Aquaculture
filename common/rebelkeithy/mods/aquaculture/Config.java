@@ -8,6 +8,7 @@ public class Config
 {
 
 	public static int fishID = 22000;
+	/*
 	public static int seaweedID = 22001;
 	public static int algaeID = 22002;
 	public static int whaleSteakID = 22003;
@@ -22,6 +23,7 @@ public class Config
 	public static int boxID = 22012;
 	public static int lockBoxID = 22013;
 	public static int treasureChestID = 22014;
+	*/
 	public static int neptuniumPickaxeID = 22015;
 	public static int neptuniumShovelID = 22016;
 	public static int neptuniumAxeID = 22017;
@@ -33,6 +35,8 @@ public class Config
 	public static int neptuniumBootsID = 22023;
 	public static int rodID = 22024;
 	public static int adminRodID = 22025;
+	
+	public static int lootID = 22001;
 
 	public static void init(File file)
 	{
@@ -43,6 +47,8 @@ public class Config
 		adminRodID = config.getItem("Admin Rod ID", adminRodID).getInt();
 		
 		fishID = config.getItem("Fish", fishID).getInt();
+		lootID = config.getItem("Loot", lootID).getInt();
+		/*
 		seaweedID = config.getItem("Seaweed", seaweedID).getInt();
 		algaeID = config.getItem("AlgaeID", algaeID).getInt();
 		whaleSteakID = config.getItem("Raw Whale Steak", whaleSteakID).getInt();
@@ -58,7 +64,7 @@ public class Config
 		boxID = config.getItem("Box", boxID).getInt();
 		lockBoxID = config.getItem("Lock Box", lockBoxID).getInt();
 		treasureChestID = config.getItem("Treasure Chest", treasureChestID).getInt();
-
+		 */
 		neptuniumPickaxeID = config.getItem("Neptunium Pickaxe", neptuniumPickaxeID).getInt();
 		neptuniumShovelID = config.getItem("Neptunium Shovel", neptuniumShovelID).getInt();
 		neptuniumAxeID = config.getItem("Neptunium Axe", neptuniumAxeID).getInt();

@@ -1,6 +1,8 @@
-package rebelkeithy.mods.aquaculture;
+package rebelkeithy.mods.aquaculture.items;
 
 import java.util.Random;
+
+import rebelkeithy.mods.keithyutils.metaitem.SubItem;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -8,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 
-public class ItemMessageInABottle extends Item
+public class ItemMessageInABottle extends SubItem
 {
 	Random rand = new Random();
 	
@@ -17,12 +19,13 @@ public class ItemMessageInABottle extends Item
         super(par1);
     }
     
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
     	if(par2World.isRemote)
     		return par1ItemStack;
     	
-        par2World.playSoundAtEntity(par3EntityPlayer, "random.glass", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+        par2World.playSoundAtEntity(par3EntityPlayer, "random.glass", 0.5F, 0.4F / (rand.nextFloat() * 0.4F + 0.8F));
         
         int messageRoll = rand.nextInt(29) + 1;
         

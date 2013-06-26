@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture;
+package rebelkeithy.mods.aquaculture.items;
 
 import java.util.Random;
 
@@ -7,8 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import rebelkeithy.mods.keithyutils.metaitem.SubItem;
 
-public class ItemBox extends Item
+public class ItemBox extends SubItem
 {
 	Random rand = new Random();
 	
