@@ -537,19 +537,19 @@ public class EntityCustomFishHook extends EntityFishHook
 	            	{
 	            		
 	            		if (roll >= 1 && roll <= 150) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Bluegill");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Bluegill");
 	    	            } else if (roll >= 151 && roll <= 300) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Bass");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Bass");
 	    	            } else if (roll >= 301 && roll <= 400) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Perch");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Perch");
 	    	            } else if (roll >= 401 && roll <= 500) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Brown Trout");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Brown Trout");
 	    	            } else if (roll >= 501 && roll <= 570) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Catfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Catfish");
 	    	            } else if (roll >= 571 && roll <= 640) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Carp");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Carp");
 	    	            } else if (roll >= 641 && roll <= 700) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Muskellunge");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Muskellunge");
 	    	            } else if (roll >= 701 && roll <= 800) {
 	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
@@ -569,7 +569,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
 	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
@@ -580,13 +580,13 @@ public class EntityCustomFishHook extends EntityFishHook
 	            	} else if(currentBiome instanceof BiomeGenDesert)
 	    	        	{
 	    	            if (roll >= 1 && roll <= 250) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Boulti");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Boulti");
 	    	            } else if (roll >= 251 && roll <= 450) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Capitaine");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Capitaine");
 	    	            } else if (roll >= 451 && roll <= 600) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Bagrid");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Bagrid");
 	    	            } else if (roll >= 601 && roll <= 700) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Syndontis");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Syndontis");
 	    	            } else if (roll >= 701 && roll <= 800) {
 	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
@@ -606,7 +606,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
 	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
@@ -617,13 +617,13 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	        } else if(currentBiome instanceof BiomeGenTaiga || currentBiome instanceof BiomeGenTaiga)
 	    	        	{
 	    	            if (roll >= 1 && roll <= 250) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Cod");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Cod");
 	    	            } else if (roll >= 251 && roll <= 450) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Pollock");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Pollock");
 	    	            } else if (roll >= 451 && roll <= 600) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Herring");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Herring");
 	    	            } else if (roll >= 601 && roll <= 700) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Rainbow Trout");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Rainbow Trout");
 	    	            } else if (roll >= 701 && roll <= 800) {
 	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
@@ -643,7 +643,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
 	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
@@ -654,19 +654,19 @@ public class EntityCustomFishHook extends EntityFishHook
 	    		   } else if(currentBiome instanceof BiomeGenOcean)
 	    	        	{
 	    	            if (roll >= 1 && roll <= 150) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Salmon");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Salmon");
 	    	            } else if (roll >= 151 && roll <= 300) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Tuna");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Tuna");
 	    	            } else if (roll >= 301 && roll <= 400) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Red Grouper");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Red Grouper");
 	    	            } else if (roll >= 401 && roll <= 500) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Swordfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Swordfish");
 	    	            } else if (roll >= 501 && roll <= 570) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Shark");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Shark");
 	    	            } else if (roll >= 571 && roll <= 640) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Whale");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Whale");
 	    	            } else if (roll >= 641 && roll <= 700) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Squid");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Squid");
 	    	            } else if (roll >= 701 && roll <= 800) {
 	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
@@ -686,7 +686,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
 	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
@@ -697,23 +697,23 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	       } else if(currentBiome instanceof BiomeGenMushroomIsland)
 	    	        	{
 	    	            if (roll >= 1 && roll <= 100) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Bluegill");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Bluegill");
 	    	            } else if (roll >= 101 && roll <= 200) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Bass");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Bass");
 	    	            } else if (roll >= 201 && roll <= 260) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Perch");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Perch");
 	    	            } else if (roll >= 261 && roll <= 320) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Brown Trout");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Brown Trout");
 	    	            } else if (roll >= 321 && roll <= 370) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Catfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Catfish");
 	    	            } else if (roll >= 371 && roll <= 420) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Carp");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Carp");
 	    	            } else if (roll >= 421 && roll <= 460) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Muskellunge");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Muskellunge");
 	    	            } else if (roll >= 461 && roll <= 580) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Brown Shrooma");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Brown Shrooma");
 	    	            } else if (roll >= 581 && roll <= 700) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Red Shrooma");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Red Shrooma");
 	    	            } else if (roll >= 701 && roll <= 800) {
 	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
@@ -733,7 +733,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
 	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
@@ -743,19 +743,19 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            }
 	            	}else{
 	    	            if (roll >= 1 && roll <= 150) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Bluegill");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Bluegill");
 	    	            } else if (roll >= 151 && roll <= 300) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Bass");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Bass");
 	    	            } else if (roll >= 301 && roll <= 400) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Perch");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Perch");
 	    	            } else if (roll >= 401 && roll <= 500) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Brown Trout");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Brown Trout");
 	    	            } else if (roll >= 501 && roll <= 570) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Catfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Catfish");
 	    	            } else if (roll >= 571 && roll <= 640) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Carp");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Carp");
 	    	            } else if (roll >= 641 && roll <= 700) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Muskellunge");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Muskellunge");
 	    	            } else if (roll >= 701 && roll <= 800) {
 	    	            	fishLoot = AquacultureItems.Algae.getItemStack();
 	    	            } else if (roll >= 801 && roll <= 825) {
@@ -775,7 +775,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            } else if (roll >= 960 && roll <= 980) {
 	    	            	fishLoot = new ItemStack(Item.bone);
 	    	            } else if (roll >= 981 && roll <= 990) {
-	    	            	fishLoot = AquacultureItems.fish.getFish("Goldfish");
+	    	            	fishLoot = AquacultureItems.fish.getItemStackFish("Goldfish");
 	    	            } else if (roll >= 991 && roll <= 999) {
 	    	            	fishLoot = AquacultureItems.MessageInABottle.getItemStack();
 	    	            } else if (roll >= 1000) {
@@ -786,6 +786,14 @@ public class EntityCustomFishHook extends EntityFishHook
 	    	            
 	            	}
 	            	count++;
+	            	if(Math.random() > 0.8)
+	            	{
+	            		fishLoot = FishLoot.instance().getRandomJunk(currentBiome.biomeID);
+	            	}
+	            	else
+	            	{
+	            		fishLoot = FishLoot.instance().getRandomFish(currentBiome.biomeID);
+	            	}
 	            	//System.out.println(fishLoot.itemID);
 	            	EntityItem entityitem = new EntityItem(worldObj, posX, posY, posZ, fishLoot);
 	            	
@@ -804,7 +812,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	                //this.angler.addStat(StatList.fishCaughtStat, 1);
 	                //this.angler.worldObj.spawnEntityInWorld(new EntityXPOrb(this.angler.worldObj, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
 	                b0 = 1;
-        		} while(fishLoot.itemID != AquacultureItems.NeptuniumBar.itemID && isAdmin);
+        		} while((fishLoot.itemID != AquacultureItems.Algae.itemID || fishLoot.getItemDamage() != AquacultureItems.NeptunesBounty.damage) && isAdmin);
             }
 
             if (this.inGround)

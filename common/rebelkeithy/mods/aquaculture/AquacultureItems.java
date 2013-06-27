@@ -75,9 +75,9 @@ public class AquacultureItems
 		CookedWhaleSteak = new SubItemFood(Config.lootID, 10, 0.8F, false).setUnlocalizedName("Aquaculture:CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
 		WhaleBurger = new SubItemFood(Config.lootID, 20, 0.8F, false).setUnlocalizedName("Aquaculture:Whaleburger").setCreativeTab(Aquaculture.tab);
 
-		Driftwood = new SubItem(20000).setUnlocalizedName("Aquaculture:Driftwood").setCreativeTab(Aquaculture.tab);
-		NeptuniumBar = new SubItem(20000).setUnlocalizedName("Aquaculture:NeptuniumIngot").setCreativeTab(Aquaculture.tab);
-		TinCan = new SubItem(20000).setUnlocalizedName("Aquaculture:TinCan").setCreativeTab(Aquaculture.tab);
+		Driftwood = new SubItem(Config.lootID).setUnlocalizedName("Aquaculture:Driftwood").setCreativeTab(Aquaculture.tab);
+		NeptuniumBar = new SubItem(Config.lootID).setUnlocalizedName("Aquaculture:NeptuniumIngot").setCreativeTab(Aquaculture.tab);
+		TinCan = new SubItem(Config.lootID).setUnlocalizedName("Aquaculture:TinCan").setCreativeTab(Aquaculture.tab);
 		MessageInABottle = new ItemMessageInABottle(Config.lootID).setUnlocalizedName("Aquaculture:MessageInABottle").setCreativeTab(Aquaculture.tab);
 		Box = new ItemBox(Config.lootID).setUnlocalizedName("Aquaculture:Box").setCreativeTab(Aquaculture.tab);
 		Lockbox = new ItemLockbox(Config.lootID).setUnlocalizedName("Aquaculture:Lockbox").setCreativeTab(Aquaculture.tab);
@@ -100,40 +100,54 @@ public class AquacultureItems
 		fish = (ItemFish) new ItemFish(Config.fishID).setCreativeTab(Aquaculture.tab);
 		
 		// Freshwater
-		fish.addFish("Bluegill", 1);
-		fish.addFish("Bass", 1);
-		fish.addFish("Perch", 2);
-		fish.addFish("Brown Trout", 2);
-		fish.addFish("Catfish", 3);
-		fish.addFish("Carp", 4);
-		fish.addFish("Muskellunge", 4);
+		fish.addFish("Bluegill", 1, 1, 5, BiomeType.freshwater, 1);
+		fish.addFish("Bass", 1, 1, 25, BiomeType.freshwater, 1);
+		fish.addFish("Perch", 2, 1, 5, BiomeType.freshwater, 1);
+		fish.addFish("Brown Trout", 2, 1, 40, BiomeType.freshwater, 1);
+		fish.addFish("Catfish", 3, 1, 50, BiomeType.freshwater, 1);
+		fish.addFish("Carp", 4, 1, 100, BiomeType.freshwater, 1);
+		fish.addFish("Muskellunge", 4, 1, 35, BiomeType.freshwater, 1);
 		
 		// Saltwater
-		fish.addFish("Salmon", 2);
-		fish.addFish("Tuna", 3);
-		fish.addFish("Red Grouper", 4);
-		fish.addFish("Swordfish", 5);
-		fish.addFish("Shark", 6);
-		fish.addFish("Whale", 0);
-		fish.addFish("Squid", 0);
+		fish.addFish("Salmon", 2, 1, 100, BiomeType.saltwater, 1);
+		fish.addFish("Tuna", 3, 1, 135, BiomeType.saltwater, 1);
+		fish.addFish("Red Grouper", 4, 1, 50, BiomeType.saltwater, 1);
+		fish.addFish("Swordfish", 5, 1, 1400, BiomeType.saltwater, 1);
+		fish.addFish("Shark", 6, 1, 5000, BiomeType.saltwater, 1);
+		fish.addFish("Whale", 0, 1, 190000, BiomeType.saltwater, 1);
+		fish.addFish("Squid", 0, 1, 1000, BiomeType.saltwater, 1);
 		
 		// Tundra
-		fish.addFish("Cod", 1);
-		fish.addFish("Pollock", 1);
-		fish.addFish("Herring", 2);
-		fish.addFish("Rainbow Trout", 4);
+		fish.addFish("Cod", 1, 1, 210, BiomeType.arctic, 1);
+		fish.addFish("Pollock", 1, 1, 45, BiomeType.arctic, 1);
+		fish.addFish("Herring", 2, 1, 3, BiomeType.arctic, 1);
+		fish.addFish("Rainbow Trout", 4, 1, 50, BiomeType.arctic, 1);
 		
 		// Desert
-		fish.addFish("Capitaine", 2);
-		fish.addFish("Boulti", 1);
-		fish.addFish("Bagrid", 3);
-		fish.addFish("Syndontis", 4);
+		fish.addFish("Capitaine", 2, 1, 450, BiomeType.arid, 1);
+		fish.addFish("Boulti", 1, 1, 10, BiomeType.arid, 1);
+		fish.addFish("Bagrid", 3, 1, 25, BiomeType.arid, 1);
+		fish.addFish("Syndontis", 4, 1, 3, BiomeType.arid, 1);
 		
 		// Mushroom Island
-		fish.addFish("Red Shrooma", 0);
-		fish.addFish("Brown Shrooma", 0);
+		fish.addFish("Red Shrooma", 0, 1, 5, BiomeType.mushroom, 1);
+		fish.addFish("Brown Shrooma", 0, 1, 5, BiomeType.mushroom, 1);
 		
-		fish.addFish("Goldfish", 0);
+		fish.addFish("Goldfish", 0, 1, 4, new BiomeType[] {}, 1);
+		
+		FishLoot.instance().addJunkLoot(Algae.getItemStack(), 25);
+		FishLoot.instance().addJunkLoot(Driftwood.getItemStack(), 25);
+		FishLoot.instance().addJunkLoot(TinCan.getItemStack(), 30);
+		FishLoot.instance().addJunkLoot(Box.getItemStack(), 25);
+		FishLoot.instance().addJunkLoot(Lockbox.getItemStack(), 23);
+		FishLoot.instance().addJunkLoot(TreasureChest.getItemStack(), 10);
+		FishLoot.instance().addJunkLoot(new ItemStack(Item.stick), 20);
+		FishLoot.instance().addJunkLoot(new ItemStack(Item.bone), 20);
+		FishLoot.instance().addJunkLoot(new ItemStack(Item.bootsLeather), 20);
+		FishLoot.instance().addJunkLoot(new ItemStack(Item.appleRed), 20);
+		FishLoot.instance().addJunkLoot(fish.getItemStackFish("Goldfish"), 10);
+		FishLoot.instance().addJunkLoot(MessageInABottle.getItemStack(), 23);
+		FishLoot.instance().addJunkLoot(NeptunesBounty.getItemStack(), 1);
 		
 		OreDictionary.registerOre("listAllfishraw", FishFillet.getItemStack());
 		OreDictionary.registerOre("listAllfishcooked", CookedFillet.getItemStack());

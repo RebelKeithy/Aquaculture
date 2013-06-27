@@ -13,12 +13,12 @@ public class AquacultureRecipes
 	{
 		AquacultureItems.fish.addFilletRecipes();
 		
-		GameRegistry.addShapelessRecipe(AquacultureItems.WhaleSteak.getItemStack(5), AquacultureItems.fish.getFish("Whale"));
-		GameRegistry.addShapelessRecipe(new ItemStack(Item.dyePowder, 2, 0), AquacultureItems.fish.getFish("Squid"));
-		GameRegistry.addShapelessRecipe(new ItemStack(Block.mushroomRed, 5), AquacultureItems.fish.getFish("Red Shrooma"));
-		GameRegistry.addShapelessRecipe(new ItemStack(Block.mushroomBrown, 5), AquacultureItems.fish.getFish("Brown Shrooma"));
+		GameRegistry.addShapelessRecipe(AquacultureItems.WhaleSteak.getItemStack(5), AquacultureItems.fish.getItemStackFish("Whale"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Item.dyePowder, 2, 0), AquacultureItems.fish.getItemStackFish("Squid"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Block.mushroomRed, 5), AquacultureItems.fish.getItemStackFish("Red Shrooma"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Block.mushroomBrown, 5), AquacultureItems.fish.getItemStackFish("Brown Shrooma"));
 		GameRegistry.addShapelessRecipe(new ItemStack(Item.leather, 2), new ItemStack(Item.bootsLeather));
-		GameRegistry.addShapelessRecipe(new ItemStack(Item.goldNugget, 1), AquacultureItems.fish.getFish("Goldfish"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Item.goldNugget, 1), AquacultureItems.fish.getItemStackFish("Goldfish"));
 
 		GameRegistry.addShapelessRecipe(new ItemStack(Block.planks, 4), AquacultureItems.Driftwood.getItemStack());
 

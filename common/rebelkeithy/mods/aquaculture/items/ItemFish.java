@@ -1,18 +1,24 @@
 package rebelkeithy.mods.aquaculture.items;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import rebelkeithy.mods.aquaculture.AquacultureItems;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import rebelkeithy.mods.aquaculture.AquacultureItems;
+import rebelkeithy.mods.aquaculture.BiomeType;
+import rebelkeithy.mods.aquaculture.FishLoot;
+import scala.util.Random;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -26,12 +32,16 @@ public class ItemFish extends ItemFood
 	{
 		public String name;
 		public int filletAmount;
+		public int minWeight;
+		public int maxWeight;
 		public Icon icon;
 		
-		public Fish(String name, int amount)
+		public Fish(String name, int amount, int min, int max)
 		{
 			this.name = name;
 			filletAmount = amount;
+			maxWeight = max;
+			minWeight = min;
 		}
 	}
 	
@@ -43,10 +53,22 @@ public class ItemFish extends ItemFood
 		
 		fish = new ArrayList<Fish>();
 	}
+
 	
-	public void addFish(String name, int filletAmount)
+	public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType biome, int rarity)
 	{
-		fish.add(new Fish(name, filletAmount));
+		addFish(name, filletAmount, minWeight, maxWeight, new BiomeType[] {biome}, rarity);
+	}
+	
+	public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType[] biomes, int rarity)
+	{
+		fish.add(new Fish(name, filletAmount, minWeight, maxWeight));
+		 
+		for(BiomeType biome : biomes)
+		{
+			FishLoot.instance().addFish(this.getItemStackFish(name), biome, rarity);
+		}
+		
 		LanguageRegistry.addName(new ItemStack(itemID, 1, fish.size()-1), name);
 	}
 	
@@ -61,8 +83,66 @@ public class ItemFish extends ItemFood
 			}
 		}
 	}
+	
+    public String getItemDisplayName(ItemStack par1ItemStack)
+    {
+		if(par1ItemStack.hasTagCompound())
+		{
+			if(par1ItemStack.getTagCompound().hasKey("Prefix"))
+			{
+				return par1ItemStack.getTagCompound().getString("Prefix") + " " + super.getItemDisplayName(par1ItemStack);
+			}
+		}
+		return super.getItemDisplayName(par1ItemStack);
+    }
+	
+    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) 
+    {
+    	if(par1ItemStack.hasTagCompound())
+    	{
+    		if(par1ItemStack.getTagCompound().hasKey("Weight"))
+    		{
+    			float weight = par1ItemStack.getTagCompound().getFloat("Weight");
+    			
+    			DecimalFormat df = new DecimalFormat("#,###.##");
+    			BigDecimal bd = new BigDecimal(weight);
+    			bd = bd.round(new MathContext(3));
+    			if(bd.doubleValue() > 999)
+    				par3List.add("Weight: " + df.format((int)bd.doubleValue()) + "lb");
+    			else
+    				par3List.add("Weight: " + bd + "lb");
+    		}
+    	}
+    }
 
-	public ItemStack getFish(String name)
+
+	public void assignRandomWeight(ItemStack stack)
+	{
+		Fish f = fish.get(stack.getItemDamage());
+		
+		Random rand = new Random();
+		float weight = rand.nextFloat() * ((f.maxWeight*1.1f) - f.minWeight) + f.minWeight;
+
+		if(!stack.hasTagCompound())
+		{
+			stack.setTagCompound(new NBTTagCompound("tag"));
+		}
+		
+		stack.getTagCompound().setFloat("Weight", weight);
+		
+		if(weight <= f.maxWeight/10.0)
+		{
+			stack.getTagCompound().setString("Prefix", "Juvenile");
+		}
+
+		if(weight > f.maxWeight)
+		{
+			stack.getTagCompound().setString("Prefix", "Massive");
+		}
+		
+	}
+
+	public ItemStack getItemStackFish(String name)
 	{
 		for(int i = 0; i < fish.size(); i++)
 		{
