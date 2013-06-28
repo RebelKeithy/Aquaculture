@@ -1,10 +1,12 @@
 package rebelkeithy.mods.aquaculture;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.Property;
+
 import java.io.File;
 
-import net.minecraftforge.common.Configuration;
-
-public class Config 
+public class Config
 {
 
 	public static int fishID = 22000;
@@ -37,6 +39,20 @@ public class Config
 	public static int adminRodID = 22025;
 	
 	public static int lootID = 22001;
+	
+	/*
+	 * Enchantments
+	 */
+	
+	public static final String categoryEnchantments = "ENCHANTMENTS";
+	
+    public static int appealingID = 60;
+    public static int magneticID = 61;
+    public static int longcastID = 62;
+    public static int shortcastID = 63;
+    public static int fastcastID = 64;
+    public static int barbedHookID = 65;
+    public static int doubleHookID = 66;
 
 	public static void init(File file)
 	{
@@ -76,6 +92,32 @@ public class Config
 		neptuniumLegsID = config.getItem("Neptunium Legs", neptuniumLegsID).getInt();
 		neptuniumBootsID = config.getItem("Neptunium Boots", neptuniumBootsID).getInt();
 		
-		config.save();
+        appealingID = isIdAvailableOrSet(config.get(categoryEnchantments, "Appealing", appealingID)).getInt();
+        magneticID = isIdAvailableOrSet(config.get(categoryEnchantments, "Magnetic", magneticID)).getInt();
+        longcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Long Cast", longcastID)).getInt();
+        shortcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Short Cast", shortcastID)).getInt();
+        fastcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Fast Cast", fastcastID)).getInt();
+        barbedHookID = isIdAvailableOrSet(config.get(categoryEnchantments, "Barbed Hook", barbedHookID)).getInt();
+        doubleHookID = isIdAvailableOrSet(config.get(categoryEnchantments, "Double Hook", doubleHookID)).getInt();
+		
+        if(config.hasChanged()) 
+        	config.save();
 	}
+	
+    private static Property isIdAvailableOrSet(Property property) {
+        int propertyInt = property.getInt();
+
+        if (Enchantment.enchantmentsList[propertyInt] == null) {
+            return property;
+        }
+
+        for (int i = 0; i < Enchantment.enchantmentsList.length; i++) {
+            if (Enchantment.enchantmentsList[propertyInt] == null) {
+                property.set(i);
+                return property;
+            }
+        }
+
+        throw new RuntimeException("No more enchantment ids are available");
+    }
 }
