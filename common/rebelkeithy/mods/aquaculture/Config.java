@@ -8,6 +8,9 @@ public class Config
 {
 
 	public static int fishID = 22000;
+	public static int ironRodID = 22001;
+	public static int goldRodID = 22002;
+	public static int diamondRodID = 22003;
 	/*
 	public static int seaweedID = 22001;
 	public static int algaeID = 22002;
@@ -33,17 +36,18 @@ public class Config
 	public static int neptuniumPlateID = 22021;
 	public static int neptuniumLegsID = 22022;
 	public static int neptuniumBootsID = 22023;
-	public static int rodID = 22024;
 	public static int adminRodID = 22025;
 	
-	public static int lootID = 22001;
+	public static int lootID = 22010;
 
 	public static void init(File file)
 	{
 		Configuration config = new Configuration(file);
 		config.load();
 
-		rodID = config.getItem("Fishing Rod ID", rodID).getInt();
+		ironRodID = config.getItem("Iron Fishing Rod ID", ironRodID).getInt();
+		goldRodID = config.getItem("Gold Fishing Rod ID", goldRodID).getInt();
+		diamondRodID = config.getItem("Diamond Fishing Rod ID", diamondRodID).getInt();
 		adminRodID = config.getItem("Admin Rod ID", adminRodID).getInt();
 		
 		fishID = config.getItem("Fish", fishID).getInt();

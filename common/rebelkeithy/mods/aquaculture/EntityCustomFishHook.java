@@ -5,13 +5,11 @@ import java.util.List;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -27,6 +25,7 @@ import net.minecraft.world.biome.BiomeGenOcean;
 import net.minecraft.world.biome.BiomeGenPlains;
 import net.minecraft.world.biome.BiomeGenRiver;
 import net.minecraft.world.biome.BiomeGenTaiga;
+import rebelkeithy.mods.aquaculture.items.ItemAquacultureFishingRod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -215,7 +214,7 @@ public class EntityCustomFishHook extends EntityFishHook
     {
     	int id = stack.itemID;
     	
-    	return id == AquacultureItems.IronFishingRod.itemID || id == AquacultureItems.AdminFishingRod.itemID;
+    	return (Item.itemsList[id] instanceof ItemAquacultureFishingRod)|| id == AquacultureItems.AdminFishingRod.itemID;
     }
 
     /**

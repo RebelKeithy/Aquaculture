@@ -28,6 +28,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class AquacultureItems 
 {
 	public static Item IronFishingRod;
+	public static Item goldFishingRod;
+	public static Item diamondFishingRod;
 	public static Item AdminFishingRod;
 	
 	public static SubItem WhaleSteak;
@@ -62,7 +64,10 @@ public class AquacultureItems
 	
 	public static void init()
 	{
-		IronFishingRod = new ItemAquacultureFishingRod(Config.rodID, 75).setUnlocalizedName("Aquaculture:IronFishingRod").setCreativeTab(Aquaculture.tab);
+		System.out.println();
+		IronFishingRod = new ItemAquacultureFishingRod(Config.ironRodID, 75, "Iron").setUnlocalizedName("Aquaculture:IronFishingRod").setCreativeTab(Aquaculture.tab);
+		goldFishingRod = new ItemAquacultureFishingRod(Config.goldRodID, 50, "Gold").setUnlocalizedName("Aquaculture:GoldFishingRod").setCreativeTab(Aquaculture.tab);
+		diamondFishingRod = new ItemAquacultureFishingRod(Config.diamondRodID, 250, "Diamond").setUnlocalizedName("Aquaculture:DiamondFishingRod").setCreativeTab(Aquaculture.tab);
 		AdminFishingRod = new ItemAdminFishingRod(Config.adminRodID, 75).setUnlocalizedName("Aquaculture:AdminFishingRod").setCreativeTab(Aquaculture.tab);
 		
 		Seaweed = new SubItemFood(Config.lootID, 1, 0, false).setUnlocalizedName("Aquaculture:Seaweed").setCreativeTab(Aquaculture.tab);
@@ -107,6 +112,7 @@ public class AquacultureItems
 		fish.addFish("Catfish", 3, 1, 50, BiomeType.freshwater, 1);
 		fish.addFish("Carp", 4, 1, 100, BiomeType.freshwater, 1);
 		fish.addFish("Muskellunge", 4, 1, 35, BiomeType.freshwater, 1);
+		fish.addFish("Gar", 1, 1, 10, BiomeType.freshwater, 1);
 		
 		// Saltwater
 		fish.addFish("Salmon", 2, 1, 100, BiomeType.saltwater, 1);
@@ -116,12 +122,22 @@ public class AquacultureItems
 		fish.addFish("Shark", 6, 1, 5000, BiomeType.saltwater, 1);
 		fish.addFish("Whale", 0, 1, 190000, BiomeType.saltwater, 1);
 		fish.addFish("Squid", 0, 1, 1000, BiomeType.saltwater, 1);
+		fish.addFish("Blowfish", 0, 1, 25, BiomeType.saltwater, 1);
+		
+		// Jungle
+		fish.addFish("Arapaima", 1, 1, 220, BiomeType.tropical, 1);
+		fish.addFish("Pirahna", 1, 1, 8, BiomeType.tropical, 1);
+		fish.addFish("Tambaqui", 1, 1, 75, BiomeType.tropical, 1);
+		fish.addFish("Electric Eel", 0, 1, 45, BiomeType.tropical, 1);
 		
 		// Tundra
 		fish.addFish("Cod", 1, 1, 210, BiomeType.arctic, 1);
 		fish.addFish("Pollock", 1, 1, 45, BiomeType.arctic, 1);
 		fish.addFish("Herring", 2, 1, 3, BiomeType.arctic, 1);
+		fish.addFish("Halibut", 1, 1, 700, BiomeType.arctic, 1);
+		fish.addFish("Pink Salmon", 1, 1, 100, BiomeType.arctic, 1);
 		fish.addFish("Rainbow Trout", 4, 1, 50, BiomeType.arctic, 1);
+		fish.addFish("Blackfish", 1, 1, 10, BiomeType.arctic, 1);
 		
 		// Desert
 		fish.addFish("Capitaine", 2, 1, 450, BiomeType.arid, 1);
@@ -156,6 +172,8 @@ public class AquacultureItems
 	public static void addNames()
 	{
 		LanguageRegistry.addName(IronFishingRod, "Iron Fishing Rod");
+		LanguageRegistry.addName(goldFishingRod, "Gold Fishing Rod");
+		LanguageRegistry.addName(diamondFishingRod, "Diamond Fishing Rod");
 		LanguageRegistry.addName(AdminFishingRod, "Admin Fishing Rod");
 		
 		LanguageRegistry.addName(Seaweed.getItemStack(), "Seaweed");

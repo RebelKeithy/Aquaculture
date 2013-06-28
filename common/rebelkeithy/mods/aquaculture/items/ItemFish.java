@@ -194,7 +194,6 @@ public class ItemFish extends ItemFood
     {
         for (int j = 0; j < fish.size(); ++j)
         {
-        	System.out.println("adding ");
             par3List.add(new ItemStack(par1, 1, j));
         }
     }

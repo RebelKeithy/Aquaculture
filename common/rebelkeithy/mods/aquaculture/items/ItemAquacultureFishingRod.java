@@ -14,12 +14,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemAquacultureFishingRod extends Item
 {
 	public Icon usingIcon;
+	public String type;
 	
-    public ItemAquacultureFishingRod(int i, int d)
+    public ItemAquacultureFishingRod(int i, int d, String type)
     {
         super(i);
         setMaxDamage(d);
         setMaxStackSize(1);
+        this.type = type;
     }
 
     @SideOnly(Side.CLIENT)
@@ -90,6 +92,6 @@ public class ItemAquacultureFishingRod extends Item
     {
         super.registerIcons(par1IconRegister);
         
-        usingIcon = par1IconRegister.registerIcon("Aquaculture:IronFishingRodUsing");
+        usingIcon = par1IconRegister.registerIcon("Aquaculture:" + type + "FishingRodUsing");
     }
 }
