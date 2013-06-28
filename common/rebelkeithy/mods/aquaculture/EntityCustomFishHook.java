@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
@@ -220,6 +221,7 @@ public class EntityCustomFishHook extends EntityFishHook
     /**
      * Called to update the entity's position/logic.
      */
+    @Override
     public void onUpdate()
     {
         //super.onUpdate();
@@ -344,10 +346,12 @@ public class EntityCustomFishHook extends EntityFishHook
             {
                 if (movingobjectposition.entityHit != null)
                 {
-                    if (movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.angler), 0))
-                    {
-                        this.bobber = movingobjectposition.entityHit;
-                    }
+                	if(!(movingobjectposition.entityHit instanceof EntityBoat)){
+                		if (movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.angler), 0))
+                    	{
+                    		this.bobber = movingobjectposition.entityHit;
+                    	}
+                	}
                 }
                 else
                 {
