@@ -112,7 +112,7 @@ public class AquacultureItems
 		fish.addFish("Muskellunge", 3, 1, 35, BiomeType.freshwater, 1);
 		fish.addFish("Brown Trout", 3, 1, 40, BiomeType.freshwater, 1);
 		fish.addFish("Catfish", 4, 1, 50, BiomeType.freshwater, 1);
-		fish.addFish("Carp", 5D, 1, 100, BiomeType.freshwater, 1);
+		fish.addFish("Carp", 5, 1, 100, BiomeType.freshwater, 1);
 		
 		// Saltwater
 		fish.addFish("Blowfish", 3, 1, 25, BiomeType.saltwater, 1);
