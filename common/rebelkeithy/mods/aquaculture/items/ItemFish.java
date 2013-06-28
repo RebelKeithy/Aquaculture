@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import rebelkeithy.mods.aquaculture.AquacultureItems;
 import rebelkeithy.mods.aquaculture.BiomeType;
 import rebelkeithy.mods.aquaculture.FishLoot;
-import scala.util.Random;
+import java.util.Random;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
