@@ -49,6 +49,6 @@ public class NeptuniumArmor extends ItemArmor
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister)
     {
-        this.itemIcon = par1IconRegister.registerIcon(this.func_111208_A());
+        this.itemIcon = par1IconRegister.registerIcon("aquaculture:" + this.func_111208_A());
     }
 }

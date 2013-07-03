@@ -19,7 +19,7 @@ public class AquacultureItem extends Item
     public Item setUnlocalizedName(String par1Str)
     {
         super.setUnlocalizedName(par1Str);
-        this.setTextureName(par1Str.replaceAll("\\s",""));
+        this.setTextureName("aquaculture:" + par1Str.replaceAll("\\s",""));
         return this;
     }
 	

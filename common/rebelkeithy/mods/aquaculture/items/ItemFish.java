@@ -125,6 +125,9 @@ public class ItemFish extends ItemFood
 		
 		Fish f = fish.get(stack.getItemDamage());
 		
+		if(f.maxWeight == 1 && f.minWeight == 1)
+			return;
+		
 		Random rand = new Random();
 		
 		float min = f.minWeight;
@@ -218,7 +221,7 @@ public class ItemFish extends ItemFood
     {
         for(Fish f : fish)
         {
-        	f.icon = par1IconRegister.registerIcon(f.name);
+        	f.icon = par1IconRegister.registerIcon("Aquaculture:" + f.name);
         }
     }
 }

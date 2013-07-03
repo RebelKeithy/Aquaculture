@@ -21,16 +21,9 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenDesert;
-import net.minecraft.world.biome.BiomeGenForest;
-import net.minecraft.world.biome.BiomeGenHills;
-import net.minecraft.world.biome.BiomeGenMushroomIsland;
-import net.minecraft.world.biome.BiomeGenOcean;
-import net.minecraft.world.biome.BiomeGenPlains;
-import net.minecraft.world.biome.BiomeGenRiver;
-import net.minecraft.world.biome.BiomeGenTaiga;
 import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
 import rebelkeithy.mods.aquaculture.items.ItemAquacultureFishingRod;
+import rebelkeithy.mods.aquaculture.items.ItemAquacultureWoodenFishingRod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -50,6 +43,8 @@ public class EntityCustomFishHook extends EntityFishHook
     public EntityPlayer angler;
     private int ticksInGround;
     private int ticksInAir;
+    
+    private int baseCatchTime = 300;
 
     /** the number of ticks remaining until this fish can no longer be caught */
     private int ticksCatchable;
@@ -156,6 +151,11 @@ public class EntityCustomFishHook extends EntityFishHook
         
         this.calculateVelocity(this.motionX, this.motionY, this.motionZ, velocity, 1.0F);
     }
+    
+    public void setBaseCatchTime(int amount)
+    {
+    	this.baseCatchTime = amount;
+    }
 
     public EntityCustomFishHook(World world, EntityPlayer entityplayer, boolean b) 
     {
@@ -235,7 +235,7 @@ public class EntityCustomFishHook extends EntityFishHook
     {
     	int id = stack.itemID;
     	
-    	return (Item.itemsList[id] instanceof ItemAquacultureFishingRod)|| id == AquacultureItems.adminFishingRod.itemID;
+    	return (Item.itemsList[id] instanceof ItemAquacultureFishingRod)|| (Item.itemsList[id] instanceof ItemAquacultureWoodenFishingRod) || id == AquacultureItems.adminFishingRod.itemID;
     }
 
     /**
@@ -437,11 +437,11 @@ public class EntityCustomFishHook extends EntityFishHook
                     }
                     else
                     {
-                        short biteChance = 300;
+                        short biteChance = (short) baseCatchTime;
 
                         if (this.worldObj.canLightningStrikeAt(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) + 1, MathHelper.floor_double(this.posZ)))
                         {
-                            biteChance = 150;
+                            biteChance = (short) (biteChance * 0.5);
                         }
                         
                         if(this.angler != null)
@@ -572,7 +572,7 @@ public class EntityCustomFishHook extends EntityFishHook
             	int doubleHook = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.doubleHook.effectId, this.angler.getCurrentEquippedItem());
             	if(doubleHook > 0)
             	{
-            		doubleOdds = 0.05F * doubleHook;
+            		doubleOdds = 0.1F * doubleHook;
             		
             		if(Math.random() < doubleOdds)
             			count++;

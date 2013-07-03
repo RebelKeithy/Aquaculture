@@ -91,6 +91,6 @@ public class ItemAdminFishingRod extends AquacultureItem
     {
         super.registerIcons(par1IconRegister);
         
-        usingIcon = par1IconRegister.registerIcon("AdminFishingRodUsing");
+        usingIcon = par1IconRegister.registerIcon("aquaculture:AdminFishingRodUsing");
     }
 }

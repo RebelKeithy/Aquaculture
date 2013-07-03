@@ -19,9 +19,10 @@ public class AquacultureRecipes
 		GameRegistry.addShapelessRecipe(new ItemStack(Block.mushroomBrown, 5), AquacultureItems.fish.getItemStackFish("Brown Shrooma"));
 		GameRegistry.addShapelessRecipe(new ItemStack(Item.leather, 2), new ItemStack(Item.bootsLeather));
 		GameRegistry.addShapelessRecipe(new ItemStack(Item.goldNugget, 1), AquacultureItems.fish.getItemStackFish("Goldfish"));
-		GameRegistry.addShapelessRecipe(AquacultureItems.frogLegs.getItemStack(), AquacultureItems.fish.getItemStackFish("Frog"));
-		GameRegistry.addShapelessRecipe(AquacultureItems.turtleSoup.getItemStack(), AquacultureItems.fish.getItemStackFish("Turtle"));
+		GameRegistry.addShapelessRecipe(AquacultureItems.frogLegs.getItemStack(2), AquacultureItems.fish.getItemStackFish("Frog"));
+		GameRegistry.addShapelessRecipe(AquacultureItems.turtleSoup.getItemStack(), AquacultureItems.fish.getItemStackFish("Turtle"), Item.bucketWater);
 		GameRegistry.addShapelessRecipe(AquacultureItems.sushi.getItemStack(), AquacultureItems.fishFillet.getItemStack(), AquacultureItems.seaweed.getItemStack());
+		GameRegistry.addShapelessRecipe(new ItemStack(Item.dyePowder, 3, 15), AquacultureItems.fish.getItemStackFish("Fish Bones"));
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(Block.planks, 4), AquacultureItems.driftwood.getItemStack());
 

@@ -40,6 +40,13 @@ public class Aquaculture
 		
 		AquacultureItems.init();
 		AquacultureItems.addNames();
+
+		LanguageRegistry.instance().addStringLocalization("enchantment.longCast", "Longcast");
+		LanguageRegistry.instance().addStringLocalization("enchantment.shortCast", "Shortcast");
+		LanguageRegistry.instance().addStringLocalization("enchantment.doubleHook", "Double Hook");
+		LanguageRegistry.instance().addStringLocalization("enchantment.barbedHook", "Barbed Hook");
+		LanguageRegistry.instance().addStringLocalization("enchantment.appealing", "Appealing");
+		LanguageRegistry.instance().addStringLocalization("enchantment.magnetic", "Magnetic");
 		//LanguageRegistry.reloadLanguageTable();
 	}
 

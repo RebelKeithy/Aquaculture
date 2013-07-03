@@ -12,13 +12,13 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAquacultureFishingRod extends AquacultureItem
+public class ItemAquacultureWoodenFishingRod extends AquacultureItem
 {
 	public Icon usingIcon;
 	public String type;
 	public int enchantability;
 	
-    public ItemAquacultureFishingRod(int i, int d, int enchantability, String type)
+    public ItemAquacultureWoodenFishingRod(int i, int d, int enchantability, String type)
     {
         super(i);
         setMaxDamage(d);
@@ -94,18 +94,22 @@ public class ItemAquacultureFishingRod extends AquacultureItem
     		boolean using = tag.getBoolean("using");
     		
     		if(using)
-    			return usingIcon;
+    			return Item.fishingRod.func_94597_g();
     	}
     	
-    	return itemIcon;
+    	return Item.fishingRod.getIconFromDamage(0);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IconRegister par1IconRegister)
     {
-        super.registerIcons(par1IconRegister);
+    	Item.fishingRod.registerIcons(par1IconRegister);
+    	
+    	this.itemIcon = Item.fishingRod.getIconFromDamage(0);
+    	
+        //super.registerIcons(par1IconRegister);
         
-        usingIcon = par1IconRegister.registerIcon("aquaculture:" + type + "FishingRodUsing");
+        //usingIcon = par1IconRegister.registerIcon("aquaculture:" + type + "FishingRodUsing");
     }
 }
