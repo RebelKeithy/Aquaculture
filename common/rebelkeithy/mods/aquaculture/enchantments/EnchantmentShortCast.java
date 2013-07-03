@@ -23,4 +23,14 @@ public class EnchantmentShortCast extends EnchantmentFishingPole {
     public boolean canApplyTogether(Enchantment enchantment) {
         return !((enchantment instanceof EnchantmentShortCast) || (enchantment instanceof EnchantmentLongCast) || (enchantment instanceof EnchantmentFastcast));
     }
+    
+    public int getMinEnchantability(int par1)
+    {
+        return 1 + 10 * (par1 - 1);
+    }
+
+    public int getMaxEnchantability(int par1)
+    {
+        return super.getMinEnchantability(par1) + 50;
+    }
 }

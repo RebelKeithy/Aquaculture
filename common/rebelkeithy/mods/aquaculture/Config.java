@@ -55,6 +55,7 @@ public class Config
     public static int fastcastID = 64;
     public static int barbedHookID = 65;
     public static int doubleHookID = 66;
+	public static int effeciencyID = 67;
 
 	public static void init(File file)
 	{
@@ -100,9 +101,10 @@ public class Config
         magneticID = isIdAvailableOrSet(config.get(categoryEnchantments, "Magnetic", magneticID)).getInt();
         longcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Long Cast", longcastID)).getInt();
         shortcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Short Cast", shortcastID)).getInt();
-        fastcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Fast Cast", fastcastID)).getInt();
+        //fastcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Fast Cast", fastcastID)).getInt();
         barbedHookID = isIdAvailableOrSet(config.get(categoryEnchantments, "Barbed Hook", barbedHookID)).getInt();
         doubleHookID = isIdAvailableOrSet(config.get(categoryEnchantments, "Double Hook", doubleHookID)).getInt();
+        effeciencyID = isIdAvailableOrSet(config.get(categoryEnchantments, "Efficency", effeciencyID)).getInt();
 		
         if(config.hasChanged()) 
         	config.save();

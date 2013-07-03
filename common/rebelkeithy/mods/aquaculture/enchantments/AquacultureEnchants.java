@@ -1,5 +1,6 @@
 package rebelkeithy.mods.aquaculture.enchantments;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraftforge.common.EnumHelper;
 import rebelkeithy.mods.aquaculture.Config;
@@ -18,6 +19,8 @@ public class AquacultureEnchants {
     //public static EnchantmentFishingPole fastcast;
     public static EnchantmentFishingPole doubleHook;
     public static EnchantmentFishingPole barbedHook;
+    
+    public static Enchantment effeciencyFishing;
 
     public static void init() {
         enumFishingPole = EnumHelper.addEnchantmentType("fishingPole");
@@ -29,5 +32,7 @@ public class AquacultureEnchants {
         //fastcast = new EnchantmentFastcast(Config.fastcastID, 7);
         doubleHook = new EnchantmentDoubleHook(Config.doubleHookID, 1);
         barbedHook = new EnchantmentBardedHook(Config.barbedHookID, 1);
+        
+        effeciencyFishing = new EnchantmentEfficiencyFishing(Config.effeciencyID, 10);
     }
 }

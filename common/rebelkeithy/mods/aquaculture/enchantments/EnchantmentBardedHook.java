@@ -23,4 +23,14 @@ public class EnchantmentBardedHook extends EnchantmentFishingPole {
     public boolean canApplyTogether(Enchantment enchantment) {
         return !((enchantment instanceof EnchantmentDoubleHook) || (enchantment instanceof EnchantmentBardedHook));
     }
+    
+    public int getMinEnchantability(int par1)
+    {
+        return 15;
+    }
+
+    public int getMaxEnchantability(int par1)
+    {
+        return super.getMinEnchantability(par1) + 50;
+    }
 }
