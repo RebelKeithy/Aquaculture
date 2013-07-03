@@ -2,20 +2,36 @@ package rebelkeithy.mods.aquaculture.items;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import rebelkeithy.mods.keithyutils.loot.WeightedLootSet;
 import rebelkeithy.mods.keithyutils.metaitem.SubItem;
 
 public class ItemLockbox extends SubItem
 {
 	Random rand = new Random();
+	public WeightedLootSet loot;
 	
     public ItemLockbox(int par1)
     {
         super(par1);
+        loot = new WeightedLootSet();
+        loot.addLoot(Item.ingotIron, 8);
+        loot.addLoot(Item.ingotGold, 7);
+        loot.addLoot(Item.appleGold, 5);
+        loot.addLoot(new ItemStack(Item.dyePowder, 1, 4), 8);
+        loot.addLoot(Item.redstone, 8);
+        loot.addLoot(Item.book, 10);
+        loot.addLoot(Item.paper, 10);
+        loot.addLoot(Item.compass, 10);
+        loot.addLoot(Item.pocketSundial, 10);
+        loot.addLoot(Item.lightStoneDust, 7);
+        loot.addLoot(Item.gunpowder, 10);
+        loot.addLoot(Item.netherQuartz, 7);
     }
     
     @Override
@@ -24,30 +40,9 @@ public class ItemLockbox extends SubItem
     	if(par2World.isRemote)
     		return par1ItemStack;
     	
-        int lootRoll = rand.nextInt(15) + 1;
+        ItemStack randomLoot = loot.getRandomLoot();
         
-        Item loot = null;
-        switch(lootRoll)
-        {
-	        case 1: loot = Item.bucketEmpty; break;
-	        case 2: loot = Item.coal; break;
-	        case 3: loot = Item.compass; break;
-	        case 4: loot = Item.glassBottle; break;
-	        case 5: loot = Item.helmetIron; break;
-	        case 6: loot = Item.legsIron; break;
-	        case 7: loot = Item.plateIron; break;
-	        case 8: loot = Item.bootsIron; break;
-	        case 9: loot = Item.paper; break;
-	        case 10: loot = Item.saddle; break;
-	        case 11: loot = Item.slimeBall; break;
-	        case 12: loot = Item.ingotIron; break;
-	        case 13: loot = Item.ingotGold; break;
-	        case 14: loot = Item.map; break;
-	        case 15: loot = Item.appleGold; break;
-	        default: loot = Item.appleGold; break;
-        }
-        
-        EntityItem entityitem = new EntityItem(par3EntityPlayer.worldObj, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, new ItemStack(loot));
+        EntityItem entityitem = new EntityItem(par3EntityPlayer.worldObj, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, randomLoot);
         par2World.spawnEntityInWorld(entityitem);
         
         --par1ItemStack.stackSize;

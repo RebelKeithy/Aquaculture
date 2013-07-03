@@ -26,15 +26,15 @@ public class ItemNeptunesBounty extends SubItem
     {
         loot = new WeightedLootSet();
         
-        loot.addLoot(AquacultureItems.NeptuniumAxe, 1, 1, 1);
-        loot.addLoot(AquacultureItems.NeptuniumPickaxe, 1, 1, 1);
-        loot.addLoot(AquacultureItems.NeptuniumShovel, 1, 1, 1);
-        loot.addLoot(AquacultureItems.NeptuniumHoe, 1, 1, 1);
-        loot.addLoot(AquacultureItems.NeptuniumSword, 1, 1, 1);
-        loot.addLoot(AquacultureItems.NeptuniumHelmet, 1, 1, 1);
-        loot.addLoot(AquacultureItems.NeptuniumPlate, 1, 1, 1);
-        loot.addLoot(AquacultureItems.NeptuniumLegs, 1, 1, 1);
-        loot.addLoot(AquacultureItems.NeptuniumBoots, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumAxe, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumPickaxe, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumShovel, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumHoe, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumSword, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumHelmet, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumPlate, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumLegs, 1, 1, 1);
+        loot.addLoot(AquacultureItems.neptuniumBoots, 1, 1, 1);
     }
     
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)

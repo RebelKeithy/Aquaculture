@@ -1,5 +1,6 @@
 package rebelkeithy.mods.aquaculture.items;
 
+import rebelkeithy.mods.aquaculture.AquacultureItem;
 import rebelkeithy.mods.aquaculture.EntityCustomFishHook;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,7 +12,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAdminFishingRod extends Item
+public class ItemAdminFishingRod extends AquacultureItem
 {
 	public Icon usingIcon;
 	
@@ -90,6 +91,6 @@ public class ItemAdminFishingRod extends Item
     {
         super.registerIcons(par1IconRegister);
         
-        usingIcon = par1IconRegister.registerIcon("Aquaculture:AdminFishingRodUsing");
+        usingIcon = par1IconRegister.registerIcon("AdminFishingRodUsing");
     }
 }

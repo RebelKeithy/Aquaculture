@@ -13,7 +13,7 @@ public class AquacultureEnchants {
 
     public static EnchantmentFishingPole appealing;
     public static EnchantmentFishingPole magnetic;
-    public static EnchantmentFishingPole Longcast;
+    public static EnchantmentFishingPole longcast;
     public static EnchantmentFishingPole shortcast;
     public static EnchantmentFishingPole fastcast;
     public static EnchantmentFishingPole doubleHook;
@@ -24,7 +24,7 @@ public class AquacultureEnchants {
 
         appealing = new EnchantmentAppealing(Config.appealingID, 3);
         magnetic = new EnchantmentMagnetic(Config.magneticID, 3);
-        Longcast = new EnchantmentLongCast(Config.longcastID, 7);
+        longcast = new EnchantmentLongCast(Config.longcastID, 7);
         shortcast = new EnchantmentShortCast(Config.shortcastID, 7);
         fastcast = new EnchantmentFastcast(Config.fastcastID, 7);
         doubleHook = new EnchantmentDoubleHook(Config.doubleHookID, 1);

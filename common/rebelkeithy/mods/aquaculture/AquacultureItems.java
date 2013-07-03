@@ -1,17 +1,20 @@
 package rebelkeithy.mods.aquaculture;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
+import rebelkeithy.mods.aquaculture.items.AquaItemAxe;
+import rebelkeithy.mods.aquaculture.items.AquaItemHoe;
+import rebelkeithy.mods.aquaculture.items.AquaItemPickaxe;
+import rebelkeithy.mods.aquaculture.items.AquaItemSpade;
+import rebelkeithy.mods.aquaculture.items.AquaItemSword;
 import rebelkeithy.mods.aquaculture.items.ItemAdminFishingRod;
 import rebelkeithy.mods.aquaculture.items.ItemAquacultureFishingRod;
 import rebelkeithy.mods.aquaculture.items.ItemBox;
@@ -24,83 +27,94 @@ import rebelkeithy.mods.aquaculture.items.NeptuniumArmor;
 import rebelkeithy.mods.keithyutils.metaitem.SubItem;
 import rebelkeithy.mods.keithyutils.metaitem.SubItemFood;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class AquacultureItems 
 {
-	public static Item IronFishingRod;
+	public static Item ironFishingRod;
 	public static Item goldFishingRod;
 	public static Item diamondFishingRod;
-	public static Item AdminFishingRod;
+	public static Item adminFishingRod;
 	
-	public static SubItem WhaleSteak;
-	public static SubItem CookedWhaleSteak;
-	public static SubItem FishFillet;
-	public static SubItem CookedFillet;
-	public static SubItem WhaleBurger;
+	public static SubItem whaleSteak;
+	public static SubItem cookedWhaleSteak;
+	public static SubItem fishFillet;
+	public static SubItem cookedFillet;
+	public static SubItem whaleBurger;
+	public static SubItem frogLegs;
+	public static SubItem cookedFrogLegs;
+	public static SubItem turtleSoup;
+	public static SubItem sushi;
 
-	public static SubItem Algae;
-	public static SubItem Seaweed;
-	public static SubItem Driftwood;
-	public static SubItem TinCan;
-	public static SubItem NeptuniumBar;
+	public static SubItem algae;
+	public static SubItem seaweed;
+	public static SubItem driftwood;
+	public static SubItem tinCan;
+	public static SubItem neptuniumBar;
 
-	public static SubItem MessageInABottle;
-	public static SubItem Box;
-	public static SubItem Lockbox;
-	public static SubItem TreasureChest;
-	public static SubItem NeptunesBounty;
+	public static SubItem nessageInABottle;
+	public static SubItem box;
+	public static SubItem lockbox;
+	public static SubItem treasureChest;
+	public static SubItem neptunesBounty;
 	
-	public static Item NeptuniumHelmet;
-	public static Item NeptuniumPlate;
-	public static Item NeptuniumLegs;
-	public static Item NeptuniumBoots;
-	public static Item NeptuniumPickaxe;
-	public static Item NeptuniumShovel;
-	public static Item NeptuniumSword;
-	public static Item NeptuniumAxe;
-	public static Item NeptuniumHoe;
+	public static Item neptuniumHelmet;
+	public static Item neptuniumPlate;
+	public static Item neptuniumLegs;
+	public static Item neptuniumBoots;
+	public static Item neptuniumPickaxe;
+	public static Item neptuniumShovel;
+	public static Item neptuniumSword;
+	public static Item neptuniumAxe;
+	public static Item neptuniumHoe;
 	
 	public static ItemFish fish;
 	
 	public static void init()
 	{
+		Item item = new Item(0) {{func_111206_d("texture name");}};
 		System.out.println();
-		IronFishingRod = new ItemAquacultureFishingRod(Config.ironRodID, 75, "Iron").setUnlocalizedName("Aquaculture:IronFishingRod").setCreativeTab(Aquaculture.tab);
-		goldFishingRod = new ItemAquacultureFishingRod(Config.goldRodID, 50, "Gold").setUnlocalizedName("Aquaculture:GoldFishingRod").setCreativeTab(Aquaculture.tab);
-		diamondFishingRod = new ItemAquacultureFishingRod(Config.diamondRodID, 250, "Diamond").setUnlocalizedName("Aquaculture:DiamondFishingRod").setCreativeTab(Aquaculture.tab);
-		AdminFishingRod = new ItemAdminFishingRod(Config.adminRodID, 75).setUnlocalizedName("Aquaculture:AdminFishingRod").setCreativeTab(Aquaculture.tab);
+		ironFishingRod = new ItemAquacultureFishingRod(Config.ironRodID, 75, 14, "Iron").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
+		goldFishingRod = new ItemAquacultureFishingRod(Config.goldRodID, 50, 22, "Gold").setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
+		diamondFishingRod = new ItemAquacultureFishingRod(Config.diamondRodID, 250, 10, "Diamond").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
+		adminFishingRod = new ItemAdminFishingRod(Config.adminRodID, 75).setTextureName("AdminFishingRod").setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
 		
-		Seaweed = new SubItemFood(Config.lootID, 1, 0, false).setUnlocalizedName("Aquaculture:Seaweed").setCreativeTab(Aquaculture.tab);
-		Algae = new SubItemFood(Config.lootID, 1, 0, false).setUnlocalizedName("Aquaculture:Algae").setCreativeTab(Aquaculture.tab);
+		seaweed = new SubItemFood(Config.lootID, 2, 0, false).setUnlocalizedName("Seaweed").setCreativeTab(Aquaculture.tab);
+		algae = new SubItemFood(Config.lootID, 2, 0, false).setUnlocalizedName("Algae").setCreativeTab(Aquaculture.tab);
 
 		//Food
-		WhaleSteak = new SubItem(Config.lootID).setUnlocalizedName("Aquaculture:RawWhaleSteak").setCreativeTab(Aquaculture.tab);
-		FishFillet = new SubItem(Config.lootID).setUnlocalizedName("Aquaculture:RawFishFillet").setCreativeTab(Aquaculture.tab);
-		CookedFillet = new SubItemFood(Config.lootID, 5, 0.6F, false).setUnlocalizedName("Aquaculture:CookedFishFillet").setCreativeTab(Aquaculture.tab);
-		CookedWhaleSteak = new SubItemFood(Config.lootID, 10, 0.8F, false).setUnlocalizedName("Aquaculture:CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
-		WhaleBurger = new SubItemFood(Config.lootID, 20, 0.8F, false).setUnlocalizedName("Aquaculture:Whaleburger").setCreativeTab(Aquaculture.tab);
-
-		Driftwood = new SubItem(Config.lootID).setUnlocalizedName("Aquaculture:Driftwood").setCreativeTab(Aquaculture.tab);
-		NeptuniumBar = new SubItem(Config.lootID).setUnlocalizedName("Aquaculture:NeptuniumIngot").setCreativeTab(Aquaculture.tab);
-		TinCan = new SubItem(Config.lootID).setUnlocalizedName("Aquaculture:TinCan").setCreativeTab(Aquaculture.tab);
-		MessageInABottle = new ItemMessageInABottle(Config.lootID).setUnlocalizedName("Aquaculture:MessageInABottle").setCreativeTab(Aquaculture.tab);
-		Box = new ItemBox(Config.lootID).setUnlocalizedName("Aquaculture:Box").setCreativeTab(Aquaculture.tab);
-		Lockbox = new ItemLockbox(Config.lootID).setUnlocalizedName("Aquaculture:Lockbox").setCreativeTab(Aquaculture.tab);
-		TreasureChest = new ItemTreasureChest(Config.lootID).setUnlocalizedName("Aquaculture:TreasureChest").setCreativeTab(Aquaculture.tab);
-		NeptunesBounty = new ItemNeptunesBounty(Config.lootID).setUnlocalizedName("Aquaculture:NeptunesBounty").setCreativeTab(Aquaculture.tab);
+		whaleSteak = new SubItem(Config.lootID).setUnlocalizedName("RawWhaleSteak").setCreativeTab(Aquaculture.tab);
+		fishFillet = new SubItem(Config.lootID).setUnlocalizedName("RawFishFillet").setCreativeTab(Aquaculture.tab);
+		cookedFillet = new SubItemFood(Config.lootID, 5, 0.6F, false).setUnlocalizedName("CookedFishFillet").setCreativeTab(Aquaculture.tab);
+		cookedWhaleSteak = new SubItemFood(Config.lootID, 10, 0.8F, false).setUnlocalizedName("CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
+		whaleBurger = new SubItemFood(Config.lootID, 20, 0.8F, false).setUnlocalizedName("Whaleburger").setCreativeTab(Aquaculture.tab);
+		frogLegs = new SubItem(Config.lootID).setUnlocalizedName("FrogLegs").setCreativeTab(Aquaculture.tab);
+		cookedFrogLegs = new SubItemFood(Config.lootID, 3, 0.6F, false).setEatTime(2).setUnlocalizedName("CookedFrogLegs").setCreativeTab(Aquaculture.tab);
+		turtleSoup = new SubItemFood(Config.lootID, 6, 0.6F, false).setUnlocalizedName("TurtleSoup").setCreativeTab(Aquaculture.tab);
+		sushi = new SubItemFood(Config.lootID, 4, 0.6F, false).setUnlocalizedName("Sushi").setCreativeTab(Aquaculture.tab);
 		
-		EnumToolMaterial neptuniumEnum = EnumHelper.addToolMaterial("Neptunium", 3, 2500, 9F, 4, 15);
-		NeptuniumPickaxe = new ItemPickaxe(Config.neptuniumPickaxeID, neptuniumEnum).setUnlocalizedName("Aquaculture:NeptuniumPickaxe").setCreativeTab(Aquaculture.tab);
-		NeptuniumShovel = new ItemSpade(Config.neptuniumShovelID, neptuniumEnum).setUnlocalizedName("Aquaculture:NeptuniumShovel").setCreativeTab(Aquaculture.tab);
-		NeptuniumAxe = new ItemAxe(Config.neptuniumAxeID, neptuniumEnum).setUnlocalizedName("Aquaculture:NeptuniumAxe").setCreativeTab(Aquaculture.tab);
-		NeptuniumHoe = new ItemHoe(Config.neptuniumHoeID, neptuniumEnum).setUnlocalizedName("Aquaculture:NeptuniumHoe").setCreativeTab(Aquaculture.tab);
-		NeptuniumSword = new ItemSword(Config.neptuniumSwordID, neptuniumEnum).setUnlocalizedName("Aquaculture:NeptuniumSword").setCreativeTab(Aquaculture.tab);
+		driftwood = new SubItem(Config.lootID).setUnlocalizedName("Driftwood").setCreativeTab(Aquaculture.tab);
+		neptuniumBar = new SubItem(Config.lootID).setUnlocalizedName("NeptuniumIngot").setCreativeTab(Aquaculture.tab);
+		tinCan = new SubItem(Config.lootID).setUnlocalizedName("TinCan").setCreativeTab(Aquaculture.tab);
+		nessageInABottle = new ItemMessageInABottle(Config.lootID).setUnlocalizedName("MessageInABottle").setCreativeTab(Aquaculture.tab);
+		box = new ItemBox(Config.lootID).setUnlocalizedName("Box").setCreativeTab(Aquaculture.tab);
+		lockbox = new ItemLockbox(Config.lootID).setUnlocalizedName("Lockbox").setCreativeTab(Aquaculture.tab);
+		treasureChest = new ItemTreasureChest(Config.lootID).setUnlocalizedName("TreasureChest").setCreativeTab(Aquaculture.tab);
+		neptunesBounty = new ItemNeptunesBounty(Config.lootID).setUnlocalizedName("NeptunesBounty").setCreativeTab(Aquaculture.tab);
+		
+		EnumToolMaterial neptuniumEnum = EnumHelper.addToolMaterial("Neptunium", 3, 2500, 9F, 6F, 15);
+		//EnumToolMaterial neptuniumEnum = EnumToolMaterial.EMERALD;
+		neptuniumPickaxe = new AquaItemPickaxe(Config.neptuniumPickaxeID, neptuniumEnum).setUnlocalizedName("NeptuniumPickaxe").setCreativeTab(Aquaculture.tab);
+		neptuniumShovel = new AquaItemSpade(Config.neptuniumShovelID, neptuniumEnum).setUnlocalizedName("NeptuniumShovel").setCreativeTab(Aquaculture.tab);
+		neptuniumAxe = new AquaItemAxe(Config.neptuniumAxeID, neptuniumEnum).setUnlocalizedName("NeptuniumAxe").setCreativeTab(Aquaculture.tab);
+		neptuniumHoe = new AquaItemHoe(Config.neptuniumHoeID, neptuniumEnum).setUnlocalizedName("NeptuniumHoe").setCreativeTab(Aquaculture.tab);
+		neptuniumSword = new AquaItemSword(Config.neptuniumSwordID, neptuniumEnum).setUnlocalizedName("NeptuniumSword").setCreativeTab(Aquaculture.tab);
 
 		EnumArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", 75, new int[] {3, 8, 6, 3}, 15);
-		NeptuniumHelmet = new NeptuniumArmor(Config.neptuniumHelmetID, neptuniumArmorEnum, 0, 0).setArmorTexture("Neptunium_1").setUnlocalizedName("Aquaculture:NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
-		NeptuniumPlate = new NeptuniumArmor(Config.neptuniumPlateID, neptuniumArmorEnum, 1, 1).setArmorTexture("Neptunium_1").setUnlocalizedName("Aquaculture:NeptuniumPlate").setCreativeTab(Aquaculture.tab);
-		NeptuniumLegs = new NeptuniumArmor(Config.neptuniumLegsID, neptuniumArmorEnum, 2, 2).setArmorTexture("Neptunium_1").setUnlocalizedName("Aquaculture:NeptuniumLegs").setCreativeTab(Aquaculture.tab);
-		NeptuniumBoots = new NeptuniumArmor(Config.neptuniumBootsID, neptuniumArmorEnum, 3, 3).setArmorTexture("Neptunium_1").setUnlocalizedName("Aquaculture:NeptuniumBoots").setCreativeTab(Aquaculture.tab);
+		neptuniumHelmet = new NeptuniumArmor(Config.neptuniumHelmetID, neptuniumArmorEnum, 0, 0).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
+		neptuniumPlate = new NeptuniumArmor(Config.neptuniumPlateID, neptuniumArmorEnum, 1, 1).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumPlate").setCreativeTab(Aquaculture.tab);
+		neptuniumLegs = new NeptuniumArmor(Config.neptuniumLegsID, neptuniumArmorEnum, 2, 2).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumLegs").setCreativeTab(Aquaculture.tab);
+		neptuniumBoots = new NeptuniumArmor(Config.neptuniumBootsID, neptuniumArmorEnum, 3, 3).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
 		
 		fish = (ItemFish) new ItemFish(Config.fishID).setCreativeTab(Aquaculture.tab);
 		
@@ -123,6 +137,11 @@ public class AquacultureItems
 		fish.addFish("Shark", 8, 1, 5000, BiomeType.saltwater, 1);
 		fish.addFish("Whale", 0, 1, 190000, BiomeType.saltwater, 1);
 		fish.addFish("Squid", 0, 1, 1000, BiomeType.saltwater, 1);
+		
+		// Brackish
+		fish.addFish("Frog", 0, 1, 1, BiomeType.brackish, 1);
+		fish.addFish("Turtle", 0, 1, 1, BiomeType.brackish, 1);
+		fish.addFish("Leech", 0, 1, 1, BiomeType.brackish, 1);
 		
 		// Jungle
 		fish.addFish("Pirahna", 1, 1, 8, BiomeType.tropical, 1);
@@ -151,56 +170,100 @@ public class AquacultureItems
 		
 		fish.addFish("Goldfish", 0, 1, 4, new BiomeType[] {}, 1);
 		
-		FishLoot.instance().addJunkLoot(Algae.getItemStack(), 25);
-		FishLoot.instance().addJunkLoot(Driftwood.getItemStack(), 25);
-		FishLoot.instance().addJunkLoot(TinCan.getItemStack(), 30);
-		FishLoot.instance().addJunkLoot(Box.getItemStack(), 25);
-		FishLoot.instance().addJunkLoot(Lockbox.getItemStack(), 23);
-		FishLoot.instance().addJunkLoot(TreasureChest.getItemStack(), 10);
+		FishLoot.instance().addJunkLoot(algae.getItemStack(), 25);
+		FishLoot.instance().addJunkLoot(driftwood.getItemStack(), 25);
+		FishLoot.instance().addJunkLoot(tinCan.getItemStack(), 30);
+		FishLoot.instance().addJunkLoot(box.getItemStack(), 25);
+		FishLoot.instance().addJunkLoot(lockbox.getItemStack(), 23);
+		FishLoot.instance().addJunkLoot(treasureChest.getItemStack(), 10);
 		FishLoot.instance().addJunkLoot(new ItemStack(Item.stick), 20);
 		FishLoot.instance().addJunkLoot(new ItemStack(Item.bone), 20);
 		FishLoot.instance().addJunkLoot(new ItemStack(Item.bootsLeather), 20);
 		FishLoot.instance().addJunkLoot(new ItemStack(Item.appleRed), 20);
 		FishLoot.instance().addJunkLoot(fish.getItemStackFish("Goldfish"), 10);
-		FishLoot.instance().addJunkLoot(MessageInABottle.getItemStack(), 23);
-		FishLoot.instance().addJunkLoot(NeptunesBounty.getItemStack(), 1);
+		FishLoot.instance().addJunkLoot(nessageInABottle.getItemStack(), 23);
+		FishLoot.instance().addJunkLoot(neptunesBounty.getItemStack(), 1);
 		
-		OreDictionary.registerOre("listAllfishraw", FishFillet.getItemStack());
-		OreDictionary.registerOre("listAllfishcooked", CookedFillet.getItemStack());
+		OreDictionary.registerOre("listAllfishraw", fishFillet.getItemStack());
+		OreDictionary.registerOre("listAllfishcooked", cookedFillet.getItemStack());
 	}
 	
 	public static void addNames()
 	{
-		LanguageRegistry.addName(IronFishingRod, "Iron Fishing Rod");
+		LanguageRegistry.addName(ironFishingRod, "Iron Fishing Rod");
 		LanguageRegistry.addName(goldFishingRod, "Gold Fishing Rod");
 		LanguageRegistry.addName(diamondFishingRod, "Diamond Fishing Rod");
-		LanguageRegistry.addName(AdminFishingRod, "Admin Fishing Rod");
+		LanguageRegistry.addName(adminFishingRod, "Admin Fishing Rod");
 		
-		LanguageRegistry.addName(Seaweed.getItemStack(), "Seaweed");
-		LanguageRegistry.addName(Driftwood.getItemStack(), "Driftwood");
-		LanguageRegistry.addName(Algae.getItemStack(), "Algae");
-		LanguageRegistry.addName(TinCan.getItemStack(), "Tin Can");
-		LanguageRegistry.addName(MessageInABottle.getItemStack(), "Message In A Bottle");
-		LanguageRegistry.addName(Box.getItemStack(), "Box");
-		LanguageRegistry.addName(Lockbox.getItemStack(), "Lockbox");
-		LanguageRegistry.addName(TreasureChest.getItemStack(), "Treasure Chest");
-		LanguageRegistry.addName(NeptunesBounty.getItemStack(), "Neptune's Bounty");
-		LanguageRegistry.addName(NeptuniumBar.getItemStack(), "Neptunium Bar");
+		LanguageRegistry.addName(seaweed.getItemStack(), "Seaweed");
+		LanguageRegistry.addName(driftwood.getItemStack(), "Driftwood");
+		LanguageRegistry.addName(algae.getItemStack(), "Algae");
+		LanguageRegistry.addName(tinCan.getItemStack(), "Tin Can");
+		LanguageRegistry.addName(nessageInABottle.getItemStack(), "Message In A Bottle");
+		LanguageRegistry.addName(box.getItemStack(), "Box");
+		LanguageRegistry.addName(lockbox.getItemStack(), "Lockbox");
+		LanguageRegistry.addName(treasureChest.getItemStack(), "Treasure Chest");
+		LanguageRegistry.addName(neptunesBounty.getItemStack(), "Neptune's Bounty");
+		LanguageRegistry.addName(neptuniumBar.getItemStack(), "Neptunium Bar");
 
-		LanguageRegistry.addName(FishFillet.getItemStack(), "Raw Fish Fillet");
-		LanguageRegistry.addName(CookedFillet.getItemStack(), "Cooked Fish Fillet");
-		LanguageRegistry.addName(WhaleSteak.getItemStack(), "Raw Whale Steak");
-		LanguageRegistry.addName(CookedWhaleSteak.getItemStack(), "Cooked Whale Steak");
-		LanguageRegistry.addName(WhaleBurger.getItemStack(), "Whaleburger");
+		LanguageRegistry.addName(fishFillet.getItemStack(), "Raw Fish Fillet");
+		LanguageRegistry.addName(cookedFillet.getItemStack(), "Cooked Fish Fillet");
+		LanguageRegistry.addName(whaleSteak.getItemStack(), "Raw Whale Steak");
+		LanguageRegistry.addName(cookedWhaleSteak.getItemStack(), "Cooked Whale Steak");
+		LanguageRegistry.addName(whaleBurger.getItemStack(), "Whaleburger");
 
-		LanguageRegistry.addName(NeptuniumHelmet, "Neptunium Helmet");
-		LanguageRegistry.addName(NeptuniumPlate, "Neptunium Plate");
-		LanguageRegistry.addName(NeptuniumLegs, "Neptunium Legs");
-		LanguageRegistry.addName(NeptuniumBoots, "Neptunium Boots");
-		LanguageRegistry.addName(NeptuniumSword, "Neptunium Sword");
-		LanguageRegistry.addName(NeptuniumPickaxe, "Neptunium Pickaxe");
-		LanguageRegistry.addName(NeptuniumShovel, "Neptunium Shovel");
-		LanguageRegistry.addName(NeptuniumHoe, "Neptunium Hoe");
-		LanguageRegistry.addName(NeptuniumAxe, "Neptunium Axe");
+		LanguageRegistry.addName(neptuniumHelmet, "Neptunium Helmet");
+		LanguageRegistry.addName(neptuniumPlate, "Neptunium Plate");
+		LanguageRegistry.addName(neptuniumLegs, "Neptunium Legs");
+		LanguageRegistry.addName(neptuniumBoots, "Neptunium Boots");
+		LanguageRegistry.addName(neptuniumSword, "Neptunium Sword");
+		LanguageRegistry.addName(neptuniumPickaxe, "Neptunium Pickaxe");
+		LanguageRegistry.addName(neptuniumShovel, "Neptunium Shovel");
+		LanguageRegistry.addName(neptuniumHoe, "Neptunium Hoe");
+		LanguageRegistry.addName(neptuniumAxe, "Neptunium Axe");
+	}
+	
+	public static void addName(Item item, String name)
+	{
+		addName(new ItemStack(item), name);
+	}
+	
+	public static void addName(ItemStack stack, String name)
+	{
+		String unloc = stack.getItem().getUnlocalizedName(stack) + ".name";
+		
+		Field ifield;
+		try {
+			Field[] fields = StringTranslate.class.getDeclaredFields();
+			
+			ifield = null;
+			for(Field f : fields)
+			{
+				System.out.println(f.getName());
+				
+				if(f.getName().equals("instance"))
+				{
+					f.setAccessible(true);
+					ifield = f;
+				}
+			}
+			
+			//ifield = StringTranslate.class.getField("instance");
+			StringTranslate translate = (StringTranslate) ifield.get(null);
+			
+			Map field = ReflectionHelper.getPrivateValue(StringTranslate.class, translate, "languageList");
+			
+			System.out.println("nameing " + unloc + " => " + name);
+			field.put(unloc, name);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

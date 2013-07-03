@@ -1,5 +1,6 @@
 package rebelkeithy.mods.aquaculture.items;
 
+import rebelkeithy.mods.aquaculture.AquacultureItem;
 import rebelkeithy.mods.aquaculture.EntityCustomFishHook;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,17 +12,19 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAquacultureFishingRod extends Item
+public class ItemAquacultureFishingRod extends AquacultureItem
 {
 	public Icon usingIcon;
 	public String type;
+	public int enchantability;
 	
-    public ItemAquacultureFishingRod(int i, int d, String type)
+    public ItemAquacultureFishingRod(int i, int d, int enchantability, String type)
     {
         super(i);
         setMaxDamage(d);
         setMaxStackSize(1);
         this.type = type;
+        this.enchantability = enchantability;
     }
 
     @SideOnly(Side.CLIENT)
@@ -33,6 +36,17 @@ public class ItemAquacultureFishingRod extends Item
     public boolean shouldRotateAroundWhenRendering()
     {
         return true;
+    }
+    
+    @Override
+    public boolean isItemTool(ItemStack par1ItemStack)
+    {
+    	return true;
+    }
+    
+    public int getItemEnchantability()
+    {
+    	return enchantability;
     }
 
 
@@ -92,6 +106,6 @@ public class ItemAquacultureFishingRod extends Item
     {
         super.registerIcons(par1IconRegister);
         
-        usingIcon = par1IconRegister.registerIcon("Aquaculture:" + type + "FishingRodUsing");
+        usingIcon = par1IconRegister.registerIcon(type + "FishingRodUsing");
     }
 }

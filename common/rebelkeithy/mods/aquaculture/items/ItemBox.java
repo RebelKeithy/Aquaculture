@@ -2,57 +2,76 @@ package rebelkeithy.mods.aquaculture.items;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import rebelkeithy.mods.keithyutils.loot.WeightedLootSet;
 import rebelkeithy.mods.keithyutils.metaitem.SubItem;
 
 public class ItemBox extends SubItem
 {
-	Random rand = new Random();
+	public Random rand = new Random();
+	public WeightedLootSet loot;
 	
     public ItemBox(int par1)
     {
         super(par1);
+        loot = new WeightedLootSet();
+        loot.addLoot(Block.stone, 5, 1, 1);
+        loot.addLoot(Block.dirt, 5, 1, 1);
+        loot.addLoot(Block.cobblestone, 5);
+        loot.addLoot(new ItemStack(Block.planks, 1, 0), 1);
+        loot.addLoot(new ItemStack(Block.planks, 1, 1), 1);
+        loot.addLoot(new ItemStack(Block.planks, 1, 2), 1);
+        loot.addLoot(new ItemStack(Block.planks, 1, 3), 1);
+        loot.addLoot(new ItemStack(Block.sapling, 1, 0), 1);
+        loot.addLoot(new ItemStack(Block.sapling, 1, 1), 1);
+        loot.addLoot(new ItemStack(Block.sapling, 1, 2), 1);
+        loot.addLoot(new ItemStack(Block.sapling, 1, 3), 1);
+        loot.addLoot(new ItemStack(Block.wood, 1, 0), 1);
+        loot.addLoot(new ItemStack(Block.wood, 1, 1), 1);
+        loot.addLoot(new ItemStack(Block.wood, 1, 2), 1);
+        loot.addLoot(new ItemStack(Block.wood, 1, 3), 1);
+        loot.addLoot(Block.gravel, 5);
+        loot.addLoot(new ItemStack(Item.coal, 1, 0), 3);
+        loot.addLoot(new ItemStack(Item.coal, 1, 1), 3);
+        loot.addLoot(Item.seeds, 3);
+        loot.addLoot(Item.stick, 5);
+        loot.addLoot(Item.bowlEmpty, 3);
+        loot.addLoot(Item.helmetLeather, 2);
+        loot.addLoot(Item.plateLeather, 2);
+        loot.addLoot(Item.legsLeather, 2);
+        loot.addLoot(Item.bootsLeather, 2);
+        loot.addLoot(Item.flint, 4);
+        loot.addLoot(Item.clay, 4);
+        loot.addLoot(Item.bucketEmpty, 1);
+        loot.addLoot(Item.leather, 4);
+        loot.addLoot(Item.slimeBall, 1);
+        loot.addLoot(Block.reed, 1);
+        loot.addLoot(Item.bone, 5);
+        loot.addLoot(Item.rottenFlesh, 5);
+        loot.addLoot(Item.glassBottle, 1);
+        loot.addLoot(Item.carrot, 1);
+        loot.addLoot(Item.potato, 1);
+        loot.addLoot(Block.vine, 1);
+        loot.addLoot(Block.tallGrass, 3);
+        loot.addLoot(Item.silk, 3);
+        loot.addLoot(Item.feather, 4);
+        loot.addLoot(Item.appleRed, 1);
     }
     
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
     	if(par2World.isRemote)
     		return par1ItemStack;
-    	
-        int lootRoll = rand.nextInt(21) + 1;
         
-        Item loot = null;
-        switch(lootRoll)
-        {
-	        case 1: loot = Item.appleRed; break;
-	        case 2: loot = Item.book; break;
-	        case 3: loot = Item.arrow; break;
-	        case 4: loot = Item.bone; break;
-	        case 5: loot = Item.bucketEmpty; break;
-	        case 6: loot = Item.coal; break;
-	        case 7: loot = Item.compass; break;
-	        case 8: loot = Item.glassBottle; break;
-	        case 9: loot = Item.helmetLeather; break;
-	        case 10: loot = Item.legsLeather; break;
-	        case 11: loot = Item.plateLeather; break;
-	        case 12: loot = Item.bootsLeather; break;
-	        case 13: loot = Item.paper; break;
-	        case 14: loot = Item.reed; break;
-	        case 15: loot = Item.saddle; break;
-	        case 16: loot = Item.sign; break;
-	        case 17: loot = Item.slimeBall; break;
-	        case 18: loot = Item.silk; break;
-	        case 19: loot = Item.stick; break;
-	        case 20: loot = Item.wheat; break;
-	        case 21: loot = Item.map; break;
-	        default: loot = Item.appleGold; break;
-        }
+        ItemStack randomLoot = loot.getRandomLoot();
         
-        EntityItem entityitem = new EntityItem(par3EntityPlayer.worldObj, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, new ItemStack(loot));
+        EntityItem entityitem = new EntityItem(par3EntityPlayer.worldObj, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, randomLoot);
         par2World.spawnEntityInWorld(entityitem);
         
         --par1ItemStack.stackSize;

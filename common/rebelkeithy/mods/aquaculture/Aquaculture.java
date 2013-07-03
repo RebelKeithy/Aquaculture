@@ -1,15 +1,16 @@
 package rebelkeithy.mods.aquaculture;
 
+import net.minecraft.client.resources.ResourceLocation;
+import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
 @Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION, dependencies = "required-after:Forge@[7.7.2.682,)")
@@ -27,25 +28,31 @@ public class Aquaculture
 	public static CommonProxy proxy;
 	public static AquacultureTab tab;
 
-	@PreInit
+	public static final ResourceLocation items = new ResourceLocation("Aquaculture", "/textures/items");
+	
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		//FMLClientHandler.instance().getClient().renderEngine
 		Config.init(event.getSuggestedConfigurationFile());
 		tab = new AquacultureTab("Aquaculture");
-	}
-
-	@Init
-	public void load(FMLInitializationEvent event)
-	{
+		LanguageRegistry.instance().addStringLocalization("itemGroup.Aquaculture", "Aquaculture");
+		
 		AquacultureItems.init();
 		AquacultureItems.addNames();
+		//LanguageRegistry.reloadLanguageTable();
+	}
+
+	@EventHandler
+	public void load(FMLInitializationEvent event)
+	{
 		
 		AquacultureRecipes.addRecipes();
 
 		EntityRegistry.registerModEntity(EntityCustomFishHook.class, "AquacultureFishHook", 0, this, 64, 1, false);
         AquacultureEnchants.init();
 		
-		tab.setItemID(AquacultureItems.IronFishingRod.itemID);
+		tab.setItemID(AquacultureItems.ironFishingRod.itemID);
 		
 		proxy.registerModelRenderers();
 	}

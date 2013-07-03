@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.ModLoader;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -70,6 +71,7 @@ public class ItemFish extends ItemFood
 		}
 		
 		LanguageRegistry.addName(new ItemStack(itemID, 1, fish.size()-1), name);
+		//ModLoader.addName(new ItemStack(itemID, 1, fish.size()-1), name);
 	}
 	
 	public void addFilletRecipes()
@@ -79,7 +81,7 @@ public class ItemFish extends ItemFood
 			Fish f = fish.get(i);
 			if(f.filletAmount != 0)
 			{
-				GameRegistry.addShapelessRecipe(AquacultureItems.FishFillet.getItemStack(f.filletAmount), new ItemStack(itemID, 1, i));
+				GameRegistry.addShapelessRecipe(AquacultureItems.fishFillet.getItemStack(f.filletAmount), new ItemStack(itemID, 1, i));
 			}
 		}
 	}
@@ -116,12 +118,20 @@ public class ItemFish extends ItemFood
     }
 
 
-	public void assignRandomWeight(ItemStack stack)
+	public void assignRandomWeight(ItemStack stack, int heavyLineLvl)
 	{
+		if(stack == null)
+			return;
+		
 		Fish f = fish.get(stack.getItemDamage());
 		
 		Random rand = new Random();
-		float weight = rand.nextFloat() * ((f.maxWeight*1.1f) - f.minWeight) + f.minWeight;
+		
+		float min = f.minWeight;
+		
+		min += (f.maxWeight - min) * (0.1 * heavyLineLvl);
+		
+		float weight = rand.nextFloat() * ((f.maxWeight*1.1f) - min) + min;
 
 		if(!stack.hasTagCompound())
 		{
@@ -155,6 +165,7 @@ public class ItemFish extends ItemFood
 		return null;
 	}
 
+    @Override
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
     	//TODO: fix this
@@ -169,6 +180,7 @@ public class ItemFish extends ItemFood
     /**
      * Gets an icon index based on an item's damage value
      */
+    @Override
     public Icon getIconFromDamage(int par1)
     {
         int j = MathHelper.clamp_int(par1, 0, fish.size());
@@ -179,6 +191,7 @@ public class ItemFish extends ItemFood
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
      * different names based on their damage or NBT.
      */
+    @Override
     public String getUnlocalizedName(ItemStack par1ItemStack)
     {
         int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, fish.size());
@@ -190,6 +203,7 @@ public class ItemFish extends ItemFood
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
+    @Override
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
         for (int j = 0; j < fish.size(); ++j)
@@ -199,11 +213,12 @@ public class ItemFish extends ItemFood
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public void registerIcons(IconRegister par1IconRegister)
     {
         for(Fish f : fish)
         {
-        	f.icon = par1IconRegister.registerIcon("Aquaculture:" + f.name);
+        	f.icon = par1IconRegister.registerIcon(f.name);
         }
     }
 }
