@@ -47,6 +47,7 @@ public class Aquaculture
 		LanguageRegistry.instance().addStringLocalization("enchantment.barbedHook", "Barbed Hook");
 		LanguageRegistry.instance().addStringLocalization("enchantment.appealing", "Appealing");
 		LanguageRegistry.instance().addStringLocalization("enchantment.magnetic", "Magnetic");
+		LanguageRegistry.instance().addStringLocalization("enchantment.heavyLine", "Heavy Line");
 		//LanguageRegistry.reloadLanguageTable();
 	}
 

@@ -10,6 +10,11 @@ public class EnchantmentEfficiencyFishing extends EnchantmentDigging {
 	protected EnchantmentEfficiencyFishing(int id, int weight) {
 		super(id, weight);
 	}
+	
+	@Override
+	public int getMaxLevel() {
+		return 5;
+	}
 
     @Override
     public boolean canApply(ItemStack itemStack) {

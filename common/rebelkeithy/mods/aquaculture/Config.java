@@ -56,6 +56,7 @@ public class Config
     public static int barbedHookID = 65;
     public static int doubleHookID = 66;
 	public static int effeciencyID = 67;
+	public static int heavyLineID = 68;
 
 	public static void init(File file)
 	{
@@ -105,6 +106,7 @@ public class Config
         barbedHookID = isIdAvailableOrSet(config.get(categoryEnchantments, "Barbed Hook", barbedHookID)).getInt();
         doubleHookID = isIdAvailableOrSet(config.get(categoryEnchantments, "Double Hook", doubleHookID)).getInt();
         effeciencyID = isIdAvailableOrSet(config.get(categoryEnchantments, "Efficency", effeciencyID)).getInt();
+        heavyLineID = isIdAvailableOrSet(config.get(categoryEnchantments, "Heavy Line", heavyLineID)).getInt();
 		
         if(config.hasChanged()) 
         	config.save();
