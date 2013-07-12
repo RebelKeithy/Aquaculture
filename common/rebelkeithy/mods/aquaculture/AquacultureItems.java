@@ -77,10 +77,10 @@ public class AquacultureItems
 	{
 		Item item = new Item(0) {{func_111206_d("texture name");}};
 		System.out.println();
-		woodenFishingRod = new ItemAquacultureWoodenFishingRod(Item.fishingRod.itemID-256, 50, 10, "Wood").setUnlocalizedName("fishingRod");
-		ironFishingRod = new ItemAquacultureFishingRod(Config.ironRodID, 75, 14, "Iron").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
-		goldFishingRod = new ItemAquacultureFishingRod(Config.goldRodID, 50, 22, "Gold").setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
-		diamondFishingRod = new ItemAquacultureFishingRod(Config.diamondRodID, 250, 10, "Diamond").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
+		//woodenFishingRod = new ItemAquacultureWoodenFishingRod(Item.fishingRod.itemID-256, 50, 10, "Wood").setUnlocalizedName("fishingRod");
+		ironFishingRod = new ItemAquacultureFishingRod(Config.ironRodID, 75, 14, "Iron").func_111206_d("aquaculture:IronFishingRod").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
+		goldFishingRod = new ItemAquacultureFishingRod(Config.goldRodID, 50, 22, "Gold").func_111206_d("aquaculture:GoldFishingRod").setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
+		diamondFishingRod = new ItemAquacultureFishingRod(Config.diamondRodID, 250, 10, "Diamond").func_111206_d("aquaculture:DiamondFishingRod").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
 		adminFishingRod = new ItemAdminFishingRod(Config.adminRodID, 75).setTextureName("AdminFishingRod").setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
 		
 		seaweed = new SubItemFood(Config.lootID, 2, 0, false).setUnlocalizedName("Seaweed").setTextureName("aquaculture:Seaweed").setCreativeTab(Aquaculture.tab);
@@ -88,7 +88,7 @@ public class AquacultureItems
 
 		//Food
 		whaleSteak = new SubItem(Config.lootID).setUnlocalizedName("RawWhaleSteak").setTextureName("aquaculture:RawWhaleSteak").setCreativeTab(Aquaculture.tab);
-		fishFillet = new SubItem(Config.lootID).setUnlocalizedName("RawFishFillet").setTextureName("aquaculture:RawFishFillet").setCreativeTab(Aquaculture.tab);
+		fishFillet = new SubItemFood(Config.lootID, 2, 0.3F, false).setUnlocalizedName("RawFishFillet").setTextureName("aquaculture:RawFishFillet").setCreativeTab(Aquaculture.tab);
 		cookedFillet = new SubItemFood(Config.lootID, 5, 0.6F, false).setUnlocalizedName("CookedFishFillet").setTextureName("aquaculture:CookedFishFillet").setCreativeTab(Aquaculture.tab);
 		cookedWhaleSteak = new SubItemFood(Config.lootID, 10, 0.8F, false).setUnlocalizedName("CookedWhaleSteak").setTextureName("aquaculture:CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
 		whaleBurger = new SubItemFood(Config.lootID, 20, 0.8F, false).setUnlocalizedName("Whaleburger").setTextureName("aquaculture:Whaleburger").setCreativeTab(Aquaculture.tab);
@@ -117,7 +117,7 @@ public class AquacultureItems
 		EnumArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", 75, new int[] {3, 8, 6, 3}, 15);
 		neptuniumHelmet = new NeptuniumArmor(Config.neptuniumHelmetID, neptuniumArmorEnum, 0, 0).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
 		neptuniumPlate = new NeptuniumArmor(Config.neptuniumPlateID, neptuniumArmorEnum, 1, 1).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumPlate").setCreativeTab(Aquaculture.tab);
-		neptuniumLegs = new NeptuniumArmor(Config.neptuniumLegsID, neptuniumArmorEnum, 2, 2).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumLegs").setCreativeTab(Aquaculture.tab);
+		neptuniumLegs = new NeptuniumArmor(Config.neptuniumLegsID, neptuniumArmorEnum, 2, 2).setArmorTexture("Neptunium_2").setUnlocalizedName("NeptuniumLegs").setCreativeTab(Aquaculture.tab);
 		neptuniumBoots = new NeptuniumArmor(Config.neptuniumBootsID, neptuniumArmorEnum, 3, 3).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
 		
 		fish = (ItemFish) new ItemFish(Config.fishID).setCreativeTab(Aquaculture.tab);
@@ -175,8 +175,9 @@ public class AquacultureItems
 		
 		fish.addFish("Goldfish", 0, 1, 4, new BiomeType[] {}, 1);
 		fish.addFish("Fish Bones", 0, 1, 1, new BiomeType[] {}, 1);
-		
-		FishLoot.instance().addJunkLoot(algae.getItemStack(), 25);
+
+		FishLoot.instance().addJunkLoot(seaweed.getItemStack(), BiomeType.saltwater, 25);
+		FishLoot.instance().addJunkLoot(algae.getItemStack(), new BiomeType[] {BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical}, 25);
 		FishLoot.instance().addJunkLoot(driftwood.getItemStack(), 25);
 		FishLoot.instance().addJunkLoot(tinCan.getItemStack(), 30);
 		FishLoot.instance().addJunkLoot(box.getItemStack(), 25);

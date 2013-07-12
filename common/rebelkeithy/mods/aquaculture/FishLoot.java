@@ -74,6 +74,19 @@ public class FishLoot
 
 		junkBiomeMap.get(biome).addLoot(fish, rarity, 1, 1);
 	}
+
+	public ItemStack getRandomFish(int biomeID)
+	{
+		BiomeType biome = BiomeType.getBiomeType(biomeID);
+		
+		ItemStack fishStack = null;
+		if(biome != null && fishBiomeMap.containsKey(biome))
+			fishStack = fishBiomeMap.get(biome).getRandomLoot();
+		else
+			fishStack = fishBiomeMap.get(BiomeType.freshwater).getRandomLoot();
+		
+		return fishStack;
+	}
 	
 	public ItemStack getRandomFish(int biomeID, int heavyLineLvl)
 	{

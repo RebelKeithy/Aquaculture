@@ -1,6 +1,5 @@
 package rebelkeithy.mods.aquaculture;
 
-import net.minecraft.client.resources.ResourceLocation;
 import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -13,13 +12,13 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
-@Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION, dependencies = "required-after:Forge@[7.7.2.682,)")
+@Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION, dependencies = "required-after:KeithyUtils@[1.1,]")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class Aquaculture 
 {
 	public final static String MOD_ID = "Aquaculture";
 	public final static String MOD_NAME = "Aquaculture";
-	public final static String MOD_VERSION = "1.2.0";
+	public final static String MOD_VERSION = "1.2.3";
 
 	@Instance(MOD_ID)
 	public static Aquaculture instance;
@@ -27,8 +26,6 @@ public class Aquaculture
 	@SidedProxy(clientSide = "rebelkeithy.mods.aquaculture.ClientProxy", serverSide = "rebelkeithy.mods.aquaculture.CommonProxy")
 	public static CommonProxy proxy;
 	public static AquacultureTab tab;
-
-	public static final ResourceLocation items = new ResourceLocation("Aquaculture", "/textures/items");
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
@@ -57,7 +54,8 @@ public class Aquaculture
 		
 		AquacultureRecipes.addRecipes();
 
-		EntityRegistry.registerModEntity(EntityCustomFishHook.class, "AquacultureFishHook", 0, this, 64, 1, false);
+		EntityRegistry.registerGlobalEntityID(EntityCustomFishHook.class, "CustomFishHook", 174);
+		//EntityRegistry.registerModEntity(EntityCustomFishHook.class, "CustomFishHook", 0, this, 128, 1, true);
         AquacultureEnchants.init();
 		
 		tab.setItemID(AquacultureItems.ironFishingRod.itemID);

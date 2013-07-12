@@ -246,6 +246,11 @@ public class EntityCustomFishHook extends EntityFishHook
     {
         //super.onUpdate();
 
+    	if(!worldObj.isRemote && this.angler == null)
+    		this.setDead();
+    		
+    	this.onEntityUpdate();
+    	
         if (this.fishPosRotationIncrements > 0)
         {
             double d0 = this.posX + (this.fishX - this.posX) / (double)this.fishPosRotationIncrements;
@@ -264,7 +269,7 @@ public class EntityCustomFishHook extends EntityFishHook
             {
                 ItemStack itemstack = this.angler.getCurrentEquippedItem();
 
-                if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || !this.isFishingRod(itemstack) || this.getDistanceSqToEntity(this.angler) > 1024.0D)
+                if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || !this.isFishingRod(itemstack) || this.getDistanceSqToEntity(this.angler) > 4*1024.0D)
                 {
                     this.setDead();
                     this.angler.fishEntity = null;
@@ -320,7 +325,7 @@ public class EntityCustomFishHook extends EntityFishHook
 
             Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
             Vec3 vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
+            MovingObjectPosition movingobjectposition = this.worldObj.clip(vec3, vec31);
             vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
             vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
@@ -364,9 +369,10 @@ public class EntityCustomFishHook extends EntityFishHook
 
             if (movingobjectposition != null)
             {
-                if (movingobjectposition.entityHit != null)
+                if (movingobjectposition.entityHit != null && this.angler != null)
                 {
-                	if(!(movingobjectposition.entityHit instanceof EntityBoat)){
+                	if(!(movingobjectposition.entityHit instanceof EntityBoat) && (this.angler.capabilities.isCreativeMode))
+                	{
                 		if (movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.angler), 0))
                     	{
                     		this.bobber = movingobjectposition.entityHit;
@@ -437,7 +443,7 @@ public class EntityCustomFishHook extends EntityFishHook
                     }
                     else
                     {
-                        short biteChance = (short) baseCatchTime;
+                        short biteChance = (short) (baseCatchTime/4);
 
                         if (this.worldObj.canLightningStrikeAt(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) + 1, MathHelper.floor_double(this.posZ)))
                         {
@@ -446,8 +452,8 @@ public class EntityCustomFishHook extends EntityFishHook
                         
                         if(this.angler != null)
                         {
-                        	//int efficiency = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.efficiency.effectId, this.angler.getCurrentEquippedItem());
-                        	//biteChance *= 1.0 - 0.1 * efficiency;
+                        	int efficiency = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.effeciencyFishing.effectId, this.angler.getCurrentEquippedItem());
+                        	biteChance *= 1.0 - 0.1 * efficiency;
                         }
 
                         if (this.rand.nextInt(biteChance) == 0)
@@ -461,7 +467,12 @@ public class EntityCustomFishHook extends EntityFishHook
                             }
                             
                             this.motionY -= 0.20000000298023224D;
-                            this.playSound("random.splash", 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                            this.playSound("liquid.splash", 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                            //this.playSound("note.harp", 0.55F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                            
+                            //this.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "note." + "harp", 3.0F, 1);
+                            //this.worldObj.spawnParticle("note", posX, posY + 1.2D, posZ, (double)16 / 24.0D, 0.0D, 0.0D);
+                            
                             float f3 = (float)MathHelper.floor_double(this.boundingBox.minY);
                             int l;
                             float f4;
@@ -560,7 +571,7 @@ public class EntityCustomFishHook extends EntityFishHook
                 this.bobber.motionZ += d2 * d4;
                 b0 = 3;
             }
-            else //if (this.ticksCatchable > 0)
+            else if (this.ticksCatchable > 0 || isAdmin)
             {
             	BiomeGenBase currentBiome = worldObj.getBiomeGenForCoords(MathHelper.floor_double(angler.posX), MathHelper.floor_double(angler.posZ));
             
@@ -601,12 +612,15 @@ public class EntityCustomFishHook extends EntityFishHook
 	            	
 	            	if(this.angler != null)
 	            	{
-	            		//heavyLine = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.heavyLine.effectID, angler.getCurrentEquippedItem());
+	            		heavyLine = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.heavyLine.effectId, angler.getCurrentEquippedItem());
 	            	}
 	            	
 	            	if(roll < fishOdds)
 	            	{
-	            		fishLoot = FishLoot.instance().getRandomFish(currentBiome.biomeID, heavyLine);
+	            		if(this.angler.getCurrentEquippedItem().itemID == AquacultureItems.adminFishingRod.itemID && this.angler.isSneaking())
+	            			fishLoot = FishLoot.instance().getRandomFish(currentBiome.biomeID);
+	            		else
+	            			fishLoot = FishLoot.instance().getRandomFish(currentBiome.biomeID, heavyLine);
 	            	}
 	            	else
 	            	{
@@ -634,7 +648,7 @@ public class EntityCustomFishHook extends EntityFishHook
 	            	
 	            	count--;
         		
-            	} while(count > 0 || (isAdmin && (fishLoot.itemID != AquacultureItems.algae.itemID || fishLoot.getItemDamage() != AquacultureItems.neptunesBounty.damage)));
+            	} while(count > 0);
             }
 
             if (this.inGround)

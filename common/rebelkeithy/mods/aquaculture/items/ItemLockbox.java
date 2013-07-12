@@ -29,7 +29,7 @@ public class ItemLockbox extends SubItem
         loot.addLoot(Item.paper, 10);
         loot.addLoot(Item.compass, 10);
         loot.addLoot(Item.pocketSundial, 10);
-        loot.addLoot(Item.lightStoneDust, 7);
+        loot.addLoot(Item.glowstone, 7);
         loot.addLoot(Item.gunpowder, 10);
         loot.addLoot(Item.netherQuartz, 7);
     }

@@ -26,6 +26,17 @@ public class ItemAdminFishingRod extends AquacultureItem
     @SideOnly(Side.CLIENT)
 
     /**
+     * Returns True is the item is renderer in full 3D when hold.
+     */
+    @Override
+    public boolean isFull3D()
+    {
+        return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+
+    /**
      * Returns true if this item should be rotated by 180 degrees around the Y axis when being held in an entities
      * hands.
      */
@@ -44,7 +55,7 @@ public class ItemAdminFishingRod extends AquacultureItem
             entityplayer.swingItem();
 
         	if(!itemstack.hasTagCompound())
-        		itemstack.setTagCompound(new NBTTagCompound());
+        		itemstack.setTagCompound(new NBTTagCompound("tag"));
         	
         	NBTTagCompound tag = itemstack.getTagCompound();
         	tag.setBoolean("using", false);
@@ -59,7 +70,7 @@ public class ItemAdminFishingRod extends AquacultureItem
             entityplayer.swingItem();
 
         	if(!itemstack.hasTagCompound())
-        		itemstack.setTagCompound(new NBTTagCompound());
+        		itemstack.setTagCompound(new NBTTagCompound("tag"));
         	
         	NBTTagCompound tag = itemstack.getTagCompound();
         	tag.setBoolean("using", true);
@@ -69,15 +80,15 @@ public class ItemAdminFishingRod extends AquacultureItem
 
     public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
     {
+		System.out.println("test");
     	if(!stack.hasTagCompound())
-    		stack.setTagCompound(new NBTTagCompound());
+    		stack.setTagCompound(new NBTTagCompound("tag"));
     	
     	NBTTagCompound tag = stack.getTagCompound();
-    	
+
     	if(tag.hasKey("using"));
     	{
     		boolean using = tag.getBoolean("using");
-    		
     		if(using)
     			return usingIcon;
     	}

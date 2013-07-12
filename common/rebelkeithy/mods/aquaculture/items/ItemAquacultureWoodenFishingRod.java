@@ -30,6 +30,17 @@ public class ItemAquacultureWoodenFishingRod extends AquacultureItem
     @SideOnly(Side.CLIENT)
 
     /**
+     * Returns True is the item is renderer in full 3D when hold.
+     */
+    @Override
+    public boolean isFull3D()
+    {
+        return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+
+    /**
      * Returns true if this item should be rotated by 180 degrees around the Y axis when being held in an entities
      * hands.
      */
@@ -92,9 +103,10 @@ public class ItemAquacultureWoodenFishingRod extends AquacultureItem
     	if(tag.hasKey("using"));
     	{
     		boolean using = tag.getBoolean("using");
-    		
+    		/*
     		if(using)
     			return Item.fishingRod.func_94597_g();
+    		*/
     	}
     	
     	return Item.fishingRod.getIconFromDamage(0);

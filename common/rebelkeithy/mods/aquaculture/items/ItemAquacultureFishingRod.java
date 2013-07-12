@@ -1,18 +1,23 @@
 package rebelkeithy.mods.aquaculture.items;
 
-import rebelkeithy.mods.aquaculture.AquacultureItem;
-import rebelkeithy.mods.aquaculture.EntityCustomFishHook;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumHelper;
+import rebelkeithy.mods.aquaculture.EntityCustomFishHook;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAquacultureFishingRod extends AquacultureItem
+public class ItemAquacultureFishingRod extends ItemTool
 {
 	public Icon usingIcon;
 	public String type;
@@ -20,11 +25,22 @@ public class ItemAquacultureFishingRod extends AquacultureItem
 	
     public ItemAquacultureFishingRod(int i, int d, int enchantability, String type)
     {
-        super(i);
+        super(i, 0, EnumHelper.addToolMaterial("Fishing" + type, 0, d, 0, 0, enchantability), new Block[] {});
         setMaxDamage(d);
         setMaxStackSize(1);
         this.type = type;
         this.enchantability = enchantability;
+    }
+
+    @SideOnly(Side.CLIENT)
+
+    /**
+     * Returns True is the item is renderer in full 3D when hold.
+     */
+    @Override
+    public boolean isFull3D()
+    {
+        return true;
     }
 
     @SideOnly(Side.CLIENT)
@@ -38,15 +54,14 @@ public class ItemAquacultureFishingRod extends AquacultureItem
         return true;
     }
     
-    @Override
-    public boolean isItemTool(ItemStack par1ItemStack)
-    {
-    	return true;
-    }
-    
     public int getItemEnchantability()
     {
     	return enchantability;
+    }
+    
+    public Multimap func_111205_h()
+    {
+        return HashMultimap.create();
     }
 
 
@@ -94,7 +109,10 @@ public class ItemAquacultureFishingRod extends AquacultureItem
     		boolean using = tag.getBoolean("using");
     		
     		if(using)
+    		{
+    			System.out.println("test");
     			return usingIcon;
+    		}
     	}
     	
     	return itemIcon;
