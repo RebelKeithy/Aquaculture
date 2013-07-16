@@ -75,7 +75,6 @@ public class AquacultureItems
 	
 	public static void init()
 	{
-		Item item = new Item(0) {{func_111206_d("texture name");}};
 		System.out.println();
 		//woodenFishingRod = new ItemAquacultureWoodenFishingRod(Item.fishingRod.itemID-256, 50, 10, "Wood").setUnlocalizedName("fishingRod");
 		ironFishingRod = new ItemAquacultureFishingRod(Config.ironRodID, 75, 14, "Iron").func_111206_d("aquaculture:IronFishingRod").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
@@ -193,6 +192,7 @@ public class AquacultureItems
 		
 		OreDictionary.registerOre("listAllfishraw", fishFillet.getItemStack());
 		OreDictionary.registerOre("listAllfishcooked", cookedFillet.getItemStack());
+		OreDictionary.registerOre("cropSeaweed", seaweed.getItemStack());
 	}
 	
 	public static void addNames()

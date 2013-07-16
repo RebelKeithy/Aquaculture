@@ -35,6 +35,8 @@ public class AquacultureRecipes
 		FurnaceRecipes.smelting().addSmelting(AquacultureItems.frogLegs.itemID, AquacultureItems.frogLegs.damage, AquacultureItems.cookedFrogLegs.getItemStack(), 0.3F);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.ironFishingRod, 1), "  X", " XS", "I S", 'X', Item.ingotIron, 'I', Item.stick, 'S', Item.silk);
+		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.goldFishingRod, 1), "  X", " XS", "I S", 'X', Item.ingotGold, 'I', Item.stick, 'S', Item.silk);
+		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.diamondFishingRod, 1), "  X", " XS", "I S", 'X', Item.diamond, 'I', Item.stick, 'S', Item.silk);
 	    GameRegistry.addRecipe(AquacultureItems.whaleBurger.getItemStack(), "B", "W", "B", 'W', AquacultureItems.cookedWhaleSteak.getItemStack(), 'B', Item.bread);
 
 		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumPickaxe, 1), "XXX", " | ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Item.stick);
