@@ -1,6 +1,7 @@
 package rebelkeithy.mods.aquaculture;
 
 import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
+import rebelkeithy.mods.aquaculture.items.AquacultureItems;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -11,11 +12,9 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-
-@Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION, dependencies = "required-after:KeithyUtils@[1.1,]")
+@Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = true)
-public class Aquaculture 
-{
+public class Aquaculture {
 	public final static String MOD_ID = "Aquaculture";
 	public final static String MOD_NAME = "Aquaculture";
 	public final static String MOD_VERSION = "1.2.3";
@@ -26,40 +25,25 @@ public class Aquaculture
 	@SidedProxy(clientSide = "rebelkeithy.mods.aquaculture.ClientProxy", serverSide = "rebelkeithy.mods.aquaculture.CommonProxy")
 	public static CommonProxy proxy;
 	public static AquacultureTab tab;
-	
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
-	{
-		//FMLClientHandler.instance().getClient().renderEngine
-		Config.init(event.getSuggestedConfigurationFile());
-		tab = new AquacultureTab("Aquaculture");
-		LanguageRegistry.instance().addStringLocalization("itemGroup.Aquaculture", "Aquaculture");
-		
-		AquacultureItems.init();
-		AquacultureItems.addNames();
 
-		LanguageRegistry.instance().addStringLocalization("enchantment.longCast", "Longcast");
-		LanguageRegistry.instance().addStringLocalization("enchantment.shortCast", "Shortcast");
-		LanguageRegistry.instance().addStringLocalization("enchantment.doubleHook", "Double Hook");
-		LanguageRegistry.instance().addStringLocalization("enchantment.barbedHook", "Barbed Hook");
-		LanguageRegistry.instance().addStringLocalization("enchantment.appealing", "Appealing");
-		LanguageRegistry.instance().addStringLocalization("enchantment.magnetic", "Magnetic");
-		LanguageRegistry.instance().addStringLocalization("enchantment.heavyLine", "Heavy Line");
-		//LanguageRegistry.reloadLanguageTable();
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+		Config.INSTANCE.init(event.getSuggestedConfigurationFile());
+		tab = new AquacultureTab("Aquaculture");
+
+		AquacultureItems.INSTANCE.register();
 	}
 
 	@EventHandler
-	public void load(FMLInitializationEvent event)
-	{
-		
-		AquacultureRecipes.addRecipes();
+	public void load(FMLInitializationEvent event) {
+
+		AquacultureRecipes.INSTANCE.addRecipes();
 
 		EntityRegistry.registerGlobalEntityID(EntityCustomFishHook.class, "CustomFishHook", 174);
-		//EntityRegistry.registerModEntity(EntityCustomFishHook.class, "CustomFishHook", 0, this, 128, 1, true);
-        AquacultureEnchants.init();
-		
+		AquacultureEnchants.init();
+
 		tab.setItemID(AquacultureItems.ironFishingRod.itemID);
-		
+
 		proxy.registerModelRenderers();
 	}
 }

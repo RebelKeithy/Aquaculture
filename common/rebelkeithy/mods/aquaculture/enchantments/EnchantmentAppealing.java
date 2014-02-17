@@ -1,37 +1,41 @@
 package rebelkeithy.mods.aquaculture.enchantments;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import rebelkeithy.mods.aquaculture.LocalizationHelper;
 import net.minecraft.enchantment.Enchantment;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /**
  * @author Freyja
  */
 public class EnchantmentAppealing extends EnchantmentFishingPole {
 
-    public EnchantmentAppealing(int id, int weight) {
-        super(id, weight);
-        setName("appealing");
-        LanguageRegistry.instance().addStringLocalization("enchantment.appealing", "Appealing");
-    }
+	public EnchantmentAppealing(int id, int weight) {
+		super(id, weight);
+		setName("appealing");
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return 5;
-    }
+	@Override
+	public int getMaxLevel() {
+		return 5;
+	}
 
-    @Override
-    public boolean canApplyTogether(Enchantment enchantment) {
-        return !((enchantment instanceof EnchantmentMagnetic) || (enchantment instanceof EnchantmentAppealing));
-    }
-    
-    public int getMinEnchantability(int par1)
-    {
-        return 12 + (par1 - 1) * 20;
-    }
+	@Override
+	public boolean canApplyTogether(Enchantment enchantment) {
+		return !((enchantment instanceof EnchantmentMagnetic) || (enchantment instanceof EnchantmentAppealing));
+	}
 
-    public int getMaxEnchantability(int par1)
-    {
-        return this.getMinEnchantability(par1) + 25;
-    }
+	@Override
+	public int getMinEnchantability(int par1) {
+		return 12 + (par1 - 1) * 20;
+	}
 
+	@Override
+	public int getMaxEnchantability(int par1) {
+		return this.getMinEnchantability(par1) + 25;
+	}
+
+	@Override
+	public String getTranslatedName(int par1) {
+		return LocalizationHelper.localize("enchantment.appealing") + RomanNumeral.convertToRoman(par1);
+	}
 }
