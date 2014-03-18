@@ -33,8 +33,4 @@ public class EnchantmentShortCast extends EnchantmentFishingPole {
 		return super.getMinEnchantability(par1) + 50;
 	}
 
-	/*@Override
-	public String getTranslatedName(int par1) {
-		return LocalizationHelper.localize("enchantment.shortCast") + RomanNumeral.convertToRoman(par1);
-	}*/
 }

@@ -22,9 +22,4 @@ public class EnchantmentFastcast extends EnchantmentFishingPole {
 	public boolean canApplyTogether(Enchantment enchantment) {
 		return !((enchantment instanceof EnchantmentShortCast) || (enchantment instanceof EnchantmentLongCast) || (enchantment instanceof EnchantmentFastcast));
 	}
-
-	/*@Override
-	public String getTranslatedName(int par1) {
-		return LocalizationHelper.localize("enchantment.fastCast") + RomanNumeral.convertToRoman(par1);
-	}*/
 }

@@ -25,7 +25,6 @@ public class AquacultureEnchants {
 
 	public static void init() {
 		enumFishingPole = EnumHelper.addEnchantmentType("fishingPole");
-		//TODO: Fix enchantments
 		
 		clearReservedEnchant(Config.appealingID);
 		clearReservedEnchant(Config.magneticID);

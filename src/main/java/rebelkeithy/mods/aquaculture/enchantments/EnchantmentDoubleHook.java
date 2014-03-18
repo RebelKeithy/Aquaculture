@@ -32,9 +32,4 @@ public class EnchantmentDoubleHook extends EnchantmentFishingPole {
 	public int getMaxEnchantability(int par1) {
 		return super.getMinEnchantability(par1) + 50;
 	}
-	
-	/*@Override
-	public String getTranslatedName(int par1) {
-		return LocalizationHelper.localize("enchantment.doubleHook") + RomanNumeral.convertToRoman(par1);
-	}*/
 }

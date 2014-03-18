@@ -31,17 +31,13 @@ public class MetaItem extends Item {
 		subItems.add(subItem);
 		return subItems.size() - 1;
 	}
-
-	/*@Override
-	public String getItemStackDisplayName(ItemStack par1ItemStack) {
-		int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, subItems.size());
-		return LocalizationHelper.localize("item." + subItems.get(i).getUnlocalizedName(par1ItemStack) + ".name");
-	}*/
 	
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack) {
 		int i = MathHelper.clamp_int(itemStack.getItemDamage(), 0, subItems.size());
-		return "item." + subItems.get(i).getUnlocalizedName(itemStack);
+		String uname = subItems.get(i).getUnlocalizedName(itemStack);
+		uname = uname.replace(" ", "_");
+		return "item." + uname;
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})

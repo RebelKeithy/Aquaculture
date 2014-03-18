@@ -59,7 +59,6 @@ public class ItemFish extends Item {
 			FishLoot.instance().addFish(this.getItemStackFish(name), biome, rarity);
 		}
 
-		//LanguageRegistry.addName(new ItemStack(this, 1, fish.size() - 1), LocalizationHelper.localize("item.Fish." + name.replace(" ", "_") + ".name"));
 	}
 
 	public void addFilletRecipes() {
@@ -155,8 +154,9 @@ public class ItemFish extends Item {
 	@Override
 	public String getUnlocalizedName(ItemStack par1ItemStack) {
 		int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, fish.size());
-
-		return super.getUnlocalizedName() + "." + fish.get(i).name;
+		String uname = super.getUnlocalizedName() + "." + fish.get(i).name;
+		uname = uname.replace(" ", "_");
+		return uname;
 	}
 
 	@SideOnly(Side.CLIENT)

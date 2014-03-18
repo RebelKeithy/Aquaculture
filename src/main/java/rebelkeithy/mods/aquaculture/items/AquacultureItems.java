@@ -27,7 +27,7 @@ public enum AquacultureItems {
 	public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, 10, "Diamond").setTextureName("aquaculture:DiamondFishingRod").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
 	public static final Item adminFishingRod = new ItemAdminFishingRod(75).setTextureName("AdminFishingRod").setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
 
-	public static final MetaItem metaLootItem = new MetaItem();
+	public static final MetaItem metaLootItem = (MetaItem) new MetaItem().setUnlocalizedName("loot").setTextureName("aquaculture:Seaweed").setCreativeTab(Aquaculture.tab);
 	
 	public static final SubItem seaweed = new SubItemFood(metaLootItem, 2, 0, false).setUnlocalizedName("Seaweed").setTextureName("aquaculture:Seaweed").setCreativeTab(Aquaculture.tab);
 	public static final SubItem algae = new SubItemFood(metaLootItem, 2, 0, false).setUnlocalizedName("Algae").setTextureName("aquaculture:Algae").setCreativeTab(Aquaculture.tab);
@@ -70,35 +70,14 @@ public enum AquacultureItems {
 	public static final ItemFish fish = (ItemFish) new ItemFish().setUnlocalizedName("Fish").setCreativeTab(Aquaculture.tab);
 
 	public void register() {
+		
 		register(woodenFishingRod);
 		register(ironFishingRod);
 		register(goldFishingRod);
 		register(diamondFishingRod);
 		register(adminFishingRod);
 
-		register(seaweed);
-		//TODO: fix registration
-		/*register(algae);
-
-		// Food
-		register(whaleSteak);
-		register(fishFillet);
-		register(cookedFillet);
-		register(cookedWhaleSteak);
-		register(whaleBurger);
-		register(frogLegs);
-		register(cookedFrogLegs);
-		register(turtleSoup);
-		register(sushi);
-
-		register(driftwood);
-		register(neptuniumBar);
-		register(tinCan);
-		register(nessageInABottle);
-		register(box);
-		register(lockbox);
-		register(treasureChest);
-		register(neptunesBounty); */
+		register(metaLootItem);
 
 		register(neptuniumPickaxe);
 		register(neptuniumShovel);
@@ -113,7 +92,7 @@ public enum AquacultureItems {
 
 		register(fish);
 
-		// Adds fish to
+		// Adding fish to main fish item
 
 		// Freshwater
 		fish.addFish("Bluegill", 1, 1, 5, BiomeType.freshwater, 1);
@@ -191,18 +170,5 @@ public enum AquacultureItems {
 
 	public void register(Item item) {
 		GameRegistry.registerItem(item, item.getUnlocalizedName());
-		this.name(item, item.getUnlocalizedName());
-	}
-
-	public void register(SubItem item) {
-		GameRegistry.registerItem(item.item, item.unlocalizedName);
-		this.name(item.item, item.unlocalizedName);
-	}
-
-	private void name(Item item, String tag) {
-		if(!tag.contains("item.")) {
-			tag = "item." + tag;
-		}
-		//LanguageRegistry.addName(item, LocalizationHelper.localize(tag + ".name"));
 	}
 }

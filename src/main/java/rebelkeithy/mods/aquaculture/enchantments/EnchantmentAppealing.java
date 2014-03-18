@@ -32,9 +32,4 @@ public class EnchantmentAppealing extends EnchantmentFishingPole {
 	public int getMaxEnchantability(int par1) {
 		return this.getMinEnchantability(par1) + 25;
 	}
-
-	/*@Override
-	public String getTranslatedName(int par1) {
-		return LocalizationHelper.localize("enchantment.appealing") + RomanNumeral.convertToRoman(par1);
-	}*/
 }
