@@ -26,6 +26,18 @@ public class AquacultureEnchants {
 	public static void init() {
 		enumFishingPole = EnumHelper.addEnchantmentType("fishingPole");
 		//TODO: Fix enchantments
+		
+		clearReservedEnchant(Config.appealingID);
+		clearReservedEnchant(Config.magneticID);
+		clearReservedEnchant(Config.longcastID);
+		clearReservedEnchant(Config.shortcastID);
+		//clearReservedEnchant(Config.fastcastID);
+		clearReservedEnchant(Config.doubleHookID);
+		clearReservedEnchant(Config.barbedHookID);
+		clearReservedEnchant(Config.heavyLineID);
+		
+		clearReservedEnchant(Config.effeciencyID);
+		
 		appealing = new EnchantmentAppealing(Config.appealingID, 3);
 		magnetic = new EnchantmentMagnetic(Config.magneticID, 3);
 		longcast = new EnchantmentLongCast(Config.longcastID, 7);
@@ -36,5 +48,12 @@ public class AquacultureEnchants {
 		heavyLine = new EnchantmentHeavyLine(Config.heavyLineID, 5);
 
 		effeciencyFishing = new EnchantmentEfficiencyFishing(Config.effeciencyID, 10);
+	}
+	
+	private static void clearReservedEnchant (int id) {
+		
+		if (Enchantment.enchantmentsList[id] instanceof EnchantmentSlotReserve) {
+			Enchantment.enchantmentsList[id] = null;
+		}
 	}
 }

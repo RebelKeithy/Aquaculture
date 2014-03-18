@@ -2,6 +2,7 @@ package rebelkeithy.mods.aquaculture;
 
 import java.io.File;
 
+import rebelkeithy.mods.aquaculture.enchantments.EnchantmentSlotReserve;
 import cpw.mods.fml.common.FMLLog;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.common.config.Configuration;
@@ -128,6 +129,7 @@ public enum Config {
 		
 		for(int i = 0; i < Enchantment.enchantmentsList.length; i++) {
 			if(Enchantment.enchantmentsList[i] == null) {
+				new EnchantmentSlotReserve(i);
 				property.set(i);
 				return property;
 			}
