@@ -7,13 +7,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import rebelkeithy.mods.aquaculture.WeightedLootSet;
+import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
 import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 
 public class ItemNeptunesBounty extends SubItem {
 	Random rand = new Random();
 	WeightedLootSet loot;
 
-	public ItemNeptunesBounty(int par1) {
+	public ItemNeptunesBounty(MetaItem par1) {
 		super(par1);
 		loot = null;
 	}

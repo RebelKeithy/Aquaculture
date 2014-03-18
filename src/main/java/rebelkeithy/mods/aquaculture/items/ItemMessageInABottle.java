@@ -7,12 +7,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
 import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 
 public class ItemMessageInABottle extends SubItem {
 	Random rand = new Random();
 
-	public ItemMessageInABottle(int par1) {
+	public ItemMessageInABottle(MetaItem par1) {
 		super(par1);
 	}
 

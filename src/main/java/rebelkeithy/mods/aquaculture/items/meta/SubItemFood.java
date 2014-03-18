@@ -38,7 +38,7 @@ public class SubItemFood extends SubItem {
 
 	private int eatTime;
 
-	public SubItemFood(int par1, int par2, float par3, boolean par4) {
+	public SubItemFood(MetaItem par1, int par2, float par3, boolean par4) {
 		super(par1);
 		this.itemUseDuration = 32;
 		this.healAmount = par2;
@@ -47,7 +47,7 @@ public class SubItemFood extends SubItem {
 		this.eatTime = 32;
 	}
 
-	public SubItemFood(int par1, int par2, boolean par3) {
+	public SubItemFood(MetaItem par1, int par2, boolean par3) {
 		this(par1, par2, 0.6F, par3);
 	}
 

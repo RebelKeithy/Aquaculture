@@ -19,19 +19,9 @@ public class SubItem {
 	private IIcon itemIcon;
 	private String textureName;
 
-	public SubItem(int id) {
-		itemID = id + 256;
-
-		if(Items.itemsList[id + 256] == null) {
-			item = new MetaItem(id);
-		} else {
-			if(Item.itemsList[itemID] instanceof MetaItem) {
-				item = (MetaItem) Item.itemsList[itemID];
-			} else {
-				System.out.println("CONFLICT @ " + id + " item slot already occupied by " + Item.itemsList[256 + id] + " while adding " + this);
-			}
-		}
-
+	public SubItem(MetaItem metaItem) {
+		
+		item = metaItem;
 		damage = item.addSubItem(this);
 	}
 

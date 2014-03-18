@@ -28,10 +28,10 @@ public enum AquacultureRecipes {
 
 		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.planks, 4), AquacultureItems.driftwood.getItemStack());
 
-		FurnaceRecipes.smelting().addSmelting(AquacultureItems.fishFillet.itemID, AquacultureItems.fishFillet.damage, AquacultureItems.cookedFillet.getItemStack(), 0.3f);
-		FurnaceRecipes.smelting().addSmelting(AquacultureItems.whaleSteak.itemID, AquacultureItems.whaleSteak.damage, AquacultureItems.cookedWhaleSteak.getItemStack(), 0.3f);
-		FurnaceRecipes.smelting().addSmelting(AquacultureItems.tinCan.itemID, AquacultureItems.tinCan.damage, new ItemStack(Items.iron_ingot), 0.7f);
-		FurnaceRecipes.smelting().addSmelting(AquacultureItems.frogLegs.itemID, AquacultureItems.frogLegs.damage, AquacultureItems.cookedFrogLegs.getItemStack(), 0.3F);
+		FurnaceRecipes.smelting().func_151394_a(AquacultureItems.fishFillet.getItemStack(), AquacultureItems.cookedFillet.getItemStack(), 0.3f);
+		FurnaceRecipes.smelting().func_151394_a(AquacultureItems.whaleSteak.getItemStack(), AquacultureItems.cookedWhaleSteak.getItemStack(), 0.3f);
+		FurnaceRecipes.smelting().func_151394_a(AquacultureItems.tinCan.getItemStack(), new ItemStack(Items.iron_ingot), 0.7f);
+		FurnaceRecipes.smelting().func_151394_a(AquacultureItems.frogLegs.getItemStack(), AquacultureItems.cookedFrogLegs.getItemStack(), 0.3F);
 
 		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.ironFishingRod, 1), "  X", " XS", "I S", 'X', Items.iron_ingot, 'I', Items.stick, 'S', Items.string);
 		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.goldFishingRod, 1), "  X", " XS", "I S", 'X', Items.gold_ingot, 'I', Items.stick, 'S', Items.string);

@@ -41,7 +41,7 @@ public class ItemFish extends Item {
 		}
 	}
 
-	public ItemFish(int par1) {
+	public ItemFish() {
 		super();
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);

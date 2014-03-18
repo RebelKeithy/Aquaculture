@@ -2,6 +2,7 @@ package rebelkeithy.mods.aquaculture;
 
 import java.io.File;
 
+import cpw.mods.fml.common.FMLLog;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -117,19 +118,22 @@ public enum Config {
 	}
 
 	private Property isIdAvailableOrSet(Property property) {
+		//TODO: fix enchantments
+		
 		int propertyInt = property.getInt();
-
+		
 		if(Enchantment.enchantmentsList[propertyInt] == null) {
 			return property;
 		}
-
+		
 		for(int i = 0; i < Enchantment.enchantmentsList.length; i++) {
-			if(Enchantment.enchantmentsList[propertyInt] == null) {
+			if(Enchantment.enchantmentsList[i] == null) {
 				property.set(i);
 				return property;
 			}
 		}
 
 		throw new RuntimeException("No more enchantment ids are available");
+		
 	}
 }

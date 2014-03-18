@@ -9,13 +9,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import rebelkeithy.mods.aquaculture.WeightedLootSet;
+import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
 import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 
 public class ItemLockbox extends SubItem {
 	Random rand = new Random();
 	public WeightedLootSet loot;
 
-	public ItemLockbox(int par1) {
+	public ItemLockbox(MetaItem par1) {
 		super(par1);
 		loot = new WeightedLootSet();
 		loot.addLoot(Items.iron_ingot, 8);

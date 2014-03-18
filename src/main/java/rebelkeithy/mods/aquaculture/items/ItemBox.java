@@ -11,13 +11,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import rebelkeithy.mods.aquaculture.WeightedLootSet;
+import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
 import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 
 public class ItemBox extends SubItem {
 	public Random rand = new Random();
 	public WeightedLootSet loot;
 
-	public ItemBox(int par1) {
+	public ItemBox(MetaItem par1) {
 		super(par1);
 		loot = new WeightedLootSet();
 		loot.addLoot(Blocks.stone, 5, 1, 1);

@@ -13,6 +13,7 @@ import rebelkeithy.mods.aquaculture.BiomeType;
 import rebelkeithy.mods.aquaculture.Config;
 import rebelkeithy.mods.aquaculture.FishLoot;
 import rebelkeithy.mods.aquaculture.LocalizationHelper;
+import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
 import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 import rebelkeithy.mods.aquaculture.items.meta.SubItemFood;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -27,28 +28,30 @@ public enum AquacultureItems {
 	public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, 10, "Diamond").setTextureName("aquaculture:DiamondFishingRod").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
 	public static final Item adminFishingRod = new ItemAdminFishingRod(75).setTextureName("AdminFishingRod").setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
 
-	public static final SubItem seaweed = new SubItemFood(Config.lootID, 2, 0, false).setUnlocalizedName("Seaweed").setTextureName("aquaculture:Seaweed").setCreativeTab(Aquaculture.tab);
-	public static final SubItem algae = new SubItemFood(Config.lootID, 2, 0, false).setUnlocalizedName("Algae").setTextureName("aquaculture:Algae").setCreativeTab(Aquaculture.tab);
+	public static final MetaItem metaLootItem = new MetaItem();
+	
+	public static final SubItem seaweed = new SubItemFood(metaLootItem, 2, 0, false).setUnlocalizedName("Seaweed").setTextureName("aquaculture:Seaweed").setCreativeTab(Aquaculture.tab);
+	public static final SubItem algae = new SubItemFood(metaLootItem, 2, 0, false).setUnlocalizedName("Algae").setTextureName("aquaculture:Algae").setCreativeTab(Aquaculture.tab);
 
 	// Food
-	public static final SubItem whaleSteak = new SubItem(Config.lootID).setUnlocalizedName("RawWhaleSteak").setTextureName("aquaculture:RawWhaleSteak").setCreativeTab(Aquaculture.tab);
-	public static final SubItem fishFillet = new SubItemFood(Config.lootID, 2, 0.3F, false).setUnlocalizedName("RawFishFillet").setTextureName("aquaculture:RawFishFillet").setCreativeTab(Aquaculture.tab);
-	public static final SubItem cookedFillet = new SubItemFood(Config.lootID, 5, 0.6F, false).setUnlocalizedName("CookedFishFillet").setTextureName("aquaculture:CookedFishFillet").setCreativeTab(Aquaculture.tab);
-	public static final SubItem cookedWhaleSteak = new SubItemFood(Config.lootID, 10, 0.8F, false).setUnlocalizedName("CookedWhaleSteak").setTextureName("aquaculture:CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
-	public static final SubItem whaleBurger = new SubItemFood(Config.lootID, 20, 0.8F, false).setUnlocalizedName("Whaleburger").setTextureName("aquaculture:Whaleburger").setCreativeTab(Aquaculture.tab);
-	public static final SubItem frogLegs = new SubItem(Config.lootID).setUnlocalizedName("FrogLegs").setTextureName("aquaculture:FrogLegs").setCreativeTab(Aquaculture.tab);
-	public static final SubItem cookedFrogLegs = new SubItemFood(Config.lootID, 3, 0.6F, false).setUnlocalizedName("CookedFrogLegs").setTextureName("aquaculture:CookedFrogLegs").setCreativeTab(Aquaculture.tab);
-	public static final SubItem turtleSoup = new SubItemFood(Config.lootID, 6, 0.6F, false).setUnlocalizedName("TurtleSoup").setTextureName("aquaculture:TurtleSoup").setCreativeTab(Aquaculture.tab);
-	public static final SubItem sushi = new SubItemFood(Config.lootID, 4, 0.6F, false).setUnlocalizedName("Sushi").setTextureName("aquaculture:Sushi").setCreativeTab(Aquaculture.tab);
+	public static final SubItem whaleSteak = new SubItem(metaLootItem).setUnlocalizedName("RawWhaleSteak").setTextureName("aquaculture:RawWhaleSteak").setCreativeTab(Aquaculture.tab);
+	public static final SubItem fishFillet = new SubItemFood(metaLootItem, 2, 0.3F, false).setUnlocalizedName("RawFishFillet").setTextureName("aquaculture:RawFishFillet").setCreativeTab(Aquaculture.tab);
+	public static final SubItem cookedFillet = new SubItemFood(metaLootItem, 5, 0.6F, false).setUnlocalizedName("CookedFishFillet").setTextureName("aquaculture:CookedFishFillet").setCreativeTab(Aquaculture.tab);
+	public static final SubItem cookedWhaleSteak = new SubItemFood(metaLootItem, 10, 0.8F, false).setUnlocalizedName("CookedWhaleSteak").setTextureName("aquaculture:CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
+	public static final SubItem whaleBurger = new SubItemFood(metaLootItem, 20, 0.8F, false).setUnlocalizedName("Whaleburger").setTextureName("aquaculture:Whaleburger").setCreativeTab(Aquaculture.tab);
+	public static final SubItem frogLegs = new SubItem(metaLootItem).setUnlocalizedName("FrogLegs").setTextureName("aquaculture:FrogLegs").setCreativeTab(Aquaculture.tab);
+	public static final SubItem cookedFrogLegs = new SubItemFood(metaLootItem, 3, 0.6F, false).setUnlocalizedName("CookedFrogLegs").setTextureName("aquaculture:CookedFrogLegs").setCreativeTab(Aquaculture.tab);
+	public static final SubItem turtleSoup = new SubItemFood(metaLootItem, 6, 0.6F, false).setUnlocalizedName("TurtleSoup").setTextureName("aquaculture:TurtleSoup").setCreativeTab(Aquaculture.tab);
+	public static final SubItem sushi = new SubItemFood(metaLootItem, 4, 0.6F, false).setUnlocalizedName("Sushi").setTextureName("aquaculture:Sushi").setCreativeTab(Aquaculture.tab);
 
-	public static final SubItem driftwood = new SubItem(Config.lootID).setUnlocalizedName("Driftwood").setTextureName("aquaculture:Driftwood").setCreativeTab(Aquaculture.tab);
-	public static final SubItem neptuniumBar = new SubItem(Config.lootID).setUnlocalizedName("NeptuniumIngot").setTextureName("aquaculture:NeptuniumIngot").setCreativeTab(Aquaculture.tab);
-	public static final SubItem tinCan = new SubItem(Config.lootID).setUnlocalizedName("TinCan").setTextureName("aquaculture:TinCan").setCreativeTab(Aquaculture.tab);
-	public static final SubItem nessageInABottle = new ItemMessageInABottle(Config.lootID).setUnlocalizedName("MessageInABottle").setTextureName("aquaculture:MessageInABottle").setCreativeTab(Aquaculture.tab);
-	public static final SubItem box = new ItemBox(Config.lootID).setUnlocalizedName("Box").setTextureName("aquaculture:Box").setCreativeTab(Aquaculture.tab);
-	public static final SubItem lockbox = new ItemLockbox(Config.lootID).setUnlocalizedName("Lockbox").setTextureName("aquaculture:Lockbox").setCreativeTab(Aquaculture.tab);
-	public static final SubItem treasureChest = new ItemTreasureChest(Config.lootID).setUnlocalizedName("TreasureChest").setTextureName("aquaculture:TreasureChest").setCreativeTab(Aquaculture.tab);
-	public static final SubItem neptunesBounty = new ItemNeptunesBounty(Config.lootID).setUnlocalizedName("NeptunesBounty").setTextureName("aquaculture:NeptunesBounty").setCreativeTab(Aquaculture.tab);
+	public static final SubItem driftwood = new SubItem(metaLootItem).setUnlocalizedName("Driftwood").setTextureName("aquaculture:Driftwood").setCreativeTab(Aquaculture.tab);
+	public static final SubItem neptuniumBar = new SubItem(metaLootItem).setUnlocalizedName("NeptuniumIngot").setTextureName("aquaculture:NeptuniumIngot").setCreativeTab(Aquaculture.tab);
+	public static final SubItem tinCan = new SubItem(metaLootItem).setUnlocalizedName("TinCan").setTextureName("aquaculture:TinCan").setCreativeTab(Aquaculture.tab);
+	public static final SubItem nessageInABottle = new ItemMessageInABottle(metaLootItem).setUnlocalizedName("MessageInABottle").setTextureName("aquaculture:MessageInABottle").setCreativeTab(Aquaculture.tab);
+	public static final SubItem box = new ItemBox(metaLootItem).setUnlocalizedName("Box").setTextureName("aquaculture:Box").setCreativeTab(Aquaculture.tab);
+	public static final SubItem lockbox = new ItemLockbox(metaLootItem).setUnlocalizedName("Lockbox").setTextureName("aquaculture:Lockbox").setCreativeTab(Aquaculture.tab);
+	public static final SubItem treasureChest = new ItemTreasureChest(metaLootItem).setUnlocalizedName("TreasureChest").setTextureName("aquaculture:TreasureChest").setCreativeTab(Aquaculture.tab);
+	public static final SubItem neptunesBounty = new ItemNeptunesBounty(metaLootItem).setUnlocalizedName("NeptunesBounty").setTextureName("aquaculture:NeptunesBounty").setCreativeTab(Aquaculture.tab);
 
 	private static ToolMaterial neptuniumEnum = EnumHelper.addToolMaterial("Neptunium", 3, 2500, 9F, 6F, 15);
 
@@ -65,7 +68,7 @@ public enum AquacultureItems {
 	public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 2, 2).setArmorTexture("Neptunium_2").setUnlocalizedName("NeptuniumLegs").setCreativeTab(Aquaculture.tab);
 	public static final Item neptuniumBoots = new NeptuniumArmor(neptuniumArmorEnum, 3, 3).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
 
-	public static final ItemFish fish = (ItemFish) new ItemFish(Config.fishID).setUnlocalizedName("Fish").setCreativeTab(Aquaculture.tab);
+	public static final ItemFish fish = (ItemFish) new ItemFish().setUnlocalizedName("Fish").setCreativeTab(Aquaculture.tab);
 
 	public void register() {
 		register(woodenFishingRod);
@@ -75,7 +78,8 @@ public enum AquacultureItems {
 		register(adminFishingRod);
 
 		register(seaweed);
-		register(algae);
+		//TODO: fix registration
+		/*register(algae);
 
 		// Food
 		register(whaleSteak);
@@ -95,7 +99,7 @@ public enum AquacultureItems {
 		register(box);
 		register(lockbox);
 		register(treasureChest);
-		register(neptunesBounty);
+		register(neptunesBounty); */
 
 		register(neptuniumPickaxe);
 		register(neptuniumShovel);
