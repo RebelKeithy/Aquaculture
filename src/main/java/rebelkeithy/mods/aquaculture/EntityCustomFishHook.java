@@ -480,8 +480,9 @@ public class EntityCustomFishHook extends EntityFishHook {
 	public float getShadowSize() {
 		return 0.0F;
 	}
-
-	public int catchFish() {
+	
+	@Override
+	public int func_146034_e() {
 		if(this.worldObj.isRemote) {
 			return 0;
 		} else {
