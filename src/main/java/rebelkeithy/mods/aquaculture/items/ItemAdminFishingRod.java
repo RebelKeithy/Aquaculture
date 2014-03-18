@@ -1,20 +1,20 @@
 package rebelkeithy.mods.aquaculture.items;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import rebelkeithy.mods.aquaculture.EntityCustomFishHook;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAdminFishingRod extends ItemAquaculture {
-	public Icon usingIcon;
+	public IIcon usingIcon;
 
-	public ItemAdminFishingRod(int i, int d) {
-		super(i);
+	public ItemAdminFishingRod(int d) {
+		super();
 		setMaxDamage(d);
 		setMaxStackSize(1);
 	}
@@ -41,12 +41,12 @@ public class ItemAdminFishingRod extends ItemAquaculture {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		if(entityplayer.fishEntity != null) {
-			int i = entityplayer.fishEntity.catchFish();
+			int i = entityplayer.fishEntity.func_146034_e();
 			// itemstack.damageItem(i, entityplayer);
 			entityplayer.swingItem();
 
 			if(!itemstack.hasTagCompound())
-				itemstack.setTagCompound(new NBTTagCompound("tag"));
+				itemstack.setTagCompound(new NBTTagCompound());
 
 			NBTTagCompound tag = itemstack.getTagCompound();
 			tag.setBoolean("using", false);
@@ -58,7 +58,7 @@ public class ItemAdminFishingRod extends ItemAquaculture {
 			entityplayer.swingItem();
 
 			if(!itemstack.hasTagCompound())
-				itemstack.setTagCompound(new NBTTagCompound("tag"));
+				itemstack.setTagCompound(new NBTTagCompound());
 
 			NBTTagCompound tag = itemstack.getTagCompound();
 			tag.setBoolean("using", true);
@@ -67,9 +67,9 @@ public class ItemAdminFishingRod extends ItemAquaculture {
 	}
 
 	@Override
-	public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
+	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
 		if(!stack.hasTagCompound())
-			stack.setTagCompound(new NBTTagCompound("tag"));
+			stack.setTagCompound(new NBTTagCompound());
 
 		NBTTagCompound tag = stack.getTagCompound();
 
@@ -84,7 +84,7 @@ public class ItemAdminFishingRod extends ItemAquaculture {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		super.registerIcons(par1IconRegister);
 
 		usingIcon = par1IconRegister.registerIcon("aquaculture:AdminFishingRodUsing");

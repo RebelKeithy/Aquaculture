@@ -2,6 +2,7 @@ package rebelkeithy.mods.aquaculture;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -23,6 +24,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
 import rebelkeithy.mods.aquaculture.items.AquacultureItems;
+import rebelkeithy.mods.aquaculture.items.ItemAdminFishingRod;
 import rebelkeithy.mods.aquaculture.items.ItemAquacultureFishingRod;
 import rebelkeithy.mods.aquaculture.items.ItemAquacultureWoodenFishingRod;
 import cpw.mods.fml.relauncher.Side;
@@ -37,7 +39,7 @@ public class EntityCustomFishHook extends EntityFishHook {
 
 	/** The tile this entity is on, Z position */
 	private int zTile;
-	private int inTile;
+	private Block inTile;
 	private boolean inGround;
 	public int shake;
 	public EntityPlayer angler;
@@ -73,7 +75,6 @@ public class EntityCustomFishHook extends EntityFishHook {
 		this.xTile = -1;
 		this.yTile = -1;
 		this.zTile = -1;
-		this.inTile = 0;
 		this.inGround = false;
 		this.shake = 0;
 		this.ticksInAir = 0;
@@ -94,7 +95,6 @@ public class EntityCustomFishHook extends EntityFishHook {
 		this.xTile = -1;
 		this.yTile = -1;
 		this.zTile = -1;
-		this.inTile = 0;
 		this.inGround = false;
 		this.shake = 0;
 		this.ticksInAir = 0;
@@ -109,7 +109,6 @@ public class EntityCustomFishHook extends EntityFishHook {
 		this.xTile = -1;
 		this.yTile = -1;
 		this.zTile = -1;
-		this.inTile = 0;
 		this.inGround = false;
 		this.shake = 0;
 		this.ticksInAir = 0;
@@ -216,9 +215,9 @@ public class EntityCustomFishHook extends EntityFishHook {
 	}
 
 	public boolean isFishingRod(ItemStack stack) {
-		int id = stack.itemID;
+		Item item = stack.getItem();
 
-		return (Item.itemsList[id] instanceof ItemAquacultureFishingRod) || (Item.itemsList[id] instanceof ItemAquacultureWoodenFishingRod) || id == AquacultureItems.adminFishingRod.itemID;
+		return (item instanceof ItemAquacultureFishingRod) || (item instanceof ItemAquacultureWoodenFishingRod) || (item instanceof ItemAdminFishingRod);
 	}
 
 	/**
@@ -270,9 +269,9 @@ public class EntityCustomFishHook extends EntityFishHook {
 			}
 
 			if(this.inGround) {
-				int i = this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile);
+				Block block = this.worldObj.getBlock(this.xTile, this.yTile, this.zTile);
 
-				if(i == this.inTile) {
+				if(block == this.inTile) {
 					++this.ticksInGround;
 
 					if(this.ticksInGround == 1200) {
@@ -294,8 +293,7 @@ public class EntityCustomFishHook extends EntityFishHook {
 
 			Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
 			Vec3 vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-			MovingObjectPosition movingobjectposition = this.worldObj.clip(vec3, vec31);
-			vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
+			MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
 			vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
 			if(movingobjectposition != null) {
@@ -461,7 +459,7 @@ public class EntityCustomFishHook extends EntityFishHook {
 		par1NBTTagCompound.setShort("xTile", (short) this.xTile);
 		par1NBTTagCompound.setShort("yTile", (short) this.yTile);
 		par1NBTTagCompound.setShort("zTile", (short) this.zTile);
-		par1NBTTagCompound.setByte("inTile", (byte) this.inTile);
+		par1NBTTagCompound.setByte("inTile", (byte)Block.getIdFromBlock(this.inTile));
 		par1NBTTagCompound.setByte("shake", (byte) this.shake);
 		par1NBTTagCompound.setByte("inGround", (byte) (this.inGround ? 1 : 0));
 	}
@@ -473,7 +471,7 @@ public class EntityCustomFishHook extends EntityFishHook {
 		this.xTile = par1NBTTagCompound.getShort("xTile");
 		this.yTile = par1NBTTagCompound.getShort("yTile");
 		this.zTile = par1NBTTagCompound.getShort("zTile");
-		this.inTile = par1NBTTagCompound.getByte("inTile") & 255;
+		this.inTile = Block.getBlockById(par1NBTTagCompound.getByte("inTile") & 255);
 		this.shake = par1NBTTagCompound.getByte("shake") & 255;
 		this.inGround = par1NBTTagCompound.getByte("inGround") == 1;
 	}
@@ -536,7 +534,7 @@ public class EntityCustomFishHook extends EntityFishHook {
 					}
 
 					if(roll < fishOdds) {
-						if(this.angler.getCurrentEquippedItem().itemID == AquacultureItems.adminFishingRod.itemID && this.angler.isSneaking())
+						if((this.angler.getCurrentEquippedItem().getItem() instanceof ItemAdminFishingRod) && this.angler.isSneaking())
 							fishLoot = FishLoot.instance().getRandomFish(currentBiome.biomeID);
 						else
 							fishLoot = FishLoot.instance().getRandomFish(currentBiome.biomeID, heavyLine);

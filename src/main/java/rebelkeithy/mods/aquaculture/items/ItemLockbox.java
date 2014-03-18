@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -17,18 +18,18 @@ public class ItemLockbox extends SubItem {
 	public ItemLockbox(int par1) {
 		super(par1);
 		loot = new WeightedLootSet();
-		loot.addLoot(Item.ingotIron, 8);
-		loot.addLoot(Item.ingotGold, 7);
-		loot.addLoot(Item.appleGold, 5);
-		loot.addLoot(new ItemStack(Item.dyePowder, 1, 4), 8);
-		loot.addLoot(Item.redstone, 8);
-		loot.addLoot(Item.book, 10);
-		loot.addLoot(Item.paper, 10);
-		loot.addLoot(Item.compass, 10);
-		loot.addLoot(Item.pocketSundial, 10);
-		loot.addLoot(Item.glowstone, 7);
-		loot.addLoot(Item.gunpowder, 10);
-		loot.addLoot(Item.netherQuartz, 7);
+		loot.addLoot(Items.iron_ingot, 8);
+		loot.addLoot(Items.gold_ingot, 7);
+		loot.addLoot(Items.golden_apple, 5);
+		loot.addLoot(new ItemStack(Items.dye, 1, 4), 8);
+		loot.addLoot(Items.redstone, 8);
+		loot.addLoot(Items.book, 10);
+		loot.addLoot(Items.paper, 10);
+		loot.addLoot(Items.compass, 10);
+		loot.addLoot(Items.clock, 10);
+		loot.addLoot(Items.glowstone_dust, 7);
+		loot.addLoot(Items.gunpowder, 10);
+		loot.addLoot(Items.quartz, 7);
 	}
 
 	@Override

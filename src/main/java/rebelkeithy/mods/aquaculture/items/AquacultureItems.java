@@ -1,11 +1,12 @@
 package rebelkeithy.mods.aquaculture.items;
 
-import net.minecraft.item.EnumArmorMaterial;
-import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import rebelkeithy.mods.aquaculture.Aquaculture;
 import rebelkeithy.mods.aquaculture.BiomeType;
@@ -20,11 +21,11 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public enum AquacultureItems {
 	INSTANCE;
 
-	public static final Item woodenFishingRod = new ItemAquacultureWoodenFishingRod(Config.woodenRodID, 50, 10, "Wood").setUnlocalizedName("fishingRod");
-	public static final Item ironFishingRod = new ItemAquacultureFishingRod(Config.ironRodID, 75, 14, "Iron").setTextureName("aquaculture:IronFishingRod").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
-	public static final Item goldFishingRod = new ItemAquacultureFishingRod(Config.goldRodID, 50, 22, "Gold").setTextureName("aquaculture:GoldFishingRod").setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
-	public static final Item diamondFishingRod = new ItemAquacultureFishingRod(Config.diamondRodID, 250, 10, "Diamond").setTextureName("aquaculture:DiamondFishingRod").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
-	public static final Item adminFishingRod = new ItemAdminFishingRod(Config.adminRodID, 75).setTextureName("AdminFishingRod").setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
+	public static final Item woodenFishingRod = new ItemAquacultureWoodenFishingRod( 50, 10, "Wood").setUnlocalizedName("fishingRod");
+	public static final Item ironFishingRod = new ItemAquacultureFishingRod(75, 14, "Iron").setTextureName("aquaculture:IronFishingRod").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
+	public static final Item goldFishingRod = new ItemAquacultureFishingRod(50, 22, "Gold").setTextureName("aquaculture:GoldFishingRod").setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
+	public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, 10, "Diamond").setTextureName("aquaculture:DiamondFishingRod").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
+	public static final Item adminFishingRod = new ItemAdminFishingRod(75).setTextureName("AdminFishingRod").setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
 
 	public static final SubItem seaweed = new SubItemFood(Config.lootID, 2, 0, false).setUnlocalizedName("Seaweed").setTextureName("aquaculture:Seaweed").setCreativeTab(Aquaculture.tab);
 	public static final SubItem algae = new SubItemFood(Config.lootID, 2, 0, false).setUnlocalizedName("Algae").setTextureName("aquaculture:Algae").setCreativeTab(Aquaculture.tab);
@@ -49,20 +50,20 @@ public enum AquacultureItems {
 	public static final SubItem treasureChest = new ItemTreasureChest(Config.lootID).setUnlocalizedName("TreasureChest").setTextureName("aquaculture:TreasureChest").setCreativeTab(Aquaculture.tab);
 	public static final SubItem neptunesBounty = new ItemNeptunesBounty(Config.lootID).setUnlocalizedName("NeptunesBounty").setTextureName("aquaculture:NeptunesBounty").setCreativeTab(Aquaculture.tab);
 
-	private static EnumToolMaterial neptuniumEnum = EnumHelper.addToolMaterial("Neptunium", 3, 2500, 9F, 6F, 15);
+	private static ToolMaterial neptuniumEnum = EnumHelper.addToolMaterial("Neptunium", 3, 2500, 9F, 6F, 15);
 
-	public static final Item neptuniumPickaxe = new AquaItemPickaxe(Config.neptuniumPickaxeID, neptuniumEnum).setUnlocalizedName("NeptuniumPickaxe").setCreativeTab(Aquaculture.tab);
-	public static final Item neptuniumShovel = new AquaItemSpade(Config.neptuniumShovelID, neptuniumEnum).setUnlocalizedName("NeptuniumShovel").setCreativeTab(Aquaculture.tab);
-	public static final Item neptuniumAxe = new AquaItemAxe(Config.neptuniumAxeID, neptuniumEnum).setUnlocalizedName("NeptuniumAxe").setCreativeTab(Aquaculture.tab);
-	public static final Item neptuniumHoe = new AquaItemHoe(Config.neptuniumHoeID, neptuniumEnum).setUnlocalizedName("NeptuniumHoe").setCreativeTab(Aquaculture.tab);
-	public static final Item neptuniumSword = new AquaItemSword(Config.neptuniumSwordID, neptuniumEnum).setUnlocalizedName("NeptuniumSword").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumPickaxe = new AquaItemPickaxe(neptuniumEnum).setUnlocalizedName("NeptuniumPickaxe").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumShovel = new AquaItemSpade(neptuniumEnum).setUnlocalizedName("NeptuniumShovel").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumAxe = new AquaItemAxe(neptuniumEnum).setUnlocalizedName("NeptuniumAxe").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumHoe = new AquaItemHoe(neptuniumEnum).setUnlocalizedName("NeptuniumHoe").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumSword = new AquaItemSword(neptuniumEnum).setUnlocalizedName("NeptuniumSword").setCreativeTab(Aquaculture.tab);
 
-	private static EnumArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", 75, new int[]{3, 8, 6, 3}, 15);
+	private static ArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", 75, new int[]{3, 8, 6, 3}, 15);
 
-	public static final Item neptuniumHelmet = new NeptuniumArmor(Config.neptuniumHelmetID, neptuniumArmorEnum, 0, 0).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
-	public static final Item neptuniumPlate = new NeptuniumArmor(Config.neptuniumPlateID, neptuniumArmorEnum, 1, 1).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumPlate").setCreativeTab(Aquaculture.tab);
-	public static final Item neptuniumLegs = new NeptuniumArmor(Config.neptuniumLegsID, neptuniumArmorEnum, 2, 2).setArmorTexture("Neptunium_2").setUnlocalizedName("NeptuniumLegs").setCreativeTab(Aquaculture.tab);
-	public static final Item neptuniumBoots = new NeptuniumArmor(Config.neptuniumBootsID, neptuniumArmorEnum, 3, 3).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumHelmet = new NeptuniumArmor(neptuniumArmorEnum, 0, 0).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumPlate = new NeptuniumArmor(neptuniumArmorEnum, 1, 1).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumPlate").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 2, 2).setArmorTexture("Neptunium_2").setUnlocalizedName("NeptuniumLegs").setCreativeTab(Aquaculture.tab);
+	public static final Item neptuniumBoots = new NeptuniumArmor(neptuniumArmorEnum, 3, 3).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
 
 	public static final ItemFish fish = (ItemFish) new ItemFish(Config.fishID).setUnlocalizedName("Fish").setCreativeTab(Aquaculture.tab);
 
@@ -172,10 +173,10 @@ public enum AquacultureItems {
 		FishLoot.instance().addJunkLoot(box.getItemStack(), 25);
 		FishLoot.instance().addJunkLoot(lockbox.getItemStack(), 23);
 		FishLoot.instance().addJunkLoot(treasureChest.getItemStack(), 10);
-		FishLoot.instance().addJunkLoot(new ItemStack(Item.stick), 20);
-		FishLoot.instance().addJunkLoot(new ItemStack(Item.bone), 20);
-		FishLoot.instance().addJunkLoot(new ItemStack(Item.bootsLeather), 20);
-		FishLoot.instance().addJunkLoot(new ItemStack(Item.appleRed), 20);
+		FishLoot.instance().addJunkLoot(new ItemStack(Items.stick), 20);
+		FishLoot.instance().addJunkLoot(new ItemStack(Items.bone), 20);
+		FishLoot.instance().addJunkLoot(new ItemStack(Items.leather_boots), 20);
+		FishLoot.instance().addJunkLoot(new ItemStack(Items.apple), 20);
 		FishLoot.instance().addJunkLoot(fish.getItemStackFish("Goldfish"), 10);
 		FishLoot.instance().addJunkLoot(nessageInABottle.getItemStack(), 23);
 		FishLoot.instance().addJunkLoot(neptunesBounty.getItemStack(), 1);

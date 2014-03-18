@@ -3,12 +3,12 @@ package rebelkeithy.mods.aquaculture;
 import java.io.File;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public enum Config {
 	INSTANCE;
-	
+	/*
 	public static int fishID = 22000;
 	
 	public static int woodenRodID = 22001;
@@ -44,7 +44,7 @@ public enum Config {
 	
 
 	public static int lootID = 22029;
-
+	 */
 	/*
 	 * Enchantments
 	 */
@@ -65,6 +65,7 @@ public enum Config {
 		Configuration config = new Configuration(file);
 		config.load();
 
+		/*
 		woodenRodID = config.getItem("Wooden Fishing Rod ID", woodenRodID).getInt();
 		ironRodID = config.getItem("Iron Fishing Rod ID", ironRodID).getInt();
 		goldRodID = config.getItem("Gold Fishing Rod ID", goldRodID).getInt();
@@ -100,7 +101,7 @@ public enum Config {
 		neptuniumPlateID = config.getItem("Neptunium Chest", neptuniumPlateID).getInt();
 		neptuniumLegsID = config.getItem("Neptunium Legs", neptuniumLegsID).getInt();
 		neptuniumBootsID = config.getItem("Neptunium Boots", neptuniumBootsID).getInt();
-
+		 */
 		appealingID = isIdAvailableOrSet(config.get(categoryEnchantments, "Appealing", appealingID)).getInt();
 		magneticID = isIdAvailableOrSet(config.get(categoryEnchantments, "Magnetic", magneticID)).getInt();
 		longcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Long Cast", longcastID)).getInt();

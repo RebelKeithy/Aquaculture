@@ -8,12 +8,10 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION)
-@NetworkMod(clientSideRequired = true, serverSideRequired = true)
 public class Aquaculture {
 	public final static String MOD_ID = "Aquaculture";
 	public final static String MOD_NAME = "Aquaculture";
@@ -42,7 +40,7 @@ public class Aquaculture {
 		EntityRegistry.registerGlobalEntityID(EntityCustomFishHook.class, "CustomFishHook", 174);
 		AquacultureEnchants.init();
 
-		tab.setItemID(AquacultureItems.ironFishingRod.itemID);
+		tab.setItem(AquacultureItems.ironFishingRod);
 
 		proxy.registerModelRenderers();
 	}

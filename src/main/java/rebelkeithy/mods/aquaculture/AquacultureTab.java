@@ -6,14 +6,14 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class AquacultureTab extends CreativeTabs {
-	int itemID;
+	Item tabItem;
 
 	public AquacultureTab(String par2Str) {
 		super(par2Str);
 	}
 
-	public void setItemID(int id) {
-		itemID = id;
+	public void setItem(Item item) {
+		tabItem = item;
 	}
 
 	@Override
@@ -21,15 +21,12 @@ public class AquacultureTab extends CreativeTabs {
 		return LocalizationHelper.localize("itemGroup.Aquaculture");
 	}
 
-	@SideOnly(Side.CLIENT)
 	/**
-	 * the itemID for the item to be displayed on the tab
+	 * The item to be displayed on the tab
 	 */
+	@SideOnly(Side.CLIENT)
 	@Override
-	public int getTabIconItemIndex() {
-		if(Item.itemsList[itemID] != null)
-			return itemID;
-		else
-			return 1;
+	public Item getTabIconItem() {
+		return tabItem;
 	}
 }

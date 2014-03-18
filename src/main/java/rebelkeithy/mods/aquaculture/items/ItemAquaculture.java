@@ -4,8 +4,8 @@ import net.minecraft.item.Item;
 
 public class ItemAquaculture extends Item {
 
-	public ItemAquaculture(int par1) {
-		super(par1);
+	public ItemAquaculture() {
+		super();
 	}
 
 	/**

@@ -3,7 +3,9 @@ package rebelkeithy.mods.aquaculture.items;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 
@@ -116,8 +118,13 @@ public class ItemMessageInABottle extends SubItem {
 			message = "ERROR! Fish Escaping!";
 			break;
 		}
-
-		par3EntityPlayer.addChatMessage(message);
+		
+		if  (par3EntityPlayer instanceof EntityPlayerMP){
+			
+			ChatComponentText chatMessage = new ChatComponentText(message);
+			par3EntityPlayer.addChatMessage(chatMessage);
+		}
+		
 		--par1ItemStack.stackSize;
 		return par1ItemStack;
 	}

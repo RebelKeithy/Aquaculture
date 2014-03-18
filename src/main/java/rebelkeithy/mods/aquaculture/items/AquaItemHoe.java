@@ -1,13 +1,13 @@
 package rebelkeithy.mods.aquaculture.items;
 
-import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 
 public class AquaItemHoe extends ItemHoe {
 
-	public AquaItemHoe(int par1, EnumToolMaterial par2EnumToolMaterial) {
-		super(par1, par2EnumToolMaterial);
+	public AquaItemHoe(ToolMaterial toolMaterial) {
+		super(toolMaterial);
 	}
 
 	/**

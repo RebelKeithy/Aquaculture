@@ -2,7 +2,7 @@ package rebelkeithy.mods.aquaculture.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.util.EnumHelper;
 import rebelkeithy.mods.aquaculture.Config;
 
 /**

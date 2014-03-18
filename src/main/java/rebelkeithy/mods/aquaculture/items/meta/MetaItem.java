@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rebelkeithy.mods.aquaculture.LocalizationHelper;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -19,8 +19,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class MetaItem extends Item {
 	ArrayList<SubItem> subItems;
 
-	public MetaItem(int par1) {
-		super(par1);
+	public MetaItem() {
+		super();
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 	}
@@ -34,7 +34,7 @@ public class MetaItem extends Item {
 	}
 
 	@Override
-	public String getItemDisplayName(ItemStack par1ItemStack) {
+	public String getItemStackDisplayName(ItemStack par1ItemStack) {
 		int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, subItems.size());
 		return LocalizationHelper.localize("item." + subItems.get(i).getUnlocalizedName(par1ItemStack) + ".name");
 	}
@@ -45,7 +45,7 @@ public class MetaItem extends Item {
 	 * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
 	 */
 	@Override
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List) {
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
 		for(SubItem item : subItems) {
 			par3List.add(item.getItemStack());
 		}
@@ -55,7 +55,7 @@ public class MetaItem extends Item {
 	/**
 	 * Gets an icon index based on an item's damage value
 	 */
-	public Icon getIconFromDamage(int par1) {
+	public IIcon getIconFromDamage(int par1) {
 		if(par1 < subItems.size())
 			return subItems.get(par1).getIcon();
 
@@ -71,7 +71,7 @@ public class MetaItem extends Item {
 	 */
 
 	@Override
-	public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
+	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
 		int damage = stack.getItemDamage();
 		if(damage < subItems.size()) {
 			return subItems.get(damage).getIcon(stack, renderPass, player, usingItem, useRemaining);
@@ -81,7 +81,7 @@ public class MetaItem extends Item {
 	}
 
 	@Override
-	public Icon getIcon(ItemStack stack, int pass) {
+	public IIcon getIcon(ItemStack stack, int pass) {
 		int damage = stack.getItemDamage();
 		if(damage < subItems.size()) {
 			return subItems.get(damage).getIcon(stack, pass);
@@ -92,7 +92,7 @@ public class MetaItem extends Item {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		for(SubItem item : subItems) {
 			item.registerIcons(par1IconRegister);
 		}

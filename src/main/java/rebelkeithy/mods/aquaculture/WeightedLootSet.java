@@ -9,6 +9,7 @@ import java.util.Set;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
@@ -69,7 +70,7 @@ public class WeightedLootSet {
 				int max = lootMax.get(key);
 				int amount = rand.nextInt(max - min + 1) + min;
 				stack.stackSize = amount;
-				if(stack.itemID == Item.enchantedBook.itemID) {
+				if(stack.getItem() == Items.enchanted_book) {
 					Enchantment enchantment = Enchantment.enchantmentsList[rand.nextInt(Enchantment.enchantmentsList.length)];
 					int l = MathHelper.getRandomIntegerInRange(rand, enchantment.getMinLevel(), enchantment.getMaxLevel());
 					((ItemEnchantedBook) stack.getItem()).addEnchantment(stack, new EnchantmentData(enchantment, l));

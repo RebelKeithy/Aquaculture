@@ -1,8 +1,8 @@
 package rebelkeithy.mods.aquaculture.items;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.EnumArmorMaterial;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -12,8 +12,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class NeptuniumArmor extends ItemArmor {
 	private String texture;
 
-	public NeptuniumArmor(int par1, EnumArmorMaterial par2EnumArmorMaterial, int par3, int par4) {
-		super(par1, par2EnumArmorMaterial, par3, par4);
+	public NeptuniumArmor(ArmorMaterial par2EnumArmorMaterial, int par3, int par4) {
+		super(par2EnumArmorMaterial, par3, par4);
 	}
 
 	public Item setArmorTexture(String string) {
@@ -22,7 +22,7 @@ public class NeptuniumArmor extends ItemArmor {
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot, int layer) {
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String layer) {
 		return "aquaculture:armor/" + texture + ".png";
 	}
 
@@ -38,7 +38,7 @@ public class NeptuniumArmor extends ItemArmor {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("aquaculture:" + this.getIconString());
 	}
 }

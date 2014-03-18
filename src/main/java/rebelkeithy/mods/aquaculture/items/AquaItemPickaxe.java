@@ -1,13 +1,13 @@
 package rebelkeithy.mods.aquaculture.items;
 
-import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 
 public class AquaItemPickaxe extends ItemPickaxe {
 
-	public AquaItemPickaxe(int par1, EnumToolMaterial par2EnumToolMaterial) {
-		super(par1, par2EnumToolMaterial);
+	public AquaItemPickaxe(ToolMaterial toolMaterial) {
+		super(toolMaterial);
 	}
 
 	/**

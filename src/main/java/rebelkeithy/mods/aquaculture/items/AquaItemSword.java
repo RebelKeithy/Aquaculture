@@ -1,13 +1,13 @@
 package rebelkeithy.mods.aquaculture.items;
 
-import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSword;
 
 public class AquaItemSword extends ItemSword {
 
-	public AquaItemSword(int par1, EnumToolMaterial par2EnumToolMaterial) {
-		super(par1, par2EnumToolMaterial);
+	public AquaItemSword(ToolMaterial toolMaterial) {
+		super(toolMaterial);
 	}
 
 	/**

@@ -1,29 +1,33 @@
 package rebelkeithy.mods.aquaculture.items;
 
+import java.util.Set;
+
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.util.EnumHelper;
 import rebelkeithy.mods.aquaculture.EntityCustomFishHook;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAquacultureFishingRod extends ItemTool {
-	public Icon usingIcon;
+	public IIcon usingIcon;
 	public String type;
 	public int enchantability;
+	private static Set effectiveBlockSet = Sets.newHashSet(new Block[]{});
 
-	public ItemAquacultureFishingRod(int i, int d, int enchantability, String type) {
-		super(i, 0, EnumHelper.addToolMaterial("Fishing" + type, 0, d, 0, 0, enchantability), new Block[]{});
+	public ItemAquacultureFishingRod(int d, int enchantability, String type) {
+		super(0F, EnumHelper.addToolMaterial("Fishing" + type, 0, d, 0, 0, enchantability), effectiveBlockSet);
 		setMaxDamage(d);
 		setMaxStackSize(1);
 		this.type = type;
@@ -62,7 +66,7 @@ public class ItemAquacultureFishingRod extends ItemTool {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		if(entityplayer.fishEntity != null) {
-			int i = entityplayer.fishEntity.catchFish();
+			int i = entityplayer.fishEntity.func_146034_e();
 			itemstack.damageItem(i, entityplayer);
 			entityplayer.swingItem();
 
@@ -88,7 +92,7 @@ public class ItemAquacultureFishingRod extends ItemTool {
 	}
 
 	@Override
-	public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
+	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
 		if(!stack.hasTagCompound())
 			stack.setTagCompound(new NBTTagCompound());
 
@@ -109,7 +113,7 @@ public class ItemAquacultureFishingRod extends ItemTool {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		super.registerIcons(par1IconRegister);
 
 		usingIcon = par1IconRegister.registerIcon("aquaculture:" + type + "FishingRodUsing");

@@ -2,6 +2,8 @@ package rebelkeithy.mods.aquaculture;
 
 import rebelkeithy.mods.aquaculture.items.AquacultureItems;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -14,33 +16,33 @@ public enum AquacultureRecipes {
 		AquacultureItems.fish.addFilletRecipes();
 
 		GameRegistry.addShapelessRecipe(AquacultureItems.whaleSteak.getItemStack(5), AquacultureItems.fish.getItemStackFish("Whale"));
-		GameRegistry.addShapelessRecipe(new ItemStack(Item.dyePowder, 2, 0), AquacultureItems.fish.getItemStackFish("Squid"));
-		GameRegistry.addShapelessRecipe(new ItemStack(Block.mushroomRed, 5), AquacultureItems.fish.getItemStackFish("Red Shrooma"));
-		GameRegistry.addShapelessRecipe(new ItemStack(Block.mushroomBrown, 5), AquacultureItems.fish.getItemStackFish("Brown Shrooma"));
-		GameRegistry.addShapelessRecipe(new ItemStack(Item.leather, 2), new ItemStack(Item.bootsLeather));
-		GameRegistry.addShapelessRecipe(new ItemStack(Item.goldNugget, 1), AquacultureItems.fish.getItemStackFish("Goldfish"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.dye, 2, 0), AquacultureItems.fish.getItemStackFish("Squid"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.red_mushroom, 5), AquacultureItems.fish.getItemStackFish("Red Shrooma"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.brown_mushroom, 5), AquacultureItems.fish.getItemStackFish("Brown Shrooma"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.leather, 2), new ItemStack(Items.leather_boots));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.gold_nugget, 1), AquacultureItems.fish.getItemStackFish("Goldfish"));
 		GameRegistry.addShapelessRecipe(AquacultureItems.frogLegs.getItemStack(1), AquacultureItems.fish.getItemStackFish("Frog"));
-		GameRegistry.addShapelessRecipe(AquacultureItems.turtleSoup.getItemStack(), AquacultureItems.fish.getItemStackFish("Turtle"), Item.bucketWater);
+		GameRegistry.addShapelessRecipe(AquacultureItems.turtleSoup.getItemStack(), AquacultureItems.fish.getItemStackFish("Turtle"), Items.water_bucket);
 		GameRegistry.addShapelessRecipe(AquacultureItems.sushi.getItemStack(), AquacultureItems.fishFillet.getItemStack(), AquacultureItems.seaweed.getItemStack());
-		GameRegistry.addShapelessRecipe(new ItemStack(Item.dyePowder, 3, 15), AquacultureItems.fish.getItemStackFish("Fish Bones"));
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.dye, 3, 15), AquacultureItems.fish.getItemStackFish("Fish Bones"));
 
-		GameRegistry.addShapelessRecipe(new ItemStack(Block.planks, 4), AquacultureItems.driftwood.getItemStack());
+		GameRegistry.addShapelessRecipe(new ItemStack(Blocks.planks, 4), AquacultureItems.driftwood.getItemStack());
 
 		FurnaceRecipes.smelting().addSmelting(AquacultureItems.fishFillet.itemID, AquacultureItems.fishFillet.damage, AquacultureItems.cookedFillet.getItemStack(), 0.3f);
 		FurnaceRecipes.smelting().addSmelting(AquacultureItems.whaleSteak.itemID, AquacultureItems.whaleSteak.damage, AquacultureItems.cookedWhaleSteak.getItemStack(), 0.3f);
-		FurnaceRecipes.smelting().addSmelting(AquacultureItems.tinCan.itemID, AquacultureItems.tinCan.damage, new ItemStack(Item.ingotIron), 0.7f);
+		FurnaceRecipes.smelting().addSmelting(AquacultureItems.tinCan.itemID, AquacultureItems.tinCan.damage, new ItemStack(Items.iron_ingot), 0.7f);
 		FurnaceRecipes.smelting().addSmelting(AquacultureItems.frogLegs.itemID, AquacultureItems.frogLegs.damage, AquacultureItems.cookedFrogLegs.getItemStack(), 0.3F);
 
-		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.ironFishingRod, 1), "  X", " XS", "I S", 'X', Item.ingotIron, 'I', Item.stick, 'S', Item.silk);
-		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.goldFishingRod, 1), "  X", " XS", "I S", 'X', Item.ingotGold, 'I', Item.stick, 'S', Item.silk);
-		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.diamondFishingRod, 1), "  X", " XS", "I S", 'X', Item.diamond, 'I', Item.stick, 'S', Item.silk);
-		GameRegistry.addRecipe(AquacultureItems.whaleBurger.getItemStack(), " B ", " W ", " B ", 'W', AquacultureItems.cookedWhaleSteak.getItemStack(), 'B', Item.bread);
+		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.ironFishingRod, 1), "  X", " XS", "I S", 'X', Items.iron_ingot, 'I', Items.stick, 'S', Items.string);
+		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.goldFishingRod, 1), "  X", " XS", "I S", 'X', Items.gold_ingot, 'I', Items.stick, 'S', Items.string);
+		GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.diamondFishingRod, 1), "  X", " XS", "I S", 'X', Items.diamond, 'I', Items.stick, 'S', Items.string);
+		GameRegistry.addRecipe(AquacultureItems.whaleBurger.getItemStack(), " B ", " W ", " B ", 'W', AquacultureItems.cookedWhaleSteak.getItemStack(), 'B', Items.bread);
 
-		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumPickaxe, 1), "XXX", " | ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Item.stick);
-		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumShovel, 1), " X ", " | ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Item.stick);
-		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumAxe, 1), "XX ", "X| ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Item.stick);
-		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumHoe, 1), "XX ", " | ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Item.stick);
-		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumSword, 1), " X ", " X ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Item.stick);
+		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumPickaxe, 1), "XXX", " | ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumShovel, 1), " X ", " | ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumAxe, 1), "XX ", "X| ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumHoe, 1), "XX ", " | ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Items.stick);
+		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumSword, 1), " X ", " X ", " | ", 'X', AquacultureItems.neptuniumBar.getItemStack(), '|', Items.stick);
 		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumHelmet, 1), "XXX", "X X", 'X', AquacultureItems.neptuniumBar.getItemStack());
 		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumPlate, 1), "X X", "XXX", "XXX", 'X', AquacultureItems.neptuniumBar.getItemStack());
 		GameRegistry.addRecipe(new ItemStack(AquacultureItems.neptuniumLegs, 1), "XXX", "X X", "X X", 'X', AquacultureItems.neptuniumBar.getItemStack());

@@ -1,23 +1,24 @@
 package rebelkeithy.mods.aquaculture.items;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import rebelkeithy.mods.aquaculture.EntityCustomFishHook;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAquacultureWoodenFishingRod extends ItemAquaculture {
-	public Icon usingIcon;
+	public IIcon usingIcon;
 	public String type;
 	public int enchantability;
 
-	public ItemAquacultureWoodenFishingRod(int i, int d, int enchantability, String type) {
-		super(i);
+	public ItemAquacultureWoodenFishingRod(int d, int enchantability, String type) {
+		super();
 		setMaxDamage(d);
 		setMaxStackSize(1);
 		this.type = type;
@@ -56,7 +57,7 @@ public class ItemAquacultureWoodenFishingRod extends ItemAquaculture {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		if(entityplayer.fishEntity != null) {
-			int i = entityplayer.fishEntity.catchFish();
+			int i = entityplayer.fishEntity.func_146034_e();
 			itemstack.damageItem(i, entityplayer);
 			entityplayer.swingItem();
 
@@ -82,7 +83,7 @@ public class ItemAquacultureWoodenFishingRod extends ItemAquaculture {
 	}
 
 	@Override
-	public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
+	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
 		if(!stack.hasTagCompound())
 			stack.setTagCompound(new NBTTagCompound());
 
@@ -97,15 +98,15 @@ public class ItemAquacultureWoodenFishingRod extends ItemAquaculture {
 			 */
 		}
 
-		return Item.fishingRod.getIconFromDamage(0);
+		return Items.fishing_rod.getIconFromDamage(0);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
-		Item.fishingRod.registerIcons(par1IconRegister);
+	public void registerIcons(IIconRegister par1IconRegister) {
+		Items.fishing_rod.registerIcons(par1IconRegister);
 
-		this.itemIcon = Item.fishingRod.getIconFromDamage(0);
+		this.itemIcon = Items.fishing_rod.getIconFromDamage(0);
 
 		// super.registerIcons(par1IconRegister);
 

@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import rebelkeithy.mods.aquaculture.BiomeType;
 import rebelkeithy.mods.aquaculture.FishLoot;
@@ -31,7 +31,7 @@ public class ItemFish extends Item {
 		public int filletAmount;
 		public int minWeight;
 		public int maxWeight;
-		public Icon icon;
+		public IIcon icon;
 
 		public Fish(String name, int amount, int min, int max) {
 			this.name = name;
@@ -42,7 +42,7 @@ public class ItemFish extends Item {
 	}
 
 	public ItemFish(int par1) {
-		super(par1);
+		super();
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
 
@@ -60,14 +60,14 @@ public class ItemFish extends Item {
 			FishLoot.instance().addFish(this.getItemStackFish(name), biome, rarity);
 		}
 
-		LanguageRegistry.addName(new ItemStack(itemID, 1, fish.size() - 1), LocalizationHelper.localize("item.Fish." + name.replace(" ", "_") + ".name"));
+		LanguageRegistry.addName(new ItemStack(this, 1, fish.size() - 1), LocalizationHelper.localize("item.Fish." + name.replace(" ", "_") + ".name"));
 	}
 
 	public void addFilletRecipes() {
 		for(int i = 0; i < fish.size(); i++) {
 			Fish f = fish.get(i);
 			if(f.filletAmount != 0) {
-				GameRegistry.addShapelessRecipe(AquacultureItems.fishFillet.getItemStack(f.filletAmount), new ItemStack(itemID, 1, i));
+				GameRegistry.addShapelessRecipe(AquacultureItems.fishFillet.getItemStack(f.filletAmount), new ItemStack(this, 1, i));
 			}
 		}
 	}
@@ -75,10 +75,10 @@ public class ItemFish extends Item {
 	public String getItemDisplayName(ItemStack par1ItemStack) {
 		if(par1ItemStack.hasTagCompound()) {
 			if(par1ItemStack.getTagCompound().hasKey("Prefix")) {
-				return par1ItemStack.getTagCompound().getString("Prefix") + " " + super.getItemDisplayName(par1ItemStack);
+				return par1ItemStack.getTagCompound().getString("Prefix") + " " + super.getItemStackDisplayName(par1ItemStack);
 			}
 		}
-		return super.getItemDisplayName(par1ItemStack);
+		return super.getItemStackDisplayName(par1ItemStack);
 	}
 
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
@@ -115,7 +115,7 @@ public class ItemFish extends Item {
 		float weight = rand.nextFloat() * ((f.maxWeight * 1.1f) - min) + min;
 
 		if(!stack.hasTagCompound()) {
-			stack.setTagCompound(new NBTTagCompound("tag"));
+			stack.setTagCompound(new NBTTagCompound());
 		}
 
 		stack.getTagCompound().setFloat("Weight", weight);
@@ -133,7 +133,7 @@ public class ItemFish extends Item {
 	public ItemStack getItemStackFish(String name) {
 		for(int i = 0; i < fish.size(); i++) {
 			if(fish.get(i).name.equals(name)) {
-				return new ItemStack(itemID, 1, i);
+				return new ItemStack(this, 1, i);
 			}
 		}
 
@@ -145,7 +145,7 @@ public class ItemFish extends Item {
 	 * Gets an icon index based on an item's damage value
 	 */
 	@Override
-	public Icon getIconFromDamage(int par1) {
+	public IIcon getIconFromDamage(int par1) {
 		int j = MathHelper.clamp_int(par1, 0, fish.size());
 		return fish.get(j).icon;
 	}
@@ -165,7 +165,7 @@ public class ItemFish extends Item {
 	 * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
 	 */
 	@Override
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List) {
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
 		for(int j = 0; j < fish.size(); ++j) {
 			par3List.add(new ItemStack(par1, 1, j));
 		}
@@ -173,7 +173,7 @@ public class ItemFish extends Item {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		for(Fish f : fish) {
 			f.icon = par1IconRegister.registerIcon("Aquaculture:" + f.name);
 		}

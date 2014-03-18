@@ -1,12 +1,13 @@
 package rebelkeithy.mods.aquaculture.items.meta;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class SubItem {
@@ -15,13 +16,13 @@ public class SubItem {
 	public MetaItem item;
 
 	public String unlocalizedName;
-	private Icon itemIcon;
+	private IIcon itemIcon;
 	private String textureName;
 
 	public SubItem(int id) {
 		itemID = id + 256;
 
-		if(Item.itemsList[id + 256] == null) {
+		if(Items.itemsList[id + 256] == null) {
 			item = new MetaItem(id);
 		} else {
 			if(Item.itemsList[itemID] instanceof MetaItem) {
@@ -60,14 +61,14 @@ public class SubItem {
 	}
 
 	public ItemStack getItemStack(int i) {
-		return new ItemStack(itemID, i, damage);
+		return new ItemStack(item, i, damage);
 	}
 
 	public String getUnlocalizedName(ItemStack par1ItemStack) {
 		return unlocalizedName;
 	}
 
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon(this.textureName);
 	}
 
@@ -87,19 +88,19 @@ public class SubItem {
 		return par1ItemStack;
 	}
 
-	public Icon getIcon() {
+	public IIcon getIcon() {
 		return itemIcon;
 	}
 
-	public Icon getIcon(ItemStack par1ItemStack) {
+	public IIcon getIcon(ItemStack par1ItemStack) {
 		return getIcon();
 	}
 
-	public Icon getIcon(ItemStack stack, int pass) {
+	public IIcon getIcon(ItemStack stack, int pass) {
 		return getIcon(stack);
 	}
 
-	public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
+	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
 		return getIcon(stack, renderPass);
 	}
 }
