@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture;
+/*package rebelkeithy.mods.aquaculture;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,4 +52,4 @@ public enum LocalizationHelper {
 			throw new NullPointerException("Cannot find language: " + lang);
 		}
 	}
-}
+}*/

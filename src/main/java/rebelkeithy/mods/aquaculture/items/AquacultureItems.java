@@ -12,7 +12,6 @@ import rebelkeithy.mods.aquaculture.Aquaculture;
 import rebelkeithy.mods.aquaculture.BiomeType;
 import rebelkeithy.mods.aquaculture.Config;
 import rebelkeithy.mods.aquaculture.FishLoot;
-import rebelkeithy.mods.aquaculture.LocalizationHelper;
 import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
 import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 import rebelkeithy.mods.aquaculture.items.meta.SubItemFood;
@@ -204,6 +203,6 @@ public enum AquacultureItems {
 		if(!tag.contains("item.")) {
 			tag = "item." + tag;
 		}
-		LanguageRegistry.addName(item, LocalizationHelper.localize(tag + ".name"));
+		//LanguageRegistry.addName(item, LocalizationHelper.localize(tag + ".name"));
 	}
 }

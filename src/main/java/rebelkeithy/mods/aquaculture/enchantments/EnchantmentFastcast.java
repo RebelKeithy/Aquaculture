@@ -1,6 +1,5 @@
 package rebelkeithy.mods.aquaculture.enchantments;
 
-import rebelkeithy.mods.aquaculture.LocalizationHelper;
 import net.minecraft.enchantment.Enchantment;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -24,8 +23,8 @@ public class EnchantmentFastcast extends EnchantmentFishingPole {
 		return !((enchantment instanceof EnchantmentShortCast) || (enchantment instanceof EnchantmentLongCast) || (enchantment instanceof EnchantmentFastcast));
 	}
 
-	@Override
+	/*@Override
 	public String getTranslatedName(int par1) {
 		return LocalizationHelper.localize("enchantment.fastCast") + RomanNumeral.convertToRoman(par1);
-	}
+	}*/
 }

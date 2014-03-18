@@ -3,7 +3,6 @@ package rebelkeithy.mods.aquaculture.items.meta;
 import java.util.ArrayList;
 import java.util.List;
 
-import rebelkeithy.mods.aquaculture.LocalizationHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,10 +32,16 @@ public class MetaItem extends Item {
 		return subItems.size() - 1;
 	}
 
-	@Override
+	/*@Override
 	public String getItemStackDisplayName(ItemStack par1ItemStack) {
 		int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, subItems.size());
 		return LocalizationHelper.localize("item." + subItems.get(i).getUnlocalizedName(par1ItemStack) + ".name");
+	}*/
+	
+	@Override
+	public String getUnlocalizedName(ItemStack itemStack) {
+		int i = MathHelper.clamp_int(itemStack.getItemDamage(), 0, subItems.size());
+		return "item." + subItems.get(i).getUnlocalizedName(itemStack);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})

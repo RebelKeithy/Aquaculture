@@ -1,6 +1,5 @@
 package rebelkeithy.mods.aquaculture.enchantments;
 
-import rebelkeithy.mods.aquaculture.LocalizationHelper;
 import net.minecraft.enchantment.Enchantment;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -34,8 +33,8 @@ public class EnchantmentDoubleHook extends EnchantmentFishingPole {
 		return super.getMinEnchantability(par1) + 50;
 	}
 	
-	@Override
+	/*@Override
 	public String getTranslatedName(int par1) {
 		return LocalizationHelper.localize("enchantment.doubleHook") + RomanNumeral.convertToRoman(par1);
-	}
+	}*/
 }

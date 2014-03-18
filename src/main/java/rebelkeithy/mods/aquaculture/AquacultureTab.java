@@ -16,10 +16,10 @@ public class AquacultureTab extends CreativeTabs {
 		tabItem = item;
 	}
 
-	@Override
+	/*@Override
 	public String getTranslatedTabLabel() {
 		return LocalizationHelper.localize("itemGroup.Aquaculture");
-	}
+	}*/
 
 	/**
 	 * The item to be displayed on the tab

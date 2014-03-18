@@ -17,7 +17,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import rebelkeithy.mods.aquaculture.BiomeType;
 import rebelkeithy.mods.aquaculture.FishLoot;
-import rebelkeithy.mods.aquaculture.LocalizationHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -60,7 +59,7 @@ public class ItemFish extends Item {
 			FishLoot.instance().addFish(this.getItemStackFish(name), biome, rarity);
 		}
 
-		LanguageRegistry.addName(new ItemStack(this, 1, fish.size() - 1), LocalizationHelper.localize("item.Fish." + name.replace(" ", "_") + ".name"));
+		//LanguageRegistry.addName(new ItemStack(this, 1, fish.size() - 1), LocalizationHelper.localize("item.Fish." + name.replace(" ", "_") + ".name"));
 	}
 
 	public void addFilletRecipes() {
