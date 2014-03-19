@@ -213,3 +213,15 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#############
+## ForgeGradle
+#############
+.gradle/
+build/
+eclipse/
+CREDITS-fml.txt
+forge-*-*-changelog.txt
+LICENSE-fml.txt
+MinecraftForge-Credits.txt
+MinecraftForge-License.txt
