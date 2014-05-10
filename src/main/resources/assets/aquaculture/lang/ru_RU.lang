@@ -1,0 +1,94 @@
+itemGroup.Aquaculture=Aquaculture
+
+# Enchantments
+enchantment.appealing=Привлечение
+enchantment.barbedHook=Колючий крючок
+enchantment.doubleHook=Двойной крючок
+enchantment.fastCast=Быстрый бросок
+enchantment.heavyLine=Тяжелая леска
+enchantment.longCast=Длинный бросок
+enchantment.magnetic=Магнетизм
+enchantment.shortCast=Короткий бросок
+
+# Rod
+item.fishingRod.name=Деревянная удочка
+item.IronFishingRod.name=Железная удочка
+item.GoldFishingRod.name=Золотая удочка
+item.DiamondFishingRod.name=Алмазная удочка
+item.AdminFishingRod.name=Удочка администратора
+
+item.Seaweed.name=Морская капуста
+item.Algae.name=Водоросли
+
+# Food
+item.RawWhaleSteak.name=Сырой китовый стейк
+item.RawFishFillet.name=Сырое рыбное филе
+item.CookedFishFillet.name=Приготовленное рыбное филе
+item.CookedWhaleSteak.name=Приготовленный китовый стейк
+item.Whaleburger.name=Приготовленный китовый бургер
+item.FrogLegs.name=Ножки лягушки
+item.CookedFrogLegs.name=Приготовленные ножки лягушки
+item.TurtleSoup.name=Черепаховый суп
+item.Sushi.name=Суши
+
+# Misc Items
+item.Driftwood.name=Коряга
+item.TinCan.name=консервная банка
+item.MessageInABottle.name=Сообщение в бутылке
+item.Box.name=Коробка
+item.Lockbox.name=Закрытая коробка
+item.TreasureChest.name=Сундук с сокровищами
+
+item.NeptuniumIngot.name=Нептуниевый слиток
+item.NeptunesBounty.name=Подарок Нептуна
+item.NeptuniumPickaxe.name=Нептуниевая кирка
+item.NeptuniumShovel.name=Нептуниевая лопата
+item.NeptuniumAxe.name=Нептуниевый топор
+item.NeptuniumHoe.name=Нептуниевая мотыга
+item.NeptuniumSword.name=Нептуниевый меч
+item.NeptuniumHelmet.name=Нептуниевый шлем
+item.NeptuniumPlate.name=Нептуниевая кираса
+item.NeptuniumLegs.name=Нептуниевые поножи
+item.NeptuniumBoots.name=Нептуниевые ботинки
+
+# Fish
+item.Fish.name=Рыба
+item.Fish.Bluegill.name=Синежаберный солнечник
+item.Fish.Perch.name=Окунь
+item.Fish.Gar.name=Щука
+item.Fish.Bass.name=Басс
+item.Fish.Muskellunge.name=Щука-маскинонг
+item.Fish.Brown_Trout.name=Кумжа
+item.Fish.Catfish.name=Сом
+item.Fish.Carp.name=Карп
+item.Fish.Blowfish.name=Иглобрюх
+item.Fish.Red_Grouper.name=Красный групер
+item.Fish.Salmon.name=Сёмга
+item.Fish.Tuna.name=Тунец
+item.Fish.Swordfish.name=Меченос
+item.Fish.Shark.name=Акула
+item.Fish.Whale.name=Кит
+item.Fish.Squid.name=Кальмар
+item.Fish.Jellyfish.name=Медуза
+item.Fish.Frog.name=Лягушка
+item.Fish.Turtle.name=Черепаха
+item.Fish.Leech.name=Пиявка
+item.Fish.Pirahna.name=Пиранья
+item.Fish.Electric_Eel.name=Электрический угорь
+item.Fish.Tambaqui.name=Бурый паку
+item.Fish.Arapaima.name=Арапаима
+item.Fish.Cod.name=Треска
+item.Fish.Pollock.name=Сайд
+item.Fish.Herring.name=Сельд
+item.Fish.Halibut.name=Палтус
+item.Fish.Pink_Salmon.name=Горбуша
+item.Fish.Rainbow_Trout.name=Микижа
+item.Fish.Blackfish.name=Чёрная рыба
+item.Fish.Capitaine.name=Хогфиш
+item.Fish.Boulti.name=Нил Тиляпии
+item.Fish.Bagrid.name=Косатковый сом
+item.Fish.Syndontis.name=Сундонтис
+item.Fish.Red_Shrooma.name=Красный гриб
+item.Fish.Brown_Shrooma.name=Коричневый гриб
+item.Fish.Goldfish.name=Золотая рыбка
+item.Fish.Fish_Bones.name=Рыбные кости
