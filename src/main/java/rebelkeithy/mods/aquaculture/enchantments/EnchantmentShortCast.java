@@ -10,7 +10,7 @@ public class EnchantmentShortCast extends EnchantmentFishingPole {
 
 	public EnchantmentShortCast(int id, int weight) {
 		super(id, weight);
-		setName("shortCast");
+		setName("atumShortCast");
 	}
 
 	@Override

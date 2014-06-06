@@ -10,7 +10,7 @@ public class EnchantmentBardedHook extends EnchantmentFishingPole {
 
 	public EnchantmentBardedHook(int id, int weight) {
 		super(id, weight);
-		setName("barbedHook");
+		setName("atumBarbedHook");
 	}
 
 	@Override
