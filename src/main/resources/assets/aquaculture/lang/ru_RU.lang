@@ -1,14 +1,14 @@
 itemGroup.Aquaculture=Aquaculture
 
 # Enchantments
-enchantment.atumAppealing=Привлечение
-enchantment.atumBarbedHook=Колючий крючок
-enchantment.atumDoubleHook=Двойной крючок
-enchantment.atumFastCast=Быстрый бросок
-enchantment.atumHeavyLine=Тяжелая леска
-enchantment.atumLongCast=Длинный бросок
-enchantment.atumMagnetic=Магнетизм
-enchantment.atumShortCast=Короткий бросок
+enchantment.aquacultureAppealing=Привлечение
+enchantment.aquacultureBarbedHook=Колючий крючок
+enchantment.aquacultureDoubleHook=Двойной крючок
+enchantment.aquacultureFastCast=Быстрый бросок
+enchantment.aquacultureHeavyLine=Тяжелая леска
+enchantment.aquacultureLongCast=Длинный бросок
+enchantment.aquacultureMagnetic=Магнетизм
+enchantment.aquacultureShortCast=Короткий бросок
 
 # Rod
 item.fishingRod.name=Деревянная удочка

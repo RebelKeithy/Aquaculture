@@ -1,14 +1,14 @@
 itemGroup.Aquaculture=水产养殖
 
 # Enchantments
-enchantment.appealing=吸引
-enchantment.barbedHook=倒刺鱼钩
-enchantment.doubleHook=双钩
-enchantment.fastCast=快速抛钩
-enchantment.heavyLine=粗线
-enchantment.longCast=长距抛钩
-enchantment.magnetic=磁力
-enchantment.shortCast=短距抛钩
+enchantment.aquacultureAppealing=吸引
+enchantment.aquacultureBarbedHook=倒刺鱼钩
+enchantment.aquacultureDoubleHook=双钩
+enchantment.aquacultureFastCast=快速抛钩
+enchantment.aquacultureHeavyLine=粗线
+enchantment.aquacultureLongCast=长距抛钩
+enchantment.aquacultureMagnetic=磁力
+enchantment.aquacultureShortCast=短距抛钩
 
 # Rod
 item.fishingRod.name=木制鱼竿
