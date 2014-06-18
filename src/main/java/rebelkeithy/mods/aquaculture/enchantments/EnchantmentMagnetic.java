@@ -10,7 +10,7 @@ public class EnchantmentMagnetic extends EnchantmentFishingPole {
 
 	public EnchantmentMagnetic(int id, int weight) {
 		super(id, weight);
-		setName("atumMagnetic");
+		setName("aquacultureMagnetic");
 	}
 
 	@Override

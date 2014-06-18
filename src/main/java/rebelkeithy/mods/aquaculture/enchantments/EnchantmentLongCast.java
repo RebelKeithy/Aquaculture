@@ -10,7 +10,7 @@ public class EnchantmentLongCast extends EnchantmentFishingPole {
 
 	public EnchantmentLongCast(int id, int weight) {
 		super(id, weight);
-		setName("atumLongCast");
+		setName("aquacultureLongCast");
 	}
 
 	@Override

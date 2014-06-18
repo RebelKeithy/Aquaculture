@@ -6,7 +6,7 @@ public class EnchantmentHeavyLine extends EnchantmentFishingPole {
 
 	public EnchantmentHeavyLine(int id, int weight) {
 		super(id, weight);
-		setName("atumHeavyLine");
+		setName("aquacultureHeavyLine");
 	}
 
 	@Override

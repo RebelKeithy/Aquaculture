@@ -10,7 +10,7 @@ public class EnchantmentFastcast extends EnchantmentFishingPole {
 
 	public EnchantmentFastcast(int id, int weight) {
 		super(id, weight);
-		setName("atumFastCast");
+		setName("aquacultureFastCast");
 	}
 
 	@Override

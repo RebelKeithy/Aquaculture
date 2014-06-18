@@ -1,14 +1,14 @@
 itemGroup.Aquaculture=Aquaculture
 
 # Enchantments
-enchantment.appealing=Appealing
-enchantment.barbedHook=Barbed Hook
-enchantment.doubleHook=Double Hook
-enchantment.fastCast=Fast Cast
-enchantment.heavyLine=Heavy Line
-enchantment.longCast=Long Cast
-enchantment.magnetic=Magnetic
-enchantment.shortCast=Short Cast
+enchantment.atumAppealing=Appealing
+enchantment.atumBarbedHook=Barbed Hook
+enchantment.atumDoubleHook=Double Hook
+enchantment.atumFastCast=Fast Cast
+enchantment.atumHeavyLine=Heavy Line
+enchantment.atumLongCast=Long Cast
+enchantment.atumMagnetic=Magnetic
+enchantment.atumShortCast=Short Cast
 
 # Rod
 item.fishingRod.name=Wooden Fishing Rod

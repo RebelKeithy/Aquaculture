@@ -10,7 +10,7 @@ public class EnchantmentDoubleHook extends EnchantmentFishingPole {
 
 	public EnchantmentDoubleHook(int id, int weight) {
 		super(id, weight);
-		setName("atumDoubleHook");
+		setName("aquacultureDoubleHook");
 	}
 
 	@Override

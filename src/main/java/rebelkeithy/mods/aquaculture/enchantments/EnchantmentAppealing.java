@@ -10,7 +10,7 @@ public class EnchantmentAppealing extends EnchantmentFishingPole {
 
 	public EnchantmentAppealing(int id, int weight) {
 		super(id, weight);
-		setName("atumAppealing");
+		setName("aquacultureAppealing");
 	}
 
 	@Override
