@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
@@ -20,6 +21,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
@@ -291,13 +293,13 @@ public class EntityCustomFishHook extends EntityFishHook {
 				++this.ticksInAir;
 			}
 
-			Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
-			Vec3 vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            Vec3 vec3 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
+			Vec3 vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 			MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
-			vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+			vec31 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
 			if(movingobjectposition != null) {
-				vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+				vec31 = Vec3.createVectorHelper(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
 			}
 
 			Entity entity = null;
@@ -375,7 +377,7 @@ public class EntityCustomFishHook extends EntityFishHook {
 				for(int k = 0; k < b0; ++k) {
 					double d7 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double) (k + 0) / (double) b0 - 0.125D + 0.125D;
 					double d8 = this.boundingBox.minY + (this.boundingBox.maxY - this.boundingBox.minY) * (double) (k + 1) / (double) b0 - 0.125D + 0.125D;
-					AxisAlignedBB axisalignedbb1 = AxisAlignedBB.getAABBPool().getAABB(this.boundingBox.minX, d7, this.boundingBox.minZ, this.boundingBox.maxX, d8, this.boundingBox.maxZ);
+					AxisAlignedBB axisalignedbb1 = AxisAlignedBB.getBoundingBox(this.boundingBox.minX, d7, this.boundingBox.minZ, this.boundingBox.maxX, d8, this.boundingBox.maxZ);
 
 					if(this.worldObj.isAABBInMaterial(axisalignedbb1, Material.water)) {
 						d6 += 1.0D / (double) b0;
@@ -393,7 +395,7 @@ public class EntityCustomFishHook extends EntityFishHook {
 						}
 
 						if(this.angler != null) {
-							int efficiency = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.effeciencyFishing.effectId, this.angler.getCurrentEquippedItem());
+							int efficiency = EnchantmentHelper.getEnchantmentLevel(Enchantment.field_151369_A.effectId, this.angler.getCurrentEquippedItem());
 							biteChance *= 1.0 - 0.1 * efficiency;
 						}
 
@@ -402,7 +404,8 @@ public class EntityCustomFishHook extends EntityFishHook {
 
 							if(this.angler != null) {
 								int barbed = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.barbedHook.effectId, this.angler.getCurrentEquippedItem());
-								ticksCatchable += 4 * barbed;
+                                int loot = EnchantmentHelper.getEnchantmentLevel(Enchantment.field_151370_z.effectId, this.angler.getCurrentEquippedItem());
+								ticksCatchable += 4 * barbed + loot;
 							}
 
 							this.motionY -= 0.20000000298023224D;

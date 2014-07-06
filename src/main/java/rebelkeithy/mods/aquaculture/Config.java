@@ -24,7 +24,6 @@ public enum Config {
 	public static int fastcastID = 64;
 	public static int barbedHookID = 65;
 	public static int doubleHookID = 66;
-	public static int effeciencyID = 67;
 	public static int heavyLineID = 68;
 
 	public void init(File file) {
@@ -38,7 +37,6 @@ public enum Config {
 		// fastcastID = isIdAvailableOrSet(config.get(categoryEnchantments, "Fast Cast", fastcastID)).getInt();
 		barbedHookID = isIdAvailableOrSet(config.get(categoryEnchantments, "Barbed Hook", barbedHookID)).getInt();
 		doubleHookID = isIdAvailableOrSet(config.get(categoryEnchantments, "Double Hook", doubleHookID)).getInt();
-		effeciencyID = isIdAvailableOrSet(config.get(categoryEnchantments, "Efficency", effeciencyID)).getInt();
 		heavyLineID = isIdAvailableOrSet(config.get(categoryEnchantments, "Heavy Line", heavyLineID)).getInt();
 
 		if(config.hasChanged())

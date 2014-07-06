@@ -21,8 +21,6 @@ public class AquacultureEnchants {
 	public static EnchantmentFishingPole barbedHook;
 	public static EnchantmentFishingPole heavyLine;
 
-	public static Enchantment effeciencyFishing;
-
 	public static void init() {
 		enumFishingPole = EnumHelper.addEnchantmentType("fishingPole");
 		
@@ -46,7 +44,6 @@ public class AquacultureEnchants {
 		barbedHook = new EnchantmentBardedHook(Config.barbedHookID, 1);
 		heavyLine = new EnchantmentHeavyLine(Config.heavyLineID, 5);
 
-		effeciencyFishing = new EnchantmentEfficiencyFishing(Config.effeciencyID, 10);
 	}
 	
 	private static void clearReservedEnchant (int id) {
