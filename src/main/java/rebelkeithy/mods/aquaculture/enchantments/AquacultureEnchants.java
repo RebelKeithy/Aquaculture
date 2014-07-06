@@ -33,8 +33,6 @@ public class AquacultureEnchants {
 		clearReservedEnchant(Config.barbedHookID);
 		clearReservedEnchant(Config.heavyLineID);
 		
-		clearReservedEnchant(Config.effeciencyID);
-		
 		appealing = new EnchantmentAppealing(Config.appealingID, 3);
 		magnetic = new EnchantmentMagnetic(Config.magneticID, 3);
 		longcast = new EnchantmentLongCast(Config.longcastID, 7);
