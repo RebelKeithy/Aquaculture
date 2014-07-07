@@ -404,9 +404,13 @@ public class EntityCustomFishHook extends EntityFishHook {
 
 							if(this.angler != null) {
 								int barbed = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.barbedHook.effectId, this.angler.getCurrentEquippedItem());
-                                int loot = EnchantmentHelper.getEnchantmentLevel(Enchantment.field_151370_z.effectId, this.angler.getCurrentEquippedItem());
-								ticksCatchable += 4 * barbed + loot;
+								ticksCatchable += 4 * barbed;
 							}
+
+                            if(this.angler != null) {
+                                int loot = EnchantmentHelper.getEnchantmentLevel(Enchantment.field_151370_z.effectId, this.angler.getCurrentEquippedItem());
+                                ticksCatchable += 4 * loot;
+                            }
 
 							this.motionY -= 0.20000000298023224D;
 							this.playSound("random.splash", 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);

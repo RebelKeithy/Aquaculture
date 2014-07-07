@@ -2,6 +2,7 @@ package rebelkeithy.mods.aquaculture.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.enchantment.EnchantmentLootBonus;
 
 /**
  * @author Freyja
@@ -20,7 +21,7 @@ public class EnchantmentBardedHook extends EnchantmentFishingPole {
 
 	@Override
 	public boolean canApplyTogether(Enchantment enchantment) {
-		return !((enchantment instanceof EnchantmentDoubleHook) || (enchantment instanceof EnchantmentBardedHook));
+		return !((enchantment instanceof EnchantmentDoubleHook) || (enchantment instanceof EnchantmentBardedHook) || (enchantment instanceof EnchantmentLootBonus));
 	}
 
 	@Override
