@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
-           mavenLocal()
+        mavenLocal()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
@@ -26,7 +26,7 @@ repositories {
 apply plugin: 'forge'
 
 version = "4.0"
-group= "rebelkeithy.mods.aquaculture" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "rebelkeithy.mods.aquaculture" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Aquaculture"
 
 ext.configFile = file "build.properties"
@@ -39,7 +39,6 @@ configFile.withReader {
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
-    assetDir = "eclipse/assets"
 }
 
 task buildInfo() {
@@ -47,7 +46,7 @@ task buildInfo() {
     def proc = cmd.execute()
     proc.waitFor()
     if (proc.exitValue() == 0) {
-        ext.revision = proc.text.trim()
+        ext.revision = "DEV." + proc.text.trim()
     } else {
         ext.revision = "GITBORK"
     }
@@ -64,30 +63,39 @@ if (System.getenv().ARTIFACT_VERSION == null) {
     artifact_version = "${config.mod_version}.${project.buildInfo.buildNum}"
 }
 
-if(System.getenv().ARTIFACT_VERSION != null) {
+if (System.getenv().ARTIFACT_VERSION != null) {
     artifact_version = "${system.getenv().ARTIFACT_VERSION}"
 }
 
 version = "${config.minecraft_version}-${artifact_version}"
 
 processResources
-{
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+        {
+            // this will ensure that this task is redone when the versions change.
+            inputs.property "version", project.artifact_version
+            inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+            // replace stuff in mcmod.info, nothing else
+            from(sourceSets.main.resources.srcDirs) {
+                include 'mcmod.info'
+
+                // replace version and mcversion
+                expand 'version': project.artifact_version, 'mcversion': project.minecraft.version
+            }
+
+            // copy everything else, thats not the mcmod.info
+            from(sourceSets.main.resources.srcDirs) {
+                exclude 'mcmod.info'
+            }
+        }
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+artifacts {
+    archives deobfJar
 }
 
 task deobfJar(type: Jar) {
@@ -102,7 +110,7 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url : "file:///var/www/html/maven")
+            repository(url: "file:///var/www/html/maven")
         }
     }
 }

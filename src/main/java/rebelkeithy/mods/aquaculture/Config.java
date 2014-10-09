@@ -44,7 +44,6 @@ public enum Config {
 	}
 
 	private Property isIdAvailableOrSet(Property property) {
-		
 		int propertyInt = property.getInt();
 		
 		if(Enchantment.enchantmentsList[propertyInt] == null) {
@@ -60,6 +59,5 @@ public enum Config {
 		}
 
 		throw new RuntimeException("No more enchantment ids are available");
-		
 	}
 }

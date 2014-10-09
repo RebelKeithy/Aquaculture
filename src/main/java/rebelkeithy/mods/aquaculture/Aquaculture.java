@@ -37,7 +37,7 @@ public class Aquaculture {
 
 		AquacultureRecipes.INSTANCE.addRecipes();
 
-		EntityRegistry.registerGlobalEntityID(EntityCustomFishHook.class, "CustomFishHook", 174);
+		EntityRegistry.registerGlobalEntityID(EntityCustomFishHook.class, "CustomFishHook", EntityRegistry.findGlobalUniqueEntityId());
 		AquacultureEnchants.init();
 
 		tab.setItem(AquacultureItems.ironFishingRod);
