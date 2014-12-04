@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture;
+package rebelkeithy.mods.aquaculture.loot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class BiomeType {
 
     private String name;
 
-    BiomeType(String name, int[] biomes) {
+    private BiomeType(String name, int[] biomes) {
         this.name = name;
         for (int i = 0; i < biomes.length; i++) {
             addBiome(biomes[i], this);

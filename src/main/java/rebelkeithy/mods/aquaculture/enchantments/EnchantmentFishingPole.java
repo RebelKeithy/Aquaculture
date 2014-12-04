@@ -10,17 +10,17 @@ import rebelkeithy.mods.aquaculture.items.ItemAquacultureFishingRod;
  */
 public abstract class EnchantmentFishingPole extends Enchantment {
 
-	public EnchantmentFishingPole(int id, int weight) {
-		super(id, weight, AquacultureEnchants.enumFishingPole);
-	}
+    public EnchantmentFishingPole(int id, int weight) {
+        super(id, weight, AquacultureEnchants.enumFishingPole);
+    }
 
-	@Override
-	public boolean canApply(ItemStack itemStack) {
-		return ((itemStack.getItem() instanceof ItemAquacultureFishingRod) || (itemStack.getItem() instanceof ItemAdminFishingRod));
-	}
+    @Override
+    public boolean canApply(ItemStack itemStack) {
+        return ((itemStack.getItem() instanceof ItemAquacultureFishingRod) || (itemStack.getItem() instanceof ItemAdminFishingRod));
+    }
 
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return canApply(stack);
-	}
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return canApply(stack);
+    }
 }
