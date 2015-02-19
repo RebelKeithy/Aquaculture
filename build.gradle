@@ -21,6 +21,11 @@ repositories {
         name = "Team Metallurgy Maven"
         url = "http://mc.aesireanempire.com/maven"
     }
+    
+	maven {
+        name = "Squeek502's Maven"
+		url = "http://www.ryanliptak.com/maven/"
+	}
 }
 
 apply plugin: 'forge'
@@ -39,6 +44,10 @@ configFile.withReader {
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
+}
+
+dependencies {
+    compile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_api_version}:api"
 }
 
 task buildInfo() {

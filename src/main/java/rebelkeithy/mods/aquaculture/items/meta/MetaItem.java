@@ -1,5 +1,7 @@
 package rebelkeithy.mods.aquaculture.items.meta;
 
+import cpw.mods.fml.common.Optional.Interface;
+import cpw.mods.fml.common.Optional.Method;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,7 +17,11 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MetaItem extends Item {
+import squeek.applecore.api.food.FoodValues;
+import squeek.applecore.api.food.IEdible;
+
+@Interface(iface = "squeek.applecore.api.food.IEdible", modid = "AppleCore")
+public class MetaItem extends Item implements IEdible {
     ArrayList<SubItem> subItems;
 
     public MetaItem() {
@@ -96,6 +102,25 @@ public class MetaItem extends Item {
         for (SubItem item : subItems) {
             item.registerIcons(par1IconRegister);
         }
+    }
+
+    @Override
+    @Method(modid = "AppleCore")
+    public FoodValues getFoodValues(ItemStack itemStack) {
+    	 int damage = itemStack.getItemDamage();
+         if (damage < subItems.size()) {
+             return subItems.get(damage).getFoodValues(itemStack);
+         }
+
+         return null;
+    }
+    
+    @Method(modid = "AppleCore")
+    public void onEatenAppleCore(ItemStack itemStack, EntityPlayer player) {
+    	 int damage = itemStack.getItemDamage();
+         if (damage < subItems.size()) {
+             subItems.get(damage).onEatenAppleCore(itemStack, player);
+         }         
     }
 
     // ItemRedirects

@@ -1,5 +1,7 @@
 package rebelkeithy.mods.aquaculture.items.meta;
 
+import squeek.applecore.api.food.FoodValues;
+import cpw.mods.fml.common.Optional.Method;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -58,6 +60,16 @@ public class SubItem {
 
     public void registerIcons(IIconRegister par1IconRegister) {
         this.itemIcon = par1IconRegister.registerIcon(this.textureName);
+    }
+    
+    @Method(modid = "AppleCore")
+    public FoodValues getFoodValues(ItemStack itemStack) {
+    	return null;
+    }
+    
+    @Method(modid = "AppleCore")
+    public void onEatenAppleCore(ItemStack itemStack, EntityPlayer player) {
+    	
     }
 
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
