@@ -1,6 +1,5 @@
 package rebelkeithy.mods.aquaculture.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraftforge.common.util.EnumHelper;
 import rebelkeithy.mods.aquaculture.handlers.Config;
@@ -24,15 +23,6 @@ public class AquacultureEnchants {
     public static void init() {
         enumFishingPole = EnumHelper.addEnchantmentType("fishingPole");
 
-        clearReservedEnchant(Config.appealingID);
-        clearReservedEnchant(Config.magneticID);
-        clearReservedEnchant(Config.longcastID);
-        clearReservedEnchant(Config.shortcastID);
-        //clearReservedEnchant(Config.fastcastID);
-        clearReservedEnchant(Config.doubleHookID);
-        clearReservedEnchant(Config.barbedHookID);
-        clearReservedEnchant(Config.heavyLineID);
-
         appealing = new EnchantmentAppealing(Config.appealingID, 3);
         magnetic = new EnchantmentMagnetic(Config.magneticID, 3);
         longcast = new EnchantmentLongCast(Config.longcastID, 7);
@@ -44,10 +34,4 @@ public class AquacultureEnchants {
 
     }
 
-    private static void clearReservedEnchant(int id) {
-
-        if (Enchantment.enchantmentsList[id] instanceof EnchantmentSlotReserve) {
-            Enchantment.enchantmentsList[id] = null;
-        }
-    }
 }
