@@ -20,7 +20,7 @@ public class NeptuniumArmor extends ItemArmor {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String layer) {
-        return "aquaculture:armor/" + texture + ".png";
+        return "aquaculture:textures/armor/" + texture + ".png";
     }
 
     @Override

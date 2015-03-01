@@ -5,7 +5,7 @@
   "description": "Welcome to Aquaculture! An expansion of Minecraft's fishing system.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "http://minecraft.curseforge.com/mc-mods/60028-aquaculture",
   "updateUrl": "",
   "authorList": ["Team Metallurgy"],
   "credits": "Shadowclaimer, lclc98, Freyja, and Rebelkeithy",
