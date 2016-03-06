@@ -19,7 +19,7 @@ import rebelkeithy.mods.aquaculture.proxy.CommonProxy;
 public class Aquaculture {
     public final static String MOD_ID = "Aquaculture";
     public final static String MOD_NAME = "Aquaculture";
-    public final static String MOD_VERSION = "1.2.3";
+    public final static String MOD_VERSION = "1.2.6";
 
     @Instance(MOD_ID)
     public static Aquaculture instance;
