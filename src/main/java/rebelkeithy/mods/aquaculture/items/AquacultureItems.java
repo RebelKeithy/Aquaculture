@@ -85,55 +85,55 @@ public class AquacultureItems {
         // Adding fish to main fish item
 
         // Freshwater
-        fish.addFish("Bluegill", 1, 1, 5, BiomeType.freshwater, 1);
-        fish.addFish("Perch", 1, 1, 5, BiomeType.freshwater, 1);
-        fish.addFish("Gar", 2, 1, 10, BiomeType.freshwater, 1);
-        fish.addFish("Bass", 3, 1, 25, BiomeType.freshwater, 1);
-        fish.addFish("Muskellunge", 3, 1, 35, BiomeType.freshwater, 1);
-        fish.addFish("Brown Trout", 3, 1, 40, BiomeType.freshwater, 1);
-        fish.addFish("Catfish", 4, 1, 50, BiomeType.freshwater, 1);
+        fish.addFish("Bluegill", 1, 1, 5, BiomeType.freshwater, 30);
+        fish.addFish("Perch", 1, 1, 5, BiomeType.freshwater, 30);
+        fish.addFish("Gar", 2, 1, 10, BiomeType.freshwater, 20);
+        fish.addFish("Bass", 3, 1, 25, BiomeType.freshwater, 10);
+        fish.addFish("Muskellunge", 3, 1, 35, BiomeType.freshwater, 10);
+        fish.addFish("Brown Trout", 3, 1, 40, BiomeType.freshwater, 10);
+        fish.addFish("Catfish", 4, 1, 50, BiomeType.freshwater, 5);
         fish.addFish("Carp", 5, 1, 100, BiomeType.freshwater, 1);
 
         // Saltwater
-        fish.addFish("Blowfish", 3, 1, 25, BiomeType.saltwater, 1);
-        fish.addFish("Red Grouper", 4, 1, 50, BiomeType.saltwater, 1);
-        fish.addFish("Salmon", 5, 1, 100, BiomeType.saltwater, 1);
-        fish.addFish("Tuna", 5, 1, 135, BiomeType.saltwater, 1);
-        fish.addFish("Swordfish", 7, 1, 1400, BiomeType.saltwater, 1);
+        fish.addFish("Blowfish", 3, 1, 25, BiomeType.saltwater, 60);
+        fish.addFish("Red Grouper", 4, 1, 50, BiomeType.saltwater, 30);
+        fish.addFish("Salmon", 5, 1, 100, BiomeType.saltwater, 10);
+        fish.addFish("Tuna", 5, 1, 135, BiomeType.saltwater, 10);
+        fish.addFish("Swordfish", 7, 1, 1400, BiomeType.saltwater, 5);
         fish.addFish("Shark", 8, 1, 5000, BiomeType.saltwater, 1);
         fish.addFish("Whale", 0, 1, 190000, BiomeType.saltwater, 1);
-        fish.addFish("Squid", 0, 1, 1000, BiomeType.saltwater, 1);
-        fish.addFish("Jellyfish", 0, 1, 500, BiomeType.saltwater, 1);
+        fish.addFish("Squid", 0, 1, 1000, BiomeType.saltwater, 40);
+        fish.addFish("Jellyfish", 0, 1, 500, BiomeType.saltwater, 40);
 
         // Brackish
         fish.addFish("Frog", 0, 1, 1, BiomeType.brackish, 1);
         fish.addFish("Turtle", 0, 1, 5, BiomeType.brackish, 1);
-        fish.addFish("Leech", 0, 1, 1, BiomeType.brackish, 1);
+        fish.addFish("Leech", 0, 1, 1, BiomeType.brackish, 30);
 
         // Jungle
-        fish.addFish("Pirahna", 1, 1, 8, BiomeType.tropical, 1);
-        fish.addFish("Electric Eel", 3, 1, 45, BiomeType.tropical, 1);
-        fish.addFish("Tambaqui", 4, 1, 75, BiomeType.tropical, 1);
+        fish.addFish("Pirahna", 1, 1, 8, BiomeType.tropical, 60);
+        fish.addFish("Electric Eel", 3, 1, 45, BiomeType.tropical, 25);
+        fish.addFish("Tambaqui", 4, 1, 75, BiomeType.tropical, 5);
         fish.addFish("Arapaima", 6, 1, 220, BiomeType.tropical, 1);
 
         // Tundra
-        fish.addFish("Cod", 6, 1, 210, BiomeType.arctic, 1);
-        fish.addFish("Pollock", 3, 1, 45, BiomeType.arctic, 1);
-        fish.addFish("Herring", 1, 1, 3, BiomeType.arctic, 1);
+        fish.addFish("Cod", 6, 1, 210, BiomeType.arctic, 10);
+        fish.addFish("Pollock", 3, 1, 45, BiomeType.arctic, 25);
+        fish.addFish("Herring", 1, 1, 3, BiomeType.arctic, 60);
         fish.addFish("Halibut", 7, 1, 700, BiomeType.arctic, 1);
-        fish.addFish("Pink Salmon", 5, 1, 100, BiomeType.arctic, 1);
-        fish.addFish("Rainbow Trout", 4, 1, 50, BiomeType.arctic, 1);
-        fish.addFish("Blackfish", 2, 1, 10, BiomeType.arctic, 1);
+        fish.addFish("Pink Salmon", 5, 1, 100, BiomeType.arctic, 10);
+        fish.addFish("Rainbow Trout", 4, 1, 50, BiomeType.arctic, 20);
+        fish.addFish("Blackfish", 2, 1, 10, BiomeType.arctic, 45);
 
         // Desert
         fish.addFish("Capitaine", 4, 1, 450, BiomeType.arid, 1);
-        fish.addFish("Boulti", 2, 1, 10, BiomeType.arid, 1);
-        fish.addFish("Bagrid", 3, 1, 25, BiomeType.arid, 1);
-        fish.addFish("Syndontis", 1, 1, 3, BiomeType.arid, 1);
+        fish.addFish("Boulti", 2, 1, 10, BiomeType.arid, 30);
+        fish.addFish("Bagrid", 3, 1, 25, BiomeType.arid, 20);
+        fish.addFish("Syndontis", 1, 1, 3, BiomeType.arid, 60);
 
         // Mushroom Island
-        fish.addFish("Red Shrooma", 0, 1, 5, BiomeType.mushroom, 1);
-        fish.addFish("Brown Shrooma", 0, 1, 5, BiomeType.mushroom, 1);
+        fish.addFish("Red Shrooma", 0, 1, 5, BiomeType.mushroom, 20);
+        fish.addFish("Brown Shrooma", 0, 1, 5, BiomeType.mushroom, 20);
 
         fish.addFish("Goldfish", 0, 1, 4, new BiomeType[]{}, 1);
         fish.addFish("Fish Bones", 0, 1, 1, new BiomeType[]{}, 1);
