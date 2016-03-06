@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import rebelkeithy.mods.aquaculture.Aquaculture;
+import rebelkeithy.mods.aquaculture.handlers.Config;
 import rebelkeithy.mods.aquaculture.loot.BiomeType;
 import rebelkeithy.mods.aquaculture.loot.FishLoot;
 import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
@@ -85,73 +86,73 @@ public class AquacultureItems {
         // Adding fish to main fish item
 
         // Freshwater
-        fish.addFish("Bluegill", 1, 1, 5, BiomeType.freshwater, 30);
-        fish.addFish("Perch", 1, 1, 5, BiomeType.freshwater, 30);
-        fish.addFish("Gar", 2, 1, 10, BiomeType.freshwater, 20);
-        fish.addFish("Bass", 3, 1, 25, BiomeType.freshwater, 10);
-        fish.addFish("Muskellunge", 3, 1, 35, BiomeType.freshwater, 10);
-        fish.addFish("Brown Trout", 3, 1, 40, BiomeType.freshwater, 10);
-        fish.addFish("Catfish", 4, 1, 50, BiomeType.freshwater, 5);
-        fish.addFish("Carp", 5, 1, 100, BiomeType.freshwater, 1);
+        fish.addFish("Bluegill", 1, 1, 5, BiomeType.freshwater, Config.fishRarity.get("Bluegill"));
+        fish.addFish("Perch", 1, 1, 5, BiomeType.freshwater, Config.fishRarity.get("Perch"));
+        fish.addFish("Gar", 2, 1, 10, BiomeType.freshwater, Config.fishRarity.get("Gar"));
+        fish.addFish("Bass", 3, 1, 25, BiomeType.freshwater, Config.fishRarity.get("Bass"));
+        fish.addFish("Muskellunge", 3, 1, 35, BiomeType.freshwater, Config.fishRarity.get("Muskellunge"));
+        fish.addFish("Brown Trout", 3, 1, 40, BiomeType.freshwater, Config.fishRarity.get("Brown Trout"));
+        fish.addFish("Catfish", 4, 1, 50, BiomeType.freshwater, Config.fishRarity.get("Catfish"));
+        fish.addFish("Carp", 5, 1, 100, BiomeType.freshwater, Config.fishRarity.get("Carp"));
 
         // Saltwater
-        fish.addFish("Blowfish", 3, 1, 25, BiomeType.saltwater, 60);
-        fish.addFish("Red Grouper", 4, 1, 50, BiomeType.saltwater, 30);
-        fish.addFish("Salmon", 5, 1, 100, BiomeType.saltwater, 10);
-        fish.addFish("Tuna", 5, 1, 135, BiomeType.saltwater, 10);
-        fish.addFish("Swordfish", 7, 1, 1400, BiomeType.saltwater, 5);
-        fish.addFish("Shark", 8, 1, 5000, BiomeType.saltwater, 1);
-        fish.addFish("Whale", 0, 1, 190000, BiomeType.saltwater, 1);
-        fish.addFish("Squid", 0, 1, 1000, BiomeType.saltwater, 40);
-        fish.addFish("Jellyfish", 0, 1, 500, BiomeType.saltwater, 40);
+        fish.addFish("Blowfish", 3, 1, 25, BiomeType.saltwater, Config.fishRarity.get("Blowfish"));
+        fish.addFish("Red Grouper", 4, 1, 50, BiomeType.saltwater, Config.fishRarity.get("Red Grouper"));
+        fish.addFish("Salmon", 5, 1, 100, BiomeType.saltwater, Config.fishRarity.get("Salmon"));
+        fish.addFish("Tuna", 5, 1, 135, BiomeType.saltwater, Config.fishRarity.get("Tuna"));
+        fish.addFish("Swordfish", 7, 1, 1400, BiomeType.saltwater, Config.fishRarity.get("Swordfish"));
+        fish.addFish("Shark", 8, 1, 5000, BiomeType.saltwater, Config.fishRarity.get("Shark"));
+        fish.addFish("Whale", 0, 1, 190000, BiomeType.saltwater, Config.fishRarity.get("Whale"));
+        fish.addFish("Squid", 0, 1, 1000, BiomeType.saltwater, Config.fishRarity.get("Squid"));
+        fish.addFish("Jellyfish", 0, 1, 500, BiomeType.saltwater, Config.fishRarity.get("Jellyfish"));
 
         // Brackish
-        fish.addFish("Frog", 0, 1, 1, BiomeType.brackish, 1);
-        fish.addFish("Turtle", 0, 1, 5, BiomeType.brackish, 1);
-        fish.addFish("Leech", 0, 1, 1, BiomeType.brackish, 30);
+        fish.addFish("Frog", 0, 1, 1, BiomeType.brackish, Config.fishRarity.get("Frog"));
+        fish.addFish("Turtle", 0, 1, 5, BiomeType.brackish, Config.fishRarity.get("Turtle"));
+        fish.addFish("Leech", 0, 1, 1, BiomeType.brackish, Config.fishRarity.get("Leech"));
 
         // Jungle
-        fish.addFish("Pirahna", 1, 1, 8, BiomeType.tropical, 60);
-        fish.addFish("Electric Eel", 3, 1, 45, BiomeType.tropical, 25);
-        fish.addFish("Tambaqui", 4, 1, 75, BiomeType.tropical, 5);
-        fish.addFish("Arapaima", 6, 1, 220, BiomeType.tropical, 1);
+        fish.addFish("Pirahna", 1, 1, 8, BiomeType.tropical, Config.fishRarity.get("Pirahna"));
+        fish.addFish("Electric Eel", 3, 1, 45, BiomeType.tropical, Config.fishRarity.get("Electric Eel"));
+        fish.addFish("Tambaqui", 4, 1, 75, BiomeType.tropical, Config.fishRarity.get("Tambaqui"));
+        fish.addFish("Arapaima", 6, 1, 220, BiomeType.tropical, Config.fishRarity.get("Arapaima"));
 
         // Tundra
-        fish.addFish("Cod", 6, 1, 210, BiomeType.arctic, 10);
-        fish.addFish("Pollock", 3, 1, 45, BiomeType.arctic, 25);
-        fish.addFish("Herring", 1, 1, 3, BiomeType.arctic, 60);
-        fish.addFish("Halibut", 7, 1, 700, BiomeType.arctic, 1);
-        fish.addFish("Pink Salmon", 5, 1, 100, BiomeType.arctic, 10);
-        fish.addFish("Rainbow Trout", 4, 1, 50, BiomeType.arctic, 20);
-        fish.addFish("Blackfish", 2, 1, 10, BiomeType.arctic, 45);
+        fish.addFish("Cod", 6, 1, 210, BiomeType.arctic, Config.fishRarity.get("Cod"));
+        fish.addFish("Pollock", 3, 1, 45, BiomeType.arctic, Config.fishRarity.get("Pollock"));
+        fish.addFish("Herring", 1, 1, 3, BiomeType.arctic, Config.fishRarity.get("Herring"));
+        fish.addFish("Halibut", 7, 1, 700, BiomeType.arctic, Config.fishRarity.get("Halibut"));
+        fish.addFish("Pink Salmon", 5, 1, 100, BiomeType.arctic, Config.fishRarity.get("Pink Salmon"));
+        fish.addFish("Rainbow Trout", 4, 1, 50, BiomeType.arctic, Config.fishRarity.get("Rainbow Trout"));
+        fish.addFish("Blackfish", 2, 1, 10, BiomeType.arctic, Config.fishRarity.get("Blackfish"));
 
         // Desert
-        fish.addFish("Capitaine", 4, 1, 450, BiomeType.arid, 1);
-        fish.addFish("Boulti", 2, 1, 10, BiomeType.arid, 30);
-        fish.addFish("Bagrid", 3, 1, 25, BiomeType.arid, 20);
-        fish.addFish("Syndontis", 1, 1, 3, BiomeType.arid, 60);
+        fish.addFish("Capitaine", 4, 1, 450, BiomeType.arid, Config.fishRarity.get("Capitaine"));
+        fish.addFish("Boulti", 2, 1, 10, BiomeType.arid, Config.fishRarity.get("Boulti"));
+        fish.addFish("Bagrid", 3, 1, 25, BiomeType.arid, Config.fishRarity.get("Bagrid"));
+        fish.addFish("Syndontis", 1, 1, 3, BiomeType.arid, Config.fishRarity.get("Syndontis"));
 
         // Mushroom Island
-        fish.addFish("Red Shrooma", 0, 1, 5, BiomeType.mushroom, 20);
-        fish.addFish("Brown Shrooma", 0, 1, 5, BiomeType.mushroom, 20);
+        fish.addFish("Red Shrooma", 0, 1, 5, BiomeType.mushroom, Config.fishRarity.get("Red Shrooma"));
+        fish.addFish("Brown Shrooma", 0, 1, 5, BiomeType.mushroom, Config.fishRarity.get("Brown Shrooma"));
 
         fish.addFish("Goldfish", 0, 1, 4, new BiomeType[]{}, 1);
         fish.addFish("Fish Bones", 0, 1, 1, new BiomeType[]{}, 1);
 
-        FishLoot.instance().addJunkLoot(seaweed.getItemStack(), BiomeType.saltwater, 25);
-        FishLoot.instance().addJunkLoot(algae.getItemStack(), new BiomeType[]{BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical}, 25);
-        FishLoot.instance().addJunkLoot(driftwood.getItemStack(), 25);
-        FishLoot.instance().addJunkLoot(tinCan.getItemStack(), 30);
-        FishLoot.instance().addJunkLoot(box.getItemStack(), 25);
-        FishLoot.instance().addJunkLoot(lockbox.getItemStack(), 23);
-        FishLoot.instance().addJunkLoot(treasureChest.getItemStack(), 10);
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.stick), 20);
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.bone), 20);
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.leather_boots), 20);
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.apple), 20);
-        FishLoot.instance().addJunkLoot(fish.getItemStackFish("Goldfish"), 10);
-        FishLoot.instance().addJunkLoot(nessageInABottle.getItemStack(), 23);
-        FishLoot.instance().addJunkLoot(neptunesBounty.getItemStack(), 1);
+        FishLoot.instance().addJunkLoot(seaweed.getItemStack(), BiomeType.saltwater, Config.junkRarity.get("Seaweed"));
+        FishLoot.instance().addJunkLoot(algae.getItemStack(), new BiomeType[]{BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical}, Config.junkRarity.get("Algae"));
+        FishLoot.instance().addJunkLoot(driftwood.getItemStack(), Config.junkRarity.get("Driftwood"));
+        FishLoot.instance().addJunkLoot(tinCan.getItemStack(), Config.junkRarity.get("Tin Can"));
+        FishLoot.instance().addJunkLoot(box.getItemStack(), Config.junkRarity.get("Box"));
+        FishLoot.instance().addJunkLoot(lockbox.getItemStack(), Config.junkRarity.get("Lockbox"));
+        FishLoot.instance().addJunkLoot(treasureChest.getItemStack(), Config.junkRarity.get("Treasure Chest"));
+        FishLoot.instance().addJunkLoot(new ItemStack(Items.stick), Config.junkRarity.get("Stick"));
+        FishLoot.instance().addJunkLoot(new ItemStack(Items.bone), Config.junkRarity.get("Bone"));
+        FishLoot.instance().addJunkLoot(new ItemStack(Items.leather_boots), Config.junkRarity.get("Leather Boots"));
+        FishLoot.instance().addJunkLoot(new ItemStack(Items.apple), Config.junkRarity.get("Apple"));
+        FishLoot.instance().addJunkLoot(fish.getItemStackFish("Goldfish"), Config.junkRarity.get("Goldfish"));
+        FishLoot.instance().addJunkLoot(nessageInABottle.getItemStack(), Config.junkRarity.get("Message In A Bottle"));
+        FishLoot.instance().addJunkLoot(neptunesBounty.getItemStack(), Config.junkRarity.get("Neptunes Bounty"));
 
         OreDictionary.registerOre("listAllfishraw", fishFillet.getItemStack());
         OreDictionary.registerOre("listAllfishcooked", cookedFillet.getItemStack());
