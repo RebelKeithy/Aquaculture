@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BiomeType {
-    public static BiomeType freshwater = new BiomeType("Freshwater", new int[]{1, 3, 4, 7, 18, 20});
-    public static BiomeType arid = new BiomeType("Arid", new int[]{2, 17});
-    public static BiomeType arctic = new BiomeType("Arctic", new int[]{5, 10, 11, 12, 13, 19});
-    public static BiomeType saltwater = new BiomeType("Saltwater", new int[]{0, 16});
-    public static BiomeType tropical = new BiomeType("Tropical", new int[]{21, 22});
-    public static BiomeType brackish = new BiomeType("Brackish", new int[]{6});
-    public static BiomeType mushroom = new BiomeType("Mushroom", new int[]{14, 15});
+    public static BiomeType freshwater = new BiomeType("Freshwater", new int[] { 1, 3, 4, 7, 18, 20 });
+    public static BiomeType arid = new BiomeType("Arid", new int[] { 2, 17 });
+    public static BiomeType arctic = new BiomeType("Arctic", new int[] { 5, 10, 11, 12, 13, 19 });
+    public static BiomeType saltwater = new BiomeType("Saltwater", new int[] { 0, 16 });
+    public static BiomeType tropical = new BiomeType("Tropical", new int[] { 21, 22 });
+    public static BiomeType brackish = new BiomeType("Brackish", new int[] { 6 });
+    public static BiomeType mushroom = new BiomeType("Mushroom", new int[] { 14, 15 });
 
     protected static Map<Integer, BiomeType> biomeMap;
 

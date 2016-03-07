@@ -74,24 +74,24 @@ public class SubItemFood extends SubItem implements IEdible {
         this.eatTime = eatTime;
         return this;
     }
-    
+
     @Override
     @Method(modid = "AppleCore")
     public FoodValues getFoodValues(ItemStack itemStack) {
-    	return new FoodValues (this.getHealAmount(), this.getSaturationModifier());
+        return new FoodValues(this.getHealAmount(), this.getSaturationModifier());
     }
-    
+
     @Method(modid = "AppleCore")
     public void onEatenAppleCore(ItemStack itemStack, EntityPlayer player) {
-    	player.getFoodStats().func_151686_a(new ItemFoodProxy(this), itemStack);
+        player.getFoodStats().func_151686_a(new ItemFoodProxy(this), itemStack);
     }
 
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         --par1ItemStack.stackSize;
         if (Loader.isModLoaded("AppleCore"))
-        	onEatenAppleCore(par1ItemStack, par3EntityPlayer);
+            onEatenAppleCore(par1ItemStack, par3EntityPlayer);
         else
-        	par3EntityPlayer.getFoodStats().addStats(this.getHealAmount(), this.getSaturationModifier());
+            par3EntityPlayer.getFoodStats().addStats(this.getHealAmount(), this.getSaturationModifier());
         par2World.playSoundAtEntity(par3EntityPlayer, "random.burp", 0.5F, par2World.rand.nextFloat() * 0.1F + 0.9F);
         this.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
         return par1ItemStack;

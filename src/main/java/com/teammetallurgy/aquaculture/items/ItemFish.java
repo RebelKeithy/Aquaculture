@@ -34,7 +34,7 @@ public class ItemFish extends Item {
     }
 
     public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType biome, int rarity) {
-        addFish(name, filletAmount, minWeight, maxWeight, new BiomeType[]{biome}, rarity);
+        addFish(name, filletAmount, minWeight, maxWeight, new BiomeType[] { biome }, rarity);
     }
 
     public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType[] biomes, int rarity) {

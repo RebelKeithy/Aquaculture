@@ -46,7 +46,7 @@ public class MetaItem extends Item implements IEdible {
         return "item." + uname;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @SideOnly(Side.CLIENT)
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
@@ -74,8 +74,8 @@ public class MetaItem extends Item implements IEdible {
      */
     /*
      * @SideOnly(Side.CLIENT) public final Icon getIconIndex(ItemStack par1ItemStack) { int damage = par1ItemStack.getItemDamage(); if(subItems.contains(damage)) { return
-	 * subItems.get(damage).getIconFromDamage(par1ItemStack); } return this.getIconFromDamage(par1ItemStack.getItemDamage()); }
-	 */
+     * subItems.get(damage).getIconFromDamage(par1ItemStack); } return this.getIconFromDamage(par1ItemStack.getItemDamage()); }
+     */
     @Override
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
         int damage = stack.getItemDamage();
@@ -107,20 +107,20 @@ public class MetaItem extends Item implements IEdible {
     @Override
     @Method(modid = "AppleCore")
     public FoodValues getFoodValues(ItemStack itemStack) {
-    	 int damage = itemStack.getItemDamage();
-         if (damage < subItems.size()) {
-             return subItems.get(damage).getFoodValues(itemStack);
-         }
+        int damage = itemStack.getItemDamage();
+        if (damage < subItems.size()) {
+            return subItems.get(damage).getFoodValues(itemStack);
+        }
 
-         return null;
+        return null;
     }
-    
+
     @Method(modid = "AppleCore")
     public void onEatenAppleCore(ItemStack itemStack, EntityPlayer player) {
-    	 int damage = itemStack.getItemDamage();
-         if (damage < subItems.size()) {
-             subItems.get(damage).onEatenAppleCore(itemStack, player);
-         }         
+        int damage = itemStack.getItemDamage();
+        if (damage < subItems.size()) {
+            subItems.get(damage).onEatenAppleCore(itemStack, player);
+        }
     }
 
     // ItemRedirects

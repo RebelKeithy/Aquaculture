@@ -20,7 +20,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import java.util.Set;
 
 public class ItemAquacultureFishingRod extends ItemTool {
-    private static Set effectiveBlockSet = Sets.newHashSet(new Block[]{});
+    private static Set effectiveBlockSet = Sets.newHashSet(new Block[] {});
     public IIcon usingIcon;
     public String type;
     public int enchantability;

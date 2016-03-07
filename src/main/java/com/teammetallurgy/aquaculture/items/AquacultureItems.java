@@ -55,7 +55,7 @@ public class AquacultureItems {
     public static final Item neptuniumAxe = new AquaItemAxe(neptuniumEnum).setUnlocalizedName("NeptuniumAxe").setCreativeTab(Aquaculture.tab);
     public static final Item neptuniumHoe = new AquaItemHoe(neptuniumEnum).setUnlocalizedName("NeptuniumHoe").setCreativeTab(Aquaculture.tab);
     public static final Item neptuniumSword = new AquaItemSword(neptuniumEnum).setUnlocalizedName("NeptuniumSword").setCreativeTab(Aquaculture.tab);
-    private static ArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", 75, new int[]{3, 8, 6, 3}, 15);
+    private static ArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", 75, new int[] { 3, 8, 6, 3 }, 15);
     public static final Item neptuniumHelmet = new NeptuniumArmor(neptuniumArmorEnum, 0, 0).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
     public static final Item neptuniumPlate = new NeptuniumArmor(neptuniumArmorEnum, 1, 1).setArmorTexture("Neptunium_1").setUnlocalizedName("NeptuniumPlate").setCreativeTab(Aquaculture.tab);
     public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 2, 2).setArmorTexture("Neptunium_2").setUnlocalizedName("NeptuniumLegs").setCreativeTab(Aquaculture.tab);
@@ -137,11 +137,11 @@ public class AquacultureItems {
         fish.addFish("Red Shrooma", 0, 1, 5, BiomeType.mushroom, Config.fishRarity.get("Red Shrooma"));
         fish.addFish("Brown Shrooma", 0, 1, 5, BiomeType.mushroom, Config.fishRarity.get("Brown Shrooma"));
 
-        fish.addFish("Goldfish", 0, 1, 4, new BiomeType[]{}, 1);
-        fish.addFish("Fish Bones", 0, 1, 1, new BiomeType[]{}, 1);
+        fish.addFish("Goldfish", 0, 1, 4, new BiomeType[] {}, 1);
+        fish.addFish("Fish Bones", 0, 1, 1, new BiomeType[] {}, 1);
 
         FishLoot.instance().addJunkLoot(seaweed.getItemStack(), BiomeType.saltwater, Config.junkRarity.get("Seaweed"));
-        FishLoot.instance().addJunkLoot(algae.getItemStack(), new BiomeType[]{BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical}, Config.junkRarity.get("Algae"));
+        FishLoot.instance().addJunkLoot(algae.getItemStack(), new BiomeType[] { BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical }, Config.junkRarity.get("Algae"));
         FishLoot.instance().addJunkLoot(driftwood.getItemStack(), Config.junkRarity.get("Driftwood"));
         FishLoot.instance().addJunkLoot(tinCan.getItemStack(), Config.junkRarity.get("Tin Can"));
         FishLoot.instance().addJunkLoot(box.getItemStack(), Config.junkRarity.get("Box"));

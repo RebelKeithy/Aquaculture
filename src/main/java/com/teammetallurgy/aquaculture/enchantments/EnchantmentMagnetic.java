@@ -32,8 +32,8 @@ public class EnchantmentMagnetic extends EnchantmentFishingPole {
         return this.getMinEnchantability(par1) + 25;
     }
 
-	/*@Override
+    /*@Override
     public String getTranslatedName(int par1) {
-		return LocalizationHelper.localize("enchantment.magnetic") + RomanNumeral.convertToRoman(par1);
-	}*/
+    	return LocalizationHelper.localize("enchantment.magnetic") + RomanNumeral.convertToRoman(par1);
+    }*/
 }
