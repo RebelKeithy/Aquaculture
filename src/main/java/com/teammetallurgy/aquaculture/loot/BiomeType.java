@@ -40,6 +40,7 @@ public class BiomeType {
         return biomeMap.get(biomeID);
     }
 
+    @Override
     public String toString() {
         return "BiomeType:" + name;
     }

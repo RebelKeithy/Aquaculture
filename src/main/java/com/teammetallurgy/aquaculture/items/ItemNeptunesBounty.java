@@ -34,6 +34,7 @@ public class ItemNeptunesBounty extends SubItem {
         loot.addLoot(AquacultureItems.neptuniumBoots, 1, 1, 1);
     }
 
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         if (par2World.isRemote)
             return par1ItemStack;

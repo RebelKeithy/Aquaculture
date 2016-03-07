@@ -59,6 +59,7 @@ public class MetaItem extends Item implements IEdible {
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     /**
      * Gets an icon index based on an item's damage value

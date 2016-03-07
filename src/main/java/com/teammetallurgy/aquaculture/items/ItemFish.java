@@ -65,6 +65,7 @@ public class ItemFish extends Item {
         return super.getItemStackDisplayName(par1ItemStack);
     }
 
+    @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
         if (par1ItemStack.hasTagCompound()) {
             if (par1ItemStack.getTagCompound().hasKey("Weight")) {

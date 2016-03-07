@@ -25,6 +25,7 @@ public class ItemTreasureChest extends SubItem {
         loot.addLoot(Items.emerald, 15);
     }
 
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         if (par2World.isRemote)
             return par1ItemStack;

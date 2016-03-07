@@ -83,11 +83,13 @@ public class SubItemFood extends SubItem implements IEdible {
         return new FoodValues(this.getHealAmount(), this.getSaturationModifier());
     }
 
+    @Override
     @Method(modid = "AppleCore")
     public void onEatenAppleCore(ItemStack itemStack, EntityPlayer player) {
         player.getFoodStats().func_151686_a(new ItemFoodProxy(this), itemStack);
     }
 
+    @Override
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         --par1ItemStack.stackSize;
         if (Loader.isModLoaded("AppleCore"))
@@ -108,6 +110,7 @@ public class SubItemFood extends SubItem implements IEdible {
     /**
      * How long it takes to use or consume an item
      */
+    @Override
     public int getMaxItemUseDuration(ItemStack par1ItemStack) {
         return eatTime;
     }
@@ -115,6 +118,7 @@ public class SubItemFood extends SubItem implements IEdible {
     /**
      * returns the action that specifies what animation to play when the items is being used
      */
+    @Override
     public EnumAction getItemUseAction(ItemStack par1ItemStack) {
         return EnumAction.eat;
     }
@@ -122,6 +126,7 @@ public class SubItemFood extends SubItem implements IEdible {
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
+    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         if (par3EntityPlayer.canEat(this.alwaysEdible)) {
             par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
