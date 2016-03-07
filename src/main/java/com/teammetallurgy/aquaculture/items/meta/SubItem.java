@@ -1,14 +1,11 @@
 package com.teammetallurgy.aquaculture.items.meta;
 
-import cpw.mods.fml.common.Optional.Method;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional.Method;
 
 import squeek.applecore.api.food.FoodValues;
 
@@ -18,8 +15,8 @@ public class SubItem {
     public MetaItem item;
 
     public String unlocalizedName;
-    private IIcon itemIcon;
-    private String textureName;
+    // private IIcon itemIcon;
+    // private String textureName;
 
     public SubItem(MetaItem metaItem) {
 
@@ -43,10 +40,10 @@ public class SubItem {
         return this;
     }
 
-    public SubItem setTextureName(String str) {
+    /*public SubItem setTextureName(String str) {
         this.textureName = str;
         return this;
-    }
+    }*/
 
     public ItemStack getItemStack() {
         return getItemStack(1);
@@ -60,9 +57,9 @@ public class SubItem {
         return unlocalizedName;
     }
 
-    public void registerIcons(IIconRegister par1IconRegister) {
+    /*public void registerIcons(IIconRegister par1IconRegister) {
         this.itemIcon = par1IconRegister.registerIcon(this.textureName);
-    }
+    }*/
 
     @Method(modid = "AppleCore")
     public FoodValues getFoodValues(ItemStack itemStack) {
@@ -83,26 +80,28 @@ public class SubItem {
     }
 
     public EnumAction getItemUseAction(ItemStack par1ItemStack) {
-        return EnumAction.none;
+        return EnumAction.NONE;
     }
 
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         return par1ItemStack;
     }
 
+    /*
     public IIcon getIcon() {
         return itemIcon;
     }
-
+    
     public IIcon getIcon(ItemStack par1ItemStack) {
         return getIcon();
     }
-
+    
     public IIcon getIcon(ItemStack stack, int pass) {
         return getIcon(stack);
     }
-
+    
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
         return getIcon(stack, renderPass);
     }
+    */
 }

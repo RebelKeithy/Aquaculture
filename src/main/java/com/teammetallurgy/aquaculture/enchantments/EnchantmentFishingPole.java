@@ -5,14 +5,15 @@ import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * @author Freyja
  */
 public abstract class EnchantmentFishingPole extends Enchantment {
 
-    public EnchantmentFishingPole(int id, int weight) {
-        super(id, weight, AquacultureEnchants.enumFishingPole);
+    public EnchantmentFishingPole(int id, ResourceLocation enchantName, int weight) {
+        super(id, enchantName, weight, AquacultureEnchants.enumFishingPole);
     }
 
     @Override

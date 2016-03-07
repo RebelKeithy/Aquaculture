@@ -14,13 +14,6 @@ public class ItemAquaculture extends Item {
     @Override
     public Item setUnlocalizedName(String par1Str) {
         super.setUnlocalizedName(par1Str);
-        this.setTextureName("aquaculture:" + par1Str.replaceAll("\\s", ""));
-        return this;
-    }
-
-    @Override
-    public Item setTextureName(String par1Str) {
-        super.setTextureName(par1Str);
         return this;
     }
 }

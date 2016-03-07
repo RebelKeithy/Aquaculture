@@ -2,12 +2,10 @@ package com.teammetallurgy.aquaculture.handlers;
 
 import com.teammetallurgy.aquaculture.items.AquacultureItems;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class AquacultureRecipes {
 
@@ -27,10 +25,10 @@ public class AquacultureRecipes {
 
         GameRegistry.addShapelessRecipe(new ItemStack(Blocks.planks, 4), AquacultureItems.driftwood.getItemStack());
 
-        FurnaceRecipes.smelting().func_151394_a(AquacultureItems.fishFillet.getItemStack(), AquacultureItems.cookedFillet.getItemStack(), 0.3f);
-        FurnaceRecipes.smelting().func_151394_a(AquacultureItems.whaleSteak.getItemStack(), AquacultureItems.cookedWhaleSteak.getItemStack(), 0.3f);
-        FurnaceRecipes.smelting().func_151394_a(AquacultureItems.tinCan.getItemStack(), new ItemStack(Items.iron_ingot), 0.7f);
-        FurnaceRecipes.smelting().func_151394_a(AquacultureItems.frogLegs.getItemStack(), AquacultureItems.cookedFrogLegs.getItemStack(), 0.3F);
+        GameRegistry.addSmelting(AquacultureItems.fishFillet.getItemStack(), AquacultureItems.cookedFillet.getItemStack(), 0.3f);
+        GameRegistry.addSmelting(AquacultureItems.whaleSteak.getItemStack(), AquacultureItems.cookedWhaleSteak.getItemStack(), 0.3f);
+        GameRegistry.addSmelting(AquacultureItems.tinCan.getItemStack(), new ItemStack(Items.iron_ingot), 0.7f);
+        GameRegistry.addSmelting(AquacultureItems.frogLegs.getItemStack(), AquacultureItems.cookedFrogLegs.getItemStack(), 0.3F);
 
         GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.ironFishingRod, 1), "  X", " XS", "I S", 'X', Items.iron_ingot, 'I', Items.stick, 'S', Items.string);
         GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.goldFishingRod, 1), "  X", " XS", "I S", 'X', Items.gold_ingot, 'I', Items.stick, 'S', Items.string);

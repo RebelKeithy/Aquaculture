@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.items;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -26,12 +25,13 @@ public class NeptuniumArmor extends ItemArmor {
     @Override
     public Item setUnlocalizedName(String par1Str) {
         super.setUnlocalizedName(par1Str);
-        this.setTextureName(par1Str);
         return this;
     }
 
+    /*
     @Override
     public void registerIcons(IIconRegister par1IconRegister) {
         this.itemIcon = par1IconRegister.registerIcon("aquaculture:" + this.getIconString());
     }
+    */
 }

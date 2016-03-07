@@ -8,17 +8,17 @@ import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 import com.teammetallurgy.aquaculture.items.AquacultureItems;
 import com.teammetallurgy.aquaculture.proxy.CommonProxy;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 @Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION)
 public class Aquaculture {
-    public final static String MOD_ID = "Aquaculture";
+    public final static String MOD_ID = "aquaculture";
     public final static String MOD_NAME = "Aquaculture";
     public final static String MOD_VERSION = "1.2.6";
 

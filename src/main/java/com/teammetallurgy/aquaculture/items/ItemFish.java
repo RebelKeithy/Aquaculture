@@ -3,18 +3,15 @@ package com.teammetallurgy.aquaculture.items;
 import com.teammetallurgy.aquaculture.loot.BiomeType;
 import com.teammetallurgy.aquaculture.loot.FishLoot;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -125,15 +122,14 @@ public class ItemFish extends Item {
         return null;
     }
 
+    /*
     @SideOnly(Side.CLIENT)
-    /**
-     * Gets an icon index based on an item's damage value
-     */
     @Override
     public IIcon getIconFromDamage(int par1) {
         int j = MathHelper.clamp_int(par1, 0, fish.size());
         return fish.get(j).icon;
     }
+     */
 
     /**
      * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have different names based on their damage or NBT.
@@ -157,6 +153,7 @@ public class ItemFish extends Item {
         }
     }
 
+    /*
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IIconRegister par1IconRegister) {
@@ -164,13 +161,14 @@ public class ItemFish extends Item {
             f.icon = par1IconRegister.registerIcon("Aquaculture:" + f.name);
         }
     }
+    */
 
     public class Fish {
         public String name;
         public int filletAmount;
         public int minWeight;
         public int maxWeight;
-        public IIcon icon;
+        // public IIcon icon;
 
         public Fish(String name, int amount, int min, int max) {
             this.name = name;

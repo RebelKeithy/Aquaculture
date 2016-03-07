@@ -1,19 +1,16 @@
 package com.teammetallurgy.aquaculture.items.meta;
 
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.common.Optional.Method;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional.Interface;
+import net.minecraftforge.fml.common.Optional.Method;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,17 +56,16 @@ public class MetaItem extends Item implements IEdible {
         }
     }
 
+    /*
     @Override
     @SideOnly(Side.CLIENT)
-    /**
-     * Gets an icon index based on an item's damage value
-     */
     public IIcon getIconFromDamage(int par1) {
         if (par1 < subItems.size())
             return subItems.get(par1).getIcon();
-
+    
         return this.itemIcon;
     }
+    */
 
     /**
      * Returns the icon index of the stack given as argument.
@@ -78,26 +74,27 @@ public class MetaItem extends Item implements IEdible {
      * @SideOnly(Side.CLIENT) public final Icon getIconIndex(ItemStack par1ItemStack) { int damage = par1ItemStack.getItemDamage(); if(subItems.contains(damage)) { return
      * subItems.get(damage).getIconFromDamage(par1ItemStack); } return this.getIconFromDamage(par1ItemStack.getItemDamage()); }
      */
+    /*
     @Override
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
         int damage = stack.getItemDamage();
         if (damage < subItems.size()) {
             return subItems.get(damage).getIcon(stack, renderPass, player, usingItem, useRemaining);
         }
-
+    
         return getIcon(stack, renderPass);
     }
-
+    
     @Override
     public IIcon getIcon(ItemStack stack, int pass) {
         int damage = stack.getItemDamage();
         if (damage < subItems.size()) {
             return subItems.get(damage).getIcon(stack, pass);
         }
-
+    
         return getIcon(stack, pass);
     }
-
+    
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IIconRegister par1IconRegister) {
@@ -105,6 +102,7 @@ public class MetaItem extends Item implements IEdible {
             item.registerIcons(par1IconRegister);
         }
     }
+    */
 
     @Override
     @Method(modid = "AppleCore")
@@ -127,7 +125,7 @@ public class MetaItem extends Item implements IEdible {
 
     // ItemRedirects
     @Override
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onItemUseFinish(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         int damage = par1ItemStack.getItemDamage();
         if (damage < subItems.size()) {
             return subItems.get(damage).onEaten(par1ItemStack, par2World, par3EntityPlayer);
@@ -159,7 +157,7 @@ public class MetaItem extends Item implements IEdible {
             return subItems.get(damage).getItemUseAction(par1ItemStack);
         }
 
-        return EnumAction.none;
+        return EnumAction.NONE;
     }
 
     @Override

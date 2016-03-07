@@ -2,18 +2,14 @@ package com.teammetallurgy.aquaculture.items;
 
 import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemAdminFishingRod extends ItemAquaculture {
-    public IIcon usingIcon;
 
     public ItemAdminFishingRod(int d) {
         super();
@@ -43,7 +39,7 @@ public class ItemAdminFishingRod extends ItemAquaculture {
     @Override
     public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
         if (entityplayer.fishEntity != null) {
-            int i = entityplayer.fishEntity.func_146034_e();
+            int i = entityplayer.fishEntity.handleHookRetraction();
             // itemstack.damageItem(i, entityplayer);
             entityplayer.swingItem();
 
@@ -68,27 +64,29 @@ public class ItemAdminFishingRod extends ItemAquaculture {
         return itemstack;
     }
 
+    /*
     @Override
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
         if (!stack.hasTagCompound())
             stack.setTagCompound(new NBTTagCompound());
-
+    
         NBTTagCompound tag = stack.getTagCompound();
-
+    
         if (tag.hasKey("using")) {
             boolean using = tag.getBoolean("using");
             if (using)
                 return usingIcon;
         }
-
+    
         return itemIcon;
     }
-
+    
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IIconRegister par1IconRegister) {
         super.registerIcons(par1IconRegister);
-
+    
         usingIcon = par1IconRegister.registerIcon("aquaculture:AdminFishingRodUsing");
     }
+    */
 }

@@ -1,13 +1,9 @@
 package com.teammetallurgy.aquaculture.loot;
 
 import net.minecraft.block.Block;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 
 import java.util.*;
 
@@ -67,9 +63,12 @@ public class WeightedLootSet {
                 int amount = rand.nextInt(max - min + 1) + min;
                 stack.stackSize = amount;
                 if (stack.getItem() == Items.enchanted_book) {
+                    // TODO: Find a way to enchant books
+                    /*
                     Enchantment enchantment = Enchantment.enchantmentsList[rand.nextInt(Enchantment.enchantmentsList.length)];
                     int l = MathHelper.getRandomIntegerInRange(rand, enchantment.getMinLevel(), enchantment.getMaxLevel());
                     ((ItemEnchantedBook) stack.getItem()).addEnchantment(stack, new EnchantmentData(enchantment, l));
+                    */
                 }
                 break;
             }

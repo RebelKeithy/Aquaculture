@@ -15,7 +15,6 @@ public class AquaItemHoe extends ItemHoe {
     @Override
     public Item setUnlocalizedName(String par1Str) {
         super.setUnlocalizedName(par1Str);
-        this.setTextureName("aquaculture:" + par1Str.replaceAll("\\s", ""));
         return this;
     }
 

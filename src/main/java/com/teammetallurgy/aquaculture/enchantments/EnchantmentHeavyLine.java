@@ -1,9 +1,13 @@
 package com.teammetallurgy.aquaculture.enchantments;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
+
+import net.minecraft.util.ResourceLocation;
+
 public class EnchantmentHeavyLine extends EnchantmentFishingPole {
 
     public EnchantmentHeavyLine(int id, int weight) {
-        super(id, weight);
+        super(id, new ResourceLocation(Aquaculture.MOD_ID + ":heavy_line"), weight);
         setName("aquacultureHeavyLine");
     }
 

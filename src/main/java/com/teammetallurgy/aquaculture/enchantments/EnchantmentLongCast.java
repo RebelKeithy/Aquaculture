@@ -1,6 +1,9 @@
 package com.teammetallurgy.aquaculture.enchantments;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
+
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * @author Freyja
@@ -8,7 +11,7 @@ import net.minecraft.enchantment.Enchantment;
 public class EnchantmentLongCast extends EnchantmentFishingPole {
 
     public EnchantmentLongCast(int id, int weight) {
-        super(id, weight);
+        super(id, new ResourceLocation(Aquaculture.MOD_ID + ":long_cast"), weight);
         setName("aquacultureLongCast");
     }
 
