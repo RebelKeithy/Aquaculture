@@ -1,4 +1,12 @@
-package rebelkeithy.mods.aquaculture.items;
+package com.teammetallurgy.aquaculture.items;
+
+import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.handlers.Config;
+import com.teammetallurgy.aquaculture.items.meta.MetaItem;
+import com.teammetallurgy.aquaculture.items.meta.SubItem;
+import com.teammetallurgy.aquaculture.items.meta.SubItemFood;
+import com.teammetallurgy.aquaculture.loot.BiomeType;
+import com.teammetallurgy.aquaculture.loot.FishLoot;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
@@ -8,13 +16,6 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
-import rebelkeithy.mods.aquaculture.Aquaculture;
-import rebelkeithy.mods.aquaculture.handlers.Config;
-import rebelkeithy.mods.aquaculture.loot.BiomeType;
-import rebelkeithy.mods.aquaculture.loot.FishLoot;
-import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
-import rebelkeithy.mods.aquaculture.items.meta.SubItem;
-import rebelkeithy.mods.aquaculture.items.meta.SubItemFood;
 
 public class AquacultureItems {
     public static final Item woodenFishingRod = new ItemAquacultureWoodenFishingRod(50, 10, "Wood").setUnlocalizedName("fishingRod");

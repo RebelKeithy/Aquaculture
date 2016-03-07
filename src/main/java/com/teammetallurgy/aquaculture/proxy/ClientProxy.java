@@ -1,8 +1,9 @@
-package rebelkeithy.mods.aquaculture.proxy;
+package com.teammetallurgy.aquaculture.proxy;
+
+import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.client.renderer.entity.RenderFish;
-import rebelkeithy.mods.aquaculture.handlers.EntityCustomFishHook;
 
 public class ClientProxy extends CommonProxy {
     public void registerParticles() {

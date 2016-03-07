@@ -1,9 +1,10 @@
-package rebelkeithy.mods.aquaculture.enchantments;
+package com.teammetallurgy.aquaculture.enchantments;
+
+import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
+import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
-import rebelkeithy.mods.aquaculture.items.ItemAdminFishingRod;
-import rebelkeithy.mods.aquaculture.items.ItemAquacultureFishingRod;
 
 /**
  * @author Freyja

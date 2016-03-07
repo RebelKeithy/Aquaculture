@@ -1,8 +1,9 @@
-package rebelkeithy.mods.aquaculture.enchantments;
+package com.teammetallurgy.aquaculture.enchantments;
+
+import com.teammetallurgy.aquaculture.handlers.Config;
 
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraftforge.common.util.EnumHelper;
-import rebelkeithy.mods.aquaculture.handlers.Config;
 
 /**
  * @author Freyja

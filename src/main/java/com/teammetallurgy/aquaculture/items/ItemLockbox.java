@@ -1,15 +1,16 @@
-package rebelkeithy.mods.aquaculture.items;
+package com.teammetallurgy.aquaculture.items;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import rebelkeithy.mods.aquaculture.loot.WeightedLootSet;
-import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
-import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 
 import java.util.Random;
+
+import com.teammetallurgy.aquaculture.items.meta.MetaItem;
+import com.teammetallurgy.aquaculture.items.meta.SubItem;
+import com.teammetallurgy.aquaculture.loot.WeightedLootSet;
 
 public class ItemLockbox extends SubItem {
     public WeightedLootSet loot;

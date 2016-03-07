@@ -1,8 +1,10 @@
-package rebelkeithy.mods.aquaculture.items;
+package com.teammetallurgy.aquaculture.items;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -14,7 +16,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
-import rebelkeithy.mods.aquaculture.handlers.EntityCustomFishHook;
 
 import java.util.Set;
 

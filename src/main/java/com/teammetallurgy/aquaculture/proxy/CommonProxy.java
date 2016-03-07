@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.proxy;
+package com.teammetallurgy.aquaculture.proxy;
 
 public class CommonProxy {
     public void registerParticles() {

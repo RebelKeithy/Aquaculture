@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.items.meta;
+package com.teammetallurgy.aquaculture.items.meta;
 
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.common.Optional.Method;

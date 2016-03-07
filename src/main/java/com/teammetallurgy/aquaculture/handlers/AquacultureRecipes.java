@@ -1,11 +1,12 @@
-package rebelkeithy.mods.aquaculture.handlers;
+package com.teammetallurgy.aquaculture.handlers;
+
+import com.teammetallurgy.aquaculture.items.AquacultureItems;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import rebelkeithy.mods.aquaculture.items.AquacultureItems;
 
 public class AquacultureRecipes {
 

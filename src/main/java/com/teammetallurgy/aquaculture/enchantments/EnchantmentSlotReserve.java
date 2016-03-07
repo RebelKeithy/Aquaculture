@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.enchantments;
+package com.teammetallurgy.aquaculture.enchantments;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;

@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.items;
+package com.teammetallurgy.aquaculture.items;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -6,10 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import rebelkeithy.mods.aquaculture.items.meta.MetaItem;
-import rebelkeithy.mods.aquaculture.items.meta.SubItem;
 
 import java.util.Random;
+
+import com.teammetallurgy.aquaculture.items.meta.MetaItem;
+import com.teammetallurgy.aquaculture.items.meta.SubItem;
 
 public class ItemMessageInABottle extends SubItem {
     Random rand = new Random();

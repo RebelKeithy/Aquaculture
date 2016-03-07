@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.handlers;
+package com.teammetallurgy.aquaculture.handlers;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

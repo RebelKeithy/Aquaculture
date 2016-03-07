@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.handlers;
+package com.teammetallurgy.aquaculture.handlers;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,13 +19,14 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import rebelkeithy.mods.aquaculture.enchantments.AquacultureEnchants;
-import rebelkeithy.mods.aquaculture.items.ItemAdminFishingRod;
-import rebelkeithy.mods.aquaculture.items.ItemAquacultureFishingRod;
-import rebelkeithy.mods.aquaculture.items.ItemAquacultureWoodenFishingRod;
-import rebelkeithy.mods.aquaculture.loot.FishLoot;
 
 import java.util.List;
+
+import com.teammetallurgy.aquaculture.enchantments.AquacultureEnchants;
+import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
+import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
+import com.teammetallurgy.aquaculture.items.ItemAquacultureWoodenFishingRod;
+import com.teammetallurgy.aquaculture.loot.FishLoot;
 
 public class EntityCustomFishHook extends EntityFishHook {
     public int shake;

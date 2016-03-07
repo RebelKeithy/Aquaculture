@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.enchantments;
+package com.teammetallurgy.aquaculture.enchantments;
 
 public class RomanNumeral {
     public static String convertToRoman(int i) {

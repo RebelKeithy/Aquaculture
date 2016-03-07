@@ -1,10 +1,11 @@
-package rebelkeithy.mods.aquaculture.loot;
+package com.teammetallurgy.aquaculture.loot;
 
 import net.minecraft.item.ItemStack;
-import rebelkeithy.mods.aquaculture.items.AquacultureItems;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.teammetallurgy.aquaculture.items.AquacultureItems;
 
 public class FishLoot {
 

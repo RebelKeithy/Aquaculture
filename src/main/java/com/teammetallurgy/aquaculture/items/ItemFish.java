@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.items;
+package com.teammetallurgy.aquaculture.items;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -11,8 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
-import rebelkeithy.mods.aquaculture.loot.BiomeType;
-import rebelkeithy.mods.aquaculture.loot.FishLoot;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -20,6 +18,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.teammetallurgy.aquaculture.loot.BiomeType;
+import com.teammetallurgy.aquaculture.loot.FishLoot;
 
 public class ItemFish extends Item {
     public List<Fish> fish;

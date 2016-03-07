@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.loot;
+package com.teammetallurgy.aquaculture.loot;
 
 import java.util.HashMap;
 import java.util.Map;

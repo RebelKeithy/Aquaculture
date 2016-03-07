@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.items;
+package com.teammetallurgy.aquaculture.items;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;

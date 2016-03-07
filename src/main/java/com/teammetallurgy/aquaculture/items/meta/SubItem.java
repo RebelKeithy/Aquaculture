@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.items.meta;
+package com.teammetallurgy.aquaculture.items.meta;
 
 import squeek.applecore.api.food.FoodValues;
 import cpw.mods.fml.common.Optional.Method;

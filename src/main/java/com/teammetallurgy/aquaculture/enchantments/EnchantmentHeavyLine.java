@@ -1,4 +1,4 @@
-package rebelkeithy.mods.aquaculture.enchantments;
+package com.teammetallurgy.aquaculture.enchantments;
 
 public class EnchantmentHeavyLine extends EnchantmentFishingPole {
 
