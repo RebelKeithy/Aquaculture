@@ -1,16 +1,11 @@
 package com.teammetallurgy.aquaculture.handlers;
 
+import net.minecraftforge.common.config.Configuration;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
-
-import com.teammetallurgy.aquaculture.loot.BiomeType;
-import com.teammetallurgy.aquaculture.loot.FishLoot;
-
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.config.Configuration;
 
 public class Config {
 

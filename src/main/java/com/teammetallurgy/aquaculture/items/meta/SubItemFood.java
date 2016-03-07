@@ -1,16 +1,18 @@
 package com.teammetallurgy.aquaculture.items.meta;
 
-import squeek.applecore.api.food.FoodValues;
-import squeek.applecore.api.food.IEdible;
-import squeek.applecore.api.food.ItemFoodProxy;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.common.Optional.Method;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+
+import squeek.applecore.api.food.FoodValues;
+import squeek.applecore.api.food.IEdible;
+import squeek.applecore.api.food.ItemFoodProxy;
 
 @Interface(iface = "squeek.applecore.api.food.IEdible", modid = "AppleCore")
 public class SubItemFood extends SubItem implements IEdible {

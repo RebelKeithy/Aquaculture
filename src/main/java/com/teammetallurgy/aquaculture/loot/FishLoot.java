@@ -1,11 +1,11 @@
 package com.teammetallurgy.aquaculture.loot;
 
+import com.teammetallurgy.aquaculture.items.AquacultureItems;
+
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.teammetallurgy.aquaculture.items.AquacultureItems;
 
 public class FishLoot {
 

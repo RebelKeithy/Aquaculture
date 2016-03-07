@@ -1,5 +1,8 @@
 package com.teammetallurgy.aquaculture.items;
 
+import com.teammetallurgy.aquaculture.items.meta.MetaItem;
+import com.teammetallurgy.aquaculture.items.meta.SubItem;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -8,9 +11,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.Random;
-
-import com.teammetallurgy.aquaculture.items.meta.MetaItem;
-import com.teammetallurgy.aquaculture.items.meta.SubItem;
 
 public class ItemMessageInABottle extends SubItem {
     Random rand = new Random();

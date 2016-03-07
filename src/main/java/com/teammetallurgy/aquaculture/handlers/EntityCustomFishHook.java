@@ -1,7 +1,14 @@
 package com.teammetallurgy.aquaculture.handlers;
 
+import com.teammetallurgy.aquaculture.enchantments.AquacultureEnchants;
+import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
+import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
+import com.teammetallurgy.aquaculture.items.ItemAquacultureWoodenFishingRod;
+import com.teammetallurgy.aquaculture.loot.FishLoot;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
@@ -21,12 +28,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import java.util.List;
-
-import com.teammetallurgy.aquaculture.enchantments.AquacultureEnchants;
-import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
-import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
-import com.teammetallurgy.aquaculture.items.ItemAquacultureWoodenFishingRod;
-import com.teammetallurgy.aquaculture.loot.FishLoot;
 
 public class EntityCustomFishHook extends EntityFishHook {
     public int shake;

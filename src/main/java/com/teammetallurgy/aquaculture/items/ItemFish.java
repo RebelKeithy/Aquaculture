@@ -1,8 +1,12 @@
 package com.teammetallurgy.aquaculture.items;
 
+import com.teammetallurgy.aquaculture.loot.BiomeType;
+import com.teammetallurgy.aquaculture.loot.FishLoot;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,9 +22,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import com.teammetallurgy.aquaculture.loot.BiomeType;
-import com.teammetallurgy.aquaculture.loot.FishLoot;
 
 public class ItemFish extends Item {
     public List<Fish> fish;

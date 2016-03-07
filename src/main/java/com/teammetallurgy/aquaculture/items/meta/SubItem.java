@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.items.meta;
 
-import squeek.applecore.api.food.FoodValues;
 import cpw.mods.fml.common.Optional.Method;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +9,8 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import squeek.applecore.api.food.FoodValues;
 
 public class SubItem {
     public int itemID;

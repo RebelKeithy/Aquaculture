@@ -1,5 +1,9 @@
 package com.teammetallurgy.aquaculture.items;
 
+import com.teammetallurgy.aquaculture.items.meta.MetaItem;
+import com.teammetallurgy.aquaculture.items.meta.SubItem;
+import com.teammetallurgy.aquaculture.loot.WeightedLootSet;
+
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -7,10 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import java.util.Random;
-
-import com.teammetallurgy.aquaculture.items.meta.MetaItem;
-import com.teammetallurgy.aquaculture.items.meta.SubItem;
-import com.teammetallurgy.aquaculture.loot.WeightedLootSet;
 
 public class ItemLockbox extends SubItem {
     public WeightedLootSet loot;
