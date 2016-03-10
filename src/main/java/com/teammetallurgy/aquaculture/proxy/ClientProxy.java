@@ -37,6 +37,19 @@ public class ClientProxy extends CommonProxy {
             ModelLoader.setCustomModelResourceLocation(AquacultureItems.metaLootItem, i, new ModelResourceLocation(Aquaculture.MOD_ID + ":loot/" + loot[i], "inventory"));
         }
 
+        // Tools
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumPickaxe, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_pickaxe", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumShovel, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_shovel", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumAxe, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_axe", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumHoe, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_hoe", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumSword, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_sword", "inventory"));
+
+        // Armour
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumHelmet, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_helmet", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumPlate, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_chestplate", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumLegs, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_leggings", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.neptuniumBoots, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":neptunium_boots", "inventory"));
+
         // Fish
         String[] fish = { "bluegill", "perch", "gar", "bass", "muskellunge", "trout_brown", "catfish", "carp", "blowfish", "grouper_red", "salmon", "tuna", "swordfish",
                 "shark", "whale", "squid", "jellyfish", "frog", "turtle", "leech", "pirahna", "electric_eel", "tambaqui", "arapaima", "cod", "pollock", "herring",
