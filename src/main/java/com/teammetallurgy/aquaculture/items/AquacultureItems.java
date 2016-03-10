@@ -17,6 +17,8 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import java.util.Locale;
+
 public class AquacultureItems {
     public static final Item woodenFishingRod = new ItemAquacultureWoodenFishingRod(50, 10, "Wood").setUnlocalizedName("fishingRod");
     public static final Item ironFishingRod = new ItemAquacultureFishingRod(75, 14, "Iron").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
@@ -161,6 +163,9 @@ public class AquacultureItems {
     }
 
     public void register(Item item) {
-        GameRegistry.registerItem(item, item.getUnlocalizedName());
+        String name = item.getUnlocalizedName();
+        name = name.replaceAll("item.", "");
+        name = name.replaceAll("([A-Z][a-z\\d]+)(?=([A-Z][a-z\\d]+))", "$1_").toLowerCase(Locale.US);
+        GameRegistry.registerItem(item, name);
     }
 }
