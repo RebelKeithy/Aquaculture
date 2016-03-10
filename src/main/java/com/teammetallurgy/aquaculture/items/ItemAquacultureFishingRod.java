@@ -3,11 +3,14 @@ package com.teammetallurgy.aquaculture.items;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
@@ -87,6 +90,28 @@ public class ItemAquacultureFishingRod extends ItemTool {
             tag.setBoolean("using", true);
         }
         return itemstack;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining) {
+
+        if (player.fishEntity != null && stack != null && stack.getItem() != null) {
+            Item item = stack.getItem();
+            if (item == AquacultureItems.ironFishingRod) {
+                return new ModelResourceLocation(Aquaculture.MOD_ID + ":iron_fishing_rod_cast", "inventory");
+            }
+
+            if (item == AquacultureItems.goldFishingRod) {
+                return new ModelResourceLocation(Aquaculture.MOD_ID + ":gold_fishing_rod_cast", "inventory");
+            }
+
+            if (item == AquacultureItems.diamondFishingRod) {
+                return new ModelResourceLocation(Aquaculture.MOD_ID + ":diamond_fishing_rod_cast", "inventory");
+            }
+        }
+
+        return null;
     }
     /*
     @Override

@@ -1,7 +1,9 @@
 package com.teammetallurgy.aquaculture.items;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -62,6 +64,17 @@ public class ItemAdminFishingRod extends ItemAquaculture {
             tag.setBoolean("using", true);
         }
         return itemstack;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining) {
+
+        if (player.fishEntity != null && stack != null && stack.getItem() != null) {
+            return new ModelResourceLocation(Aquaculture.MOD_ID + ":admin_fishing_rod_cast", "inventory");
+        }
+
+        return null;
     }
 
     /*

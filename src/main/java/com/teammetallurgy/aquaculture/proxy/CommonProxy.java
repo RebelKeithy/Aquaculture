@@ -6,4 +6,7 @@ public class CommonProxy {
 
     public void registerModelRenderers() {
     }
+
+    public void registerItemModels() {
+    }
 }

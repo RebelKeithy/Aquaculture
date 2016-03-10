@@ -35,6 +35,8 @@ public class Aquaculture {
         tab = new AquacultureTab("Aquaculture");
 
         new AquacultureItems().register();
+
+        proxy.registerItemModels();
     }
 
     @EventHandler
