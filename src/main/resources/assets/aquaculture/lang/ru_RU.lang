@@ -47,8 +47,8 @@ item.NeptuniumAxe.name=Нептуниевый топор
 item.NeptuniumHoe.name=Нептуниевая мотыга
 item.NeptuniumSword.name=Нептуниевый меч
 item.NeptuniumHelmet.name=Нептуниевый шлем
-item.NeptuniumPlate.name=Нептуниевая кираса
-item.NeptuniumLegs.name=Нептуниевые поножи
+item.NeptuniumChestplate.name=Нептуниевая кираса
+item.NeptuniumLeggings.name=Нептуниевые поножи
 item.NeptuniumBoots.name=Нептуниевые ботинки
 
 # Fish

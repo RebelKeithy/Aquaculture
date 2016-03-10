@@ -47,8 +47,8 @@ item.NeptuniumAxe.name=Neptunium Axe
 item.NeptuniumHoe.name=Neptunium Hoe
 item.NeptuniumSword.name=Neptunium Sword
 item.NeptuniumHelmet.name=Neptunium Helmet
-item.NeptuniumPlate.name=Neptunium Plate
-item.NeptuniumLegs.name=Neptunium Legs
+item.NeptuniumChestplate.name=Neptunium Chestplate
+item.NeptuniumLeggings.name=Neptunium Leggings
 item.NeptuniumBoots.name=Neptunium Boots
 
 # Fish

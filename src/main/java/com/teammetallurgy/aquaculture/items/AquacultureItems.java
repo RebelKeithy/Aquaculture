@@ -59,8 +59,8 @@ public class AquacultureItems {
     public static final Item neptuniumSword = new AquaItemSword(neptuniumEnum).setUnlocalizedName("NeptuniumSword").setCreativeTab(Aquaculture.tab);
     private static ArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", "", 75, new int[] { 3, 8, 6, 3 }, 15);
     public static final Item neptuniumHelmet = new NeptuniumArmor(neptuniumArmorEnum, 0, 0).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumPlate = new NeptuniumArmor(neptuniumArmorEnum, 1, 1).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumPlate").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 2, 2).setArmorTexture("neptunium_layer_2").setUnlocalizedName("NeptuniumLegs").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumPlate = new NeptuniumArmor(neptuniumArmorEnum, 1, 1).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumChestplate").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 2, 2).setArmorTexture("neptunium_layer_2").setUnlocalizedName("NeptuniumLeggings").setCreativeTab(Aquaculture.tab);
     public static final Item neptuniumBoots = new NeptuniumArmor(neptuniumArmorEnum, 3, 3).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
 
     public void register() {
