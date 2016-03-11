@@ -20,6 +20,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerItemModels() {
         // Fishing Rods
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.woodenFishingRod, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":fishing_rod", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(AquacultureItems.woodenFishingRod, 1, new ModelResourceLocation(Aquaculture.MOD_ID + ":fishing_rod_cast", "inventory"));
         ModelLoader.setCustomModelResourceLocation(AquacultureItems.adminFishingRod, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":admin_fishing_rod", "inventory"));
         ModelLoader.setCustomModelResourceLocation(AquacultureItems.adminFishingRod, 1, new ModelResourceLocation(Aquaculture.MOD_ID + ":admin_fishing_rod_cast", "inventory"));
         ModelLoader.setCustomModelResourceLocation(AquacultureItems.ironFishingRod, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":iron_fishing_rod", "inventory"));

@@ -30,6 +30,9 @@ public class AquacultureRecipes {
         GameRegistry.addSmelting(AquacultureItems.tinCan.getItemStack(), new ItemStack(Items.iron_ingot), 0.7f);
         GameRegistry.addSmelting(AquacultureItems.frogLegs.getItemStack(), AquacultureItems.cookedFrogLegs.getItemStack(), 0.3F);
 
+        GameRegistry.addShapelessRecipe(new ItemStack(AquacultureItems.woodenFishingRod), new ItemStack(Items.fishing_rod));
+        GameRegistry.addShapelessRecipe(new ItemStack(Items.fishing_rod), new ItemStack(AquacultureItems.woodenFishingRod));
+        GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.ironFishingRod, 1), "  X", " XS", "I S", 'X', Items.iron_ingot, 'I', Items.stick, 'S', Items.string);
         GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.ironFishingRod, 1), "  X", " XS", "I S", 'X', Items.iron_ingot, 'I', Items.stick, 'S', Items.string);
         GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.goldFishingRod, 1), "  X", " XS", "I S", 'X', Items.gold_ingot, 'I', Items.stick, 'S', Items.string);
         GameRegistry.addShapedRecipe(new ItemStack(AquacultureItems.diamondFishingRod, 1), "  X", " XS", "I S", 'X', Items.diamond, 'I', Items.stick, 'S', Items.string);

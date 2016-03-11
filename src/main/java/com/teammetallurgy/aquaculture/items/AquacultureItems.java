@@ -20,7 +20,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.Locale;
 
 public class AquacultureItems {
-    public static final Item woodenFishingRod = new ItemAquacultureWoodenFishingRod(50, 10, "Wood").setUnlocalizedName("fishingRod");
+    public static final Item woodenFishingRod = new ItemAquacultureWoodenFishingRod(50, 10, "Wood").setUnlocalizedName("fishingRod").setCreativeTab(Aquaculture.tab);
     public static final Item ironFishingRod = new ItemAquacultureFishingRod(75, 14, "Iron").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
     public static final Item goldFishingRod = new ItemAquacultureFishingRod(50, 22, "Gold").setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
     public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, 10, "Diamond").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
