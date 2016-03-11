@@ -165,7 +165,7 @@ public class AquacultureItems {
     public void register(Item item) {
         String name = item.getUnlocalizedName();
         name = name.replaceAll("item.", "");
-        name = name.replaceAll("([A-Z][a-z\\d]+)(?=([A-Z][a-z\\d]+))", "$1_").toLowerCase(Locale.US);
+        name = name.replaceAll("([A-Za-z][a-z\\d]+)(?=([A-Z][a-z\\d]+))", "$1_").toLowerCase(Locale.US);
         GameRegistry.registerItem(item, name);
     }
 }
