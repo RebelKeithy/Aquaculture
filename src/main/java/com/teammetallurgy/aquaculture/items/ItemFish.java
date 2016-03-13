@@ -63,18 +63,19 @@ public class ItemFish extends Item {
     }
 
     @Override
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-        if (par1ItemStack.hasTagCompound()) {
-            if (par1ItemStack.getTagCompound().hasKey("Weight")) {
-                float weight = par1ItemStack.getTagCompound().getFloat("Weight");
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> toolTip, boolean isDebug) {
+        if (itemStack.hasTagCompound()) {
+            if (itemStack.getTagCompound().hasKey("Weight")) {
+                float weight = itemStack.getTagCompound().getFloat("Weight");
 
                 DecimalFormat df = new DecimalFormat("#,###.##");
                 BigDecimal bd = new BigDecimal(weight);
                 bd = bd.round(new MathContext(3));
                 if (bd.doubleValue() > 999)
-                    par3List.add("Weight: " + df.format((int) bd.doubleValue()) + "lb");
+                    toolTip.add("Weight: " + df.format((int) bd.doubleValue()) + "lb");
                 else
-                    par3List.add("Weight: " + bd + "lb");
+                    toolTip.add("Weight: " + bd + "lb");
             }
         }
     }
@@ -142,14 +143,11 @@ public class ItemFish extends Item {
         return uname;
     }
 
-    @SideOnly(Side.CLIENT)
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-     */
     @Override
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subItems) {
         for (int j = 0; j < fish.size(); ++j) {
-            par3List.add(new ItemStack(par1, 1, j));
+            subItems.add(new ItemStack(item, 1, j));
         }
     }
 

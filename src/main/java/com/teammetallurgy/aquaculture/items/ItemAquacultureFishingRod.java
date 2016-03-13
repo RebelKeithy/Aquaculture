@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Set;
 
 public class ItemAquacultureFishingRod extends ItemTool {
-    private static Set effectiveBlockSet = Sets.newHashSet(new Block[] {});
+    private static Set<Block> effectiveBlockSet = Sets.newHashSet(new Block[] {});
     // public IIcon usingIcon;
     public String type;
     public int enchantability;

@@ -41,7 +41,7 @@ public class ItemAdminFishingRod extends ItemAquaculture {
     @Override
     public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
         if (entityplayer.fishEntity != null) {
-            int i = entityplayer.fishEntity.handleHookRetraction();
+            // int i = entityplayer.fishEntity.handleHookRetraction();
             // itemstack.damageItem(i, entityplayer);
             entityplayer.swingItem();
 

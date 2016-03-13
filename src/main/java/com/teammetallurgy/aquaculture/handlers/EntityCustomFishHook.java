@@ -278,12 +278,12 @@ public class EntityCustomFishHook extends EntityFishHook {
             }
 
             Entity entity = null;
-            List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+            List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
             double d4 = 0.0D;
             double d5;
 
             for (int j = 0; j < list.size(); ++j) {
-                Entity entity1 = (Entity) list.get(j);
+                Entity entity1 = list.get(j);
 
                 if (entity1.canBeCollidedWith() && (entity1 != this.angler || this.ticksInAir >= 5)) {
                     float f = 0.3F;
