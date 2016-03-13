@@ -113,33 +113,4 @@ public class ItemAquacultureFishingRod extends ItemTool {
 
         return null;
     }
-    /*
-    @Override
-    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
-        if (!stack.hasTagCompound())
-            stack.setTagCompound(new NBTTagCompound());
-    
-        NBTTagCompound tag = stack.getTagCompound();
-    
-        if (tag.hasKey("using"))
-            ;
-        {
-            boolean using = tag.getBoolean("using");
-    
-            if (using) {
-                return usingIcon;
-            }
-        }
-    
-        return itemIcon;
-    }
-    
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void registerIcons(IIconRegister par1IconRegister) {
-        super.registerIcons(par1IconRegister);
-    
-        usingIcon = par1IconRegister.registerIcon("aquaculture:" + type + "FishingRodUsing");
-    }
-    */
 }

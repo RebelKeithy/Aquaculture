@@ -28,10 +28,4 @@ public class NeptuniumArmor extends ItemArmor {
         return this;
     }
 
-    /*
-    @Override
-    public void registerIcons(IIconRegister par1IconRegister) {
-        this.itemIcon = par1IconRegister.registerIcon("aquaculture:" + this.getIconString());
-    }
-    */
 }
