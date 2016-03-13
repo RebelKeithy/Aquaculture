@@ -33,9 +33,16 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomModelResourceLocation(AquacultureItems.diamondFishingRod, 0, new ModelResourceLocation(Aquaculture.MOD_ID + ":diamond_fishing_rod", "inventory"));
         ModelLoader.setCustomModelResourceLocation(AquacultureItems.diamondFishingRod, 1, new ModelResourceLocation(Aquaculture.MOD_ID + ":diamond_fishing_rod_cast", "inventory"));
 
+        // Food
+        String[] food = { "seaweed", "algae", "whale_steak_raw", "fish_fillet_raw", "fish_fillet_cooked", "whale_steak_cooked", "whale_burger", "frog_legs_raw", "frog_legs_cooked",
+                "turtle_soup", "sushi" };
+
+        for (int i = 0; i < food.length; i++) {
+            ModelLoader.setCustomModelResourceLocation(AquacultureItems.metaFoodItem, i, new ModelResourceLocation(Aquaculture.MOD_ID + ":loot/" + food[i], "inventory"));
+        }
+
         // Loot
-        String[] loot = { "seaweed", "algae", "whale_steak_raw", "fish_fillet_raw", "fish_fillet_cooked", "whale_steak_cooked", "whale_burger", "frog_legs_raw", "frog_legs_cooked",
-                "turtle_soup", "sushi", "driftwood", "neptunium_ingot", "tin_can", "message_in_a_bottle", "box", "lockbox", "treasure_chest", "neptunes_bounty" };
+        String[] loot = { "driftwood", "neptunium_ingot", "tin_can", "message_in_a_bottle", "box", "lockbox", "treasure_chest", "neptunes_bounty" };
 
         for (int i = 0; i < loot.length; i++) {
             ModelLoader.setCustomModelResourceLocation(AquacultureItems.metaLootItem, i, new ModelResourceLocation(Aquaculture.MOD_ID + ":loot/" + loot[i], "inventory"));

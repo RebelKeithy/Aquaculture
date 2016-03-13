@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.items;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.handlers.Config;
 import com.teammetallurgy.aquaculture.items.meta.MetaItem;
+import com.teammetallurgy.aquaculture.items.meta.MetaItemFood;
 import com.teammetallurgy.aquaculture.items.meta.SubItem;
 import com.teammetallurgy.aquaculture.items.meta.SubItemFood;
 import com.teammetallurgy.aquaculture.loot.BiomeType;
@@ -26,21 +27,22 @@ public class AquacultureItems {
     public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, 10, "Diamond").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
     public static final Item adminFishingRod = new ItemAdminFishingRod(75).setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
 
+    public static final MetaItemFood metaFoodItem = (MetaItemFood) new MetaItemFood().setUnlocalizedName("food").setCreativeTab(Aquaculture.tab);
     public static final MetaItem metaLootItem = (MetaItem) new MetaItem().setUnlocalizedName("loot").setCreativeTab(Aquaculture.tab);
 
-    public static final SubItem seaweed = new SubItemFood(metaLootItem, 2, 0, false).setUnlocalizedName("Seaweed").setCreativeTab(Aquaculture.tab);
-    public static final SubItem algae = new SubItemFood(metaLootItem, 2, 0, false).setUnlocalizedName("Algae").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood seaweed = new SubItemFood(metaFoodItem, 2, 0, false).setUnlocalizedName("Seaweed").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood algae = new SubItemFood(metaFoodItem, 2, 0, false).setUnlocalizedName("Algae").setCreativeTab(Aquaculture.tab);
 
     // Food
-    public static final SubItem whaleSteak = new SubItem(metaLootItem).setUnlocalizedName("RawWhaleSteak").setCreativeTab(Aquaculture.tab);
-    public static final SubItem fishFillet = new SubItemFood(metaLootItem, 2, 0.3F, false).setUnlocalizedName("RawFishFillet").setCreativeTab(Aquaculture.tab);
-    public static final SubItem cookedFillet = new SubItemFood(metaLootItem, 5, 0.6F, false).setUnlocalizedName("CookedFishFillet").setCreativeTab(Aquaculture.tab);
-    public static final SubItem cookedWhaleSteak = new SubItemFood(metaLootItem, 10, 0.8F, false).setUnlocalizedName("CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
-    public static final SubItem whaleBurger = new SubItemFood(metaLootItem, 20, 0.8F, false).setUnlocalizedName("Whaleburger").setCreativeTab(Aquaculture.tab);
-    public static final SubItem frogLegs = new SubItem(metaLootItem).setUnlocalizedName("FrogLegs").setCreativeTab(Aquaculture.tab);
-    public static final SubItem cookedFrogLegs = new SubItemFood(metaLootItem, 3, 0.6F, false).setUnlocalizedName("CookedFrogLegs").setCreativeTab(Aquaculture.tab);
-    public static final SubItem turtleSoup = new SubItemFood(metaLootItem, 6, 0.6F, false).setUnlocalizedName("TurtleSoup").setCreativeTab(Aquaculture.tab);
-    public static final SubItem sushi = new SubItemFood(metaLootItem, 4, 0.6F, false).setUnlocalizedName("Sushi").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood whaleSteak = new SubItemFood(metaFoodItem, 2, 0.3F, false).setUnlocalizedName("RawWhaleSteak").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood fishFillet = new SubItemFood(metaFoodItem, 2, 0.3F, false).setUnlocalizedName("RawFishFillet").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedFillet = new SubItemFood(metaFoodItem, 5, 0.6F, false).setUnlocalizedName("CookedFishFillet").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedWhaleSteak = new SubItemFood(metaFoodItem, 10, 0.8F, false).setUnlocalizedName("CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood whaleBurger = new SubItemFood(metaFoodItem, 20, 0.8F, false).setUnlocalizedName("Whaleburger").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood frogLegs = new SubItemFood(metaFoodItem, 2, 0.3F, false).setUnlocalizedName("FrogLegs").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedFrogLegs = new SubItemFood(metaFoodItem, 3, 0.6F, false).setUnlocalizedName("CookedFrogLegs").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood turtleSoup = new SubItemFood(metaFoodItem, 6, 0.6F, false).setUnlocalizedName("TurtleSoup").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood sushi = new SubItemFood(metaFoodItem, 4, 0.6F, false).setUnlocalizedName("Sushi").setCreativeTab(Aquaculture.tab);
 
     public static final SubItem driftwood = new SubItem(metaLootItem).setUnlocalizedName("Driftwood").setCreativeTab(Aquaculture.tab);
     public static final SubItem neptuniumBar = new SubItem(metaLootItem).setUnlocalizedName("NeptuniumIngot").setCreativeTab(Aquaculture.tab);
@@ -72,6 +74,7 @@ public class AquacultureItems {
         register(adminFishingRod);
 
         register(metaLootItem);
+        register(metaFoodItem);
 
         register(neptuniumPickaxe);
         register(neptuniumShovel);

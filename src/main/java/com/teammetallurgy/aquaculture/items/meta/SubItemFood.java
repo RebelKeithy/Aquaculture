@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.items.meta;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -14,61 +15,56 @@ import squeek.applecore.api.food.IEdible;
 import squeek.applecore.api.food.ItemFoodProxy;
 
 @Interface(iface = "squeek.applecore.api.food.IEdible", modid = "AppleCore")
-public class SubItemFood extends SubItem implements IEdible {
-    /**
-     * Number of ticks to run while 'EnumAction'ing until result.
-     */
+public class SubItemFood implements IEdible {
+    public int damage;
+    public MetaItemFood item;
+    public String unlocalizedName;
     public final int itemUseDuration;
-
-    /**
-     * The amount this food item heals the player.
-     */
     private final int healAmount;
     private final float saturationModifier;
-
-    /**
-     * Whether wolves like this food (true for raw and cooked porkchop).
-     */
     private final boolean isWolfsFavoriteMeat;
-
-    /**
-     * If this field is true, the food can be consumed even if the player don't need to eat.
-     */
     private boolean alwaysEdible;
-
-    /**
-     * represents the potion effect that will occurr upon eating this food. Set by setPotionEffect
-     */
     private int potionId;
-
-    /**
-     * set by setPotionEffect
-     */
     private int potionDuration;
-
-    /**
-     * set by setPotionEffect
-     */
     private int potionAmplifier;
-
-    /**
-     * probably of the set potion effect occurring
-     */
     private float potionEffectProbability;
-
     private int eatTime;
 
-    public SubItemFood(MetaItem par1, int par2, float par3, boolean par4) {
-        super(par1);
+    public SubItemFood(MetaItemFood metaItem, int heal, float saturation, boolean isWolfFood) {
+        item = metaItem;
+        damage = item.addSubItem(this);
+
         this.itemUseDuration = 32;
-        this.healAmount = par2;
-        this.isWolfsFavoriteMeat = par4;
-        this.saturationModifier = par3;
+        this.healAmount = heal;
+        this.isWolfsFavoriteMeat = isWolfFood;
+        this.saturationModifier = saturation;
         this.eatTime = 32;
     }
 
-    public SubItemFood(MetaItem par1, int par2, boolean par3) {
-        this(par1, par2, 0.6F, par3);
+    public SubItemFood(MetaItemFood metaItem, int heal, boolean isWolfFood) {
+        this(metaItem, heal, 0.6F, isWolfFood);
+    }
+
+    public SubItemFood setCreativeTab(CreativeTabs tab) {
+        item.setCreativeTab(tab);
+        return this;
+    }
+
+    public SubItemFood setUnlocalizedName(String name) {
+        this.unlocalizedName = name;
+        return this;
+    }
+
+    public ItemStack getItemStack() {
+        return getItemStack(1);
+    }
+
+    public ItemStack getItemStack(int amount) {
+        return new ItemStack(item, amount, damage);
+    }
+
+    public String getUnlocalizedName(ItemStack itemStack) {
+        return unlocalizedName;
     }
 
     public SubItemFood setEatTime(int eatTime) {
@@ -82,13 +78,11 @@ public class SubItemFood extends SubItem implements IEdible {
         return new FoodValues(this.getHealAmount(), this.getSaturationModifier());
     }
 
-    @Override
     @Method(modid = "AppleCore")
     public void onEatenAppleCore(ItemStack itemStack, EntityPlayer player) {
         player.getFoodStats().addStats(new ItemFoodProxy(this), itemStack);
     }
 
-    @Override
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         --par1ItemStack.stackSize;
         if (Loader.isModLoaded("AppleCore"))
@@ -106,26 +100,14 @@ public class SubItemFood extends SubItem implements IEdible {
         }
     }
 
-    /**
-     * How long it takes to use or consume an item
-     */
-    @Override
     public int getMaxItemUseDuration(ItemStack par1ItemStack) {
         return eatTime;
     }
 
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
-    @Override
     public EnumAction getItemUseAction(ItemStack par1ItemStack) {
         return EnumAction.EAT;
     }
 
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
-    @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         if (par3EntityPlayer.canEat(this.alwaysEdible)) {
             par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
@@ -138,23 +120,14 @@ public class SubItemFood extends SubItem implements IEdible {
         return this.healAmount;
     }
 
-    /**
-     * gets the saturationModifier of the ItemFood
-     */
     public float getSaturationModifier() {
         return this.saturationModifier;
     }
 
-    /**
-     * Whether wolves like this food (true for raw and cooked porkchop).
-     */
     public boolean isWolfsFavoriteMeat() {
         return this.isWolfsFavoriteMeat;
     }
 
-    /**
-     * sets a potion effect on the item. Args: int potionId, int duration (will be multiplied by 20), int amplifier, float probability of effect happening
-     */
     public SubItemFood setPotionEffect(int par1, int par2, int par3, float par4) {
         this.potionId = par1;
         this.potionDuration = par2;
@@ -163,9 +136,6 @@ public class SubItemFood extends SubItem implements IEdible {
         return this;
     }
 
-    /**
-     * Set the field 'alwaysEdible' to true, and make the food edible even if the player don't need to eat.
-     */
     public SubItemFood setAlwaysEdible() {
         this.alwaysEdible = true;
         return this;

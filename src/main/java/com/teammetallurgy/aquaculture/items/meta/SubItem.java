@@ -5,9 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional.Method;
-
-import squeek.applecore.api.food.FoodValues;
 
 public class SubItem {
     public int itemID;
@@ -60,16 +57,6 @@ public class SubItem {
     /*public void registerIcons(IIconRegister par1IconRegister) {
         this.itemIcon = par1IconRegister.registerIcon(this.textureName);
     }*/
-
-    @Method(modid = "AppleCore")
-    public FoodValues getFoodValues(ItemStack itemStack) {
-        return null;
-    }
-
-    @Method(modid = "AppleCore")
-    public void onEatenAppleCore(ItemStack itemStack, EntityPlayer player) {
-
-    }
 
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         return par1ItemStack;

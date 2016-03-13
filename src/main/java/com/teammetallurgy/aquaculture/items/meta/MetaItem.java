@@ -7,19 +7,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional.Interface;
-import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import squeek.applecore.api.food.FoodValues;
-import squeek.applecore.api.food.IEdible;
-
-@Interface(iface = "squeek.applecore.api.food.IEdible", modid = "AppleCore")
-public class MetaItem extends Item implements IEdible {
+public class MetaItem extends Item {
     ArrayList<SubItem> subItems;
 
     public MetaItem() {
@@ -103,25 +97,6 @@ public class MetaItem extends Item implements IEdible {
         }
     }
     */
-
-    @Override
-    @Method(modid = "AppleCore")
-    public FoodValues getFoodValues(ItemStack itemStack) {
-        int damage = itemStack.getItemDamage();
-        if (damage < subItems.size()) {
-            return subItems.get(damage).getFoodValues(itemStack);
-        }
-
-        return null;
-    }
-
-    @Method(modid = "AppleCore")
-    public void onEatenAppleCore(ItemStack itemStack, EntityPlayer player) {
-        int damage = itemStack.getItemDamage();
-        if (damage < subItems.size()) {
-            subItems.get(damage).onEatenAppleCore(itemStack, player);
-        }
-    }
 
     // ItemRedirects
     @Override
