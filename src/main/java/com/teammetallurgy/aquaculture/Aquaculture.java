@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 
 @Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION)
 public class Aquaculture {
@@ -44,7 +45,11 @@ public class Aquaculture {
 
         new AquacultureRecipes().addRecipes();
 
-        EntityRegistry.registerGlobalEntityID(EntityCustomFishHook.class, "CustomFishHook", EntityRegistry.findGlobalUniqueEntityId());
+        EntityRegistry.registerModEntity(EntityCustomFishHook.class, "CustomFishHook", 0, Aquaculture.instance, 64, 5, true);
+        // Force vanilla packet handling
+        EntityRegistration customFishHookRegistration = EntityRegistry.instance().lookupModSpawn(EntityCustomFishHook.class, false);
+        customFishHookRegistration.setCustomSpawning(null, true);
+
         AquacultureEnchants.init();
 
         tab.setItem(AquacultureItems.ironFishingRod);

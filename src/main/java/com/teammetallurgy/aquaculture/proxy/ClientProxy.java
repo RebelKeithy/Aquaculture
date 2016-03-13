@@ -1,10 +1,13 @@
 package com.teammetallurgy.aquaculture.proxy;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.client.CustomFishingHookRenderFactory;
+import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 import com.teammetallurgy.aquaculture.items.AquacultureItems;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -13,8 +16,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void registerModelRenderers() {
-        // TODO: Entity Rendering
-        // RenderingRegistry.registerEntityRenderingHandler(EntityCustomFishHook.class, new RenderFish());
+        RenderingRegistry.registerEntityRenderingHandler(EntityCustomFishHook.class, new CustomFishingHookRenderFactory());
     }
 
     @Override
