@@ -32,7 +32,7 @@ public class MetaItem extends Item {
 
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
-        int i = MathHelper.clamp_int(itemStack.getItemDamage(), 0, subItems.size());
+        int i = MathHelper.clamp_int(itemStack.getItemDamage(), 0, subItems.size() - 1);
         String uname = subItems.get(i).getUnlocalizedName(itemStack);
         uname = uname.replace(" ", "_");
         return "item." + uname;
@@ -102,7 +102,7 @@ public class MetaItem extends Item {
     @Override
     public ItemStack onItemUseFinish(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         int damage = par1ItemStack.getItemDamage();
-        if (damage < subItems.size()) {
+        if (damage >= 0 && damage < subItems.size()) {
             return subItems.get(damage).onEaten(par1ItemStack, par2World, par3EntityPlayer);
         }
 
@@ -115,7 +115,7 @@ public class MetaItem extends Item {
     @Override
     public int getMaxItemUseDuration(ItemStack par1ItemStack) {
         int damage = par1ItemStack.getItemDamage();
-        if (damage < subItems.size()) {
+        if (damage >= 0 && damage < subItems.size()) {
             return subItems.get(damage).getMaxItemUseDuration(par1ItemStack);
         }
 
@@ -128,7 +128,7 @@ public class MetaItem extends Item {
     @Override
     public EnumAction getItemUseAction(ItemStack par1ItemStack) {
         int damage = par1ItemStack.getItemDamage();
-        if (damage < subItems.size()) {
+        if (damage >= 0 && damage < subItems.size()) {
             return subItems.get(damage).getItemUseAction(par1ItemStack);
         }
 
@@ -138,7 +138,7 @@ public class MetaItem extends Item {
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
         int damage = par1ItemStack.getItemDamage();
-        if (damage < subItems.size()) {
+        if (damage >= 0 && damage < subItems.size()) {
             return subItems.get(damage).onItemRightClick(par1ItemStack, par2World, par3EntityPlayer);
         }
 
