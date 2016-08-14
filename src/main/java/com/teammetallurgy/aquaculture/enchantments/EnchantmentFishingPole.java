@@ -4,16 +4,16 @@ import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
 import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * @author Freyja
  */
 public abstract class EnchantmentFishingPole extends Enchantment {
 
-    public EnchantmentFishingPole(int id, ResourceLocation enchantName, int weight) {
-        super(id, enchantName, weight, AquacultureEnchants.enumFishingPole);
+    public EnchantmentFishingPole(Rarity rarity) {
+        super(rarity, AquacultureEnchants.enumFishingPole, new EntityEquipmentSlot[] { EntityEquipmentSlot.MAINHAND });
     }
 
     @Override

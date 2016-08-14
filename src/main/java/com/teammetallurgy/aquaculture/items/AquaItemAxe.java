@@ -6,7 +6,7 @@ import net.minecraft.item.ItemAxe;
 public class AquaItemAxe extends ItemAxe {
 
     public AquaItemAxe(ToolMaterial toolMaterial) {
-        super(toolMaterial);
+        super(toolMaterial, 8.0F, -3.0F);
     }
 
     /**

@@ -8,7 +8,6 @@ import com.teammetallurgy.aquaculture.loot.FishLoot;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityBoat;
@@ -16,13 +15,17 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
+import net.minecraft.init.Enchantments;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -114,8 +117,8 @@ public class EntityCustomFishHook extends EntityFishHook {
         this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f;
         this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI) * f;
 
-        int shortCast = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.shortcast.effectId, par2EntityPlayer.getCurrentEquippedItem());
-        int longCast = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.longcast.effectId, par2EntityPlayer.getCurrentEquippedItem());
+        int shortCast = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.shortcast, par2EntityPlayer.getHeldItemMainhand());
+        int longCast = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.longcast, par2EntityPlayer.getHeldItemMainhand());
 
         float velocity = 1.5F;
         if (shortCast > 0) {
@@ -168,7 +171,7 @@ public class EntityCustomFishHook extends EntityFishHook {
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
-    public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9, boolean p_180426_10_) {
+    public void setPositionAndRotationDirect(double par1, double par3, double par5, float par7, float par8, int par9, boolean p_180426_10_) {
         this.fishX = par1;
         this.fishY = par3;
         this.fishZ = par5;
@@ -213,7 +216,7 @@ public class EntityCustomFishHook extends EntityFishHook {
             double d0 = this.posX + (this.fishX - this.posX) / this.fishPosRotationIncrements;
             double d1 = this.posY + (this.fishY - this.posY) / this.fishPosRotationIncrements;
             double d2 = this.posZ + (this.fishZ - this.posZ) / this.fishPosRotationIncrements;
-            double d3 = MathHelper.wrapAngleTo180_double(this.fishYaw - this.rotationYaw);
+            double d3 = MathHelper.wrapDegrees(this.fishYaw - this.rotationYaw);
             this.rotationYaw = (float) (this.rotationYaw + d3 / this.fishPosRotationIncrements);
             this.rotationPitch = (float) (this.rotationPitch + (this.fishPitch - this.rotationPitch) / this.fishPosRotationIncrements);
             --this.fishPosRotationIncrements;
@@ -221,7 +224,7 @@ public class EntityCustomFishHook extends EntityFishHook {
             this.setRotation(this.rotationYaw, this.rotationPitch);
         } else {
             if (!this.worldObj.isRemote && this.angler != null) {
-                ItemStack itemstack = this.angler.getCurrentEquippedItem();
+                ItemStack itemstack = this.angler.getHeldItemMainhand();
 
                 if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || !this.isFishingRod(itemstack) || this.getDistanceSqToEntity(this.angler) > 4 * 1024.0D) {
                     this.setDead();
@@ -268,13 +271,13 @@ public class EntityCustomFishHook extends EntityFishHook {
                 ++this.ticksInAir;
             }
 
-            Vec3 vec3 = new Vec3(this.posX, this.posY, this.posZ);
-            Vec3 vec31 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-            MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
-            vec31 = new Vec3(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            Vec3d vec3 = new Vec3d(this.posX, this.posY, this.posZ);
+            Vec3d vec31 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            RayTraceResult rayTraceResult = this.worldObj.rayTraceBlocks(vec3, vec31);
+            vec31 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
-            if (movingobjectposition != null) {
-                vec31 = new Vec3(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+            if (rayTraceResult != null) {
+                vec31 = new Vec3d(rayTraceResult.hitVec.xCoord, rayTraceResult.hitVec.yCoord, rayTraceResult.hitVec.zCoord);
             }
 
             Entity entity = null;
@@ -288,10 +291,10 @@ public class EntityCustomFishHook extends EntityFishHook {
                 if (entity1.canBeCollidedWith() && (entity1 != this.angler || this.ticksInAir >= 5)) {
                     float f = 0.3F;
                     AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f, f, f);
-                    MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec3, vec31);
+                    RayTraceResult rayTraceResult1 = axisalignedbb.calculateIntercept(vec3, vec31);
 
-                    if (movingobjectposition1 != null) {
-                        d5 = vec3.distanceTo(movingobjectposition1.hitVec);
+                    if (rayTraceResult1 != null) {
+                        d5 = vec3.distanceTo(rayTraceResult1.hitVec);
 
                         if (d5 < d4 || d4 == 0.0D) {
                             entity = entity1;
@@ -302,14 +305,14 @@ public class EntityCustomFishHook extends EntityFishHook {
             }
 
             if (entity != null) {
-                movingobjectposition = new MovingObjectPosition(entity);
+                rayTraceResult = new RayTraceResult(entity);
             }
 
-            if (movingobjectposition != null) {
-                if (movingobjectposition.entityHit != null && this.angler != null) {
-                    if (!(movingobjectposition.entityHit instanceof EntityBoat) && (this.angler.capabilities.isCreativeMode)) {
-                        if (movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.angler), 0)) {
-                            this.bobber = movingobjectposition.entityHit;
+            if (rayTraceResult != null) {
+                if (rayTraceResult.entityHit != null && this.angler != null) {
+                    if (!(rayTraceResult.entityHit instanceof EntityBoat) && (this.angler.capabilities.isCreativeMode)) {
+                        if (rayTraceResult.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.angler), 0)) {
+                            this.bobber = rayTraceResult.entityHit;
                         }
                     }
                 } else {
@@ -355,7 +358,7 @@ public class EntityCustomFishHook extends EntityFishHook {
                     double d8 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (k + 1) / b0 - 0.125D + 0.125D;
                     AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(boundingBox.minX, d7, boundingBox.minZ, boundingBox.maxX, d8, boundingBox.maxZ);
 
-                    if (this.worldObj.isAABBInMaterial(axisalignedbb1, Material.water)) {
+                    if (this.worldObj.isAABBInMaterial(axisalignedbb1, Material.WATER)) {
                         d6 += 1.0D / b0;
                     }
                 }
@@ -372,7 +375,7 @@ public class EntityCustomFishHook extends EntityFishHook {
                         }
 
                         if (this.angler != null) {
-                            int efficiency = EnchantmentHelper.getEnchantmentLevel(Enchantment.efficiency.effectId, this.angler.getCurrentEquippedItem());
+                            int efficiency = EnchantmentHelper.getEnchantmentLevel(Enchantments.EFFICIENCY, this.angler.getHeldItemMainhand());
                             biteChance *= 1.0 - 0.1 * efficiency;
                         }
 
@@ -380,17 +383,17 @@ public class EntityCustomFishHook extends EntityFishHook {
                             this.ticksCatchable = this.rand.nextInt(30) + 10;
 
                             if (this.angler != null) {
-                                int barbed = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.barbedHook.effectId, this.angler.getCurrentEquippedItem());
+                                int barbed = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.barbedHook, this.angler.getHeldItemMainhand());
                                 ticksCatchable += 4 * barbed;
                             }
 
                             if (this.angler != null) {
-                                int loot = EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, this.angler.getCurrentEquippedItem());
+                                int loot = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, this.angler.getHeldItemMainhand());
                                 ticksCatchable += 4 * loot;
                             }
 
                             this.motionY -= 0.20000000298023224D;
-                            this.playSound("random.splash", 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                            this.playSound(SoundEvents.ENTITY_BOBBER_SPLASH, 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                             // this.playSound("note.harp", 0.55F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
 
                             // this.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "note." + "harp", 3.0F, 1);
@@ -488,14 +491,14 @@ public class EntityCustomFishHook extends EntityFishHook {
                 this.bobber.motionZ += d2 * d4;
                 b0 = 3;
             } else if (this.ticksCatchable > 0 || isAdmin) {
-                BiomeGenBase currentBiome = worldObj.getBiomeGenForCoords(new BlockPos(MathHelper.floor_double(angler.posX), 0, MathHelper.floor_double(angler.posZ)));
+                Biome currentBiome = worldObj.getBiomeGenForCoords(new BlockPos(MathHelper.floor_double(angler.posX), 0, MathHelper.floor_double(angler.posZ)));
 
                 ItemStack fishLoot;
                 int count = 1;
 
                 float doubleOdds = 0;
 
-                int doubleHook = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.doubleHook.effectId, this.angler.getCurrentEquippedItem());
+                int doubleHook = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.doubleHook, this.angler.getHeldItemMainhand());
                 if (doubleHook > 0) {
                     doubleOdds = 0.1F * doubleHook;
 
@@ -506,8 +509,8 @@ public class EntityCustomFishHook extends EntityFishHook {
                 do {
                     float fishOdds = 0.5F;
 
-                    int magnetic = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.magnetic.effectId, this.angler.getCurrentEquippedItem());
-                    int appealing = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.appealing.effectId, this.angler.getCurrentEquippedItem());
+                    int magnetic = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.magnetic, this.angler.getHeldItemMainhand());
+                    int appealing = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.appealing, this.angler.getHeldItemMainhand());
 
                     if (magnetic > 0) {
                         fishOdds -= (0.08 * magnetic);
@@ -520,16 +523,16 @@ public class EntityCustomFishHook extends EntityFishHook {
                     int heavyLine = 0;
 
                     if (this.angler != null) {
-                        heavyLine = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.heavyLine.effectId, angler.getCurrentEquippedItem());
+                        heavyLine = EnchantmentHelper.getEnchantmentLevel(AquacultureEnchants.heavyLine, angler.getHeldItemMainhand());
                     }
 
                     if (roll < fishOdds) {
-                        if ((this.angler.getCurrentEquippedItem().getItem() instanceof ItemAdminFishingRod) && this.angler.isSneaking())
-                            fishLoot = FishLoot.instance().getRandomFish(currentBiome.biomeID);
+                        if ((this.angler.getHeldItemMainhand().getItem() instanceof ItemAdminFishingRod) && this.angler.isSneaking())
+                            fishLoot = FishLoot.instance().getRandomFish(Biome.getIdForBiome(currentBiome));
                         else
-                            fishLoot = FishLoot.instance().getRandomFish(currentBiome.biomeID, heavyLine);
+                            fishLoot = FishLoot.instance().getRandomFish(Biome.getIdForBiome(currentBiome), heavyLine);
                     } else {
-                        fishLoot = FishLoot.instance().getRandomJunk(currentBiome.biomeID);
+                        fishLoot = FishLoot.instance().getRandomJunk(Biome.getIdForBiome(currentBiome));
                     }
 
                     if (fishLoot != null) {
@@ -544,7 +547,7 @@ public class EntityCustomFishHook extends EntityFishHook {
                         entityitem.motionY = d6 * d9 + MathHelper.sqrt_double(d8) * 0.08D;
                         entityitem.motionZ = d7 * d9;
                         this.worldObj.spawnEntityInWorld(entityitem);
-                        this.angler.addStat(StatList.fishCaughtStat, 1);
+                        this.angler.addStat(StatList.FISH_CAUGHT, 1);
                         this.angler.worldObj.spawnEntityInWorld(new EntityXPOrb(this.angler.worldObj, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
                         b0 = 1;
                     }

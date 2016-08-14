@@ -10,6 +10,8 @@ import com.teammetallurgy.aquaculture.loot.BiomeType;
 import com.teammetallurgy.aquaculture.loot.FishLoot;
 
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -59,11 +61,11 @@ public class AquacultureItems {
     public static final Item neptuniumAxe = new AquaItemAxe(neptuniumEnum).setUnlocalizedName("NeptuniumAxe").setCreativeTab(Aquaculture.tab);
     public static final Item neptuniumHoe = new AquaItemHoe(neptuniumEnum).setUnlocalizedName("NeptuniumHoe").setCreativeTab(Aquaculture.tab);
     public static final Item neptuniumSword = new AquaItemSword(neptuniumEnum).setUnlocalizedName("NeptuniumSword").setCreativeTab(Aquaculture.tab);
-    private static ArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", "", 75, new int[] { 3, 8, 6, 3 }, 15);
-    public static final Item neptuniumHelmet = new NeptuniumArmor(neptuniumArmorEnum, 0, 0).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumPlate = new NeptuniumArmor(neptuniumArmorEnum, 1, 1).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumChestplate").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 2, 2).setArmorTexture("neptunium_layer_2").setUnlocalizedName("NeptuniumLeggings").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumBoots = new NeptuniumArmor(neptuniumArmorEnum, 3, 3).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
+    private static ArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", "", 75, new int[] { 3, 8, 6, 3 }, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
+    public static final Item neptuniumHelmet = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.HEAD).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumPlate = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.CHEST).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumChestplate").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.LEGS).setArmorTexture("neptunium_layer_2").setUnlocalizedName("NeptuniumLeggings").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumBoots = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.FEET).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
 
     public void register() {
 
@@ -152,10 +154,10 @@ public class AquacultureItems {
         FishLoot.instance().addJunkLoot(box.getItemStack(), Config.junkRarity.get("Box"));
         FishLoot.instance().addJunkLoot(lockbox.getItemStack(), Config.junkRarity.get("Lockbox"));
         FishLoot.instance().addJunkLoot(treasureChest.getItemStack(), Config.junkRarity.get("Treasure Chest"));
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.stick), Config.junkRarity.get("Stick"));
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.bone), Config.junkRarity.get("Bone"));
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.leather_boots), Config.junkRarity.get("Leather Boots"));
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.apple), Config.junkRarity.get("Apple"));
+        FishLoot.instance().addJunkLoot(new ItemStack(Items.STICK), Config.junkRarity.get("Stick"));
+        FishLoot.instance().addJunkLoot(new ItemStack(Items.BONE), Config.junkRarity.get("Bone"));
+        FishLoot.instance().addJunkLoot(new ItemStack(Items.LEATHER_BOOTS), Config.junkRarity.get("Leather Boots"));
+        FishLoot.instance().addJunkLoot(new ItemStack(Items.APPLE), Config.junkRarity.get("Apple"));
         FishLoot.instance().addJunkLoot(fish.getItemStackFish("Goldfish"), Config.junkRarity.get("Goldfish"));
         FishLoot.instance().addJunkLoot(nessageInABottle.getItemStack(), Config.junkRarity.get("Message In A Bottle"));
         FishLoot.instance().addJunkLoot(neptunesBounty.getItemStack(), Config.junkRarity.get("Neptunes Bounty"));
@@ -169,6 +171,7 @@ public class AquacultureItems {
         String name = item.getUnlocalizedName();
         name = name.replaceAll("item.", "");
         name = name.replaceAll("([A-Za-z][a-z\\d]+)(?=([A-Z][a-z\\d]+))", "$1_").toLowerCase(Locale.US);
-        GameRegistry.registerItem(item, name);
+        item.setRegistryName(name);
+        GameRegistry.register(item);
     }
 }

@@ -1,11 +1,15 @@
 package com.teammetallurgy.aquaculture.items.meta;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -48,9 +52,10 @@ public class MetaItem extends Item {
 
     // ItemRedirects
     @Override
-    public ItemStack onItemUseFinish(ItemStack itemStack, World world, EntityPlayer player) {
+    public ItemStack onItemUseFinish(ItemStack itemStack, World world, EntityLivingBase entityLiving) {
         int damage = itemStack.getItemDamage();
-        if (damage >= 0 && damage < subItems.size()) {
+        if (entityLiving instanceof EntityPlayer && damage >= 0 && damage < subItems.size()) {
+            EntityPlayer player = (EntityPlayer) entityLiving;
             return subItems.get(damage).onEaten(itemStack, world, player);
         }
 
@@ -78,12 +83,13 @@ public class MetaItem extends Item {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
         int damage = itemStack.getItemDamage();
         if (damage >= 0 && damage < subItems.size()) {
-            return subItems.get(damage).onItemRightClick(itemStack, world, player);
+            ItemStack result = subItems.get(damage).onItemRightClick(itemStack, world, player);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, result);
         }
 
-        return itemStack;
+        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStack);
     }
 }

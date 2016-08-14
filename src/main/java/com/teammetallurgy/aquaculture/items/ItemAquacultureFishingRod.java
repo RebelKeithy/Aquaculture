@@ -3,17 +3,19 @@ package com.teammetallurgy.aquaculture.items;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,11 +30,22 @@ public class ItemAquacultureFishingRod extends ItemTool {
     public int enchantability;
 
     public ItemAquacultureFishingRod(int d, int enchantability, String type) {
-        super(0F, EnumHelper.addToolMaterial("Fishing" + type, 0, d, 0, 0, enchantability), effectiveBlockSet);
+        super(0F, 0F, EnumHelper.addToolMaterial("Fishing" + type, 0, d, 0, 0, enchantability), effectiveBlockSet);
         setMaxDamage(d);
         setMaxStackSize(1);
         this.type = type;
         this.enchantability = enchantability;
+        addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter() {
+
+            @Override
+            public float apply(ItemStack stack, World world, EntityLivingBase entity) {
+                if (entity != null && ((EntityPlayer) entity).fishEntity != null && stack != null && entity.getHeldItemMainhand() == stack) {
+                    return 1.0F;
+                }
+
+                return 0;
+            }
+        });
     }
 
     @SideOnly(Side.CLIENT)
@@ -60,16 +73,16 @@ public class ItemAquacultureFishingRod extends ItemTool {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack) {
-        return HashMultimap.create();
+    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
+        return HashMultimap.<String, AttributeModifier> create();
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer, EnumHand hand) {
         if (entityplayer.fishEntity != null) {
             int i = entityplayer.fishEntity.handleHookRetraction();
             itemstack.damageItem(i, entityplayer);
-            entityplayer.swingItem();
+            entityplayer.swingArm(hand);
 
             if (!itemstack.hasTagCompound())
                 itemstack.setTagCompound(new NBTTagCompound());
@@ -77,11 +90,11 @@ public class ItemAquacultureFishingRod extends ItemTool {
             NBTTagCompound tag = itemstack.getTagCompound();
             tag.setBoolean("using", false);
         } else {
-            world.playSoundAtEntity(entityplayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
             if (!world.isRemote) {
                 world.spawnEntityInWorld(new EntityCustomFishHook(world, entityplayer));
             }
-            entityplayer.swingItem();
+            entityplayer.swingArm(hand);
 
             if (!itemstack.hasTagCompound())
                 itemstack.setTagCompound(new NBTTagCompound());
@@ -89,28 +102,7 @@ public class ItemAquacultureFishingRod extends ItemTool {
             NBTTagCompound tag = itemstack.getTagCompound();
             tag.setBoolean("using", true);
         }
-        return itemstack;
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining) {
-
-        if (player.fishEntity != null && stack != null && stack.getItem() != null) {
-            Item item = stack.getItem();
-            if (item == AquacultureItems.ironFishingRod) {
-                return new ModelResourceLocation(Aquaculture.MOD_ID + ":iron_fishing_rod_cast", "inventory");
-            }
-
-            if (item == AquacultureItems.goldFishingRod) {
-                return new ModelResourceLocation(Aquaculture.MOD_ID + ":gold_fishing_rod_cast", "inventory");
-            }
-
-            if (item == AquacultureItems.diamondFishingRod) {
-                return new ModelResourceLocation(Aquaculture.MOD_ID + ":diamond_fishing_rod_cast", "inventory");
-            }
-        }
-
-        return null;
-    }
 }

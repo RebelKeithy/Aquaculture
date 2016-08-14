@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.items;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -8,8 +9,8 @@ import net.minecraft.item.ItemStack;
 public class NeptuniumArmor extends ItemArmor {
     private String texture;
 
-    public NeptuniumArmor(ArmorMaterial par2EnumArmorMaterial, int par3, int par4) {
-        super(par2EnumArmorMaterial, par3, par4);
+    public NeptuniumArmor(ArmorMaterial armorMaterial, int renderIndex, EntityEquipmentSlot equipmentSlot) {
+        super(armorMaterial, renderIndex, equipmentSlot);
     }
 
     public Item setArmorTexture(String string) {
@@ -18,7 +19,7 @@ public class NeptuniumArmor extends ItemArmor {
     }
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String layer) {
+    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String layer) {
         return "aquaculture:textures/armor/" + texture + ".png";
     }
 

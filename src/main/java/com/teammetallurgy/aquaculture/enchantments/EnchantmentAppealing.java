@@ -1,17 +1,14 @@
 package com.teammetallurgy.aquaculture.enchantments;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
-
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * @author Freyja
  */
 public class EnchantmentAppealing extends EnchantmentFishingPole {
 
-    public EnchantmentAppealing(int id, int weight) {
-        super(id, new ResourceLocation(Aquaculture.MOD_ID + ":appealing"), weight);
+    public EnchantmentAppealing(Rarity rarity) {
+        super(rarity);
         setName("aquacultureAppealing");
     }
 

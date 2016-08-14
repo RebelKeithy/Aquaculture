@@ -1,10 +1,15 @@
 package com.teammetallurgy.aquaculture.items.meta;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional.Interface;
@@ -24,7 +29,7 @@ public class SubItemFood implements IEdible {
     private final float saturationModifier;
     private final boolean isWolfsFavoriteMeat;
     private boolean alwaysEdible;
-    private int potionId;
+    private Potion potion;
     private int potionDuration;
     private int potionAmplifier;
     private float potionEffectProbability;
@@ -83,20 +88,26 @@ public class SubItemFood implements IEdible {
         player.getFoodStats().addStats(new ItemFoodProxy(this), itemStack);
     }
 
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityLivingBase entity) {
         --par1ItemStack.stackSize;
+        if (!(entity instanceof EntityPlayer)) {
+            return par1ItemStack;
+        }
+
+        EntityPlayer player = (EntityPlayer) entity;
+
         if (Loader.isModLoaded("AppleCore"))
-            onEatenAppleCore(par1ItemStack, par3EntityPlayer);
+            onEatenAppleCore(par1ItemStack, player);
         else
-            par3EntityPlayer.getFoodStats().addStats(this.getHealAmount(), this.getSaturationModifier());
-        par2World.playSoundAtEntity(par3EntityPlayer, "random.burp", 0.5F, par2World.rand.nextFloat() * 0.1F + 0.9F);
-        this.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
+            player.getFoodStats().addStats(this.getHealAmount(), this.getSaturationModifier());
+        par2World.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, par2World.rand.nextFloat() * 0.1F + 0.9F);
+        this.onFoodEaten(par1ItemStack, par2World, player);
         return par1ItemStack;
     }
 
     protected void onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
-        if (!par2World.isRemote && this.potionId > 0 && par2World.rand.nextFloat() < this.potionEffectProbability) {
-            par3EntityPlayer.addPotionEffect(new PotionEffect(this.potionId, this.potionDuration * 20, this.potionAmplifier));
+        if (!par2World.isRemote && this.potion != null && par2World.rand.nextFloat() < this.potionEffectProbability) {
+            par3EntityPlayer.addPotionEffect(new PotionEffect(this.potion, this.potionDuration * 20, this.potionAmplifier));
         }
     }
 
@@ -108,9 +119,9 @@ public class SubItemFood implements IEdible {
         return EnumAction.EAT;
     }
 
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer, EnumHand hand) {
         if (par3EntityPlayer.canEat(this.alwaysEdible)) {
-            par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+            par3EntityPlayer.setActiveHand(hand);
         }
 
         return par1ItemStack;
@@ -128,11 +139,11 @@ public class SubItemFood implements IEdible {
         return this.isWolfsFavoriteMeat;
     }
 
-    public SubItemFood setPotionEffect(int par1, int par2, int par3, float par4) {
-        this.potionId = par1;
-        this.potionDuration = par2;
-        this.potionAmplifier = par3;
-        this.potionEffectProbability = par4;
+    public SubItemFood setPotionEffect(Potion potion, int duration, int amplifier, float effectPribability) {
+        this.potion = potion;
+        this.potionDuration = duration;
+        this.potionAmplifier = amplifier;
+        this.potionEffectProbability = effectPribability;
         return this;
     }
 

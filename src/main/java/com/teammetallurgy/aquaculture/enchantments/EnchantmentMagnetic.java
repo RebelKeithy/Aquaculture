@@ -1,17 +1,14 @@
 package com.teammetallurgy.aquaculture.enchantments;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
-
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * @author Freyja
  */
 public class EnchantmentMagnetic extends EnchantmentFishingPole {
 
-    public EnchantmentMagnetic(int id, int weight) {
-        super(id, new ResourceLocation(Aquaculture.MOD_ID + ":magnetic"), weight);
+    public EnchantmentMagnetic(Enchantment.Rarity rarity) {
+        super(rarity);
         setName("aquacultureMagnetic");
     }
 

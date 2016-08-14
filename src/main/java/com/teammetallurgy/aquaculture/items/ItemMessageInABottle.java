@@ -5,9 +5,10 @@ import com.teammetallurgy.aquaculture.items.meta.SubItem;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -24,7 +25,7 @@ public class ItemMessageInABottle extends SubItem {
         if (par2World.isRemote)
             return par1ItemStack;
 
-        par2World.playSoundAtEntity(par3EntityPlayer, "random.glass", 0.5F, 0.4F / (rand.nextFloat() * 0.4F + 0.8F));
+        par2World.playSound(null, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.PLAYERS, 0.5F, 0.4F / (rand.nextFloat() * 0.4F + 0.8F));
 
         int messageRoll = rand.nextInt(29) + 1;
 
@@ -37,7 +38,7 @@ public class ItemMessageInABottle extends SubItem {
 
         if (par3EntityPlayer instanceof EntityPlayerMP) {
 
-            ChatComponentText chatMessage = new ChatComponentText(StatCollector.translateToLocal(message));
+            TextComponentTranslation chatMessage = new TextComponentTranslation(message);
             par3EntityPlayer.addChatMessage(chatMessage);
         }
 

@@ -19,18 +19,18 @@ public class ItemLockbox extends SubItem {
     public ItemLockbox(MetaItem par1) {
         super(par1);
         loot = new WeightedLootSet();
-        loot.addLoot(Items.iron_ingot, 8);
-        loot.addLoot(Items.gold_ingot, 7);
-        loot.addLoot(Items.golden_apple, 5);
-        loot.addLoot(new ItemStack(Items.dye, 1, 4), 8);
-        loot.addLoot(Items.redstone, 8);
-        loot.addLoot(Items.book, 10);
-        loot.addLoot(Items.paper, 10);
-        loot.addLoot(Items.compass, 10);
-        loot.addLoot(Items.clock, 10);
-        loot.addLoot(Items.glowstone_dust, 7);
-        loot.addLoot(Items.gunpowder, 10);
-        loot.addLoot(Items.quartz, 7);
+        loot.addLoot(Items.IRON_INGOT, 8);
+        loot.addLoot(Items.GOLD_INGOT, 7);
+        loot.addLoot(Items.GOLDEN_APPLE, 5);
+        loot.addLoot(new ItemStack(Items.DYE, 1, 4), 8);
+        loot.addLoot(Items.REDSTONE, 8);
+        loot.addLoot(Items.BOOK, 10);
+        loot.addLoot(Items.PAPER, 10);
+        loot.addLoot(Items.COMPASS, 10);
+        loot.addLoot(Items.CLOCK, 10);
+        loot.addLoot(Items.GLOWSTONE_DUST, 7);
+        loot.addLoot(Items.GUNPOWDER, 10);
+        loot.addLoot(Items.QUARTZ, 7);
     }
 
     @Override

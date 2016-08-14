@@ -19,10 +19,10 @@ public class ItemTreasureChest extends SubItem {
     public ItemTreasureChest(MetaItem par1) {
         super(par1);
         loot = new WeightedLootSet();
-        loot.addLoot(Items.iron_ingot, 40);
-        loot.addLoot(Items.gold_ingot, 30);
-        loot.addLoot(Items.diamond, 15);
-        loot.addLoot(Items.emerald, 15);
+        loot.addLoot(Items.IRON_INGOT, 40);
+        loot.addLoot(Items.GOLD_INGOT, 30);
+        loot.addLoot(Items.DIAMOND, 15);
+        loot.addLoot(Items.EMERALD, 15);
     }
 
     @Override
