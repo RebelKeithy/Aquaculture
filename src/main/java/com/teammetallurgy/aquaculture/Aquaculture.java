@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 public class Aquaculture {
     public final static String MOD_ID = "aquaculture";
     public final static String MOD_NAME = "Aquaculture";
-    public final static String MOD_VERSION = "1.3.0";
+    public final static String MOD_VERSION = "1.4.0";
 
     @Instance(MOD_ID)
     public static Aquaculture instance;
