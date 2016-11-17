@@ -9,13 +9,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MetaItem extends Item {
     ArrayList<SubItem> subItems;
@@ -44,7 +44,7 @@ public class MetaItem extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> itemStackList) {
+    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> itemStackList) {
         for (SubItem subItem : subItems) {
             itemStackList.add(subItem.getItemStack());
         }
@@ -83,7 +83,9 @@ public class MetaItem extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack itemStack = player.getHeldItem(hand);
+
         int damage = itemStack.getItemDamage();
         if (damage >= 0 && damage < subItems.size()) {
             ItemStack result = subItems.get(damage).onItemRightClick(itemStack, world, player);

@@ -1,21 +1,21 @@
 package com.teammetallurgy.aquaculture.handlers;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class AquacultureTab extends CreativeTabs {
-    Item tabItem;
+    ItemStack tabItem;
 
     public AquacultureTab(String par2Str) {
         super(par2Str);
     }
 
-    public void setItem(Item item) {
-        tabItem = item;
+    public void setItemStack(ItemStack itemStack) {
+        tabItem = itemStack;
     }
 
     @Override
-    public Item getTabIconItem() {
+    public ItemStack getTabIconItem() {
         return tabItem;
     }
 }

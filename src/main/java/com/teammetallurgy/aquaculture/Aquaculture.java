@@ -4,18 +4,16 @@ import com.teammetallurgy.aquaculture.enchantments.AquacultureEnchants;
 import com.teammetallurgy.aquaculture.handlers.AquacultureRecipes;
 import com.teammetallurgy.aquaculture.handlers.AquacultureTab;
 import com.teammetallurgy.aquaculture.handlers.Config;
-import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 import com.teammetallurgy.aquaculture.items.AquacultureItems;
 import com.teammetallurgy.aquaculture.proxy.CommonProxy;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
 
 @Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION)
 public class Aquaculture {
@@ -45,14 +43,15 @@ public class Aquaculture {
 
         new AquacultureRecipes().addRecipes();
 
-        EntityRegistry.registerModEntity(EntityCustomFishHook.class, "CustomFishHook", 0, Aquaculture.instance, 64, 5, true);
+        // TODO: Disabled until forge entity registry is fixed
+        // EntityRegistry.registerModEntity(EntityCustomFishHook.class, "CustomFishHook", 0, Aquaculture.instance, 64, 5, true);
         // Force vanilla packet handling
-        EntityRegistration customFishHookRegistration = EntityRegistry.instance().lookupModSpawn(EntityCustomFishHook.class, false);
-        customFishHookRegistration.setCustomSpawning(null, true);
+        // EntityRegistration customFishHookRegistration = EntityRegistry.instance().lookupModSpawn(EntityCustomFishHook.class, false);
+        // customFishHookRegistration.setCustomSpawning(null, true);
 
         AquacultureEnchants.init();
 
-        tab.setItem(AquacultureItems.ironFishingRod);
+        tab.setItemStack(new ItemStack(AquacultureItems.ironFishingRod));
 
         proxy.registerModelRenderers();
     }

@@ -78,7 +78,9 @@ public class ItemAquacultureFishingRod extends ItemTool {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand hand) {
+        ItemStack itemstack = entityplayer.getHeldItem(hand);
+
         if (entityplayer.fishEntity != null) {
             int i = entityplayer.fishEntity.handleHookRetraction();
             itemstack.damageItem(i, entityplayer);

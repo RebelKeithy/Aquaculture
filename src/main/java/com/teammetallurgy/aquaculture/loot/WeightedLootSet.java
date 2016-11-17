@@ -61,7 +61,7 @@ public class WeightedLootSet {
                 int min = lootMin.get(key);
                 int max = lootMax.get(key);
                 int amount = rand.nextInt(max - min + 1) + min;
-                stack.stackSize = amount;
+                stack.func_190920_e(amount);
                 if (stack.getItem() == Items.ENCHANTED_BOOK) {
                     // TODO: Find a way to enchant books
                     /*

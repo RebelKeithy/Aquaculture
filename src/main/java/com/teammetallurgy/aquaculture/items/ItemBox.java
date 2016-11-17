@@ -73,7 +73,7 @@ public class ItemBox extends SubItem {
         EntityItem entityitem = new EntityItem(par3EntityPlayer.worldObj, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, randomLoot);
         par2World.spawnEntityInWorld(entityitem);
 
-        --par1ItemStack.stackSize;
+        par1ItemStack.func_190918_g(1);
         return par1ItemStack;
     }
 }

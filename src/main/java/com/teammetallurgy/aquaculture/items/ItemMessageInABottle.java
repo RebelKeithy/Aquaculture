@@ -42,7 +42,7 @@ public class ItemMessageInABottle extends SubItem {
             par3EntityPlayer.addChatMessage(chatMessage);
         }
 
-        --par1ItemStack.stackSize;
+        par1ItemStack.func_190918_g(1);
         return par1ItemStack;
     }
 }

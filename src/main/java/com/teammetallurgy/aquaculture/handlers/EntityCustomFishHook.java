@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -59,7 +60,7 @@ public class EntityCustomFishHook extends EntityFishHook {
 
     private boolean isAdmin = false;
 
-    public EntityCustomFishHook(World par1World) {
+    /* public EntityCustomFishHook(World par1World) {
         super(par1World);
         this.xTile = -1;
         this.yTile = -1;
@@ -71,11 +72,11 @@ public class EntityCustomFishHook extends EntityFishHook {
         this.bobber = null;
         this.setSize(0.25F, 0.25F);
         this.ignoreFrustumCheck = true;
-    }
+    }*/
 
     @SideOnly(Side.CLIENT)
     public EntityCustomFishHook(World par1World, double par2, double par4, double par6, EntityPlayer par8EntityPlayer) {
-        super(par1World, par2, par4, par6, par8EntityPlayer);
+        super(par1World, par8EntityPlayer, par2, par4, par6);
         this.setPosition(par2, par4, par6);
         this.ignoreFrustumCheck = true;
         this.angler = par8EntityPlayer;
@@ -321,7 +322,7 @@ public class EntityCustomFishHook extends EntityFishHook {
             }
 
             if (!this.inGround) {
-                this.moveEntity(this.motionX, this.motionY, this.motionZ);
+                this.moveEntity(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
                 float f1 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
                 this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
@@ -358,7 +359,7 @@ public class EntityCustomFishHook extends EntityFishHook {
                     double d8 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (k + 1) / b0 - 0.125D + 0.125D;
                     AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(boundingBox.minX, d7, boundingBox.minZ, boundingBox.maxX, d8, boundingBox.maxZ);
 
-                    if (this.worldObj.isAABBInMaterial(axisalignedbb1, Material.WATER)) {
+                    if (this.worldObj.isMaterialInBB(axisalignedbb1, Material.WATER)) {
                         d6 += 1.0D / b0;
                     }
                 }
@@ -491,7 +492,7 @@ public class EntityCustomFishHook extends EntityFishHook {
                 this.bobber.motionZ += d2 * d4;
                 b0 = 3;
             } else if (this.ticksCatchable > 0 || isAdmin) {
-                Biome currentBiome = worldObj.getBiomeGenForCoords(new BlockPos(MathHelper.floor_double(angler.posX), 0, MathHelper.floor_double(angler.posZ)));
+                Biome currentBiome = worldObj.getBiome(new BlockPos(MathHelper.floor_double(angler.posX), 0, MathHelper.floor_double(angler.posZ)));
 
                 ItemStack fishLoot;
                 int count = 1;
