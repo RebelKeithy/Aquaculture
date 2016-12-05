@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.proxy;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.client.CustomFishingHookRenderFactory;
+import com.teammetallurgy.aquaculture.handlers.AquacultureEntitySpawnHandler;
 import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 import com.teammetallurgy.aquaculture.items.AquacultureItems;
 
@@ -70,5 +71,12 @@ public class ClientProxy extends CommonProxy {
         for (int i = 0; i < fish.length; i++) {
             ModelLoader.setCustomModelResourceLocation(AquacultureItems.fish, i, new ModelResourceLocation(Aquaculture.MOD_ID + ":fish/" + fish[i], "inventory"));
         }
+    }
+
+    @Override
+    public void registerEntities() {
+        super.registerEntities();
+
+        AquacultureEntitySpawnHandler.init();
     }
 }

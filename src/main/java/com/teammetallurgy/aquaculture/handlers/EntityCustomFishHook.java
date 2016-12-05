@@ -27,12 +27,13 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.common.registry.IThrowableEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class EntityCustomFishHook extends EntityFishHook {
+public class EntityCustomFishHook extends EntityFishHook implements IThrowableEntity {
     public int shake;
     public EntityPlayer angler;
     public Entity bobber;
@@ -59,20 +60,6 @@ public class EntityCustomFishHook extends EntityFishHook {
     private double velocityZ;
 
     private boolean isAdmin = false;
-
-    /* public EntityCustomFishHook(World par1World) {
-        super(par1World);
-        this.xTile = -1;
-        this.yTile = -1;
-        this.zTile = -1;
-        this.inGround = false;
-        this.shake = 0;
-        this.ticksInAir = 0;
-        this.ticksCatchable = 0;
-        this.bobber = null;
-        this.setSize(0.25F, 0.25F);
-        this.ignoreFrustumCheck = true;
-    }*/
 
     @SideOnly(Side.CLIENT)
     public EntityCustomFishHook(World par1World, double par2, double par4, double par6, EntityPlayer par8EntityPlayer) {
@@ -578,5 +565,15 @@ public class EntityCustomFishHook extends EntityFishHook {
         if (this.angler != null) {
             this.angler.fishEntity = null;
         }
+    }
+
+    @Override
+    public Entity getThrower() {
+        return this.angler;
+    }
+
+    @Override
+    public void setThrower(Entity entity) {
+        // do nothing
     }
 }
