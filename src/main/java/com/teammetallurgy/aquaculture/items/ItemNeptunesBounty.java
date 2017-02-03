@@ -44,10 +44,10 @@ public class ItemNeptunesBounty extends SubItem {
 
         ItemStack item = loot.getRandomLoot();
 
-        EntityItem entityitem = new EntityItem(par3EntityPlayer.worldObj, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, item);
-        par2World.spawnEntityInWorld(entityitem);
+        EntityItem entityitem = new EntityItem(par3EntityPlayer.world, par3EntityPlayer.posX, par3EntityPlayer.posY, par3EntityPlayer.posZ, item);
+        par2World.spawnEntity(entityitem);
 
-        par1ItemStack.func_190918_g(1);
+        par1ItemStack.shrink(1);
         return par1ItemStack;
     }
 }

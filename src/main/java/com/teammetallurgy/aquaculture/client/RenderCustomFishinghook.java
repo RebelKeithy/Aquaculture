@@ -33,7 +33,7 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
 
     @Override
     public void doRender(EntityCustomFishHook entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        EntityPlayer entityplayer = entity.func_190619_l();
+        EntityPlayer entityplayer = entity.getAngler();
 
         if (entityplayer != null && !this.renderOutlines) {
             GlStateManager.pushMatrix();
@@ -83,7 +83,7 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
             }
 
             float f7 = entityplayer.getSwingProgress(partialTicks);
-            float f8 = MathHelper.sin(MathHelper.sqrt_float(f7) * (float) Math.PI);
+            float f8 = MathHelper.sin(MathHelper.sqrt(f7) * (float) Math.PI);
             float f9 = (entityplayer.prevRenderYawOffset + (entityplayer.renderYawOffset - entityplayer.prevRenderYawOffset) * partialTicks) * 0.017453292F;
             double d0 = MathHelper.sin(f9);
             double d1 = MathHelper.cos(f9);
@@ -94,7 +94,7 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
             double d6;
             double d7;
 
-            if ((this.renderManager.options == null || this.renderManager.options.thirdPersonView <= 0) && entityplayer == Minecraft.getMinecraft().thePlayer) {
+            if ((this.renderManager.options == null || this.renderManager.options.thirdPersonView <= 0) && entityplayer == Minecraft.getMinecraft().player) {
                 float f10 = this.renderManager.options.fovSetting;
                 f10 = f10 / 100.0F;
                 Vec3d vec3d = new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D);

@@ -57,11 +57,6 @@ public class ItemAquacultureWoodenFishingRod extends ItemAquaculture {
     }
 
     @Override
-    public boolean isItemTool(ItemStack par1ItemStack) {
-        return true;
-    }
-
-    @Override
     public int getItemEnchantability() {
         return enchantability;
     }
@@ -83,7 +78,7 @@ public class ItemAquacultureWoodenFishingRod extends ItemAquaculture {
         } else {
             world.playSound(null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
             if (!world.isRemote) {
-                world.spawnEntityInWorld(new EntityCustomFishHook(world, entityplayer));
+                world.spawnEntity(new EntityCustomFishHook(world, entityplayer));
             }
             entityplayer.swingArm(hand);
 

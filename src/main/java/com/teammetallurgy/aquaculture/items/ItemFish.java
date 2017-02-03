@@ -138,7 +138,7 @@ public class ItemFish extends Item {
      */
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack) {
-        int i = MathHelper.clamp_int(par1ItemStack.getItemDamage(), 0, fish.size());
+        int i = MathHelper.clamp(par1ItemStack.getItemDamage(), 0, fish.size());
         String uname = super.getUnlocalizedName() + "." + fish.get(i).name;
         uname = uname.replace(" ", "_");
         return uname;

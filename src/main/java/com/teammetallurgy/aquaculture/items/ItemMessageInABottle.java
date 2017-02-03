@@ -39,10 +39,10 @@ public class ItemMessageInABottle extends SubItem {
         if (par3EntityPlayer instanceof EntityPlayerMP) {
 
             TextComponentTranslation chatMessage = new TextComponentTranslation(message);
-            par3EntityPlayer.addChatMessage(chatMessage);
+            par3EntityPlayer.sendMessage(chatMessage);
         }
 
-        par1ItemStack.func_190918_g(1);
+        par1ItemStack.shrink(1);
         return par1ItemStack;
     }
 }

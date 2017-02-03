@@ -70,7 +70,7 @@ public class SubItemFood {
     }
 
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityLivingBase entity) {
-        par1ItemStack.func_190918_g(1);
+        par1ItemStack.shrink(1);
         if (!(entity instanceof EntityPlayer)) {
             return par1ItemStack;
         }
