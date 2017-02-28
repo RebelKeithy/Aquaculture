@@ -51,7 +51,7 @@ minecraft {
 }
 
 dependencies {
-    // deobfCompile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_api_version}:api"
+    deobfCompile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_api_version}:api"
 }
 
 task buildInfo() {
