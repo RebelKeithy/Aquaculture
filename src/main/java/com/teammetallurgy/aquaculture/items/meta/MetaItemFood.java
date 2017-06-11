@@ -4,7 +4,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -32,7 +31,7 @@ public class MetaItemFood extends ItemFood {
 
     public int addSubItem(SubItemFood subItem) {
         if (subItems == null)
-            subItems = new ArrayList<SubItemFood>();
+            subItems = new ArrayList<>();
 
         subItems.add(subItem);
         return subItems.size() - 1;
@@ -48,7 +47,7 @@ public class MetaItemFood extends ItemFood {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> itemStackList) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> itemStackList) {
         for (SubItemFood subItem : subItems) {
             itemStackList.add(subItem.getItemStack());
         }
@@ -113,10 +112,10 @@ public class MetaItemFood extends ItemFood {
         int damage = itemStack.getItemDamage();
         if (damage >= 0 && damage < subItems.size()) {
             ItemStack result = subItems.get(damage).onItemRightClick(itemStack, world, player, hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, result);
+            return new ActionResult<>(EnumActionResult.SUCCESS, result);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStack);
+        return new ActionResult<>(EnumActionResult.FAIL, itemStack);
     }
 
 }

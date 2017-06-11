@@ -28,7 +28,7 @@ public class MetaItem extends Item {
 
     public int addSubItem(SubItem subItem) {
         if (subItems == null)
-            subItems = new ArrayList<SubItem>();
+            subItems = new ArrayList<>();
 
         subItems.add(subItem);
         return subItems.size() - 1;
@@ -44,7 +44,7 @@ public class MetaItem extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> itemStackList) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> itemStackList) {
         for (SubItem subItem : subItems) {
             itemStackList.add(subItem.getItemStack());
         }
@@ -89,9 +89,9 @@ public class MetaItem extends Item {
         int damage = itemStack.getItemDamage();
         if (damage >= 0 && damage < subItems.size()) {
             ItemStack result = subItems.get(damage).onItemRightClick(itemStack, world, player);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, result);
+            return new ActionResult<>(EnumActionResult.SUCCESS, result);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStack);
+        return new ActionResult<>(EnumActionResult.FAIL, itemStack);
     }
 }

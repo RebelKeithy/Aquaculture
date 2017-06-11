@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -37,6 +37,11 @@ group = "com.teammetallurgy.aquaculture" // http://maven.apache.org/guides/mini/
 archivesBaseName = "Aquaculture"
 
 ext.configFile = file "build.properties"
+
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
 
 configFile.withReader {
     def prop = new Properties()

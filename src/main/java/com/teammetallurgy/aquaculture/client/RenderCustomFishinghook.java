@@ -5,9 +5,9 @@ import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
 import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -42,7 +42,7 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
             GlStateManager.scale(0.5F, 0.5F, 0.5F);
             this.bindEntityTexture(entity);
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer vertexbuffer = tessellator.getBuffer();
+            BufferBuilder bufferBuilder = tessellator.getBuffer();
             int i = 1;
             int j = 2;
             float f = 0.0625F;
@@ -60,11 +60,11 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
                 GlStateManager.enableOutlineMode(this.getTeamColor(entity));
             }
 
-            vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-            vertexbuffer.pos(-0.5D, -0.5D, 0.0D).tex(0.0625D, 0.1875D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            vertexbuffer.pos(0.5D, -0.5D, 0.0D).tex(0.125D, 0.1875D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            vertexbuffer.pos(0.5D, 0.5D, 0.0D).tex(0.125D, 0.125D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            vertexbuffer.pos(-0.5D, 0.5D, 0.0D).tex(0.0625D, 0.125D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+            bufferBuilder.pos(-0.5D, -0.5D, 0.0D).tex(0.0625D, 0.1875D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            bufferBuilder.pos(0.5D, -0.5D, 0.0D).tex(0.125D, 0.1875D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            bufferBuilder.pos(0.5D, 0.5D, 0.0D).tex(0.125D, 0.125D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            bufferBuilder.pos(-0.5D, 0.5D, 0.0D).tex(0.0625D, 0.125D).normal(0.0F, 1.0F, 0.0F).endVertex();
             tessellator.draw();
 
             if (this.renderOutlines) {
@@ -121,12 +121,12 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
             double d12 = ((float) (d6 - d9));
             GlStateManager.disableTexture2D();
             GlStateManager.disableLighting();
-            vertexbuffer.begin(3, DefaultVertexFormats.POSITION_COLOR);
+            bufferBuilder.begin(3, DefaultVertexFormats.POSITION_COLOR);
             int l = 16;
 
             for (int i1 = 0; i1 <= 16; ++i1) {
                 float f11 = i1 / 16.0F;
-                vertexbuffer.pos(x + d10 * f11, y + d11 * (f11 * f11 + f11) * 0.5D + 0.25D, z + d12 * f11).color(0, 0, 0, 255).endVertex();
+                bufferBuilder.pos(x + d10 * f11, y + d11 * (f11 * f11 + f11) * 0.5D + 0.25D, z + d12 * f11).color(0, 0, 0, 255).endVertex();
             }
 
             tessellator.draw();

@@ -3,14 +3,14 @@ package com.teammetallurgy.aquaculture.items;
 import com.teammetallurgy.aquaculture.loot.BiomeType;
 import com.teammetallurgy.aquaculture.loot.FishLoot;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 public class ItemFish extends Item {
     public List<Fish> fish;
 
@@ -29,7 +31,7 @@ public class ItemFish extends Item {
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
 
-        fish = new ArrayList<Fish>();
+        fish = new ArrayList<>();
     }
 
     public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType biome, int rarity) {
@@ -49,7 +51,10 @@ public class ItemFish extends Item {
         for (int i = 0; i < fish.size(); i++) {
             Fish f = fish.get(i);
             if (f.filletAmount != 0) {
+                // Fixme: Change to JSON recipes
+                /*
                 GameRegistry.addShapelessRecipe(AquacultureItems.fishFillet.getItemStack(f.filletAmount), new ItemStack(this, 1, i));
+                */
             }
         }
     }
@@ -65,7 +70,7 @@ public class ItemFish extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> toolTip, boolean isDebug) {
+    public void addInformation(ItemStack itemStack, @Nullable World world, List<String> toolTip, ITooltipFlag tooltipType) {
         if (itemStack.hasTagCompound()) {
             if (itemStack.getTagCompound().hasKey("Weight")) {
                 float weight = itemStack.getTagCompound().getFloat("Weight");
@@ -146,9 +151,9 @@ public class ItemFish extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
         for (int j = 0; j < fish.size(); ++j) {
-            subItems.add(new ItemStack(item, 1, j));
+            subItems.add(new ItemStack(this, 1, j));
         }
     }
 
