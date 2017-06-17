@@ -1,6 +1,6 @@
 [
 {
-  "modid": "Aquaculture",
+  "modid": "aquaculture",
   "name": "Aquaculture",
   "description": "Welcome to Aquaculture! An expansion of Minecraft's fishing system.",
   "version": "${version}",
