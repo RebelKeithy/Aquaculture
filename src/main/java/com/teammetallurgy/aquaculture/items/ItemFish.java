@@ -152,8 +152,10 @@ public class ItemFish extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        for (int j = 0; j < fish.size(); ++j) {
-            subItems.add(new ItemStack(this, 1, j));
+        if (this.isInCreativeTab(tab)) {
+            for (int j = 0; j < fish.size(); ++j) {
+                subItems.add(new ItemStack(this, 1, j));
+            }
         }
     }
 

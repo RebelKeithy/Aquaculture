@@ -48,8 +48,10 @@ public class MetaItemFood extends ItemFood {
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> itemStackList) {
-        for (SubItemFood subItem : subItems) {
-            itemStackList.add(subItem.getItemStack());
+        if (this.isInCreativeTab(tab)) {
+            for (SubItemFood subItem : subItems) {
+                itemStackList.add(subItem.getItemStack());
+            }
         }
     }
 
