@@ -7,7 +7,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 /**
  * @author Freyja
@@ -41,33 +41,33 @@ public class AquacultureEnchants {
 
         appealing = new EnchantmentAppealing(Enchantment.Rarity.RARE);
         appealing.setRegistryName("appealing");
-        GameRegistry.register(appealing);
+        ForgeRegistries.ENCHANTMENTS.register(appealing);
 
         magnetic = new EnchantmentMagnetic(Enchantment.Rarity.RARE);
         magnetic.setRegistryName("magnetic");
-        GameRegistry.register(magnetic);
+        ForgeRegistries.ENCHANTMENTS.register(magnetic);
 
         longcast = new EnchantmentLongCast(Enchantment.Rarity.COMMON);
         longcast.setRegistryName("long_cast");
-        GameRegistry.register(longcast);
+        ForgeRegistries.ENCHANTMENTS.register(longcast);
 
         shortcast = new EnchantmentShortCast(Enchantment.Rarity.COMMON);
         shortcast.setRegistryName("short_cast");
-        GameRegistry.register(shortcast);
+        ForgeRegistries.ENCHANTMENTS.register(shortcast);
 
         // fastcast = new EnchantmentFastcast(Config.fastcastID, 7);
 
         doubleHook = new EnchantmentDoubleHook(Enchantment.Rarity.VERY_RARE);
         doubleHook.setRegistryName("double_hook");
-        GameRegistry.register(doubleHook);
+        ForgeRegistries.ENCHANTMENTS.register(doubleHook);
 
         barbedHook = new EnchantmentBardedHook(Enchantment.Rarity.VERY_RARE);
         barbedHook.setRegistryName("barbed_hook");
-        GameRegistry.register(barbedHook);
+        ForgeRegistries.ENCHANTMENTS.register(barbedHook);
 
         heavyLine = new EnchantmentHeavyLine(Enchantment.Rarity.UNCOMMON);
         heavyLine.setRegistryName("heavy_line");
-        GameRegistry.register(heavyLine);
+        ForgeRegistries.ENCHANTMENTS.register(heavyLine);
 
     }
 

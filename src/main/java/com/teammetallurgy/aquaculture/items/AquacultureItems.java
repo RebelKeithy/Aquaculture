@@ -17,7 +17,7 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Locale;
@@ -172,6 +172,6 @@ public class AquacultureItems {
         name = name.replaceAll("item.", "");
         name = name.replaceAll("([A-Za-z][a-z\\d]+)(?=([A-Z][a-z\\d]+))", "$1_").toLowerCase(Locale.US);
         item.setRegistryName(name);
-        GameRegistry.register(item);
+        ForgeRegistries.ITEMS.register(item);
     }
 }
