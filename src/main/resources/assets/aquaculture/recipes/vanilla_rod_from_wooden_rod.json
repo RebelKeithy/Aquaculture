@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aquaculture:fishing_rod"
+    }
+  ],
+  "result": {
+    "item": "minecraft:fishing_rod"
+  }
+}

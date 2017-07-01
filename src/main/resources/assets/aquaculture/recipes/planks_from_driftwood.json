@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aquaculture:loot",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "minecraft:planks",
+    "data": 0,
+    "count": 4
+  }
+}
