@@ -39,6 +39,9 @@ minecraft {
     version = config.minecraft_version + "-" + config.forge_version
     runDir = "run"
     mappings = config.mcp_mappings
+	
+	replace "@VERSION@", project.mod_version
+    replaceIn "Aquaculture.java"
 }
 
 dependencies {

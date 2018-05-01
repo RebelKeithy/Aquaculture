@@ -1,12 +1,8 @@
 package com.teammetallurgy.aquaculture.handlers;
 
-import com.teammetallurgy.aquaculture.items.AquacultureItems;
-
 public class AquacultureRecipes {
 
     public void addRecipes() {
-        AquacultureItems.fish.addFilletRecipes();
-
         // Fixme: Change to JSON recipes
         /*
         GameRegistry.addSmelting(AquacultureItems.fishFillet.getItemStack(), AquacultureItems.cookedFillet.getItemStack(), 0.3f);

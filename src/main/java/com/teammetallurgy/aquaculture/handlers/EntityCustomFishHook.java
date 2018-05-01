@@ -5,7 +5,6 @@ import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
 import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
 import com.teammetallurgy.aquaculture.items.ItemAquacultureWoodenFishingRod;
 import com.teammetallurgy.aquaculture.loot.FishLoot;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -160,7 +159,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
 
     @Override
     @SideOnly(Side.CLIENT)
-    /**
+    /*
      * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
      * posY, posZ, yaw, pitch
      */
@@ -178,7 +177,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
 
     @Override
     @SideOnly(Side.CLIENT)
-    /**
+    /*
      * Sets the velocity to the args. Args: x, y, z
      */
     public void setVelocity(double par1, double par3, double par5) {
@@ -278,9 +277,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
             double d4 = 0.0D;
             double d5;
 
-            for (int j = 0; j < list.size(); ++j) {
-                Entity entity1 = list.get(j);
-
+            for (Entity entity1 : list) {
                 if (entity1.canBeCollidedWith() && (entity1 != this.angler || this.ticksInAir >= 5)) {
                     float f = 0.3F;
                     AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f, f, f);
@@ -319,7 +316,6 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
                 this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
                 for (this.rotationPitch = (float) (Math.atan2(this.motionY, f1) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
-                    ;
                 }
 
                 while (this.rotationPitch - this.prevRotationPitch >= 180.0F) {
