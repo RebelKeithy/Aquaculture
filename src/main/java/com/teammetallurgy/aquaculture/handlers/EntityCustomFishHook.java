@@ -219,7 +219,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
             if (!this.world.isRemote && this.angler != null) {
                 ItemStack itemstack = this.angler.getHeldItemMainhand();
 
-                if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || !this.isFishingRod(itemstack) || this.getDistanceSqToEntity(this.angler) > 4 * 1024.0D) {
+                if (this.angler.isDead || !this.angler.isEntityAlive() || !itemstack.isEmpty() || !this.isFishingRod(itemstack) || this.getDistanceSq(this.angler) > 4 * 1024.0D) {
                     this.setDead();
                     this.angler.fishEntity = null;
                     return;
@@ -338,7 +338,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
                 this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
                 float f2 = 0.92F;
 
-                if (this.onGround || this.isCollidedHorizontally) {
+                if (this.onGround || this.collidedHorizontally) {
                     f2 = 0.5F;
                 }
 
@@ -347,7 +347,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
 
                 for (int k = 0; k < b0; ++k) {
                     AxisAlignedBB boundingBox = this.getEntityBoundingBox();
-                    double d7 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (k + 0) / b0 - 0.125D + 0.125D;
+                    double d7 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (k) / b0 - 0.125D + 0.125D;
                     double d8 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (k + 1) / b0 - 0.125D + 0.125D;
                     AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(boundingBox.minX, d7, boundingBox.minZ, boundingBox.maxX, d8, boundingBox.maxZ);
 
