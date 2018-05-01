@@ -126,7 +126,6 @@ aquaculture.message28=Look up at me, now back at your inventory, now back at me,
 aquaculture.message29=Recycle for 5 Brass.
 
 # Enchantments
-
 enchantment.aquaculture.barbed_hook.desc=This gives a fishing rod a higher catch window.
 enchantment.aquaculture.heavy_line.desc=The fish caught by this enchantment are heavier.
 enchantment.aquaculture.double_hook.desc=You have a chance of catching two fish instead of one.

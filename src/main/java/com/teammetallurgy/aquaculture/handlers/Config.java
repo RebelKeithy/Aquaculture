@@ -10,10 +10,10 @@ import java.util.Map.Entry;
 public class Config {
 
     public static final String categoryFishRarity = "FISH_RARITY";
-    public static HashMap<String, Integer> fishRarity = new HashMap<String, Integer>();
+    public static HashMap<String, Integer> fishRarity = new HashMap<>();
 
     public static final String categoryJunkRarity = "JUNK_RARITY";
-    public static HashMap<String, Integer> junkRarity = new HashMap<String, Integer>();
+    public static HashMap<String, Integer> junkRarity = new HashMap<>();
 
     static {
         // Freshwater

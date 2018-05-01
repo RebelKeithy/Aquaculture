@@ -44,7 +44,7 @@ public class Aquaculture {
     @EventHandler
     public void load(FMLInitializationEvent event) {
 
-        new AquacultureRecipes().addRecipes();
+        AquacultureRecipes.addSmeltingRecipes();
 
         AquacultureEnchants.init();
 

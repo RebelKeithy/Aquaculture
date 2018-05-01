@@ -3,37 +3,28 @@ package com.teammetallurgy.aquaculture.items;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
-import net.minecraft.block.Block;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
-import java.util.Set;
 
-public class ItemAquacultureFishingRod extends ItemTool {
-    private static Set<Block> effectiveBlockSet = Sets.newHashSet(new Block[]{});
-    public String type;
+public class ItemAquacultureFishingRod extends ItemFishingRod {
     public int enchantability;
 
-    public ItemAquacultureFishingRod(int d, int enchantability, String type) {
-        super(0F, 0F, Objects.requireNonNull(EnumHelper.addToolMaterial("Fishing" + type, 0, d, 0, 0, enchantability)), effectiveBlockSet);
-        setMaxDamage(d);
+    public ItemAquacultureFishingRod(int maxDamage, ToolMaterial material) {
+        setMaxDamage(maxDamage);
         setMaxStackSize(1);
-        this.type = type;
-        this.enchantability = enchantability;
+        this.enchantability = material.getEnchantability();
         addPropertyOverride(new ResourceLocation("cast"), (stack, world, entity) -> {
             if (entity != null && ((EntityPlayer) entity).fishEntity != null && !stack.isEmpty() && entity.getHeldItemMainhand() == stack) {
                 return 1.0F;

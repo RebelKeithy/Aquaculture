@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class ItemAdminFishingRod extends ItemAquaculture {
+public class ItemAdminFishingRod extends ItemFishingRod {
 
     public ItemAdminFishingRod(int d) {
         super();

@@ -23,9 +23,9 @@ import java.util.Locale;
 
 public class AquacultureItems {
     public static final Item woodenFishingRod = new ItemAquacultureWoodenFishingRod(50, 10, "Wood").setUnlocalizedName("fishingRod").setCreativeTab(Aquaculture.tab);
-    public static final Item ironFishingRod = new ItemAquacultureFishingRod(75, 14, "Iron").setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
-    public static final Item goldFishingRod = new ItemAquacultureFishingRod(50, 22, "Gold").setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
-    public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, 10, "Diamond").setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
+    public static final Item ironFishingRod = new ItemAquacultureFishingRod(75, ToolMaterial.IRON).setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
+    public static final Item goldFishingRod = new ItemAquacultureFishingRod(50, ToolMaterial.GOLD).setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
+    public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, ToolMaterial.DIAMOND).setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
     public static final Item adminFishingRod = new ItemAdminFishingRod(75).setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
 
     public static final MetaItemFood metaFoodItem = (MetaItemFood) new MetaItemFood().setUnlocalizedName("food").setCreativeTab(Aquaculture.tab);
