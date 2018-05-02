@@ -18,9 +18,9 @@ public class FishLoot {
     }
 
     public static FishLoot instance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new FishLoot();
-
+        }
         return instance;
     }
 
@@ -61,7 +61,7 @@ public class FishLoot {
     public ItemStack getRandomFish(int biomeID) {
         BiomeType biome = BiomeType.getBiomeType(biomeID);
 
-        ItemStack fishStack = null;
+        ItemStack fishStack;
         if (biome != null && fishBiomeMap.containsKey(biome))
             fishStack = fishBiomeMap.get(biome).getRandomLoot();
         else
@@ -74,7 +74,7 @@ public class FishLoot {
     public ItemStack getRandomFish(int biomeID, int heavyLineLvl) {
         BiomeType biome = BiomeType.getBiomeType(biomeID);
 
-        ItemStack fishStack = null;
+        ItemStack fishStack;
         if (biome != null && fishBiomeMap.containsKey(biome))
             fishStack = fishBiomeMap.get(biome).getRandomLoot();
         else
