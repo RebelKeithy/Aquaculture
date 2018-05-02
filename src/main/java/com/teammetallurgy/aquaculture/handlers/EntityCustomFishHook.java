@@ -82,10 +82,10 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
         this.calculateVelocity(this.motionX, this.motionY, this.motionZ, velocity, 1.0F);
     }
 
-    public EntityCustomFishHook(World world, EntityPlayer entityplayer, boolean b) {
+    public EntityCustomFishHook(World world, EntityPlayer entityplayer, boolean isAdmin) {
         this(world, entityplayer);
 
-        isAdmin = b;
+        this.isAdmin = isAdmin;
     }
 
     public EntityCustomFishHook(World world) {
@@ -163,6 +163,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
 
     @Override
     public void onUpdate() {
+        super.onEntityUpdate();
         if (this.angler == null) {
             this.setDead();
         } else if (this.world.isRemote || !this.shouldStopFishing()) {

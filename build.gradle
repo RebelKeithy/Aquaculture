@@ -11,7 +11,7 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'maven'  
+apply plugin: 'maven-publish'
 
 repositories {   
 	maven {
@@ -20,96 +20,60 @@ repositories {
 	}
 }
 
-version = "1.2.6"
+version = "${minecraft_version}-${mod_version}" + getBuildNumber()
 group = "com.teammetallurgy.aquaculture"
 archivesBaseName = "Aquaculture"
-
-ext.configFile = file "build.properties"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-configFile.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
-}
-
 minecraft {
-    version = config.minecraft_version + "-" + config.forge_version
-    runDir = "run"
-    mappings = config.mcp_mappings
+    version = "${minecraft_version}-${forge_version}"
+    mappings = "${mcp_mappings}"
+	runDir = "run"
 	
-	replace "@VERSION@", config.mod_version
+	replace "@VERSION@", "${mod_version}"
     replaceIn "Aquaculture.java"
 }
 
 dependencies {
-    deobfCompile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_api_version}:api"
+    deobfCompile "applecore:AppleCore:${minecraft_version}-${applecore_api_version}:api"
 }
-
-task buildInfo() {
-    def cmd = "git rev-parse --short HEAD"
-    def proc = cmd.execute()
-    proc.waitFor()
-    if (proc.exitValue() == 0) {
-        ext.revision = "DEV." + proc.text.trim()
-    } else {
-        ext.revision = "GITBORK"
-    }
-
-    if (System.getenv().BUILD_NUMBER != null) {
-        ext.buildNum = "${System.getenv().BUILD_NUMBER}"
-    } else {
-        ext.buildNum = "${project.buildInfo.revision}"
-    }
-}
-
-ext.artifact_version = 'NFG'
-if (System.getenv().ARTIFACT_VERSION == null) {
-    artifact_version = "${config.mod_version}.${project.buildInfo.buildNum}"
-}
-
-if (System.getenv().ARTIFACT_VERSION != null) {
-    artifact_version = "${system.getenv().ARTIFACT_VERSION}"
-}
-
-version = "${config.minecraft_version}-${artifact_version}"
 
 processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.artifact_version
+    inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
-    // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-
-        // replace version and mcversion
-        expand 'version': project.artifact_version, 'mcversion': project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
-    // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
 }
 
-/*
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
+String getBuildNumber() {
+    if (System.getenv().BUILD_NUMBER) {
+        return "." + (System.getenv('BUILD_NUMBER') ? System.getenv('BUILD_NUMBER') : System.getenv('TRAVIS_BUILD_NUMBER') ? System.getenv('TRAVIS_BUILD_NUMBER') : '0');
+	}
+	return '';
 }
 
-artifacts {
-    archives deobfJar
-}
-*/
-
-uploadArchives {
+publishing {
+    tasks.publish.dependsOn 'build'
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId "aquaculture_${minecraft_version}"
+            artifact jar
+        }
+    }
     repositories {
-        mavenDeployer {
-            repository(url: "file:///var/www/html/maven")
+        if (project.hasProperty('maven_repo')) {
+            maven { url maven_repo }
+        } else {
+            mavenLocal()
         }
     }
 }
