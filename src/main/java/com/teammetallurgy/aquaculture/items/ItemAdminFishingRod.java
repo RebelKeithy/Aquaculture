@@ -16,8 +16,8 @@ import javax.annotation.Nonnull;
 
 public class ItemAdminFishingRod extends ItemFishingRod {
 
-    public ItemAdminFishingRod(int d) {
-        setMaxDamage(d);
+    public ItemAdminFishingRod(int maxDamage) {
+        setMaxDamage(maxDamage);
         setMaxStackSize(1);
         addPropertyOverride(new ResourceLocation("cast"), (stack, world, entity) -> {
             if (entity != null) {
@@ -51,8 +51,8 @@ public class ItemAdminFishingRod extends ItemFishingRod {
         ItemStack heldStack = player.getHeldItem(hand);
 
         if (player.fishEntity != null) {
-            // int i = entityplayer.fishEntity.handleHookRetraction();
-            // itemstack.damageItem(i, entityplayer);
+            int i = player.fishEntity.handleHookRetraction();
+            heldStack.damageItem(i, player);
             player.swingArm(hand);
 
             if (!heldStack.hasTagCompound())
