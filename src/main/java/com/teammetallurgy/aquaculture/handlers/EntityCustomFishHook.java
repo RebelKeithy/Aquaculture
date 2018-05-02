@@ -163,8 +163,6 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
 
     @Override
     public void onUpdate() {
-        super.onUpdate();
-
         if (this.angler == null) {
             this.setDead();
         } else if (this.world.isRemote || !this.shouldStopFishing()) {
