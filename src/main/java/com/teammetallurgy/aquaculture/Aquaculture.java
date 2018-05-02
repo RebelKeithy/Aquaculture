@@ -14,11 +14,12 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION)
+@Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION, guiFactory = Aquaculture.GUI_FACTORY_CLASS)
 public class Aquaculture {
     public final static String MOD_ID = "aquaculture";
     public final static String MOD_NAME = "Aquaculture";
     public final static String MOD_VERSION = "@VERSION@";
+    public static final String GUI_FACTORY_CLASS = "com.teammetallurgy.aquaculture.client.GuiFactory";
 
     @Instance(MOD_ID)
     public static Aquaculture instance;

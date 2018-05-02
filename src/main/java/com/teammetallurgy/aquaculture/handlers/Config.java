@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map.Entry;
 
 public class Config {
+    public static Configuration config;
 
     public static final String categoryFishRarity = "FISH_RARITY";
     public static HashMap<String, Integer> fishRarity = new HashMap<>();
@@ -86,7 +87,7 @@ public class Config {
     }
 
     public void init(File file) {
-        Configuration config = new Configuration(file);
+        config = new Configuration(file);
         config.load();
 
         for (Entry<String, Integer> entry : fishRarity.entrySet()) {
@@ -103,8 +104,8 @@ public class Config {
             entry.setValue(rarity);
         }
 
-        if (config.hasChanged())
+        if (config.hasChanged()) {
             config.save();
+        }
     }
-
 }
