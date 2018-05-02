@@ -40,7 +40,7 @@ minecraft {
     runDir = "run"
     mappings = config.mcp_mappings
 	
-	replace "@VERSION@", project.mod_version
+	replace "@VERSION@", config.mod_version
     replaceIn "Aquaculture.java"
 }
 
