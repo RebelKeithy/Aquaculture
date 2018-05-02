@@ -1,3 +1,22 @@
-# [Aquaculture](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1283907-aquaculture)
+# [Aquaculture](https://minecraft.curseforge.com/projects/aquaculture)
 
 An expansion of Minecraft's fishing system. You never know what you'll catch. Every biome is home to tons of unique fish you can only catch in that biome, and there's a myriad of new loot items you can randomly catch while fishing.
+
+How to get Aquaculture through maven
+---
+Add to your build.gradle:
+```gradle
+repositories {
+  maven {
+    // url of the maven that hosts Aquacultures files
+    url "http://girafi.dk/maven/"
+  }
+}
+
+dependencies {
+  // compile against Aquaculture
+  deobfCompile "com.teammetallurgy.aquaculture:aquaculture_${mc_version}:${mc_version}-${aquaculture_version}"
+}
+```
+
+`${mc_version}` & `${aquaculture_version}` can be found [here](http://girafi.dk/maven/com/teammetallurgy/aquaculture/), check the file name of the version you want.
