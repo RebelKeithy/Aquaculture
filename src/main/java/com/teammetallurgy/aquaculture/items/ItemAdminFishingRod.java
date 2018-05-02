@@ -17,14 +17,19 @@ import javax.annotation.Nonnull;
 public class ItemAdminFishingRod extends ItemFishingRod {
 
     public ItemAdminFishingRod(int d) {
-        super();
         setMaxDamage(d);
         setMaxStackSize(1);
         addPropertyOverride(new ResourceLocation("cast"), (stack, world, entity) -> {
-            if (entity != null && ((EntityPlayer) entity).fishEntity != null && !stack.isEmpty() && entity.getHeldItemMainhand() == stack) {
-                return 1.0F;
+            if (entity != null) {
+                boolean isMain = entity.getHeldItemMainhand() == stack;
+                boolean isOff = entity.getHeldItemOffhand() == stack;
+
+                if (entity.getHeldItemMainhand().getItem() instanceof ItemAdminFishingRod) {
+                    isOff = false;
+                }
+                return (isMain || isOff) && entity instanceof EntityPlayer && ((EntityPlayer) entity).fishEntity != null ? 1.0F : 0.0F;
             }
-            return 0;
+            return 0.0F;
         });
     }
 

@@ -39,7 +39,7 @@ public class AquacultureEntitySpawnHandler {
                 return null;
             }
 
-            return new EntityCustomFishHook(world, posX, posY, posZ, (EntityPlayer) angler);
+            return new EntityCustomFishHook(world, (EntityPlayer) angler, posX, posY, posZ);
         };
         Preconditions.checkNotNull(customFishHookRegistration, "fishHookRegistration");
         customFishHookRegistration.setCustomSpawning(fishHookSpawnHandler, false);

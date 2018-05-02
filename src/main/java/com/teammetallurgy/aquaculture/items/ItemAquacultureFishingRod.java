@@ -24,12 +24,17 @@ public class ItemAquacultureFishingRod extends ItemFishingRod {
     public ItemAquacultureFishingRod(int maxDamage, ToolMaterial material) {
         setMaxDamage(maxDamage);
         setMaxStackSize(1);
-        this.enchantability = material.getEnchantability();
+        this.enchantability = material == ToolMaterial.WOOD ? 10 : material.getEnchantability();
         addPropertyOverride(new ResourceLocation("cast"), (stack, world, entity) -> {
-            if (entity != null && ((EntityPlayer) entity).fishEntity != null && !stack.isEmpty() && entity.getHeldItemMainhand() == stack) {
-                return 1.0F;
+            if (entity != null) {
+                boolean isMain = entity.getHeldItemMainhand() == stack;
+                boolean isOff = entity.getHeldItemOffhand() == stack;
+                if (entity.getHeldItemMainhand().getItem() instanceof ItemAquacultureFishingRod) {
+                    isOff = false;
+                }
+                return (isMain || isOff) && entity instanceof EntityPlayer && ((EntityPlayer) entity).fishEntity != null ? 1.0F : 0.0F;
             }
-            return 0;
+            return 0.0F;
         });
     }
 
