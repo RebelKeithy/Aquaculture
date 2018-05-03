@@ -67,7 +67,6 @@ public class AquacultureItems {
     public static final Item neptuniumBoots = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.FEET).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
 
     public void register() {
-
         register(woodenFishingRod);
         register(ironFishingRod);
         register(goldFishingRod);

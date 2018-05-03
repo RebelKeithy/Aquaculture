@@ -34,7 +34,7 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
 
     @Override
     public void doRender(@Nonnull EntityCustomFishHook entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        EntityPlayer entityplayer = entity.getAngler();
+        EntityPlayer angler = entity.getAngler();
 
         if (!this.renderOutlines) {
             GlStateManager.pushMatrix();
@@ -52,7 +52,7 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
                 GlStateManager.enableOutlineMode(this.getTeamColor(entity));
             }
 
-            bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+            bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL); //Hook
             bufferBuilder.pos(-0.5D, -0.5D, 0.0D).tex(0.0625D, 0.1875D).normal(0.0F, 1.0F, 0.0F).endVertex();
             bufferBuilder.pos(0.5D, -0.5D, 0.0D).tex(0.125D, 0.1875D).normal(0.0F, 1.0F, 0.0F).endVertex();
             bufferBuilder.pos(0.5D, 0.5D, 0.0D).tex(0.125D, 0.125D).normal(0.0F, 1.0F, 0.0F).endVertex();
@@ -66,17 +66,17 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
 
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
-            int k = entityplayer.getPrimaryHand() == EnumHandSide.RIGHT ? 1 : -1;
-            ItemStack heldStack = entityplayer.getHeldItemMainhand();
+            int k = angler.getPrimaryHand() == EnumHandSide.RIGHT ? 1 : -1;
+            ItemStack heldStack = angler.getHeldItemMainhand();
 
             boolean isAquaRod = heldStack.getItem() instanceof ItemAdminFishingRod || heldStack.getItem() instanceof ItemAquacultureFishingRod;
             if (!isAquaRod) {
                 k = -k;
             }
 
-            float f7 = entityplayer.getSwingProgress(partialTicks);
+            float f7 = angler.getSwingProgress(partialTicks);
             float f8 = MathHelper.sin(MathHelper.sqrt(f7) * (float) Math.PI);
-            float f9 = (entityplayer.prevRenderYawOffset + (entityplayer.renderYawOffset - entityplayer.prevRenderYawOffset) * partialTicks) * 0.017453292F;
+            float f9 = (angler.prevRenderYawOffset + (angler.renderYawOffset - angler.prevRenderYawOffset) * partialTicks) * 0.017453292F;
             double d0 = MathHelper.sin(f9);
             double d1 = MathHelper.cos(f9);
             double d2 = k * 0.35D;
@@ -85,23 +85,23 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
             double d6;
             double d7;
 
-            if ((this.renderManager.options == null || this.renderManager.options.thirdPersonView <= 0) && entityplayer == Minecraft.getMinecraft().player) {
+            if ((this.renderManager.options == null || this.renderManager.options.thirdPersonView <= 0) && angler == Minecraft.getMinecraft().player) {
                 float f10 = this.renderManager.options.fovSetting;
                 f10 = f10 / 100.0F;
                 Vec3d vec3d = new Vec3d(k * -0.36D * f10, -0.045D * f10, 0.4D);
-                vec3d = vec3d.rotatePitch(-(entityplayer.prevRotationPitch + (entityplayer.rotationPitch - entityplayer.prevRotationPitch) * partialTicks) * 0.017453292F);
-                vec3d = vec3d.rotateYaw(-(entityplayer.prevRotationYaw + (entityplayer.rotationYaw - entityplayer.prevRotationYaw) * partialTicks) * 0.017453292F);
+                vec3d = vec3d.rotatePitch(-(angler.prevRotationPitch + (angler.rotationPitch - angler.prevRotationPitch) * partialTicks) * 0.017453292F);
+                vec3d = vec3d.rotateYaw(-(angler.prevRotationYaw + (angler.rotationYaw - angler.prevRotationYaw) * partialTicks) * 0.017453292F);
                 vec3d = vec3d.rotateYaw(f8 * 0.5F);
                 vec3d = vec3d.rotatePitch(-f8 * 0.7F);
-                d4 = entityplayer.prevPosX + (entityplayer.posX - entityplayer.prevPosX) * partialTicks + vec3d.x;
-                d5 = entityplayer.prevPosY + (entityplayer.posY - entityplayer.prevPosY) * partialTicks + vec3d.y;
-                d6 = entityplayer.prevPosZ + (entityplayer.posZ - entityplayer.prevPosZ) * partialTicks + vec3d.z;
-                d7 = entityplayer.getEyeHeight();
+                d4 = angler.prevPosX + (angler.posX - angler.prevPosX) * partialTicks + vec3d.x;
+                d5 = angler.prevPosY + (angler.posY - angler.prevPosY) * partialTicks + vec3d.y;
+                d6 = angler.prevPosZ + (angler.posZ - angler.prevPosZ) * partialTicks + vec3d.z;
+                d7 = angler.getEyeHeight();
             } else {
-                d4 = entityplayer.prevPosX + (entityplayer.posX - entityplayer.prevPosX) * partialTicks - d1 * d2 - d0 * 0.8D;
-                d5 = entityplayer.prevPosY + entityplayer.getEyeHeight() + (entityplayer.posY - entityplayer.prevPosY) * partialTicks - 0.45D;
-                d6 = entityplayer.prevPosZ + (entityplayer.posZ - entityplayer.prevPosZ) * partialTicks - d0 * d2 + d1 * 0.8D;
-                d7 = entityplayer.isSneaking() ? -0.1875D : 0.0D;
+                d4 = angler.prevPosX + (angler.posX - angler.prevPosX) * partialTicks - d1 * d2 - d0 * 0.8D;
+                d5 = angler.prevPosY + angler.getEyeHeight() + (angler.posY - angler.prevPosY) * partialTicks - 0.45D;
+                d6 = angler.prevPosZ + (angler.posZ - angler.prevPosZ) * partialTicks - d0 * d2 + d1 * 0.8D;
+                d7 = angler.isSneaking() ? -0.1875D : 0.0D;
             }
 
             double d13 = entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks;
@@ -116,7 +116,7 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
 
             for (int i1 = 0; i1 <= 16; ++i1) {
                 float f11 = i1 / 16.0F;
-                bufferBuilder.pos(x + d10 * f11, y + d11 * (f11 * f11 + f11) * 0.5D + 0.25D, z + d12 * f11).color(0, 0, 0, 255).endVertex();
+                bufferBuilder.pos(x + d10 * f11, y + d11 * (f11 * f11 + f11) * 0.5D + 0.25D, z + d12 * f11).color(0, 0, 0, 255).endVertex(); //Line
             }
 
             tessellator.draw();
