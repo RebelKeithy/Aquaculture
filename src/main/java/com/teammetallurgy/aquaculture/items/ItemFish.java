@@ -34,7 +34,7 @@ public class ItemFish extends Item {
     }
 
     public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType biome, int rarity) {
-        addFish(name, filletAmount, minWeight, maxWeight, new BiomeType[] { biome }, rarity);
+        addFish(name, filletAmount, minWeight, maxWeight, new BiomeType[]{biome}, rarity);
     }
 
     public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType[] biomes, int rarity) {
@@ -84,13 +84,11 @@ public class ItemFish extends Item {
         if (f.maxWeight == 1 && f.minWeight == 1)
             return;
 
-        Random rand = new Random();
-
         float min = f.minWeight;
 
         min += (f.maxWeight - min) * (0.1 * heavyLineLvl);
 
-        float weight = rand.nextFloat() * ((f.maxWeight * 1.1f) - min) + min;
+        float weight = new Random().nextFloat() * (f.maxWeight - min) + min;
 
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
@@ -99,14 +97,15 @@ public class ItemFish extends Item {
         Preconditions.checkNotNull(stack.getTagCompound(), "tagCompound");
         stack.getTagCompound().setFloat("Weight", weight);
 
-        if (weight <= f.maxWeight / 10.0) {
+        if (weight <= f.maxWeight * 0.10F) {
             stack.getTagCompound().setString("Prefix", "Juvenile");
-        }
-
-        if (weight > f.maxWeight) {
+        } else if (weight > f.maxWeight * 0.10F && weight <= f.maxWeight * 0.20F) {
+            stack.getTagCompound().setString("Prefix", "Small");
+        } else if (weight >= f.maxWeight * 0.80F && weight < f.maxWeight * 0.90F) {
+            stack.getTagCompound().setString("Prefix", "Large");
+        } else if (weight >= f.maxWeight * 0.90F) {
             stack.getTagCompound().setString("Prefix", "Massive");
         }
-
     }
 
     @Nonnull
@@ -129,7 +128,6 @@ public class ItemFish extends Item {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> subItems) {
         if (this.isInCreativeTab(tab)) {
             for (int j = 0; j < fish.size(); ++j) {

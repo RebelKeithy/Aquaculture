@@ -30,7 +30,7 @@ public class Aquaculture {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        new Config().init(event.getSuggestedConfigurationFile());
+        Config.init(event.getSuggestedConfigurationFile());
         tab = new AquacultureTab("Aquaculture");
 
         new AquacultureItems().register();

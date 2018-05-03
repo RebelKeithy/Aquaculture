@@ -27,11 +27,13 @@ public class GuiFactory extends DefaultGuiFactory {
     private static List<IConfigElement> getConfigElements() {
         List<IConfigElement> list = new ArrayList<>();
 
+        List<IConfigElement> basic = new ConfigElement(Config.config.getCategory(Config.categoryBasic)).getChildElements();
         List<IConfigElement> fishRarity = new ConfigElement(Config.config.getCategory(Config.categoryFishRarity)).getChildElements();
         List<IConfigElement> junkRarity = new ConfigElement(Config.config.getCategory(Config.categoryJunkRarity)).getChildElements();
 
-        list.add(new DummyConfigElement.DummyCategoryElement("Fish rarity", String.valueOf(new ResourceLocation(Aquaculture.MOD_ID, "config.category.mobDrops")), fishRarity));
-        list.add(new DummyConfigElement.DummyCategoryElement("Junk rarity", String.valueOf(new ResourceLocation(Aquaculture.MOD_ID, "config.category.modSupport")), junkRarity));
+        list.add(new DummyConfigElement.DummyCategoryElement("Basic options", String.valueOf(new ResourceLocation(Aquaculture.MOD_ID, "config.category.basic")), basic));
+        list.add(new DummyConfigElement.DummyCategoryElement("Fish rarity", String.valueOf(new ResourceLocation(Aquaculture.MOD_ID, "config.category.fishRarity")), fishRarity));
+        list.add(new DummyConfigElement.DummyCategoryElement("Junk rarity", String.valueOf(new ResourceLocation(Aquaculture.MOD_ID, "config.category.junkRarity")), junkRarity));
 
         return list;
     }

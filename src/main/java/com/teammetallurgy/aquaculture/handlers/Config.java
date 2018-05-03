@@ -1,14 +1,21 @@
 package com.teammetallurgy.aquaculture.handlers;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
 
+@Mod.EventBusSubscriber
 public class Config {
     public static Configuration config;
+    public static final String categoryBasic = "BASIC_OPTIONS";
+    public static boolean assignRandomWeight;
 
     public static final String categoryFishRarity = "FISH_RARITY";
     public static HashMap<String, Integer> fishRarity = new HashMap<>();
@@ -86,9 +93,15 @@ public class Config {
 
     }
 
-    public void init(File file) {
-        config = new Configuration(file);
-        config.load();
+    public static void init(File file) {
+        if (config == null) {
+            config = new Configuration(file);
+            loadConfiguration();
+        }
+    }
+
+    private static void loadConfiguration() {
+        assignRandomWeight = config.get(categoryBasic, "Enable fish weight", true).getBoolean();
 
         for (Entry<String, Integer> entry : fishRarity.entrySet()) {
             int rarity = entry.getValue();
@@ -106,6 +119,13 @@ public class Config {
 
         if (config.hasChanged()) {
             config.save();
+        }
+    }
+
+    @SubscribeEvent
+    public static void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if (event.getModID().equalsIgnoreCase(Aquaculture.MOD_ID)) {
+            loadConfiguration();
         }
     }
 }

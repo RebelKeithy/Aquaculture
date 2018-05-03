@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.loot;
 
+import com.teammetallurgy.aquaculture.handlers.Config;
 import com.teammetallurgy.aquaculture.items.AquacultureItems;
 import net.minecraft.item.ItemStack;
 
@@ -33,7 +34,6 @@ public class FishLoot {
         if (!fishBiomeMap.containsKey(biome)) {
             fishBiomeMap.put(biome, new WeightedLootSet());
         }
-
         fishBiomeMap.get(biome).addLoot(fish, rarity, 1, 1);
     }
 
@@ -53,7 +53,6 @@ public class FishLoot {
         if (!junkBiomeMap.containsKey(biome)) {
             junkBiomeMap.put(biome, new WeightedLootSet());
         }
-
         junkBiomeMap.get(biome).addLoot(fish, rarity, 1, 1);
     }
 
@@ -62,11 +61,11 @@ public class FishLoot {
         BiomeType biome = BiomeType.getBiomeType(biomeID);
 
         ItemStack fishStack;
-        if (biome != null && fishBiomeMap.containsKey(biome))
+        if (biome != null && fishBiomeMap.containsKey(biome)) {
             fishStack = fishBiomeMap.get(biome).getRandomLoot();
-        else
+        } else {
             fishStack = fishBiomeMap.get(BiomeType.freshwater).getRandomLoot();
-
+        }
         return fishStack;
     }
 
@@ -75,13 +74,14 @@ public class FishLoot {
         BiomeType biome = BiomeType.getBiomeType(biomeID);
 
         ItemStack fishStack;
-        if (biome != null && fishBiomeMap.containsKey(biome))
+        if (biome != null && fishBiomeMap.containsKey(biome)) {
             fishStack = fishBiomeMap.get(biome).getRandomLoot();
-        else
+        } else {
             fishStack = fishBiomeMap.get(BiomeType.freshwater).getRandomLoot();
-
-        AquacultureItems.fish.assignRandomWeight(fishStack, heavyLineLvl);
-
+        }
+        if (Config.assignRandomWeight) {
+            AquacultureItems.fish.assignRandomWeight(fishStack, heavyLineLvl);
+        }
         return fishStack;
     }
 
@@ -89,9 +89,10 @@ public class FishLoot {
     public ItemStack getRandomJunk(int biomeID) {
         BiomeType biome = BiomeType.getBiomeType(biomeID);
 
-        if (biome != null && junkBiomeMap.containsKey(biome))
+        if (biome != null && junkBiomeMap.containsKey(biome)) {
             return junkBiomeMap.get(biome).getRandomLoot();
-        else
+        } else {
             return junkBiomeMap.get(BiomeType.freshwater).getRandomLoot();
+        }
     }
 }
