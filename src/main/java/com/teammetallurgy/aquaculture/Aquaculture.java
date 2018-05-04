@@ -46,6 +46,7 @@ public class Aquaculture {
     public void load(FMLInitializationEvent event) {
 
         AquacultureRecipes.addSmeltingRecipes();
+        AquacultureRecipes.addBrewingRecipes();
 
         AquacultureEnchants.init();
 
