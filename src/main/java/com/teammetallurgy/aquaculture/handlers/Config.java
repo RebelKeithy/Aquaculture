@@ -16,6 +16,9 @@ public class Config {
     public static Configuration config;
     public static final String categoryBasic = "BASIC_OPTIONS";
     public static boolean assignRandomWeight;
+    public static boolean enableNeptuniumArmor;
+    public static boolean enableNeptuniumTools;
+    public static boolean enableNeptuniumLoot;
 
     public static final String categoryFishRarity = "FISH_RARITY";
     public static HashMap<String, Integer> fishRarity = new HashMap<>();
@@ -102,6 +105,9 @@ public class Config {
 
     private static void loadConfiguration() {
         assignRandomWeight = config.get(categoryBasic, "Enable fish weight", true).getBoolean();
+        enableNeptuniumArmor = config.get(categoryBasic, "Enable Neptunium armor", true).getBoolean();
+        enableNeptuniumTools = config.get(categoryBasic, "Enable Neptunium tools", true).getBoolean();
+        enableNeptuniumLoot = config.get(categoryBasic, "Enable Neptunium loot", true).getBoolean();
 
         for (Entry<String, Integer> entry : fishRarity.entrySet()) {
             int rarity = entry.getValue();
