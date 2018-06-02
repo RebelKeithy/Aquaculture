@@ -116,13 +116,13 @@ public class AquacultureItems {
         fish.addFish("Turtle", 0, 1, 5, BiomeType.brackish, Config.fishRarity.get("Turtle"));
         fish.addFish("Leech", 0, 1, 1, BiomeType.brackish, Config.fishRarity.get("Leech"));
 
-        // Jungle
+        // Topical
         fish.addFish("Pirahna", 1, 1, 8, BiomeType.tropical, Config.fishRarity.get("Pirahna"));
         fish.addFish("Electric Eel", 3, 1, 45, BiomeType.tropical, Config.fishRarity.get("Electric Eel"));
         fish.addFish("Tambaqui", 4, 1, 75, BiomeType.tropical, Config.fishRarity.get("Tambaqui"));
         fish.addFish("Arapaima", 6, 1, 220, BiomeType.tropical, Config.fishRarity.get("Arapaima"));
 
-        // Tundra
+        // Arctic
         fish.addFish("Cod", 6, 1, 210, BiomeType.arctic, Config.fishRarity.get("Cod"));
         fish.addFish("Pollock", 3, 1, 45, BiomeType.arctic, Config.fishRarity.get("Pollock"));
         fish.addFish("Herring", 1, 1, 3, BiomeType.arctic, Config.fishRarity.get("Herring"));
@@ -131,13 +131,13 @@ public class AquacultureItems {
         fish.addFish("Rainbow Trout", 4, 1, 50, BiomeType.arctic, Config.fishRarity.get("Rainbow Trout"));
         fish.addFish("Blackfish", 2, 1, 10, BiomeType.arctic, Config.fishRarity.get("Blackfish"));
 
-        // Desert
+        // Arid
         fish.addFish("Capitaine", 4, 1, 450, BiomeType.arid, Config.fishRarity.get("Capitaine"));
         fish.addFish("Boulti", 2, 1, 10, BiomeType.arid, Config.fishRarity.get("Boulti"));
         fish.addFish("Bagrid", 3, 1, 25, BiomeType.arid, Config.fishRarity.get("Bagrid"));
         fish.addFish("Syndontis", 1, 1, 3, BiomeType.arid, Config.fishRarity.get("Syndontis"));
 
-        // Mushroom Island
+        // Mushroom
         fish.addFish("Red Shrooma", 0, 1, 5, BiomeType.mushroom, Config.fishRarity.get("Red Shrooma"));
         fish.addFish("Brown Shrooma", 0, 1, 5, BiomeType.mushroom, Config.fishRarity.get("Brown Shrooma"));
 
