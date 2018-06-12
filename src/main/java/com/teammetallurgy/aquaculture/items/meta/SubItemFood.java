@@ -11,18 +11,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.Optional.Interface;
-import squeek.applecore.api.food.FoodValues;
-import squeek.applecore.api.food.IEdible;
-import squeek.applecore.api.food.ItemFoodProxy;
 
 import javax.annotation.Nonnull;
 
-@Interface(iface = "squeek.applecore.api.food.IEdible", modid = "applecore")
-public class SubItemFood implements IEdible {
-    private static final boolean APPLE_CORE_LOADED = Loader.isModLoaded("applecore");
+public class SubItemFood {
     public int damage;
     public MetaItemFood item;
     public String unlocalizedName;
@@ -81,12 +73,6 @@ public class SubItemFood implements IEdible {
         return this;
     }
 
-    @Override
-    @Optional.Method(modid = "applecore")
-    public FoodValues getFoodValues(@Nonnull ItemStack stack) {
-        return new FoodValues(FoodValues.get(stack).hunger, FoodValues.get(stack).saturationModifier);
-    }
-
     public ItemStack onEaten(@Nonnull ItemStack stack, World world, EntityLivingBase entity) {
         stack.shrink(1);
         if (!(entity instanceof EntityPlayer)) {
@@ -95,13 +81,9 @@ public class SubItemFood implements IEdible {
 
         EntityPlayer player = (EntityPlayer) entity;
 
-        if (APPLE_CORE_LOADED) {
-            new ItemFoodProxy(this).onEaten(stack, player);
-        } else {
-            player.getFoodStats().addStats(this.getHealAmount(), this.getSaturationModifier());
-            world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-            this.onFoodEaten(stack, world, player);
-        }
+        player.getFoodStats().addStats(this.getHealAmount(), this.getSaturationModifier());
+        world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+        this.onFoodEaten(stack, world, player);
         return stack;
     }
 

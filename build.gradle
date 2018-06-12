@@ -13,13 +13,6 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'maven-publish'
 
-repositories {   
-	maven {
-        name = "Squeek502's Maven"
-		url = "http://www.ryanliptak.com/maven/"
-	}
-}
-
 version = "${minecraft_version}-${mod_version}" + getBuildNumber()
 group = "com.teammetallurgy.aquaculture"
 archivesBaseName = "Aquaculture"
@@ -34,10 +27,6 @@ minecraft {
 	
 	replace "@VERSION@", "${mod_version}"
     replaceIn "Aquaculture.java"
-}
-
-dependencies {
-    deobfCompile "applecore:AppleCore:${minecraft_version}-${applecore_api_version}:api"
 }
 
 processResources {
