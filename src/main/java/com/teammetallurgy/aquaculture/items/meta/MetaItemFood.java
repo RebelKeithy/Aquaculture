@@ -12,18 +12,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.Optional.Interface;
-import squeek.applecore.api.food.FoodValues;
-import squeek.applecore.api.food.IEdible;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
-@Interface(iface = "squeek.applecore.api.food.IEdible", modid = "applecore")
-public class MetaItemFood extends ItemFood implements IEdible {
-
-    ArrayList<SubItemFood> subItems;
+public class MetaItemFood extends ItemFood {
+    private ArrayList<SubItemFood> subItems;
 
     public MetaItemFood() {
         super(0, 0, false);
@@ -32,9 +26,9 @@ public class MetaItemFood extends ItemFood implements IEdible {
     }
 
     public int addSubItem(SubItemFood subItem) {
-        if (subItems == null)
+        if (subItems == null) {
             subItems = new ArrayList<>();
-
+        }
         subItems.add(subItem);
         return subItems.size() - 1;
     }
@@ -57,25 +51,6 @@ public class MetaItemFood extends ItemFood implements IEdible {
         }
     }
 
-    @Override
-    @Optional.Method(modid = "applecore")
-    public FoodValues getFoodValues(@Nonnull ItemStack stack) {
-        int damage = stack.getItemDamage();
-        if (damage >= 0 && damage < subItems.size()) {
-            return subItems.get(damage).getFoodValues(stack);
-        }
-    
-        return null;
-    }
-    
-    @Optional.Method(modid = "applecore")
-    public void onEatenAppleCore(ItemStack stack, EntityPlayer player) {
-        int damage = stack.getItemDamage();
-        if (damage >= 0 && damage < subItems.size()) {
-            subItems.get(damage).onEatenAppleCore(stack, player);
-        }
-    }
-
     // ItemRedirects
     @Override
     @Nonnull
@@ -93,7 +68,6 @@ public class MetaItemFood extends ItemFood implements IEdible {
         if (damage >= 0 && damage < subItems.size()) {
             return subItems.get(damage).getMaxItemUseDuration(stack);
         }
-
         return 0;
     }
 

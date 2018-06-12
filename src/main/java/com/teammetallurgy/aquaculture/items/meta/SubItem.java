@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 
 public class SubItem {
-    public int itemID;
     public int damage;
     public MetaItem item;
 
@@ -46,7 +45,7 @@ public class SubItem {
     }
 
     @Nonnull
-    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player) {
+    public ItemStack onEaten(@Nonnull ItemStack stack, World world, EntityPlayer player) {
         return stack;
     }
 

@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 
 @Interface(iface = "squeek.applecore.api.food.IEdible", modid = "applecore")
 public class SubItemFood implements IEdible {
+    private static final boolean APPLE_CORE_LOADED = Loader.isModLoaded("applecore");
     public int damage;
     public MetaItemFood item;
     public String unlocalizedName;
@@ -83,12 +84,7 @@ public class SubItemFood implements IEdible {
     @Override
     @Optional.Method(modid = "applecore")
     public FoodValues getFoodValues(@Nonnull ItemStack stack) {
-        return new FoodValues(this.getHealAmount(), this.getSaturationModifier());
-    }
-    
-    @Optional.Method(modid = "applecore")
-    public void onEatenAppleCore(@Nonnull ItemStack stack, EntityPlayer player) {
-        player.getFoodStats().addStats(new ItemFoodProxy(this), stack);
+        return new FoodValues(FoodValues.get(stack).hunger, FoodValues.get(stack).saturationModifier);
     }
 
     public ItemStack onEaten(@Nonnull ItemStack stack, World world, EntityLivingBase entity) {
@@ -99,8 +95,8 @@ public class SubItemFood implements IEdible {
 
         EntityPlayer player = (EntityPlayer) entity;
 
-        if (Loader.isModLoaded("applecore")) {
-            onEatenAppleCore(stack, player);
+        if (APPLE_CORE_LOADED) {
+            new ItemFoodProxy(this).onEaten(stack, player);
         } else {
             player.getFoodStats().addStats(this.getHealAmount(), this.getSaturationModifier());
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
@@ -128,7 +124,6 @@ public class SubItemFood implements IEdible {
         if (player.canEat(this.alwaysEdible)) {
             player.setActiveHand(hand);
         }
-
         return stack;
     }
 
@@ -144,11 +139,11 @@ public class SubItemFood implements IEdible {
         return this.isWolfsFavoriteMeat;
     }
 
-    public SubItemFood setPotionEffect(Potion potion, int duration, int amplifier, float effectPribability) {
+    public SubItemFood setPotionEffect(Potion potion, int duration, int amplifier, float effectProbability) {
         this.potion = potion;
         this.potionDuration = duration;
         this.potionAmplifier = amplifier;
-        this.potionEffectProbability = effectPribability;
+        this.potionEffectProbability = effectProbability;
         return this;
     }
 
