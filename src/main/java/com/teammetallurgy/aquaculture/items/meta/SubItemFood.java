@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -73,7 +74,7 @@ public class SubItemFood {
         return this;
     }
 
-    public ItemStack onEaten(@Nonnull ItemStack stack, World world, EntityLivingBase entity) {
+    public ItemStack onEaten(ItemFood food, @Nonnull ItemStack stack, World world, EntityLivingBase entity) {
         stack.shrink(1);
         if (!(entity instanceof EntityPlayer)) {
             return stack;
@@ -81,7 +82,7 @@ public class SubItemFood {
 
         EntityPlayer player = (EntityPlayer) entity;
 
-        player.getFoodStats().addStats(this.getHealAmount(), this.getSaturationModifier());
+        player.getFoodStats().addStats(food, stack);
         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
         this.onFoodEaten(stack, world, player);
         return stack;

@@ -57,7 +57,7 @@ public class MetaItemFood extends ItemFood {
     public ItemStack onItemUseFinish(@Nonnull ItemStack stack, @Nonnull World world, EntityLivingBase player) {
         int damage = stack.getItemDamage();
         if (damage >= 0 && damage < subItems.size()) {
-            return subItems.get(damage).onEaten(stack, world, player);
+            return subItems.get(damage).onEaten(this, stack, world, player);
         }
         return stack;
     }
@@ -78,7 +78,6 @@ public class MetaItemFood extends ItemFood {
         if (damage >= 0 && damage < subItems.size()) {
             return subItems.get(damage).getItemUseAction(stack);
         }
-
         return EnumAction.NONE;
     }
 
