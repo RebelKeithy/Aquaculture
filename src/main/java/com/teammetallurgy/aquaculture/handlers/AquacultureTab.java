@@ -18,7 +18,7 @@ public class AquacultureTab extends CreativeTabs {
 
     @Override
     @Nonnull
-    public ItemStack getTabIconItem() {
+    public ItemStack createIcon() {
         return tabItem;
     }
 }

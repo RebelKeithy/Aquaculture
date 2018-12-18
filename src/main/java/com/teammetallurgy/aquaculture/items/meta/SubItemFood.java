@@ -50,7 +50,7 @@ public class SubItemFood {
         return this;
     }
 
-    public SubItemFood setUnlocalizedName(String name) {
+    public SubItemFood setTranslationKey(String name) {
         this.unlocalizedName = name;
         return this;
     }

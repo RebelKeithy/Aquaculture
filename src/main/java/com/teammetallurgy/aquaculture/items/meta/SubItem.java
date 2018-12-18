@@ -25,7 +25,7 @@ public class SubItem {
         return this;
     }
 
-    public SubItem setUnlocalizedName(String name) {
+    public SubItem setTranslationKey(String name) {
         this.unlocalizedName = name;
         return this;
     }

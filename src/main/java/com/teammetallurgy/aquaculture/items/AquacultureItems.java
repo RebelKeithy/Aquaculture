@@ -22,49 +22,49 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.Locale;
 
 public class AquacultureItems {
-    public static final Item woodenFishingRod = new ItemAquacultureFishingRod(50, ToolMaterial.WOOD).setUnlocalizedName("fishingRod").setCreativeTab(Aquaculture.tab);
-    public static final Item ironFishingRod = new ItemAquacultureFishingRod(75, ToolMaterial.IRON).setUnlocalizedName("IronFishingRod").setCreativeTab(Aquaculture.tab);
-    public static final Item goldFishingRod = new ItemAquacultureFishingRod(50, ToolMaterial.GOLD).setUnlocalizedName("GoldFishingRod").setCreativeTab(Aquaculture.tab);
-    public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, ToolMaterial.DIAMOND).setUnlocalizedName("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
-    public static final Item adminFishingRod = new ItemAdminFishingRod(75).setUnlocalizedName("AdminFishingRod").setCreativeTab(Aquaculture.tab);
+    public static final Item woodenFishingRod = new ItemAquacultureFishingRod(50, ToolMaterial.WOOD).setTranslationKey("fishingRod").setCreativeTab(Aquaculture.tab);
+    public static final Item ironFishingRod = new ItemAquacultureFishingRod(75, ToolMaterial.IRON).setTranslationKey("IronFishingRod").setCreativeTab(Aquaculture.tab);
+    public static final Item goldFishingRod = new ItemAquacultureFishingRod(50, ToolMaterial.GOLD).setTranslationKey("GoldFishingRod").setCreativeTab(Aquaculture.tab);
+    public static final Item diamondFishingRod = new ItemAquacultureFishingRod(250, ToolMaterial.DIAMOND).setTranslationKey("DiamondFishingRod").setCreativeTab(Aquaculture.tab);
+    public static final Item adminFishingRod = new ItemAdminFishingRod(75).setTranslationKey("AdminFishingRod").setCreativeTab(Aquaculture.tab);
 
-    public static final MetaItemFood metaFoodItem = (MetaItemFood) new MetaItemFood().setUnlocalizedName("food").setCreativeTab(Aquaculture.tab);
-    public static final MetaItem metaLootItem = (MetaItem) new MetaItem().setUnlocalizedName("loot").setCreativeTab(Aquaculture.tab);
+    public static final MetaItemFood metaFoodItem = (MetaItemFood) new MetaItemFood().setTranslationKey("food").setCreativeTab(Aquaculture.tab);
+    public static final MetaItem metaLootItem = (MetaItem) new MetaItem().setTranslationKey("loot").setCreativeTab(Aquaculture.tab);
 
-    public static final SubItemFood seaweed = new SubItemFood(metaFoodItem, 2, 0, false).setUnlocalizedName("Seaweed").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood algae = new SubItemFood(metaFoodItem, 2, 0, false).setUnlocalizedName("Algae").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood seaweed = new SubItemFood(metaFoodItem, 2, 0, false).setTranslationKey("Seaweed").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood algae = new SubItemFood(metaFoodItem, 2, 0, false).setTranslationKey("Algae").setCreativeTab(Aquaculture.tab);
 
     // Food
-    public static final SubItemFood whaleSteak = new SubItemFood(metaFoodItem, 2, 0.3F, false).setUnlocalizedName("RawWhaleSteak").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood fishFillet = new SubItemFood(metaFoodItem, 2, 0.3F, false).setUnlocalizedName("RawFishFillet").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood cookedFillet = new SubItemFood(metaFoodItem, 5, 0.6F, false).setUnlocalizedName("CookedFishFillet").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood cookedWhaleSteak = new SubItemFood(metaFoodItem, 10, 0.8F, false).setUnlocalizedName("CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood whaleBurger = new SubItemFood(metaFoodItem, 20, 0.8F, false).setUnlocalizedName("Whaleburger").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood frogLegs = new SubItemFood(metaFoodItem, 2, 0.3F, false).setUnlocalizedName("FrogLegs").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood cookedFrogLegs = new SubItemFood(metaFoodItem, 3, 0.6F, false).setUnlocalizedName("CookedFrogLegs").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood turtleSoup = new SubItemFood(metaFoodItem, 6, 0.6F, false).setUnlocalizedName("TurtleSoup").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood sushi = new SubItemFood(metaFoodItem, 4, 0.6F, false).setUnlocalizedName("Sushi").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood whaleSteak = new SubItemFood(metaFoodItem, 2, 0.3F, false).setTranslationKey("RawWhaleSteak").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood fishFillet = new SubItemFood(metaFoodItem, 2, 0.3F, false).setTranslationKey("RawFishFillet").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedFillet = new SubItemFood(metaFoodItem, 5, 0.6F, false).setTranslationKey("CookedFishFillet").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedWhaleSteak = new SubItemFood(metaFoodItem, 10, 0.8F, false).setTranslationKey("CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood whaleBurger = new SubItemFood(metaFoodItem, 20, 0.8F, false).setTranslationKey("Whaleburger").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood frogLegs = new SubItemFood(metaFoodItem, 2, 0.3F, false).setTranslationKey("FrogLegs").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedFrogLegs = new SubItemFood(metaFoodItem, 3, 0.6F, false).setTranslationKey("CookedFrogLegs").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood turtleSoup = new SubItemFood(metaFoodItem, 6, 0.6F, false).setTranslationKey("TurtleSoup").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood sushi = new SubItemFood(metaFoodItem, 4, 0.6F, false).setTranslationKey("Sushi").setCreativeTab(Aquaculture.tab);
 
-    public static final SubItem driftwood = new SubItem(metaLootItem).setUnlocalizedName("Driftwood").setCreativeTab(Aquaculture.tab);
-    public static final SubItem neptuniumBar = new SubItem(metaLootItem).setUnlocalizedName("NeptuniumIngot").setCreativeTab(Aquaculture.tab);
-    public static final SubItem tinCan = new SubItem(metaLootItem).setUnlocalizedName("TinCan").setCreativeTab(Aquaculture.tab);
-    public static final SubItem nessageInABottle = new ItemMessageInABottle(metaLootItem).setUnlocalizedName("MessageInABottle").setCreativeTab(Aquaculture.tab);
-    public static final SubItem box = new ItemBox(metaLootItem).setUnlocalizedName("Box").setCreativeTab(Aquaculture.tab);
-    public static final SubItem lockbox = new ItemLockbox(metaLootItem).setUnlocalizedName("Lockbox").setCreativeTab(Aquaculture.tab);
-    public static final SubItem treasureChest = new ItemTreasureChest(metaLootItem).setUnlocalizedName("TreasureChest").setCreativeTab(Aquaculture.tab);
-    public static final SubItem neptunesBounty = new ItemNeptunesBounty(metaLootItem).setUnlocalizedName("NeptunesBounty").setCreativeTab(Aquaculture.tab);
-    public static final ItemFish fish = (ItemFish) new ItemFish().setUnlocalizedName("Fish").setCreativeTab(Aquaculture.tab);
+    public static final SubItem driftwood = new SubItem(metaLootItem).setTranslationKey("Driftwood").setCreativeTab(Aquaculture.tab);
+    public static final SubItem neptuniumBar = new SubItem(metaLootItem).setTranslationKey("NeptuniumIngot").setCreativeTab(Aquaculture.tab);
+    public static final SubItem tinCan = new SubItem(metaLootItem).setTranslationKey("TinCan").setCreativeTab(Aquaculture.tab);
+    public static final SubItem nessageInABottle = new ItemMessageInABottle(metaLootItem).setTranslationKey("MessageInABottle").setCreativeTab(Aquaculture.tab);
+    public static final SubItem box = new ItemBox(metaLootItem).setTranslationKey("Box").setCreativeTab(Aquaculture.tab);
+    public static final SubItem lockbox = new ItemLockbox(metaLootItem).setTranslationKey("Lockbox").setCreativeTab(Aquaculture.tab);
+    public static final SubItem treasureChest = new ItemTreasureChest(metaLootItem).setTranslationKey("TreasureChest").setCreativeTab(Aquaculture.tab);
+    public static final SubItem neptunesBounty = new ItemNeptunesBounty(metaLootItem).setTranslationKey("NeptunesBounty").setCreativeTab(Aquaculture.tab);
+    public static final ItemFish fish = (ItemFish) new ItemFish().setTranslationKey("Fish").setCreativeTab(Aquaculture.tab);
     private static ToolMaterial neptuniumEnum = EnumHelper.addToolMaterial("Neptunium", 3, 2500, 9F, 6F, 15);
-    public static final Item neptuniumPickaxe = new AquaItemPickaxe(neptuniumEnum).setUnlocalizedName("NeptuniumPickaxe").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumShovel = new AquaItemSpade(neptuniumEnum).setUnlocalizedName("NeptuniumShovel").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumAxe = new AquaItemAxe(neptuniumEnum).setUnlocalizedName("NeptuniumAxe").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumHoe = new AquaItemHoe(neptuniumEnum).setUnlocalizedName("NeptuniumHoe").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumSword = new AquaItemSword(neptuniumEnum).setUnlocalizedName("NeptuniumSword").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumPickaxe = new AquaItemPickaxe(neptuniumEnum).setTranslationKey("NeptuniumPickaxe").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumShovel = new AquaItemSpade(neptuniumEnum).setTranslationKey("NeptuniumShovel").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumAxe = new AquaItemAxe(neptuniumEnum).setTranslationKey("NeptuniumAxe").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumHoe = new AquaItemHoe(neptuniumEnum).setTranslationKey("NeptuniumHoe").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumSword = new AquaItemSword(neptuniumEnum).setTranslationKey("NeptuniumSword").setCreativeTab(Aquaculture.tab);
     private static ArmorMaterial neptuniumArmorEnum = EnumHelper.addArmorMaterial("Neptunium", "", 75, new int[]{3, 6, 8, 3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
-    public static final Item neptuniumHelmet = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.HEAD).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumPlate = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.CHEST).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumChestplate").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.LEGS).setArmorTexture("neptunium_layer_2").setUnlocalizedName("NeptuniumLeggings").setCreativeTab(Aquaculture.tab);
-    public static final Item neptuniumBoots = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.FEET).setArmorTexture("neptunium_layer_1").setUnlocalizedName("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumHelmet = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.HEAD).setArmorTexture("neptunium_layer_1").setTranslationKey("NeptuniumHelmet").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumPlate = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.CHEST).setArmorTexture("neptunium_layer_1").setTranslationKey("NeptuniumChestplate").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumLegs = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.LEGS).setArmorTexture("neptunium_layer_2").setTranslationKey("NeptuniumLeggings").setCreativeTab(Aquaculture.tab);
+    public static final Item neptuniumBoots = new NeptuniumArmor(neptuniumArmorEnum, 0, EntityEquipmentSlot.FEET).setArmorTexture("neptunium_layer_1").setTranslationKey("NeptuniumBoots").setCreativeTab(Aquaculture.tab);
 
     public void register() {
         register(woodenFishingRod);
@@ -165,7 +165,7 @@ public class AquacultureItems {
     }
 
     public void register(Item item) {
-        String name = item.getUnlocalizedName();
+        String name = item.getTranslationKey();
         name = name.replaceAll("item.", "");
         name = name.replaceAll("([A-Za-z][a-z\\d]+)(?=([A-Z][a-z\\d]+))", "$1_").toLowerCase(Locale.US);
         item.setRegistryName(name);

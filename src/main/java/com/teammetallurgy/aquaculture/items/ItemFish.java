@@ -120,9 +120,9 @@ public class ItemFish extends Item {
 
     @Override
     @Nonnull
-    public String getUnlocalizedName(@Nonnull ItemStack stack) {
+    public String getTranslationKey(@Nonnull ItemStack stack) {
         int i = MathHelper.clamp(stack.getItemDamage(), 0, fish.size());
-        String uname = super.getUnlocalizedName() + "." + fish.get(i).name;
+        String uname = super.getTranslationKey() + "." + fish.get(i).name;
         uname = uname.replace(" ", "_");
         return uname;
     }

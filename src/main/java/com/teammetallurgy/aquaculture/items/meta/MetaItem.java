@@ -35,7 +35,7 @@ public class MetaItem extends Item {
 
     @Override
     @Nonnull
-    public String getUnlocalizedName(@Nonnull ItemStack stack) {
+    public String getTranslationKey(@Nonnull ItemStack stack) {
         int i = MathHelper.clamp(stack.getItemDamage(), 0, subItems.size() - 1);
         String uname = subItems.get(i).getUnlocalizedName(stack);
         uname = uname.replace(" ", "_");

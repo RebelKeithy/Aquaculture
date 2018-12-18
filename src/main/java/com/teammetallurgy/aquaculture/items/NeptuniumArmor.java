@@ -27,8 +27,8 @@ public class NeptuniumArmor extends ItemArmor {
 
     @Override
     @Nonnull
-    public Item setUnlocalizedName(@Nonnull String name) {
-        super.setUnlocalizedName(name);
+    public Item setTranslationKey(@Nonnull String name) {
+        super.setTranslationKey(name);
         return this;
     }
 }
