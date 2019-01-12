@@ -31,19 +31,19 @@ public class AquacultureItems {
     public static final MetaItemFood metaFoodItem = (MetaItemFood) new MetaItemFood().setTranslationKey("food").setCreativeTab(Aquaculture.tab);
     public static final MetaItem metaLootItem = (MetaItem) new MetaItem().setTranslationKey("loot").setCreativeTab(Aquaculture.tab);
 
-    public static final SubItemFood seaweed = new SubItemFood(metaFoodItem, 2, 0, false).setTranslationKey("Seaweed").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood algae = new SubItemFood(metaFoodItem, 2, 0, false).setTranslationKey("Algae").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood seaweed = new SubItemFood(metaFoodItem, 2, 0).setTranslationKey("Seaweed").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood algae = new SubItemFood(metaFoodItem, 2, 0).setTranslationKey("Algae").setCreativeTab(Aquaculture.tab);
 
     // Food
-    public static final SubItemFood whaleSteak = new SubItemFood(metaFoodItem, 2, 0.3F, false).setTranslationKey("RawWhaleSteak").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood fishFillet = new SubItemFood(metaFoodItem, 2, 0.3F, false).setTranslationKey("RawFishFillet").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood cookedFillet = new SubItemFood(metaFoodItem, 5, 0.6F, false).setTranslationKey("CookedFishFillet").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood cookedWhaleSteak = new SubItemFood(metaFoodItem, 10, 0.8F, false).setTranslationKey("CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood whaleBurger = new SubItemFood(metaFoodItem, 20, 0.8F, false).setTranslationKey("Whaleburger").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood frogLegs = new SubItemFood(metaFoodItem, 2, 0.3F, false).setTranslationKey("FrogLegs").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood cookedFrogLegs = new SubItemFood(metaFoodItem, 3, 0.6F, false).setTranslationKey("CookedFrogLegs").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood turtleSoup = new SubItemFood(metaFoodItem, 6, 0.6F, false).setTranslationKey("TurtleSoup").setCreativeTab(Aquaculture.tab);
-    public static final SubItemFood sushi = new SubItemFood(metaFoodItem, 4, 0.6F, false).setTranslationKey("Sushi").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood whaleSteak = new SubItemFood(metaFoodItem, 2, 0.3F).setTranslationKey("RawWhaleSteak").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood fishFillet = new SubItemFood(metaFoodItem, 2, 0.3F).setTranslationKey("RawFishFillet").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedFillet = new SubItemFood(metaFoodItem, 5, 0.6F).setTranslationKey("CookedFishFillet").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedWhaleSteak = new SubItemFood(metaFoodItem, 10, 0.8F).setTranslationKey("CookedWhaleSteak").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood whaleBurger = new SubItemFood(metaFoodItem, 20, 0.8F).setTranslationKey("Whaleburger").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood frogLegs = new SubItemFood(metaFoodItem, 2, 0.3F).setTranslationKey("FrogLegs").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood cookedFrogLegs = new SubItemFood(metaFoodItem, 3, 0.6F).setTranslationKey("CookedFrogLegs").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood turtleSoup = new SubItemFood(metaFoodItem, 6, 0.6F).setTranslationKey("TurtleSoup").setCreativeTab(Aquaculture.tab);
+    public static final SubItemFood sushi = new SubItemFood(metaFoodItem, 4, 0.6F).setTranslationKey("Sushi").setCreativeTab(Aquaculture.tab);
 
     public static final SubItem driftwood = new SubItem(metaLootItem).setTranslationKey("Driftwood").setCreativeTab(Aquaculture.tab);
     public static final SubItem neptuniumBar = new SubItem(metaLootItem).setTranslationKey("NeptuniumIngot").setCreativeTab(Aquaculture.tab);

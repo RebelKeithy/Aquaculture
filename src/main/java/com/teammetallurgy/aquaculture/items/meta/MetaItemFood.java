@@ -1,7 +1,6 @@
 package com.teammetallurgy.aquaculture.items.meta;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemFood;
@@ -49,17 +48,6 @@ public class MetaItemFood extends ItemFood {
                 items.add(subItem.getItemStack());
             }
         }
-    }
-
-    // ItemRedirects
-    @Override
-    @Nonnull
-    public ItemStack onItemUseFinish(@Nonnull ItemStack stack, @Nonnull World world, EntityLivingBase player) {
-        int damage = stack.getItemDamage();
-        if (damage >= 0 && damage < subItems.size()) {
-            return subItems.get(damage).onEaten(this, stack, world, player);
-        }
-        return stack;
     }
 
     @Override
