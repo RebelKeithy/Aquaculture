@@ -1,60 +1,51 @@
 package com.teammetallurgy.aquaculture.items;
 
-import com.teammetallurgy.aquaculture.handlers.Config;
-import com.teammetallurgy.aquaculture.items.meta.MetaItem;
-import com.teammetallurgy.aquaculture.items.meta.SubItem;
-import com.teammetallurgy.aquaculture.loot.WeightedLootSet;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class ItemNeptunesBounty extends SubItem {
-    private WeightedLootSet loot;
+public class ItemNeptunesBounty extends Item {
 
-    public ItemNeptunesBounty(MetaItem metaItem) {
-        super(metaItem);
-        loot = null;
+    public ItemNeptunesBounty(Item.Properties properties) {
+        super(properties);
     }
 
     public void initLoot() {
-        loot = new WeightedLootSet();
-
-        if (Config.enableNeptuniumTools) {
-            loot.addLoot(AquacultureItems.neptuniumAxe, 1, 1, 1);
-            loot.addLoot(AquacultureItems.neptuniumPickaxe, 1, 1, 1);
-            loot.addLoot(AquacultureItems.neptuniumShovel, 1, 1, 1);
-            loot.addLoot(AquacultureItems.neptuniumHoe, 1, 1, 1);
-            loot.addLoot(AquacultureItems.neptuniumSword, 1, 1, 1);
+        /*if (Config.enableNeptuniumTools) { //TODO to loot table
+            loot.addLoot(AquaItems.NEPTUNIUM_AXE, 1, 1, 1);
+            loot.addLoot(AquaItems.NEPTUNIUM_PICKAXE, 1, 1, 1);
+            loot.addLoot(AquaItems.NEPTUNIUM_SHOVEL, 1, 1, 1);
+            loot.addLoot(AquaItems.NEPTUNIUM_HOE, 1, 1, 1);
+            loot.addLoot(AquaItems.NEPTUNIUM_SWORD, 1, 1, 1);
         }
         if (Config.enableNeptuniumArmor) {
-            loot.addLoot(AquacultureItems.neptuniumHelmet, 1, 1, 1);
-            loot.addLoot(AquacultureItems.neptuniumPlate, 1, 1, 1);
-            loot.addLoot(AquacultureItems.neptuniumLegs, 1, 1, 1);
-            loot.addLoot(AquacultureItems.neptuniumBoots, 1, 1, 1);
+            loot.addLoot(AquaItems.NEPTUNIUM_HELMET, 1, 1, 1);
+            loot.addLoot(AquaItems.NEPTUNIUM_PLATE, 1, 1, 1);
+            loot.addLoot(AquaItems.NEPTUNIUM_LEGS, 1, 1, 1);
+            loot.addLoot(AquaItems.NEPTUNIUM_BOOTS, 1, 1, 1);
         }
         if (Config.enableNeptuniumLoot) {
-            loot.addLoot(AquacultureItems.neptuniumBar, 2, 1, 4);
-        }
+            loot.addLoot(AquaItems.NEPTUNIUM_BAR, 2, 1, 4);
+        }*/
     }
 
     @Override
     @Nonnull
-    public ItemStack onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player) {
-        if (world.isRemote)
-            return stack;
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, @Nonnull EnumHand hand) {
+        ItemStack heldStack = player.getHeldItem(hand);
 
-        if (loot == null)
-            initLoot();
-
-        ItemStack item = loot.getRandomLoot();
+        /*ItemStack item = loot.getRandomLoot();
 
         EntityItem entityitem = new EntityItem(player.world, player.posX, player.posY, player.posZ, item);
-        world.spawnEntity(entityitem);
+        world.spawnEntity(entityitem);*/
 
-        stack.shrink(1);
-        return stack;
+        heldStack.shrink(1);
+
+        return super.onItemRightClick(world, player, hand);
     }
 }

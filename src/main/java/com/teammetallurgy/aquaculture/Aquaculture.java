@@ -1,56 +1,41 @@
 package com.teammetallurgy.aquaculture;
 
-import com.teammetallurgy.aquaculture.enchantments.AquacultureEnchants;
-import com.teammetallurgy.aquaculture.handlers.AquacultureRecipes;
-import com.teammetallurgy.aquaculture.handlers.AquacultureTab;
-import com.teammetallurgy.aquaculture.handlers.Config;
-import com.teammetallurgy.aquaculture.items.AquacultureItems;
-import com.teammetallurgy.aquaculture.proxy.CommonProxy;
-import net.minecraft.item.ItemStack;
+import com.teammetallurgy.aquaculture.client.ClientHandler;
+import com.teammetallurgy.aquaculture.utils.AquacultureTab;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(modid = Aquaculture.MOD_ID, name = Aquaculture.MOD_NAME, version = Aquaculture.MOD_VERSION, guiFactory = Aquaculture.GUI_FACTORY_CLASS)
+@Mod(value = Aquaculture.MOD_ID)
 public class Aquaculture {
     public final static String MOD_ID = "aquaculture";
     public final static String MOD_NAME = "Aquaculture";
-    public final static String MOD_VERSION = "@VERSION@";
-    public static final String GUI_FACTORY_CLASS = "com.teammetallurgy.aquaculture.client.GuiFactory";
 
-    @Instance(MOD_ID)
-    public static Aquaculture instance;
+    public static final AquacultureTab TAB = new AquacultureTab(MOD_ID);
 
-    @SidedProxy(clientSide = "com.teammetallurgy.aquaculture.proxy.ClientProxy", serverSide = "com.teammetallurgy.aquaculture.proxy.CommonProxy")
-    public static CommonProxy proxy;
-    public static AquacultureTab tab;
-
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        Config.init(event.getSuggestedConfigurationFile());
-        tab = new AquacultureTab("Aquaculture");
-
-        new AquacultureItems().register();
-
-        proxy.registerItemModels();
-
-        proxy.registerEntities();
-
-        proxy.registerModelRenderers();
+    public Aquaculture() {
+        final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modBus.addListener(this::setupCommon);
+        modBus.addListener(this::setupClient);
     }
 
-    @EventHandler
-    public void load(FMLInitializationEvent event) {
+    private void setupCommon(FMLCommonSetupEvent event) {
+        /*
+         new AquaItems().register();
+
+        //EntityRegistry.registerModEntity(new ResourceLocation("aquaculture:custom_fish_hook"), EntityCustomFishHook.class, "CustomFishHook", 0, Aquaculture.instance, 64, 5, true);
 
         AquacultureRecipes.addSmeltingRecipes();
         AquacultureRecipes.addBrewingRecipes();
 
         AquacultureEnchants.init();
+        *///TODO Move most of these to registry events
 
-        tab.setItemStack(new ItemStack(AquacultureItems.ironFishingRod));
+    }
 
+    private void setupClient(FMLClientSetupEvent event) {
+        ClientHandler.registerItemModels();
     }
 }

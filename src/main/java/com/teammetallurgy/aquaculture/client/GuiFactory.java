@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.client;
+/*package com.teammetallurgy.aquaculture.client;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.handlers.Config;
@@ -37,4 +37,4 @@ public class GuiFactory extends DefaultGuiFactory {
 
         return list;
     }
-}
+}*/

@@ -15,7 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
-/run
+
 
 # External tool builders
 .externalToolBuilders/
@@ -36,7 +36,7 @@ local.properties
 *.iml
 *.ipr
 *.iws
-
+/.idea/
 #################
 ## Visual Studio
 #################
@@ -227,6 +227,7 @@ pip-log.txt
 #############
 .gradle/
 build/
+run/
 eclipse/
 CREDITS-fml.txt
 forge-*-*-changelog.txt

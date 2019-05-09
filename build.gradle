@@ -1,68 +1,56 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'maven-publish'
+apply plugin: 'net.minecraftforge.gradle'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 version = "${minecraft_version}-${mod_version}" + getBuildNumber()
 group = "com.teammetallurgy.aquaculture"
 archivesBaseName = "Aquaculture"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 minecraft {
-    version = "${minecraft_version}-${forge_version}"
-    mappings = "${mcp_mappings}"
-	runDir = "run"
-	
-	replace "@VERSION@", "${mod_version}"
-    replaceIn "Aquaculture.java"
+    mappings channel: 'snapshot', version: '20190501-1.13.2'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            mods {
+                waddles {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            mods {
+                waddles {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+}
 
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand 'version': project.version, 'mcversion': project.minecraft.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+jar {
+    manifest {
+        attributes([
+            "Implementation-Version": "${version}"
+        ])
     }
 }
 
 String getBuildNumber() {
-    if (System.getenv().BUILD_NUMBER) {
-        return "." + (System.getenv('BUILD_NUMBER') ? System.getenv('BUILD_NUMBER') : System.getenv('TRAVIS_BUILD_NUMBER') ? System.getenv('TRAVIS_BUILD_NUMBER') : '0');
-	}
-	return '';
-}
-
-publishing {
-    tasks.publish.dependsOn 'build'
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId "aquaculture_${minecraft_version}"
-            artifact jar
-        }
-    }
-    repositories {
-        if (project.hasProperty('maven_repo')) {
-            maven { url maven_repo }
-        } else {
-            mavenLocal()
-        }
-    }
+    return System.getenv('BUILD_NUMBER') ? ".alpha" + System.getenv('BUILD_NUMBER') : "";
 }

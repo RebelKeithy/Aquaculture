@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.loot;
+/*package com.teammetallurgy.aquaculture.loot;
 
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -70,4 +70,4 @@ public class WeightedLootSet {
         }
         return stack;
     }
-}
+}*/

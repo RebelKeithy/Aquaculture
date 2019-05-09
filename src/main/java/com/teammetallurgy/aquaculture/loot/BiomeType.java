@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.loot;
+/*package com.teammetallurgy.aquaculture.loot;
 
 import net.minecraft.world.biome.Biome;
 
@@ -61,4 +61,4 @@ public class BiomeType {
     public String toString() {
         return "BiomeType:" + name;
     }
-}
+}*/

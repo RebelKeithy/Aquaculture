@@ -1,23 +1,19 @@
 package com.teammetallurgy.aquaculture.items;
 
-import com.teammetallurgy.aquaculture.items.meta.MetaItem;
-import com.teammetallurgy.aquaculture.items.meta.SubItem;
-import com.teammetallurgy.aquaculture.loot.WeightedLootSet;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class ItemBox extends SubItem {
-    public WeightedLootSet loot;
+public class ItemBox extends Item {
 
-    public ItemBox(MetaItem metaItem) {
-        super(metaItem);
-        loot = new WeightedLootSet();
+    public ItemBox(Item.Properties builder) {
+        super(builder);
+        /*loot = new WeightedLootSet(); //TODO Make it a loot table
         loot.addLoot(Blocks.STONE, 5, 1, 1);
         loot.addLoot(Blocks.DIRT, 5, 1, 1);
         loot.addLoot(Blocks.COBBLESTONE, 5);
@@ -58,21 +54,21 @@ public class ItemBox extends SubItem {
         loot.addLoot(Blocks.TALLGRASS, 3);
         loot.addLoot(Items.STRING, 3);
         loot.addLoot(Items.FEATHER, 4);
-        loot.addLoot(Items.APPLE, 1);
+        loot.addLoot(Items.APPLE, 1);*/
     }
 
     @Override
     @Nonnull
-    public ItemStack onItemRightClick(@Nonnull ItemStack stack, World world, EntityPlayer player) {
-        if (world.isRemote)
-            return stack;
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, @Nonnull EnumHand hand) {
+        ItemStack heldStack = player.getHeldItem(hand);
 
-        ItemStack randomLoot = loot.getRandomLoot();
+        /*ItemStack randomLoot = loot.getRandomLoot();
 
         EntityItem entityitem = new EntityItem(player.world, player.posX, player.posY, player.posZ, randomLoot);
-        world.spawnEntity(entityitem);
+        world.spawnEntity(entityitem);*/
 
-        stack.shrink(1);
-        return stack;
+        heldStack.shrink(1);
+
+        return super.onItemRightClick(world, player, hand);
     }
 }

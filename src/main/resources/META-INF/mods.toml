@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[25,)"
+
+[[mods]]
+    modId="aquaculture"
+    version="${file.jarVersion}"
+    displayName="Aquaculture 2"
+    displayURL="https://minecraft.curseforge.com/projects/aquaculture"
+    issueTrackerURL="https://github.com/TeamMetallurgy/Aquaculture/issues"
+    authors="Team Metallurgy"
+    credits="Shadowclaimer, Girafi, Glassmaker, lclc98, Freyja, and Rebelkeithy"
+    description='''
+    Welcome to Aquaculture! An expansion of Minecraft's fishing system.
+    '''

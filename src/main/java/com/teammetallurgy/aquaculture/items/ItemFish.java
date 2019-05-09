@@ -1,18 +1,17 @@
 package com.teammetallurgy.aquaculture.items;
 
 import com.google.common.base.Preconditions;
-import com.teammetallurgy.aquaculture.loot.BiomeType;
-import com.teammetallurgy.aquaculture.loot.FishLoot;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,15 +24,13 @@ import java.util.Random;
 public class ItemFish extends Item {
     public NonNullList<Fish> fish;
 
-    public ItemFish() {
-        super();
-        this.setHasSubtypes(true);
-        this.setMaxDamage(0);
+    public ItemFish(Properties properties) {
+        super(properties);
 
         fish = NonNullList.create();
     }
 
-    public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType biome, int rarity) {
+    /*public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType biome, int rarity) {
         addFish(name, filletAmount, minWeight, maxWeight, new BiomeType[]{biome}, rarity);
     }
 
@@ -44,42 +41,44 @@ public class ItemFish extends Item {
             FishLoot.instance().addFish(this.getItemStackFish(name), biome, rarity);
         }
 
-    }
+    }*/
 
     @Override
     @Nonnull
-    public String getItemStackDisplayName(@Nonnull ItemStack stack) {
-        if (stack.hasTagCompound() && stack.getTagCompound() != null) {
-            if (stack.getTagCompound().hasKey("Prefix")) {
-                return stack.getTagCompound().getString("Prefix") + " " + super.getItemStackDisplayName(stack);
+    public ITextComponent getDisplayName(@Nonnull ItemStack stack) {
+        if (stack.hasTag() && stack.getTag() != null) {
+            if (stack.getTag().contains("Prefix")) {
+                return new TextComponentTranslation(stack.getTag().getString("Prefix") + " " + super.getDisplayName(stack));
             }
         }
-        return super.getItemStackDisplayName(stack);
+        return super.getDisplayName(stack);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<String> toolTip, ITooltipFlag tooltipType) {
-        if (stack.hasTagCompound() && stack.getTagCompound() != null) {
-            if (stack.getTagCompound().hasKey("Weight")) {
-                float weight = stack.getTagCompound().getFloat("Weight");
+    @OnlyIn(Dist.CLIENT)
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> toolTip, ITooltipFlag tooltipType) {
+        if (stack.hasTag() && stack.getTag() != null) {
+            if (stack.getTag().contains("Weight")) {
+                float weight = stack.getTag().getFloat("Weight");
 
                 DecimalFormat df = new DecimalFormat("#,###.##");
                 BigDecimal bd = new BigDecimal(weight);
                 bd = bd.round(new MathContext(3));
-                if (bd.doubleValue() > 999)
-                    toolTip.add("Weight: " + df.format((int) bd.doubleValue()) + "lb");
-                else
-                    toolTip.add("Weight: " + bd + "lb");
+                if (bd.doubleValue() > 999) {
+                    toolTip.add(new TextComponentTranslation("Weight: " + df.format((int) bd.doubleValue()) + "lb"));
+                } else {
+                    toolTip.add(new TextComponentTranslation("Weight: " + bd + "lb"));
+                }
             }
         }
     }
 
     public void assignRandomWeight(@Nonnull ItemStack stack, int heavyLineLvl) {
-        if (stack.isEmpty())
+        if (stack.isEmpty()) {
             return;
+        }
 
-        Fish f = fish.get(stack.getItemDamage());
+        Fish f = fish.get(stack.getDamage());
 
         if (f.maxWeight == 1 && f.minWeight == 1)
             return;
@@ -90,50 +89,31 @@ public class ItemFish extends Item {
 
         float weight = new Random().nextFloat() * (f.maxWeight - min) + min;
 
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
+        if (!stack.hasTag()) {
+            stack.setTag(new NBTTagCompound());
         }
 
-        Preconditions.checkNotNull(stack.getTagCompound(), "tagCompound");
-        stack.getTagCompound().setFloat("Weight", weight);
+        Preconditions.checkNotNull(stack.getTag(), "tagCompound");
+        stack.getTag().putFloat("Weight", weight);
 
         if (weight <= f.maxWeight * 0.10F) {
-            stack.getTagCompound().setString("Prefix", "Juvenile");
+            stack.getTag().putString("Prefix", "Juvenile");
         } else if (weight > f.maxWeight * 0.10F && weight <= f.maxWeight * 0.20F) {
-            stack.getTagCompound().setString("Prefix", "Small");
+            stack.getTag().putString("Prefix", "Small");
         } else if (weight >= f.maxWeight * 0.80F && weight < f.maxWeight * 0.90F) {
-            stack.getTagCompound().setString("Prefix", "Large");
+            stack.getTag().putString("Prefix", "Large");
         } else if (weight >= f.maxWeight * 0.90F) {
-            stack.getTagCompound().setString("Prefix", "Massive");
+            stack.getTag().putString("Prefix", "Massive");
         }
-    }
-
-    @Nonnull
-    public ItemStack getItemStackFish(String name) {
-        for (int i = 0; i < fish.size(); i++) {
-            if (fish.get(i).name.equals(name)) {
-                return new ItemStack(this, 1, i);
-            }
-        }
-        return ItemStack.EMPTY;
     }
 
     @Override
     @Nonnull
     public String getTranslationKey(@Nonnull ItemStack stack) {
-        int i = MathHelper.clamp(stack.getItemDamage(), 0, fish.size());
+        int i = MathHelper.clamp(stack.getDamage(), 0, fish.size());
         String uname = super.getTranslationKey() + "." + fish.get(i).name;
         uname = uname.replace(" ", "_");
         return uname;
-    }
-
-    @Override
-    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> subItems) {
-        if (this.isInCreativeTab(tab)) {
-            for (int j = 0; j < fish.size(); ++j) {
-                subItems.add(new ItemStack(this, 1, j));
-            }
-        }
     }
 
     public class Fish {

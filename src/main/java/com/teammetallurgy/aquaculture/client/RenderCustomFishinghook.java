@@ -1,6 +1,6 @@
-package com.teammetallurgy.aquaculture.client;
+/*package com.teammetallurgy.aquaculture.client;
 
-import com.teammetallurgy.aquaculture.handlers.EntityCustomFishHook;
+import com.teammetallurgy.aquaculture.utils.EntityCustomFishHook;
 import com.teammetallurgy.aquaculture.items.ItemAdminFishingRod;
 import com.teammetallurgy.aquaculture.items.ItemAquacultureFishingRod;
 import net.minecraft.client.Minecraft;
@@ -125,4 +125,4 @@ public class RenderCustomFishinghook extends Render<EntityCustomFishHook> {
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
         }
     }
-}
+}*/

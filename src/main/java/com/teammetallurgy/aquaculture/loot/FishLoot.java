@@ -1,7 +1,7 @@
-package com.teammetallurgy.aquaculture.loot;
+/*package com.teammetallurgy.aquaculture.loot;
 
-import com.teammetallurgy.aquaculture.handlers.Config;
-import com.teammetallurgy.aquaculture.items.AquacultureItems;
+import com.teammetallurgy.aquaculture.utils.Config;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -80,7 +80,7 @@ public class FishLoot {
             fishStack = fishBiomeMap.get(BiomeType.freshwater).getRandomLoot();
         }
         if (Config.assignRandomWeight) {
-            AquacultureItems.fish.assignRandomWeight(fishStack, heavyLineLvl);
+            AquaItems.FISH.assignRandomWeight(fishStack, heavyLineLvl);
         }
         return fishStack;
     }
@@ -95,4 +95,4 @@ public class FishLoot {
             return junkBiomeMap.get(BiomeType.freshwater).getRandomLoot();
         }
     }
-}
+}*/
