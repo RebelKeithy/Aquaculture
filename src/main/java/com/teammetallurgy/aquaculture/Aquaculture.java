@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture;
 
-import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.utils.AquacultureTab;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -22,20 +21,10 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
-        /*
-         new AquaItems().register();
-
-        //EntityRegistry.registerModEntity(new ResourceLocation("aquaculture:custom_fish_hook"), EntityCustomFishHook.class, "CustomFishHook", 0, Aquaculture.instance, 64, 5, true);
-
-        AquacultureRecipes.addSmeltingRecipes();
-        AquacultureRecipes.addBrewingRecipes();
-
-        AquacultureEnchants.init();
-        *///TODO Move most of these to registry events
-
+        //EntityRegistry.registerModEntity(new ResourceLocation("aquaculture:custom_fish_hook"), EntityCustomFishHook.class, "CustomFishHook", 0, Aquaculture.instance, 64, 5, true); //TODO, also don't register here
     }
 
     private void setupClient(FMLClientSetupEvent event) {
-        ClientHandler.registerItemModels();
+
     }
 }

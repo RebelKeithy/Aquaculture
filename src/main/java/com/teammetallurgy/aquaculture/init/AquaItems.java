@@ -4,80 +4,96 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.items.*;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.*;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ObjectHolder;
 
-import java.util.Locale;
+import javax.annotation.Nonnull;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@ObjectHolder(Aquaculture.MOD_ID)
 public class AquaItems {
-    public static final Item WOODEN_FISHING_ROD = new ItemAquacultureFishingRod(ItemTier.WOOD, new Item.Properties().defaultMaxDamage(60).group(Aquaculture.TAB));
-    public static final Item IRON_FISHING_ROD = new ItemAquacultureFishingRod(ItemTier.IRON, new Item.Properties().defaultMaxDamage(75).group(Aquaculture.TAB));
-    public static final Item GOLD_FISHING_ROD = new ItemAquacultureFishingRod(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(50).group(Aquaculture.TAB));
-    public static final Item DIAMOND_FISHING_ROD = new ItemAquacultureFishingRod(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(250).group(Aquaculture.TAB));
-    public static final Item ADMIN_FISHING_ROD = new ItemFishingRod(new Item.Properties().defaultMaxDamage(75).maxStackSize(1).group(Aquaculture.TAB));
+    public static final Item IRON_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.IRON, new Item.Properties().defaultMaxDamage(75).group(Aquaculture.TAB)), "iron_fishing_rod");
+    public static final Item GOLD_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(50).group(Aquaculture.TAB)), "gold_fishing_rod");
+    public static final Item DIAMOND_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(250).group(Aquaculture.TAB)), "diamond_fishing_rod");
+    public static final Item ADMIN_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(75).group(Aquaculture.TAB)), "admin_fishing_rod");
 
-    /*public static final Item SEAWEED = new ItemFood(2, 0, false, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item ALGAE = new ItemFood(2, 0, false, new Item.Properties().group(Aquaculture.TAB));
+    // Neptunium
+    public static final Item NEPTUNIUM_INGOT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "neptunium_ingot");
+
+    public static final Item NEPTUNIUM_PICKAXE = register(new AquaItemPickaxe(AquaEnums.NEPTUNIUM_TOOL, 1, -2.8F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_pickaxe");
+    public static final Item NEPTUNIUM_SHOVEL = register(new ItemSpade(AquaEnums.NEPTUNIUM_TOOL, 1.5F, -3.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_shovel");
+    public static final Item NEPTUNIUM_AXE = register(new AquaItemAxe(AquaEnums.NEPTUNIUM_TOOL, 8.0F, -3.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_axe");
+    public static final Item NEPTUNIUM_HOE = register(new ItemHoe(AquaEnums.NEPTUNIUM_TOOL, 0.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_hoe");
+    public static final Item NEPTUNIUM_SWORD = register(new ItemSword(AquaEnums.NEPTUNIUM_TOOL, 3, -2.4F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_sword");
+
+    public static final Item NEPTUNIUM_HELMET = register(new NeptuniumArmor(AquaEnums.NEPTINIUM_ARMOR, EntityEquipmentSlot.HEAD, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_helmet");
+    public static final Item NEPTUNIUM_PLATE = register(new NeptuniumArmor(AquaEnums.NEPTINIUM_ARMOR, EntityEquipmentSlot.CHEST, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_chestplate");
+    public static final Item NEPTUNIUM_LEGS = register(new NeptuniumArmor(AquaEnums.NEPTINIUM_ARMOR, EntityEquipmentSlot.LEGS, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_2"), "neptunium_leggings");
+    public static final Item NEPTUNIUM_BOOTS = register(new NeptuniumArmor(AquaEnums.NEPTINIUM_ARMOR, EntityEquipmentSlot.FEET, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
+
+    // Misc
+    public static final Item DRIFTWOOD = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "driftwood");
+    public static final Item TIN_CAN = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "tin_can");
+    public static final Item NESSAGE_IN_A_BOTTLE = register(new ItemMessageInABottle(new Item.Properties().group(Aquaculture.TAB)), "message_in_a_bottle");
+    public static final Item BOX = register(new ItemBox(new Item.Properties().group(Aquaculture.TAB)), "box");
+    public static final Item LOCKBOX = register(new ItemLockbox(new Item.Properties().group(Aquaculture.TAB)), "lockbox");
+    public static final Item TREASURE_CHEST = register(new ItemTreasureChest(new Item.Properties().group(Aquaculture.TAB)), "treasure_chest");
+    public static final Item NEPTUNES_BOUNTY = register(new ItemNeptunesBounty(new Item.Properties().group(Aquaculture.TAB)), "neptunes_bounty");
+    public static final Item SEAWEED = register(new ItemFood(2, 0, false, new Item.Properties().group(Aquaculture.TAB)), "seaweed");
+    public static final Item ALGAE = register(new ItemFood(2, 0, false, new Item.Properties().group(Aquaculture.TAB)), "algae");
 
     // Food
-    public static final Item WHALE_STEAK = new ItemFood(2, 0.3F, false, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item FISH_FILLET = new ItemFood(2, 0.3F, false, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item COOKED_FILLET = new ItemFood(5, 0.6F, true, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item COOKED_WHALE_STEAK = new ItemFood(10, 0.8F, true, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item WHALE_BURGER = new ItemFood(20, 0.8F, true, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item FROG_LEGS = new ItemFood(2, 0.3F, false, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item COOKED_FROG_LEGS = new ItemFood(3, 0.6F, true, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item TURTLE_SOUP = new ItemFood(6, 0.6F, false, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item SUSHI = new ItemFood(4, 0.6F, false, new Item.Properties().group(Aquaculture.TAB));
+    public static final Item WHALE_STEAK = register(new ItemFood(2, 0.3F, false, new Item.Properties().group(Aquaculture.TAB)), "whale_steak_raw");
+    public static final Item COOKED_WHALE_STEAK = register(new ItemFood(10, 0.8F, true, new Item.Properties().group(Aquaculture.TAB)), "whale_steak_cooked");
+    public static final Item WHALE_BURGER = register(new ItemFood(20, 0.8F, true, new Item.Properties().group(Aquaculture.TAB)), "whale_burger");
+    public static final Item FISH_FILLET = register(new ItemFood(2, 0.3F, false, new Item.Properties().group(Aquaculture.TAB)), "fish_fillet_raw");
+    public static final Item COOKED_FILLET = register(new ItemFood(5, 0.6F, true, new Item.Properties().group(Aquaculture.TAB)), "fish_fillet_cooked");
+    public static final Item FROG_LEGS = register(new ItemFood(2, 0.3F, false, new Item.Properties().group(Aquaculture.TAB)), "frog_legs_raw");
+    public static final Item COOKED_FROG_LEGS = register(new ItemFood(3, 0.6F, true, new Item.Properties().group(Aquaculture.TAB)), "frog_legs_cooked");
+    public static final Item TURTLE_SOUP = register(new ItemSoup(6, new Item.Properties().group(Aquaculture.TAB)), "turtle_soup");
+    public static final Item SUSHI = register(new ItemFood(4, 0.6F, false, new Item.Properties().group(Aquaculture.TAB)), "sushi");
 
-    public static final Item DRIFTWOOD = new Item(new Item.Properties().group(Aquaculture.TAB));
-    public static final Item NEPTUNIUM_BAR = new Item(new Item.Properties().group(Aquaculture.TAB));
-    public static final Item TIN_CAN = new Item(new Item.Properties().group(Aquaculture.TAB));
-    public static final Item NESSAGE_IN_ABOTTLE = new ItemMessageInABottle(new Item.Properties().group(Aquaculture.TAB));
-    public static final Item BOX = new ItemBox(new Item.Properties().group(Aquaculture.TAB));
-    public static final Item LOCKBOX = new ItemLockbox(new Item.Properties().group(Aquaculture.TAB));
-    public static final Item TREASURE_CHEST = new ItemTreasureChest(new Item.Properties().group(Aquaculture.TAB));
-    public static final Item NEPTUNES_BOUNTY = new ItemNeptunesBounty(new Item.Properties().group(Aquaculture.TAB));*/
-    public static final Item FISH = new ItemFish(new Item.Properties().defaultMaxDamage(0).group(Aquaculture.TAB));
-    private static ItemTier NEPTUNIUM_ENUM = null /*EnumHelper.addToolMaterial("Neptunium", 3, 2500, 9F, 6F, 15)*/;
-    public static final Item NEPTUNIUM_PICKAXE = new AquaItemPickaxe(NEPTUNIUM_ENUM, 1, -2.8F, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item NEPTUNIUM_SHOVEL = new ItemSpade(NEPTUNIUM_ENUM, 1.5F, -3.0F, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item NEPTUNIUM_AXE = new AquaItemAxe(NEPTUNIUM_ENUM, 8.0F, -3.0F, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item NEPTUNIUM_HOE = new ItemHoe(NEPTUNIUM_ENUM, 0.0F, new Item.Properties().group(Aquaculture.TAB));
-    public static final Item NEPTUNIUM_SWORD = new ItemSword(NEPTUNIUM_ENUM, 3, -2.4F, new Item.Properties().group(Aquaculture.TAB));
-    private static ArmorMaterial NEPTUNIUM_ARMOR_ENUM = null /*EnumHelper.addArmorMaterial("Neptunium", "", 75, new int[]{3, 6, 8, 3}, 15, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F)*/;
-    public static final Item NEPTUNIUM_HELMET = new NeptuniumArmor(NEPTUNIUM_ARMOR_ENUM, EntityEquipmentSlot.HEAD, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1");
-    public static final Item NEPTUNIUM_PLATE = new NeptuniumArmor(NEPTUNIUM_ARMOR_ENUM, EntityEquipmentSlot.CHEST, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1");
-    public static final Item NEPTUNIUM_LEGS = new NeptuniumArmor(NEPTUNIUM_ARMOR_ENUM, EntityEquipmentSlot.LEGS, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_2");
-    public static final Item NEPTUNIUM_BOOTS = new NeptuniumArmor(NEPTUNIUM_ARMOR_ENUM, EntityEquipmentSlot.FEET, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1");
+    // Fish
+    public static final Item BLUEGILL = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "bluegill");
+    public static final Item PERCH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "perch");
+    public static final Item GAR = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "gar");
+    public static final Item BASS = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "bass");
+    public static final Item MUSKELLUNGE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "muskellunge");
+    public static final Item BROWN_TROUT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "brown_trout");
+    public static final Item CATFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "catfish");
+    public static final Item CARP = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "carp");
+    public static final Item RED_GROUPER = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "red_grouper");
+    public static final Item TUNA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "tuna");
+    public static final Item SWORDFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "swordfish");
+    public static final Item SHARK = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "shark");
+    public static final Item WHALE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "whale");
+    public static final Item SQUID = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "squid");
+    public static final Item JELLYFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "jellyfish");
+    public static final Item FROG = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "frog");
+    public static final Item TURTLE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "turtle");
+    public static final Item LEECH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "leech");
+    public static final Item PIRAHNA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "pirahna");
+    public static final Item ELECTRIC_EEL = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "electric_eel");
+    public static final Item TAMBAQUI = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "tambaqui");
+    public static final Item ARAPAIMA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "arapaima");
+    public static final Item POLLOCK = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "pollock");
+    public static final Item HERRING = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "herring");
+    public static final Item HALIBUT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "halibut");
+    public static final Item PINK_SALMON = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "pink_salmon");
+    public static final Item RAINBOW_TROUT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "rainbow_trout");
+    public static final Item BLACKFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "blackfish");
+    public static final Item CAPITAINE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "capitaine");
+    public static final Item BOULTI = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "boulti");
+    public static final Item BAGRID = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "bagrid");
+    public static final Item SYNDONTIS = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "syndontis");
+    public static final Item RED_SHROOMA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "red_shrooma");
+    public static final Item BROWN_SHROOMA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "brown_shrooma");
+    public static final Item GOLDFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "goldfish");
+    public static final Item FISH_BONES = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "fish_bones");
 
-    @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
-        register(WOODEN_FISHING_ROD);
-        register(IRON_FISHING_ROD);
-        register(GOLD_FISHING_ROD);
-        register(DIAMOND_FISHING_ROD);
-        register(ADMIN_FISHING_ROD);
-
-        register(NEPTUNIUM_PICKAXE);
-        register(NEPTUNIUM_SHOVEL);
-        register(NEPTUNIUM_AXE);
-        register(NEPTUNIUM_HOE);
-        register(NEPTUNIUM_SWORD);
-        register(NEPTUNIUM_HELMET);
-        register(NEPTUNIUM_PLATE);
-        register(NEPTUNIUM_LEGS);
-        register(NEPTUNIUM_BOOTS);
-
-        register(FISH);
-    }
-
-    public void register() {
-        // Adding fish to main fish item
-
+    public static void register() {
         // Freshwater
         /*FISH.addFish("Bluegill", 1, 1, 5, BiomeType.freshwater, Config.fishRarity.get("Bluegill"));
         FISH.addFish("Perch", 1, 1, 5, BiomeType.freshwater, Config.fishRarity.get("Perch"));
@@ -89,9 +105,7 @@ public class AquaItems {
         FISH.addFish("Carp", 5, 1, 100, BiomeType.freshwater, Config.fishRarity.get("Carp"));
 
         // Saltwater
-        FISH.addFish("Blowfish", 3, 1, 25, BiomeType.saltwater, Config.fishRarity.get("Blowfish"));
         FISH.addFish("Red Grouper", 4, 1, 50, BiomeType.saltwater, Config.fishRarity.get("Red Grouper"));
-        FISH.addFish("Salmon", 5, 1, 100, BiomeType.saltwater, Config.fishRarity.get("Salmon"));
         FISH.addFish("Tuna", 5, 1, 135, BiomeType.saltwater, Config.fishRarity.get("Tuna"));
         FISH.addFish("Swordfish", 7, 1, 1400, BiomeType.saltwater, Config.fishRarity.get("Swordfish"));
         FISH.addFish("Shark", 8, 1, 5000, BiomeType.saltwater, Config.fishRarity.get("Shark"));
@@ -111,7 +125,6 @@ public class AquaItems {
         FISH.addFish("Arapaima", 6, 1, 220, BiomeType.tropical, Config.fishRarity.get("Arapaima"));
 
         // Arctic
-        FISH.addFish("Cod", 6, 1, 210, BiomeType.arctic, Config.fishRarity.get("Cod"));
         FISH.addFish("Pollock", 3, 1, 45, BiomeType.arctic, Config.fishRarity.get("Pollock"));
         FISH.addFish("Herring", 1, 1, 3, BiomeType.arctic, Config.fishRarity.get("Herring"));
         FISH.addFish("Halibut", 7, 1, 700, BiomeType.arctic, Config.fishRarity.get("Halibut"));
@@ -154,11 +167,16 @@ public class AquaItems {
         //OreDictionary.registerOre("cropSeaweed", seaweed.getItemStack());
     }
 
-    public static void register(Item item) {
-        String name = item.getTranslationKey();
-        name = name.replaceAll("item.", "");
-        name = name.replaceAll("([A-Za-z][a-z\\d]+)(?=([A-Z][a-z\\d]+))", "$1_").toLowerCase(Locale.US);
-        item.setRegistryName(name);
+    /**
+     * Registers an item
+     *
+     * @param item The item to be registered
+     * @param name The name to register the item with
+     * @return The Item that was registered
+     */
+    public static Item register(@Nonnull Item item, @Nonnull String name) {
+        item.setRegistryName(new ResourceLocation(Aquaculture.MOD_ID, name));
         ForgeRegistries.ITEMS.register(item);
+        return item;
     }
 }

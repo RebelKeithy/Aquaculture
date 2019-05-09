@@ -14,7 +14,7 @@ import static net.minecraft.potion.PotionUtils.addPotionToItemStack;
 import static net.minecraftforge.common.brewing.BrewingRecipeRegistry.addRecipe;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class AquacultureRecipes {
+public class AquaRecipes {
 
     public static void addSmeltingRecipes() {
         /*GameRegistry.addSmelting(AquaItems.fishFillet.getItemStack(), AquaItems.cookedFillet.getItemStack(), 0.3F); //TODO Move to new Json system

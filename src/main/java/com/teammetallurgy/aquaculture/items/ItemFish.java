@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -105,15 +104,6 @@ public class ItemFish extends Item {
         } else if (weight >= f.maxWeight * 0.90F) {
             stack.getTag().putString("Prefix", "Massive");
         }
-    }
-
-    @Override
-    @Nonnull
-    public String getTranslationKey(@Nonnull ItemStack stack) {
-        int i = MathHelper.clamp(stack.getDamage(), 0, fish.size());
-        String uname = super.getTranslationKey() + "." + fish.get(i).name;
-        uname = uname.replace(" ", "_");
-        return uname;
     }
 
     public class Fish {
