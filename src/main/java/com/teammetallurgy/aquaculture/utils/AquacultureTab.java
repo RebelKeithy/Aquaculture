@@ -1,6 +1,6 @@
 package com.teammetallurgy.aquaculture.utils;
 
-import net.minecraft.init.Items;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -15,6 +15,6 @@ public class AquacultureTab extends ItemGroup {
     @Override
     @Nonnull
     public ItemStack createIcon() {
-        return new ItemStack(Items.ARROW); //TODO change back to AquaItems.IRON_FISHING_ROD
+        return new ItemStack(AquaItems.IRON_FISHING_ROD);
     }
 }

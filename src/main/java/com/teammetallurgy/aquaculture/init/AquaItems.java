@@ -1,19 +1,23 @@
 package com.teammetallurgy.aquaculture.init;
 
+import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.items.*;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaItems {
+    public static List<Item> ITEMS = Lists.newArrayList();
     public static final Item IRON_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.IRON, new Item.Properties().defaultMaxDamage(75).group(Aquaculture.TAB)), "iron_fishing_rod");
     public static final Item GOLD_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(50).group(Aquaculture.TAB)), "gold_fishing_rod");
     public static final Item DIAMOND_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(250).group(Aquaculture.TAB)), "diamond_fishing_rod");
@@ -176,7 +180,14 @@ public class AquaItems {
      */
     public static Item register(@Nonnull Item item, @Nonnull String name) {
         item.setRegistryName(new ResourceLocation(Aquaculture.MOD_ID, name));
-        ForgeRegistries.ITEMS.register(item);
+        ITEMS.add(item);
         return item;
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        for (Item item : ITEMS) {
+            event.getRegistry().register(item);
+        }
     }
 }
