@@ -29,7 +29,7 @@ public class ItemMessageInABottle extends Item {
 
         int messageRoll = rand.nextInt(29) + 1;
 
-        String message = "";
+        String message;
         if (messageRoll == 0) {
             message = "ERROR! Fish Escaping!";
         } else {

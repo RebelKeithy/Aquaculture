@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.items;
 
-import com.teammetallurgy.aquaculture.utils.AquaUtils;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -33,9 +33,20 @@ public class ItemLootBox extends Item {
             WorldServer worldServer = (WorldServer) world;
             LootContext.Builder builder = new LootContext.Builder(worldServer);
             List<ItemStack> loot = worldServer.getServer().getLootTableManager().getLootTableFromLocation(lootTable).generateLootForPools(world.rand, builder.build());
-            AquaUtils.giveItem(player, loot.get(0));
+            this.giveItem(player, loot.get(0));
             return new ActionResult<>(EnumActionResult.SUCCESS, heldStack);
         }
         return super.onItemRightClick(world, player, hand);
+    }
+
+    /*
+     * Gives the specified ItemStack to the player
+     */
+    private void giveItem(EntityPlayer player, @Nonnull ItemStack stack) {
+        if (!player.inventory.addItemStackToInventory(stack)) {
+            player.dropItem(stack, false);
+        } else if (player instanceof EntityPlayerMP) {
+            ((EntityPlayerMP) player).sendContainerToPlayer(player.inventoryContainer);
+        }
     }
 }

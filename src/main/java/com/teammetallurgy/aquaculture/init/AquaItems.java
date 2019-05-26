@@ -21,7 +21,7 @@ public class AquaItems {
     public static final Item IRON_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.IRON, new Item.Properties().defaultMaxDamage(75).group(Aquaculture.TAB)), "iron_fishing_rod");
     public static final Item GOLD_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(50).group(Aquaculture.TAB)), "gold_fishing_rod");
     public static final Item DIAMOND_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(250).group(Aquaculture.TAB)), "diamond_fishing_rod");
-    public static final Item ADMIN_FISHING_ROD = register(new ItemAquaFishingRod(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(75).group(Aquaculture.TAB)), "admin_fishing_rod");
+    public static final Item ADMIN_FISHING_ROD = register(new ItemAquaFishingRod(null, new Item.Properties().defaultMaxDamage(75).group(Aquaculture.TAB)), "admin_fishing_rod");
 
     // Neptunium
     public static final Item NEPTUNIUM_INGOT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "neptunium_ingot");

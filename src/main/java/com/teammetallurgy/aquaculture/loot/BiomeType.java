@@ -34,7 +34,6 @@ public class BiomeType {
         }
 
         if (biomeMap.containsKey(biomeID) && biomeMap.get(biomeID).contains(biomeType)) {
-            System.out.println("[Aquaculture] Error: Biome ID " + biomeID + " is already registered as " + biomeMap.get(biomeID));
         } else {
             if (!biomeMap.containsKey(biomeID)) {
                 biomeMap.put(biomeID, new ArrayList<>());

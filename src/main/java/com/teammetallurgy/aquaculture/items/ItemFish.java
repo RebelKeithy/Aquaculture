@@ -5,7 +5,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -21,26 +20,10 @@ import java.util.List;
 import java.util.Random;
 
 public class ItemFish extends Item {
-    public NonNullList<Fish> fish;
 
     public ItemFish(Properties properties) {
         super(properties);
-
-        fish = NonNullList.create();
     }
-
-    /*public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType biome, int rarity) {
-        addFish(name, filletAmount, minWeight, maxWeight, new BiomeType[]{biome}, rarity);
-    }
-
-    public void addFish(String name, int filletAmount, int minWeight, int maxWeight, BiomeType[] biomes, int rarity) {
-        fish.add(new Fish(name, filletAmount, minWeight, maxWeight));
-
-        for (BiomeType biome : biomes) {
-            FishLoot.instance().addFish(this.getItemStackFish(name), biome, rarity);
-        }
-
-    }*/
 
     @Override
     @Nonnull
@@ -55,7 +38,7 @@ public class ItemFish extends Item {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> toolTip, ITooltipFlag tooltipType) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> toolTip, ITooltipFlag tooltipType) { //TODO Move to event. Config. Add support for non Aquaculture fish
         if (stack.hasTag() && stack.getTag() != null) {
             if (stack.getTag().contains("Weight")) {
                 float weight = stack.getTag().getFloat("Weight");
@@ -77,7 +60,7 @@ public class ItemFish extends Item {
             return;
         }
 
-        Fish f = fish.get(stack.getDamage());
+        Fish f = null;
 
         if (f.maxWeight == 1 && f.minWeight == 1)
             return;
