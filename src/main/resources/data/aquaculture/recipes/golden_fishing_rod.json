@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    " IS",
+    "T S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "T": {
+      "item": "minecraft:stick"
+    },
+    "I": {
+      "item": "minecraft:gold_ingot"
+    }	
+  },
+  "result": {
+    "item": "aquaculture:gold_fishing_rod"
+  }
+}

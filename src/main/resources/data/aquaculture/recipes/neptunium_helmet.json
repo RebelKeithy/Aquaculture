@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "S S"
+  ],
+  "key": {
+    "S": {
+      "item": "aquaculture:neptunium_ingot"
+    }
+  },
+  "result": {
+    "item": "aquaculture:neptunium_helmet"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aquaculture:squid"
+    }
+  ],
+  "result": {
+    "item": "minecraft:ink_sac"
+  }
+}

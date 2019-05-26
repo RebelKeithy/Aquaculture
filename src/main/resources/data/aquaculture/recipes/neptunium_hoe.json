@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SS",
+    " T",
+    " T"
+  ],
+  "key": {
+    "S": {
+      "item": "aquaculture:neptunium_ingot"
+    },
+    "T": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "aquaculture:neptunium_hoe"
+  }
+}

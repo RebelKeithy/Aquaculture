@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aquaculture:frog"
+    }
+  ],
+  "result": {
+    "item": "aquaculture:frog_legs_raw"
+  }
+}

@@ -41,10 +41,10 @@ public class AquaItems {
     public static final Item DRIFTWOOD = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "driftwood");
     public static final Item TIN_CAN = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "tin_can");
     public static final Item NESSAGE_IN_A_BOTTLE = register(new ItemMessageInABottle(new Item.Properties().group(Aquaculture.TAB)), "message_in_a_bottle");
-    public static final Item BOX = register(new ItemBox(new Item.Properties().group(Aquaculture.TAB)), "box");
-    public static final Item LOCKBOX = register(new ItemLockbox(new Item.Properties().group(Aquaculture.TAB)), "lockbox");
-    public static final Item TREASURE_CHEST = register(new ItemTreasureChest(new Item.Properties().group(Aquaculture.TAB)), "treasure_chest");
-    public static final Item NEPTUNES_BOUNTY = register(new ItemNeptunesBounty(new Item.Properties().group(Aquaculture.TAB)), "neptunes_bounty");
+    public static final Item BOX = register(new ItemLootBox(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.BOX), "box");
+    public static final Item LOCKBOX = register(new ItemLootBox(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.LOCKBOX), "lockbox");
+    public static final Item TREASURE_CHEST = register(new ItemLootBox(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.TREASURE_CHEST), "treasure_chest");
+    public static final Item NEPTUNES_BOUNTY = register(new ItemLootBox(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.NEPTUNES_BOUNTY), "neptunes_bounty");
     public static final Item SEAWEED = register(new ItemFood(2, 0, false, new Item.Properties().group(Aquaculture.TAB)), "seaweed");
     public static final Item ALGAE = register(new ItemFood(2, 0, false, new Item.Properties().group(Aquaculture.TAB)), "algae");
 
