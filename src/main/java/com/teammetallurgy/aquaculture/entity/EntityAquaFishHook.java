@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -23,8 +24,8 @@ import java.util.Objects;
 
 public class EntityAquaFishHook extends EntityFishHook {
 
-    public EntityAquaFishHook(World world) {
-        this(world, null); //TODO figure out this null..
+    public EntityAquaFishHook(World world) { //TODO Remove in 1.14, not needed
+        super(world, Minecraft.getInstance().player); //Breaks Aquaculture completely on servers. Only here to allow for development on 1.13, while waiting for 1.14
     }
 
     public EntityAquaFishHook(World world, EntityPlayer player) {

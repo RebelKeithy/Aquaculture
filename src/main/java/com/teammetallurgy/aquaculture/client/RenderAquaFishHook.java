@@ -62,8 +62,8 @@ public class RenderAquaFishHook extends Render<EntityAquaFishHook> {
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
             int hand = angler.getPrimaryHand() == EnumHandSide.RIGHT ? 1 : -1;
-            ItemStack itemstack = angler.getHeldItemMainhand();
-            if (!(itemstack.getItem() instanceof ItemFishingRod)) {
+            ItemStack heldStack = angler.getHeldItemMainhand();
+            if (!(heldStack.getItem() instanceof ItemFishingRod)) {
                 hand = -hand;
             }
 
