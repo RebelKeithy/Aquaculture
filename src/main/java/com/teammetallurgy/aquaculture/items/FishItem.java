@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -19,9 +19,9 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 
-public class ItemFish extends Item {
+public class FishItem extends Item {
 
-    public ItemFish(Properties properties) {
+    public FishItem(Properties properties) {
         super(properties);
     }
 
@@ -30,7 +30,7 @@ public class ItemFish extends Item {
     public ITextComponent getDisplayName(@Nonnull ItemStack stack) {
         if (stack.hasTag() && stack.getTag() != null) {
             if (stack.getTag().contains("Prefix")) {
-                return new TextComponentTranslation(stack.getTag().getString("Prefix") + " " + super.getDisplayName(stack));
+                return new TranslationTextComponent(stack.getTag().getString("Prefix") + " " + super.getDisplayName(stack));
             }
         }
         return super.getDisplayName(stack);
@@ -47,9 +47,9 @@ public class ItemFish extends Item {
                 BigDecimal bd = new BigDecimal(weight);
                 bd = bd.round(new MathContext(3));
                 if (bd.doubleValue() > 999) {
-                    toolTip.add(new TextComponentTranslation("Weight: " + df.format((int) bd.doubleValue()) + "lb"));
+                    toolTip.add(new TranslationTextComponent("Weight: " + df.format((int) bd.doubleValue()) + "lb"));
                 } else {
-                    toolTip.add(new TextComponentTranslation("Weight: " + bd + "lb"));
+                    toolTip.add(new TranslationTextComponent("Weight: " + bd + "lb"));
                 }
             }
         }
@@ -72,7 +72,7 @@ public class ItemFish extends Item {
         float weight = new Random().nextFloat() * (f.maxWeight - min) + min;
 
         if (!stack.hasTag()) {
-            stack.setTag(new NBTTagCompound());
+            stack.setTag(new CompoundNBT());
         }
 
         Preconditions.checkNotNull(stack.getTag(), "tagCompound");

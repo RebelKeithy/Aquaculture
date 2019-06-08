@@ -1,11 +1,11 @@
 package com.teammetallurgy.aquaculture.init;
 
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 
 import javax.annotation.Nonnull;
 
@@ -39,12 +39,12 @@ public class AquaEnums {
     };
     public static IArmorMaterial NEPTINIUM_ARMOR = new IArmorMaterial() {
         @Override
-        public int getDurability(@Nonnull EntityEquipmentSlot slot) {
+        public int getDurability(@Nonnull EquipmentSlotType slot) {
             int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
             return MAX_DAMAGE_ARRAY[slot.getIndex()] * 75;
         }
         @Override
-        public int getDamageReductionAmount(@Nonnull EntityEquipmentSlot slot) {
+        public int getDamageReductionAmount(@Nonnull EquipmentSlotType slot) {
             int[] damageReduction = new int[]{3, 6, 8, 3};
             return damageReduction[slot.getIndex()];
         }

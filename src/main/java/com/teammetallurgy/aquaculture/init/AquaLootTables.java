@@ -2,7 +2,7 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.world.storage.loot.LootTables;
 
 public class AquaLootTables {
     //Boxes
@@ -12,6 +12,6 @@ public class AquaLootTables {
     public static final ResourceLocation NEPTUNES_BOUNTY = register("box/neptunes_bounty");
 
     private static ResourceLocation register(String path) {
-        return LootTableList.register(new ResourceLocation(Aquaculture.MOD_ID, path));
+        return null /*LootTables.register(new ResourceLocation(Aquaculture.MOD_ID, path))*/; //TODO
     }
 }

@@ -1,14 +1,17 @@
 package com.teammetallurgy.aquaculture.init;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
-import net.minecraft.init.Items;
-import net.minecraft.init.PotionTypes;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.PotionType;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.Potions;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import javax.annotation.Nonnull;
 
 import static net.minecraft.potion.PotionUtils.addPotionToItemStack;
 import static net.minecraftforge.common.brewing.BrewingRecipeRegistry.addRecipe;
@@ -25,17 +28,22 @@ public class AquaRecipes {
     }
 
     @SubscribeEvent
-    public static void registerRecipes(RegistryEvent.Register<PotionType> event) {
-        /*addBrewingRecipeWithSubPotions(AquaItems.FISH.getItemStackFish("Jellyfish"), PotionTypes.POISON); //TODO
-        addBrewingRecipeWithSubPotions(AquaItems.FISH.getItemStackFish("Leech"), PotionTypes.HEALING);*/
+    public static void registerRecipes(RegistryEvent.Register<Potion> event) {
+        addBrewingRecipeWithSubPotions(AquaItems.JELLYFISH, Potions.field_185254_z);
+        addBrewingRecipeWithSubPotions(AquaItems.LEECH, Potions.field_185250_v);
     }
 
-    private static void addBrewingRecipeWithSubPotions(Ingredient ingredient, PotionType potionType) {
-        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), PotionTypes.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), PotionTypes.MUNDANE));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), PotionTypes.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), potionType));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), PotionTypes.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), potionType));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), PotionTypes.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), PotionTypes.MUNDANE));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), PotionTypes.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), PotionTypes.MUNDANE));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), PotionTypes.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), potionType));
+    private static void addBrewingRecipeWithSubPotions(Item item, Potion potionType) {
+        addBrewingRecipeWithSubPotions(new ItemStack(item), potionType);
+    }
+
+    private static void addBrewingRecipeWithSubPotions(@Nonnull ItemStack stack, Potion potionType) {
+        Ingredient ingredient = Ingredient.fromStacks(stack);
+        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), Potions.field_185230_b), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), Potions.field_185231_c));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), Potions.field_185233_e), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), potionType));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.field_185233_e), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), potionType));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.field_185230_b), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.field_185231_c));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.field_185230_b), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.field_185231_c));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.field_185233_e), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), potionType));
     }
 }

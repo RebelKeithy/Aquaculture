@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture;
 
 import com.teammetallurgy.aquaculture.client.RenderAquaFishHook;
-import com.teammetallurgy.aquaculture.entity.EntityAquaFishHook;
+import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.utils.AquacultureTab;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -26,6 +26,6 @@ public class Aquaculture {
     }
 
     private void setupClient(FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(EntityAquaFishHook.class, RenderAquaFishHook::new);
+        RenderingRegistry.registerEntityRenderingHandler(AquaFishingBobberEntity.class, RenderAquaFishHook::new);
     }
 }
