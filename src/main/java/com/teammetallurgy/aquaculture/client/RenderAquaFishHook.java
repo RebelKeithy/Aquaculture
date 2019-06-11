@@ -77,7 +77,7 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
             double anglerZ;
             double anglerEye;
             if ((this.field_76990_c.options == null || this.field_76990_c.options.thirdPersonView <= 0) && angler == Minecraft.getInstance().player) {
-                double fov = Objects.requireNonNull(this.field_76990_c.options).fovSetting;
+                double fov = Objects.requireNonNull(this.field_76990_c.options).fov;
                 fov = fov / 100.0D;
                 Vec3d rod = new Vec3d((double) hand * -0.36D * fov, -0.045D * fov, 0.4D);
                 rod = rod.rotatePitch(-MathHelper.func_219799_g(partialTicks, angler.prevRotationPitch, angler.rotationPitch) * ((float) Math.PI / 180F));

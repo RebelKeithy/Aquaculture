@@ -29,8 +29,8 @@ public class AquaRecipes {
 
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<Potion> event) {
-        addBrewingRecipeWithSubPotions(AquaItems.JELLYFISH, Potions.field_185254_z);
-        addBrewingRecipeWithSubPotions(AquaItems.LEECH, Potions.field_185250_v);
+        addBrewingRecipeWithSubPotions(AquaItems.JELLYFISH, Potions.POISON);
+        addBrewingRecipeWithSubPotions(AquaItems.LEECH, Potions.HEALING);
     }
 
     private static void addBrewingRecipeWithSubPotions(Item item, Potion potionType) {
@@ -39,11 +39,11 @@ public class AquaRecipes {
 
     private static void addBrewingRecipeWithSubPotions(@Nonnull ItemStack stack, Potion potionType) {
         Ingredient ingredient = Ingredient.fromStacks(stack);
-        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), Potions.field_185230_b), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), Potions.field_185231_c));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), Potions.field_185233_e), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), potionType));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.field_185233_e), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), potionType));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.field_185230_b), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.field_185231_c));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.field_185230_b), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.field_185231_c));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.field_185233_e), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), potionType));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), Potions.MUNDANE));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), Potions.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), potionType));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), potionType));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.MUNDANE));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.MUNDANE));
+        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), potionType));
     }
 }

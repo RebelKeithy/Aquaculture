@@ -12,6 +12,6 @@ public class AquaLootTables {
     public static final ResourceLocation NEPTUNES_BOUNTY = register("box/neptunes_bounty");
 
     private static ResourceLocation register(String path) {
-        return null /*LootTables.register(new ResourceLocation(Aquaculture.MOD_ID, path))*/; //TODO
+        return LootTables.register(new ResourceLocation(Aquaculture.MOD_ID, path));
     }
 }

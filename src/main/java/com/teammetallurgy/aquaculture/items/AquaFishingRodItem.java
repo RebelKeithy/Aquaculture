@@ -40,7 +40,7 @@ public class AquaFishingRodItem extends FishingRodItem {
             if (!world.isRemote) {
                 lureSpeed = player.fishingBobber.handleHookRetraction(heldStack);
                 if (!isAdminRod) {
-                    heldStack.func_222118_a(lureSpeed, player, (entity) -> entity.func_213334_d(hand));
+                    heldStack.damageItem(lureSpeed, player, (entity) -> entity.sendBreakAnimation(hand));
                 }
             }
 
@@ -51,7 +51,7 @@ public class AquaFishingRodItem extends FishingRodItem {
             if (!world.isRemote) {
                 lureSpeed = EnchantmentHelper.getFishingSpeedBonus(heldStack);
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
-                world.func_217376_c(new AquaFishingBobberEntity(player, world, luck, lureSpeed));
+                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed));
             }
 
             player.swingArm(hand);

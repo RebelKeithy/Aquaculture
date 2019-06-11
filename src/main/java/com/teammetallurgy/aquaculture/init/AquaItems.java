@@ -45,19 +45,19 @@ public class AquaItems {
     public static final Item LOCKBOX = register(new LootBoxItem(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.LOCKBOX), "lockbox");
     public static final Item TREASURE_CHEST = register(new LootBoxItem(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.TREASURE_CHEST), "treasure_chest");
     public static final Item NEPTUNES_BOUNTY = register(new LootBoxItem(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.NEPTUNES_BOUNTY), "neptunes_bounty");
-    public static final Item SEAWEED = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.ALGAE)), "seaweed");
-    public static final Item ALGAE = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.ALGAE)), "algae");
+    public static final Item SEAWEED = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.ALGAE)), "seaweed");
+    public static final Item ALGAE = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.ALGAE)), "algae");
 
     // Food
-    public static final Item WHALE_STEAK = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.FISH_RAW)), "whale_steak_raw");
-    public static final Item COOKED_WHALE_STEAK = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.WHALE_STEAK)), "whale_steak_cooked");
-    public static final Item WHALE_BURGER = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.WHALE_BURGER)), "whale_burger");
-    public static final Item FISH_FILLET = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.FISH_RAW)), "fish_fillet_raw");
-    public static final Item COOKED_FILLET = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.FISH_FILLET)), "fish_fillet_cooked");
-    public static final Item FROG_LEGS = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.FISH_RAW)), "frog_legs_raw");
-    public static final Item COOKED_FROG_LEGS = register(new Item(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.FROG_LEGS)), "frog_legs_cooked");
-    public static final Item TURTLE_SOUP = register(new SoupItem(new Item.Properties().group(Aquaculture.TAB).func_221540_a(Foods.field_221448_x)), "turtle_soup");
-    public static final Item SUSHI = register(new SoupItem(new Item.Properties().group(Aquaculture.TAB).func_221540_a(AquaFoods.SUSHI)), "sushi");
+    public static final Item WHALE_STEAK = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.FISH_RAW)), "whale_steak_raw");
+    public static final Item COOKED_WHALE_STEAK = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.WHALE_STEAK)), "whale_steak_cooked");
+    public static final Item WHALE_BURGER = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.WHALE_BURGER)), "whale_burger");
+    public static final Item FISH_FILLET = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.FISH_RAW)), "fish_fillet_raw");
+    public static final Item COOKED_FILLET = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.FISH_FILLET)), "fish_fillet_cooked");
+    public static final Item FROG_LEGS = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.FISH_RAW)), "frog_legs_raw");
+    public static final Item COOKED_FROG_LEGS = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.FROG_LEGS)), "frog_legs_cooked");
+    public static final Item TURTLE_SOUP = register(new SoupItem(new Item.Properties().group(Aquaculture.TAB).food(Foods.MUSHROOM_STEW)), "turtle_soup");
+    public static final Item SUSHI = register(new SoupItem(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.SUSHI)), "sushi");
 
     // Fish
     public static final Item BLUEGILL = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "bluegill");

@@ -33,7 +33,7 @@ public class LootBoxItem extends Item {
         if (world instanceof ServerWorld) {
             ServerWorld worldServer = (ServerWorld) world;
             LootContext.Builder builder = new LootContext.Builder(worldServer);
-            List<ItemStack> loot = worldServer.getServer().getLootTableManager().getLootTableFromLocation(lootTable).func_216113_a(builder.build(LootParameterSets.field_216266_g));
+            List<ItemStack> loot = worldServer.getServer().getLootTableManager().getLootTableFromLocation(lootTable).generate(builder.build(LootParameterSets.GENERIC));
             this.giveItem(player, loot.get(0));
             return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
         }
