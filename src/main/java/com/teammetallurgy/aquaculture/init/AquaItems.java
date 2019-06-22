@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.api.AquaEnums;
 import com.teammetallurgy.aquaculture.items.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -45,7 +46,6 @@ public class AquaItems {
     public static final Item LOCKBOX = register(new LootBoxItem(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.LOCKBOX), "lockbox");
     public static final Item TREASURE_CHEST = register(new LootBoxItem(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.TREASURE_CHEST), "treasure_chest");
     public static final Item NEPTUNES_BOUNTY = register(new LootBoxItem(new Item.Properties().group(Aquaculture.TAB), AquaLootTables.NEPTUNES_BOUNTY), "neptunes_bounty");
-    public static final Item SEAWEED = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.ALGAE)), "seaweed");
     public static final Item ALGAE = register(new Item(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.ALGAE)), "algae");
 
     // Food
@@ -60,115 +60,53 @@ public class AquaItems {
     public static final Item SUSHI = register(new SoupItem(new Item.Properties().group(Aquaculture.TAB).food(AquaFoods.SUSHI)), "sushi");
 
     // Fish
-    public static final Item BLUEGILL = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "bluegill");
-    public static final Item PERCH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "perch");
-    public static final Item GAR = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "gar");
-    public static final Item BASS = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "bass");
-    public static final Item MUSKELLUNGE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "muskellunge");
-    public static final Item BROWN_TROUT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "brown_trout");
-    public static final Item CATFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "catfish");
-    public static final Item CARP = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "carp");
-    public static final Item RED_GROUPER = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "red_grouper");
-    public static final Item TUNA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "tuna");
-    public static final Item SWORDFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "swordfish");
-    public static final Item SHARK = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "shark");
-    public static final Item WHALE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "whale");
-    public static final Item SQUID = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "squid");
-    public static final Item JELLYFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "jellyfish");
+    public static final Item BLUEGILL = register(new FishItem(1, 5), "bluegill");
+    public static final Item PERCH = register(new FishItem(1, 5), "perch");
+    public static final Item GAR = register(new FishItem(1, 10), "gar");
+    public static final Item BASS = register(new FishItem(1, 25), "bass");
+    public static final Item MUSKELLUNGE = register(new FishItem(1, 35), "muskellunge");
+    public static final Item BROWN_TROUT = register(new FishItem(1, 40), "brown_trout");
+    public static final Item CATFISH = register(new FishItem(1, 50), "catfish");
+    public static final Item CARP = register(new FishItem(1, 100), "carp");
+    public static final Item RED_GROUPER = register(new FishItem(1, 50), "red_grouper");
+    public static final Item TUNA = register(new FishItem(1, 135), "tuna");
+    public static final Item SWORDFISH = register(new FishItem(1, 1400), "swordfish");
+    public static final Item SHARK = register(new FishItem(1, 5000), "shark"); //Not sure if should be in FISHES tag
+    public static final Item WHALE = register(new FishItem(1, 190000), "whale"); //Not sure if should be in FISHES tag
+    public static final Item SQUID = register(new FishItem(1, 1000), "squid"); //Not sure if should be in FISHES tag
+    public static final Item JELLYFISH = register(new FishItem(1, 500), "jellyfish"); //Not sure if should be in FISHES
     public static final Item FROG = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "frog");
     public static final Item TURTLE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "turtle");
     public static final Item LEECH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "leech");
-    public static final Item PIRAHNA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "pirahna");
-    public static final Item ELECTRIC_EEL = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "electric_eel");
-    public static final Item TAMBAQUI = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "tambaqui");
-    public static final Item ARAPAIMA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "arapaima");
-    public static final Item POLLOCK = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "pollock");
-    public static final Item HERRING = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "herring");
-    public static final Item HALIBUT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "halibut");
-    public static final Item PINK_SALMON = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "pink_salmon");
-    public static final Item RAINBOW_TROUT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "rainbow_trout");
-    public static final Item BLACKFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "blackfish");
-    public static final Item CAPITAINE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "capitaine");
-    public static final Item BOULTI = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "boulti");
-    public static final Item BAGRID = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "bagrid");
-    public static final Item SYNDONTIS = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "syndontis");
-    public static final Item RED_SHROOMA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "red_shrooma");
-    public static final Item BROWN_SHROOMA = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "brown_shrooma");
-    public static final Item GOLDFISH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "goldfish");
+    public static final Item PIRAHNA = register(new FishItem(1, 8), "pirahna");
+    public static final Item ELECTRIC_EEL = register(new FishItem(1, 45), "electric_eel");
+    public static final Item TAMBAQUI = register(new FishItem(1, 75), "tambaqui");
+    public static final Item ARAPAIMA = register(new FishItem(1, 220), "arapaima");
+    public static final Item POLLOCK = register(new FishItem(1, 45), "pollock");
+    public static final Item HERRING = register(new FishItem(1, 3), "herring");
+    public static final Item HALIBUT = register(new FishItem(1, 700), "halibut");
+    public static final Item PINK_SALMON = register(new FishItem(1, 100), "pink_salmon");
+    public static final Item RAINBOW_TROUT = register(new FishItem(1, 50), "rainbow_trout");
+    public static final Item BLACKFISH = register(new FishItem(1, 10), "blackfish");
+    public static final Item CAPITAINE = register(new FishItem(1, 450), "capitaine");
+    public static final Item BOULTI = register(new FishItem(1, 10), "boulti");
+    public static final Item BAGRID = register(new FishItem(1, 25), "bagrid");
+    public static final Item SYNDONTIS = register(new FishItem(1, 3), "syndontis");
+    public static final Item RED_SHROOMA = register(new FishItem(1, 5), "red_shrooma");
+    public static final Item BROWN_SHROOMA = register(new FishItem(1, 5), "brown_shrooma");
+    public static final Item GOLDFISH = register(new FishItem(1, 4), "goldfish");
     public static final Item FISH_BONES = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "fish_bones");
 
     public static void register() {
-        // Freshwater
-        /*FISH.addFish("Bluegill", 1, 1, 5, BiomeType.freshwater, Config.fishRarity.get("Bluegill"));
-        FISH.addFish("Perch", 1, 1, 5, BiomeType.freshwater, Config.fishRarity.get("Perch"));
-        FISH.addFish("Gar", 2, 1, 10, BiomeType.freshwater, Config.fishRarity.get("Gar"));
-        FISH.addFish("Bass", 3, 1, 25, BiomeType.freshwater, Config.fishRarity.get("Bass"));
-        FISH.addFish("Muskellunge", 3, 1, 35, BiomeType.freshwater, Config.fishRarity.get("Muskellunge"));
-        FISH.addFish("Brown Trout", 3, 1, 40, BiomeType.freshwater, Config.fishRarity.get("Brown Trout"));
-        FISH.addFish("Catfish", 4, 1, 50, BiomeType.freshwater, Config.fishRarity.get("Catfish"));
-        FISH.addFish("Carp", 5, 1, 100, BiomeType.freshwater, Config.fishRarity.get("Carp"));
-
-        // Saltwater
-        FISH.addFish("Red Grouper", 4, 1, 50, BiomeType.saltwater, Config.fishRarity.get("Red Grouper"));
-        FISH.addFish("Tuna", 5, 1, 135, BiomeType.saltwater, Config.fishRarity.get("Tuna"));
-        FISH.addFish("Swordfish", 7, 1, 1400, BiomeType.saltwater, Config.fishRarity.get("Swordfish"));
-        FISH.addFish("Shark", 8, 1, 5000, BiomeType.saltwater, Config.fishRarity.get("Shark"));
-        FISH.addFish("Whale", 0, 1, 190000, BiomeType.saltwater, Config.fishRarity.get("Whale"));
-        FISH.addFish("Squid", 0, 1, 1000, BiomeType.saltwater, Config.fishRarity.get("Squid"));
-        FISH.addFish("Jellyfish", 0, 1, 500, BiomeType.saltwater, Config.fishRarity.get("Jellyfish"));
-
-        // Brackish
-        FISH.addFish("Frog", 0, 1, 1, BiomeType.brackish, Config.fishRarity.get("Frog"));
-        FISH.addFish("Turtle", 0, 1, 5, BiomeType.brackish, Config.fishRarity.get("Turtle"));
-        FISH.addFish("Leech", 0, 1, 1, BiomeType.brackish, Config.fishRarity.get("Leech"));
-
-        // Topical
-        FISH.addFish("Pirahna", 1, 1, 8, BiomeType.tropical, Config.fishRarity.get("Pirahna"));
-        FISH.addFish("Electric Eel", 3, 1, 45, BiomeType.tropical, Config.fishRarity.get("Electric Eel"));
-        FISH.addFish("Tambaqui", 4, 1, 75, BiomeType.tropical, Config.fishRarity.get("Tambaqui"));
-        FISH.addFish("Arapaima", 6, 1, 220, BiomeType.tropical, Config.fishRarity.get("Arapaima"));
-
-        // Arctic
-        FISH.addFish("Pollock", 3, 1, 45, BiomeType.arctic, Config.fishRarity.get("Pollock"));
-        FISH.addFish("Herring", 1, 1, 3, BiomeType.arctic, Config.fishRarity.get("Herring"));
-        FISH.addFish("Halibut", 7, 1, 700, BiomeType.arctic, Config.fishRarity.get("Halibut"));
-        FISH.addFish("Pink Salmon", 5, 1, 100, BiomeType.arctic, Config.fishRarity.get("Pink Salmon"));
-        FISH.addFish("Rainbow Trout", 4, 1, 50, BiomeType.arctic, Config.fishRarity.get("Rainbow Trout"));
-        FISH.addFish("Blackfish", 2, 1, 10, BiomeType.arctic, Config.fishRarity.get("Blackfish"));
-
-        // Arid
-        FISH.addFish("Capitaine", 4, 1, 450, BiomeType.arid, Config.fishRarity.get("Capitaine"));
-        FISH.addFish("Boulti", 2, 1, 10, BiomeType.arid, Config.fishRarity.get("Boulti"));
-        FISH.addFish("Bagrid", 3, 1, 25, BiomeType.arid, Config.fishRarity.get("Bagrid"));
-        FISH.addFish("Syndontis", 1, 1, 3, BiomeType.arid, Config.fishRarity.get("Syndontis"));
-
-        // Mushroom
-        FISH.addFish("Red Shrooma", 0, 1, 5, BiomeType.mushroom, Config.fishRarity.get("Red Shrooma"));
-        FISH.addFish("Brown Shrooma", 0, 1, 5, BiomeType.mushroom, Config.fishRarity.get("Brown Shrooma"));
-
-        FISH.addFish("Goldfish", 0, 1, 4, new BiomeType[]{}, 1);
-        FISH.addFish("Fish Bones", 0, 1, 1, new BiomeType[]{}, 1);*/
-
-        /*FishLoot.instance().addJunkLoot(SEAWEED.getItemStack(), BiomeType.saltwater, Config.junkRarity.get("Seaweed"));
-        FishLoot.instance().addJunkLoot(ALGAE.getItemStack(), new BiomeType[]{BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical}, Config.junkRarity.get("Algae"));
-        FishLoot.instance().addJunkLoot(DRIFTWOOD.getItemStack(), Config.junkRarity.get("Driftwood"));
+        //TODO Add Seaweed and Kelp as junk in OCEAN tags
+        //FishLoot.instance().addJunkLoot(ALGAE.getItemStack(), new BiomeType[]{BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical}, Config.junkRarity.get("Algae"));
+        //TODO ^ Add to junk when BiomeDictionary tag condition have been made
+        /*FishLoot.instance().addJunkLoot(DRIFTWOOD.getItemStack(), Config.junkRarity.get("Driftwood"));
         FishLoot.instance().addJunkLoot(TIN_CAN.getItemStack(), Config.junkRarity.get("Tin Can"));
         FishLoot.instance().addJunkLoot(BOX.getItemStack(), Config.junkRarity.get("Box"));
         FishLoot.instance().addJunkLoot(LOCKBOX.getItemStack(), Config.junkRarity.get("Lockbox"));
         FishLoot.instance().addJunkLoot(TREASURE_CHEST.getItemStack(), Config.junkRarity.get("Treasure Chest"));
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.STICK), Config.junkRarity.get("Stick"));
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.BONE), Config.junkRarity.get("Bone"));
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.LEATHER_BOOTS), Config.junkRarity.get("Leather Boots"));
-        FishLoot.instance().addJunkLoot(new ItemStack(Items.APPLE), Config.junkRarity.get("Apple"));
-        FishLoot.instance().addJunkLoot(FISH.getItemStackFish("Goldfish"), Config.junkRarity.get("Goldfish"));
-        FishLoot.instance().addJunkLoot(NESSAGE_IN_ABOTTLE.getItemStack(), Config.junkRarity.get("Message In A Bottle"));
-        if (Config.enableNeptuniumLoot) {
-            FishLoot.instance().addJunkLoot(NEPTUNES_BOUNTY.getItemStack(), Config.junkRarity.get("Neptunes Bounty"));
-        }*/ //TODO Move to loot table?
-
-        //OreDictionary.registerOre("listAllfishraw", fishFillet.getItemStack());
-        //OreDictionary.registerOre("listAllfishcooked", cookedFillet.getItemStack());
-        //OreDictionary.registerOre("cropSeaweed", seaweed.getItemStack());
+        */
     }
 
     /**

@@ -1,25 +1,6 @@
 /*package com.teammetallurgy.aquaculture.utils;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map.Entry;
-
-@Mod.EventBusSubscriber
-public class Config {
-    public static Configuration config;
-    public static final String categoryBasic = "BASIC_OPTIONS";
-    public static boolean assignRandomWeight;
-    public static boolean enableNeptuniumArmor;
-    public static boolean enableNeptuniumTools;
-    public static boolean enableNeptuniumLoot;
-
+public class Config { //TODO Old config, patially kept for reference atm.
     public static final String categoryFishRarity = "FISH_RARITY";
     public static HashMap<String, Integer> fishRarity = new HashMap<>();
 
@@ -86,28 +67,13 @@ public class Config {
         junkRarity.put("Box", 25);
         junkRarity.put("Lockbox", 23);
         junkRarity.put("Treasure Chest", 10);
-        junkRarity.put("Stick", 20);
-        junkRarity.put("Bone", 20);
-        junkRarity.put("Leather Boots", 20);
-        junkRarity.put("Apple", 20);
-        junkRarity.put("Goldfish", 10);
-        junkRarity.put("Message In A Bottle", 23);
-        junkRarity.put("Neptunes Bounty", 1);
-
-    }
-
-    public static void init(File file) {
-        if (config == null) {
-            config = new Configuration(file);
-            loadConfiguration();
-        }
     }
 
     private static void loadConfiguration() {
         assignRandomWeight = config.get(categoryBasic, "Enable fish weight", true).getBoolean();
-        enableNeptuniumArmor = config.get(categoryBasic, "Enable Neptunium armor", true).getBoolean();
-        enableNeptuniumTools = config.get(categoryBasic, "Enable Neptunium tools", true).getBoolean();
-        enableNeptuniumLoot = config.get(categoryBasic, "Enable Neptunium loot", true).getBoolean();
+        enableNeptuniumArmor = config.get(categoryBasic, "Enable Neptunium armor", true).getBoolean(); //Not possible in 1.14
+        enableNeptuniumTools = config.get(categoryBasic, "Enable Neptunium tools", true).getBoolean(); //Not possible in 1.14
+        enableNeptuniumLoot = config.get(categoryBasic, "Enable Neptunium loot", true).getBoolean(); //Maybe possible, will have to look into if IConditionSerializer works for loot tables
 
         for (Entry<String, Integer> entry : fishRarity.entrySet()) {
             int rarity = entry.getValue();
@@ -125,13 +91,6 @@ public class Config {
 
         if (config.hasChanged()) {
             config.save();
-        }
-    }
-
-    @SubscribeEvent
-    public static void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equalsIgnoreCase(Aquaculture.MOD_ID)) {
-            loadConfiguration();
         }
     }
 }*/

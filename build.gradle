@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: false
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -17,7 +17,7 @@ group = "com.teammetallurgy.aquaculture"
 archivesBaseName = "Aquaculture"
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190611-1.14.2'
+    mappings channel: 'snapshot', version: '20190622-1.14.2'
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {

@@ -1,5 +1,6 @@
-package com.teammetallurgy.aquaculture.init;
+package com.teammetallurgy.aquaculture.api;
 
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;

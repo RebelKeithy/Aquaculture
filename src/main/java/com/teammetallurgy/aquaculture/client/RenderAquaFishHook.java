@@ -40,8 +40,8 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
             this.bindEntityTexture(bobber);
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder builder = tessellator.getBuffer();
-            GlStateManager.rotatef(180.0F - this.field_76990_c.playerViewY, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotatef((float) (this.field_76990_c.options.thirdPersonView == 2 ? -1 : 1) * -this.field_76990_c.playerViewX, 1.0F, 0.0F, 0.0F);
+            GlStateManager.rotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotatef((float) (this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
             if (this.renderOutlines) {
                 GlStateManager.enableColorMaterial();
                 GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(bobber));
@@ -68,7 +68,7 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
 
             float swingProgress = angler.getSwingProgress(partialTicks);
             float swingProgressSqrt = MathHelper.sin(MathHelper.sqrt(swingProgress) * (float) Math.PI);
-            float yawOffset = MathHelper.func_219799_g(partialTicks, angler.prevRenderYawOffset, angler.renderYawOffset) * ((float) Math.PI / 180F);
+            float yawOffset = MathHelper.lerp(partialTicks, angler.prevRenderYawOffset, angler.renderYawOffset) * ((float) Math.PI / 180F);
             double sin = (double) MathHelper.sin(yawOffset);
             double cos = (double) MathHelper.cos(yawOffset);
             double handOffset = (double) hand * 0.35D;
@@ -76,28 +76,28 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
             double anglerY;
             double anglerZ;
             double anglerEye;
-            if ((this.field_76990_c.options == null || this.field_76990_c.options.thirdPersonView <= 0) && angler == Minecraft.getInstance().player) {
-                double fov = Objects.requireNonNull(this.field_76990_c.options).fov;
+            if ((this.renderManager.options == null || this.renderManager.options.thirdPersonView <= 0) && angler == Minecraft.getInstance().player) {
+                double fov = Objects.requireNonNull(this.renderManager.options).fov;
                 fov = fov / 100.0D;
                 Vec3d rod = new Vec3d((double) hand * -0.36D * fov, -0.045D * fov, 0.4D);
-                rod = rod.rotatePitch(-MathHelper.func_219799_g(partialTicks, angler.prevRotationPitch, angler.rotationPitch) * ((float) Math.PI / 180F));
-                rod = rod.rotateYaw(-MathHelper.func_219799_g(partialTicks, angler.prevRotationYaw, angler.rotationYaw) * ((float) Math.PI / 180F));
+                rod = rod.rotatePitch(-MathHelper.lerp(partialTicks, angler.prevRotationPitch, angler.rotationPitch) * ((float) Math.PI / 180F));
+                rod = rod.rotateYaw(-MathHelper.lerp(partialTicks, angler.prevRotationYaw, angler.rotationYaw) * ((float) Math.PI / 180F));
                 rod = rod.rotateYaw(swingProgressSqrt * 0.5F);
                 rod = rod.rotatePitch(-swingProgressSqrt * 0.7F);
-                anglerX = MathHelper.func_219803_d((double) partialTicks, angler.prevPosX, angler.posX) + rod.x;
-                anglerY = MathHelper.func_219803_d((double) partialTicks, angler.prevPosY, angler.posY) + rod.y;
-                anglerZ = MathHelper.func_219803_d((double) partialTicks, angler.prevPosZ, angler.posZ) + rod.z;
+                anglerX = MathHelper.lerp((double) partialTicks, angler.prevPosX, angler.posX) + rod.x;
+                anglerY = MathHelper.lerp((double) partialTicks, angler.prevPosY, angler.posY) + rod.y;
+                anglerZ = MathHelper.lerp((double) partialTicks, angler.prevPosZ, angler.posZ) + rod.z;
                 anglerEye = (double) angler.getEyeHeight();
             } else {
-                anglerX = MathHelper.func_219803_d((double) partialTicks, angler.prevPosX, angler.posX) - cos * handOffset - sin * 0.8D;
+                anglerX = MathHelper.lerp((double) partialTicks, angler.prevPosX, angler.posX) - cos * handOffset - sin * 0.8D;
                 anglerY = angler.prevPosY + (double) angler.getEyeHeight() + (angler.posY - angler.prevPosY) * (double) partialTicks - 0.45D;
-                anglerZ = MathHelper.func_219803_d((double) partialTicks, angler.prevPosZ, angler.posZ) - sin * handOffset + cos * 0.8D;
+                anglerZ = MathHelper.lerp((double) partialTicks, angler.prevPosZ, angler.posZ) - sin * handOffset + cos * 0.8D;
                 anglerEye = angler.func_213287_bg() ? -0.1875D : 0.0D;
             }
 
-            double hookX = MathHelper.func_219803_d((double) partialTicks, bobber.prevPosX, bobber.posX);
-            double hookY = MathHelper.func_219803_d((double) partialTicks, bobber.prevPosY, bobber.posY) + 0.25D;
-            double hookZ = MathHelper.func_219803_d((double) partialTicks, bobber.prevPosZ, bobber.posZ);
+            double hookX = MathHelper.lerp((double) partialTicks, bobber.prevPosX, bobber.posX);
+            double hookY = MathHelper.lerp((double) partialTicks, bobber.prevPosY, bobber.posY) + 0.25D;
+            double hookZ = MathHelper.lerp((double) partialTicks, bobber.prevPosZ, bobber.posZ);
             double startX = (double) ((float) (anglerX - hookX));
             double startY = (double) ((float) (anglerY - hookY)) + anglerEye;
             double startZ = (double) ((float) (anglerZ - hookZ));

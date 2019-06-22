@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "aquaculture:bluegill",
+    "aquaculture:perch",
+    "aquaculture:gar",
+    "aquaculture:bass",
+    "aquaculture:muskellunge",
+    "aquaculture:brown_trout",
+    "aquaculture:catfish",
+    "aquaculture:carp",
+    "aquaculture:red_grouper",
+    "aquaculture:tuna",
+    "aquaculture:swordfish",
+    "aquaculture:pirahna",
+    "aquaculture:electric_eel",
+    "aquaculture:tambaqui",
+    "aquaculture:arapaima",
+    "aquaculture:pollock",
+    "aquaculture:herring",
+    "aquaculture:halibut",
+    "aquaculture:pink_salmon",
+    "aquaculture:rainbow_trout",
+    "aquaculture:blackfish",
+    "aquaculture:capitaine",
+    "aquaculture:boulti",
+    "aquaculture:bagrid",
+    "aquaculture:syndontis",
+    "aquaculture:red_shrooma",
+    "aquaculture:brown_shrooma",
+    "aquaculture:goldfish"
+  ]
+}

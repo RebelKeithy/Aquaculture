@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.items;
 
 import com.google.common.base.Preconditions;
+import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,12 +21,14 @@ import java.util.List;
 import java.util.Random;
 
 public class FishItem extends Item {
+    public Fish fish;
 
-    public FishItem(Properties properties) {
-        super(properties);
+    public FishItem(int minWeight, int maxWeight) {
+        super(new Item.Properties().group(Aquaculture.TAB));
+        this.fish = new Fish(minWeight, maxWeight);
     }
 
-    @Override
+    /*@Override
     @Nonnull
     public ITextComponent getDisplayName(@Nonnull ItemStack stack) {
         if (stack.hasTag() && stack.getTag() != null) {
@@ -34,9 +37,9 @@ public class FishItem extends Item {
             }
         }
         return super.getDisplayName(stack);
-    }
+    }*/
 
-    @Override
+    /*@Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> toolTip, ITooltipFlag tooltipType) { //TODO Move to event. Config. Add support for non Aquaculture fish
         if (stack.hasTag() && stack.getTag() != null) {
@@ -53,7 +56,7 @@ public class FishItem extends Item {
                 }
             }
         }
-    }
+    }*/
 
     public void assignRandomWeight(@Nonnull ItemStack stack, int heavyLineLvl) {
         if (stack.isEmpty()) {
@@ -90,16 +93,14 @@ public class FishItem extends Item {
     }
 
     public class Fish {
-        public String name;
-        public int filletAmount;
+        //public int filletAmount; //TODO?
         public int minWeight;
         public int maxWeight;
 
-        public Fish(String name, int amount, int min, int max) {
-            this.name = name;
-            filletAmount = amount;
-            maxWeight = max;
-            minWeight = min;
+        public Fish(int minWeight, int maxWeight) {
+            //this.filletAmount = filletAmount;
+            this.minWeight = minWeight;
+            this.maxWeight = maxWeight;
         }
     }
 }
