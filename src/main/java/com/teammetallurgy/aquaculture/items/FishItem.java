@@ -2,22 +2,11 @@ package com.teammetallurgy.aquaculture.items;
 
 import com.google.common.base.Preconditions;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.text.DecimalFormat;
-import java.util.List;
 import java.util.Random;
 
 public class FishItem extends Item {

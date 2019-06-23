@@ -19,8 +19,8 @@ import static net.minecraftforge.common.brewing.BrewingRecipeRegistry.addRecipe;
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AquaRecipes {
 
-    public static void addSmeltingRecipes() {
-        /*GameRegistry.addSmelting(AquaItems.fishFillet.getItemStack(), AquaItems.cookedFillet.getItemStack(), 0.3F); //TODO Move to new Json system
+    public static void addSmeltingRecipes() { //TODO Move to new Json system
+        /*GameRegistry.addSmelting(AquaItems.fishFillet.getItemStack(), AquaItems.cookedFillet.getItemStack(), 0.3F);
         GameRegistry.addSmelting(AquaItems.whaleSteak.getItemStack(), AquaItems.cookedWhaleSteak.getItemStack(), 0.3F);
         GameRegistry.addSmelting(AquaItems.frogLegs.getItemStack(), AquaItems.cookedFrogLegs.getItemStack(), 0.3F);
         GameRegistry.addSmelting(AquaItems.fish.getItemStackFish("Jellyfish"), new ItemStack(Items.SLIME_BALL), 0.3F);

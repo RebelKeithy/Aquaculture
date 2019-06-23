@@ -1,0 +1,45 @@
+{
+  "pools": [
+    {
+      "name": "main",
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "aquaculture:driftwood"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "aquaculture:tin_can"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 7,
+          "name": "aquaculture:box"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aquaculture:lockbox"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "aquaculture:treasure_chest"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "aquaculture:goldfish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aquaculture:message_in_a_bottle"
+        }
+      ]
+    }
+  ]
+}

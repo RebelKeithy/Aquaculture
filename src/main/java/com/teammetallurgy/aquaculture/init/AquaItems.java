@@ -98,15 +98,9 @@ public class AquaItems {
     public static final Item FISH_BONES = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "fish_bones");
 
     public static void register() {
-        //TODO Add Seaweed and Kelp as junk in OCEAN tags
+        //TODO Add Seaweed and Kelp as junk in OCEAN tags. Seaweed weight was 25
         //FishLoot.instance().addJunkLoot(ALGAE.getItemStack(), new BiomeType[]{BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical}, Config.junkRarity.get("Algae"));
-        //TODO ^ Add to junk when BiomeDictionary tag condition have been made
-        /*FishLoot.instance().addJunkLoot(DRIFTWOOD.getItemStack(), Config.junkRarity.get("Driftwood"));
-        FishLoot.instance().addJunkLoot(TIN_CAN.getItemStack(), Config.junkRarity.get("Tin Can"));
-        FishLoot.instance().addJunkLoot(BOX.getItemStack(), Config.junkRarity.get("Box"));
-        FishLoot.instance().addJunkLoot(LOCKBOX.getItemStack(), Config.junkRarity.get("Lockbox"));
-        FishLoot.instance().addJunkLoot(TREASURE_CHEST.getItemStack(), Config.junkRarity.get("Treasure Chest"));
-        */
+        //TODO ^ Add to junk when BiomeDictionary tag condition have been made. Old weight was 25
     }
 
     /**
