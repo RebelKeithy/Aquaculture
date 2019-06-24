@@ -12,3 +12,10 @@ loaderVersion="[26,)"
     description='''
     Welcome to Aquaculture! An expansion of Minecraft's fishing system.
     '''
+
+[[dependencies.aquaculture]]
+    modId="forge"
+    mandatory=true
+    versionRange="[26,)"
+    ordering="AFTER"
+    side="BOTH"

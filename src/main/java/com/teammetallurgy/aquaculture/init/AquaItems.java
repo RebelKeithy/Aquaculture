@@ -74,7 +74,7 @@ public class AquaItems {
     public static final Item SHARK = register(new FishItem(1, 5000), "shark"); //Not sure if should be in FISHES tag
     public static final Item WHALE = register(new FishItem(1, 190000), "whale"); //Not sure if should be in FISHES tag
     public static final Item SQUID = register(new FishItem(1, 1000), "squid"); //Not sure if should be in FISHES tag
-    public static final Item JELLYFISH = register(new FishItem(1, 500), "jellyfish"); //Not sure if should be in FISHES
+    public static final Item JELLYFISH = register(new FishItem(1, 500), "jellyfish"); //Not sure if should be in FISHES tag
     public static final Item FROG = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "frog");
     public static final Item TURTLE = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "turtle");
     public static final Item LEECH = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "leech");
