@@ -27,28 +27,22 @@ public class AquaLootTables {
     }
 
     @SubscribeEvent
-    public static void onLootTableLoad(LootTableLoadEvent event) { //TODO. Not fired for vanilla loot tables atm. Forge issue opened about it #5671
+    public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
-        System.out.println("LOOT: " + name);
-
         if (name.equals(LootTables.GAMEPLAY_FISHING_FISH)) {
-            System.out.println("FISH");
             event.getTable().addPool(getInjectPool(FISH));
         } else if (name.equals(LootTables.GAMEPLAY_FISHING_TREASURE)) {
-            System.out.println("TREASURE");
             event.getTable().addPool(getInjectPool(TREASURE));
         } else if (name.equals(LootTables.GAMEPLAY_FISHING_JUNK)) {
-            System.out.println("JUNK");
             event.getTable().addPool(getInjectPool(JUNK));
         }
     }
 
     private static LootPool getInjectPool(ResourceLocation location) {
-        return LootPool.builder().addEntry(getInjectEntry(location.toString(), 1)).build();
+        return LootPool.builder().addEntry(getInjectEntry(location, 1)).build();
     }
 
-    private static LootEntry.Builder getInjectEntry(String name, int weight) {
-        ResourceLocation location = new ResourceLocation(Aquaculture.MOD_ID, "inject/" + name);
+    private static LootEntry.Builder getInjectEntry(ResourceLocation location, int weight) {
         return TableLootEntry.func_216171_a(location).weight(weight);
     }
 }

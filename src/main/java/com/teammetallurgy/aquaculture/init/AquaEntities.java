@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaEntities {
-    public static final EntityType<AquaFishingBobberEntity> FISH_HOOK = register("bobber", EntityType.Builder.<AquaFishingBobberEntity>create(EntityClassification.MISC)
+    public static final EntityType<AquaFishingBobberEntity> FISH_HOOK = register("aqua_bobber", EntityType.Builder.<AquaFishingBobberEntity>create(EntityClassification.MISC)
             .disableSerialization()
             .disableSummoning()
             .size(0.25F, 0.25F)
@@ -23,6 +23,7 @@ public class AquaEntities {
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
+        System.out.println("REGISTER ENTITY");
         event.getRegistry().register(FISH_HOOK);
     }
 

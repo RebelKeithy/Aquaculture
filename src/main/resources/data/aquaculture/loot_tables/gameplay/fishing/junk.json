@@ -16,12 +16,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 7,
+          "weight": 6,
           "name": "aquaculture:box"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 4,
           "name": "aquaculture:lockbox"
         },
         {

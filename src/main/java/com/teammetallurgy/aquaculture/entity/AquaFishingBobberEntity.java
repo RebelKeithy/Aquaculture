@@ -1,9 +1,7 @@
 package com.teammetallurgy.aquaculture.entity;
 
-import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
@@ -22,12 +20,13 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed) {
         super(player, world, luck, lureSpeed);
         this.luck = luck;
+        this.angler.fishingBobber = this;
     }
 
     @Override
     @Nonnull
     public EntityType<?> getType() {
-        return AquaEntities.FISH_HOOK;
+        return super.getType(); //AquaEntities.FISH_HOOK
     }
 
     @Override
@@ -47,7 +46,6 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                     double z = this.angler.posZ - this.posZ;
                     itemEntity.setMotion(x * 0.1D, y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D, z * 0.1D);
                     this.world.addEntity(itemEntity);
-                    this.angler.world.addEntity(new ExperienceOrbEntity(this.angler.world, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
                 }
                 this.remove();
             }

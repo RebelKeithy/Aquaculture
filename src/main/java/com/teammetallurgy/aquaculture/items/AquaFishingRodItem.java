@@ -43,7 +43,6 @@ public class AquaFishingRodItem extends FishingRodItem {
                     heldStack.damageItem(lureSpeed, player, (entity) -> entity.sendBreakAnimation(hand));
                 }
             }
-
             player.swingArm(hand);
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_FISHING_BOBBER_RETRIEVE, SoundCategory.NEUTRAL, 1.0F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
         } else {
@@ -53,7 +52,6 @@ public class AquaFishingRodItem extends FishingRodItem {
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
                 world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed));
             }
-
             player.swingArm(hand);
             player.addStat(Stats.ITEM_USED.get(this));
         }

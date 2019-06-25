@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
@@ -23,15 +24,18 @@ import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
 public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> {
-    private static final ResourceLocation FISH_PARTICLES = new ResourceLocation("textures/particle/particles.png");
+    private static final ResourceLocation BOBBER = new ResourceLocation("textures/entity/fishing_hook.png");
 
     public RenderAquaFishHook(EntityRendererManager manager) {
         super(manager);
+        System.out.println("RenderAquaFishHook");
     }
 
     @Override
-    public void doRender(AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void func_76986_a(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) {
         PlayerEntity angler = bobber.getAngler();
+        System.out.println("Render RenderAquaFishHook");
+
         if (angler != null && !this.renderOutlines) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef((float) x, (float) y, (float) z);
@@ -62,13 +66,13 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
             GlStateManager.popMatrix();
             int hand = angler.getPrimaryHand() == HandSide.RIGHT ? 1 : -1;
             ItemStack heldMain = angler.getHeldItemMainhand();
-            if (!(heldMain.getItem() instanceof net.minecraft.item.FishingRodItem)) {
+            if (!(heldMain.getItem() instanceof FishingRodItem)) {
                 hand = -hand;
             }
 
             float swingProgress = angler.getSwingProgress(partialTicks);
-            float swingProgressSqrt = MathHelper.sin(MathHelper.sqrt(swingProgress) * (float) Math.PI);
-            float yawOffset = MathHelper.lerp(partialTicks, angler.prevRenderYawOffset, angler.renderYawOffset) * ((float) Math.PI / 180F);
+            float swingProgressSqrt = MathHelper.sin(MathHelper.sqrt(swingProgress) * 3.1415927F);
+            float yawOffset = MathHelper.lerp(partialTicks, angler.prevRenderYawOffset, angler.renderYawOffset) * 0.017453292F;
             double sin = (double) MathHelper.sin(yawOffset);
             double cos = (double) MathHelper.cos(yawOffset);
             double handOffset = (double) hand * 0.35D;
@@ -76,12 +80,13 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
             double anglerY;
             double anglerZ;
             double anglerEye;
+            double fov;
             if ((this.renderManager.options == null || this.renderManager.options.thirdPersonView <= 0) && angler == Minecraft.getInstance().player) {
-                double fov = Objects.requireNonNull(this.renderManager.options).fov;
-                fov = fov / 100.0D;
+                fov = Objects.requireNonNull(this.renderManager.options).fov;
+                fov /= 100.0D;
                 Vec3d rod = new Vec3d((double) hand * -0.36D * fov, -0.045D * fov, 0.4D);
-                rod = rod.rotatePitch(-MathHelper.lerp(partialTicks, angler.prevRotationPitch, angler.rotationPitch) * ((float) Math.PI / 180F));
-                rod = rod.rotateYaw(-MathHelper.lerp(partialTicks, angler.prevRotationYaw, angler.rotationYaw) * ((float) Math.PI / 180F));
+                rod = rod.rotatePitch(-MathHelper.lerp(partialTicks, angler.prevRotationPitch, angler.rotationPitch) * 0.017453292F);
+                rod = rod.rotateYaw(-MathHelper.lerp(partialTicks, angler.prevRotationYaw, angler.rotationYaw) * 0.017453292F);
                 rod = rod.rotateYaw(swingProgressSqrt * 0.5F);
                 rod = rod.rotatePitch(-swingProgressSqrt * 0.7F);
                 anglerX = MathHelper.lerp((double) partialTicks, angler.prevPosX, angler.posX) + rod.x;
@@ -95,12 +100,12 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
                 anglerEye = angler.func_213287_bg() ? -0.1875D : 0.0D;
             }
 
-            double hookX = MathHelper.lerp((double) partialTicks, bobber.prevPosX, bobber.posX);
-            double hookY = MathHelper.lerp((double) partialTicks, bobber.prevPosY, bobber.posY) + 0.25D;
-            double hookZ = MathHelper.lerp((double) partialTicks, bobber.prevPosZ, bobber.posZ);
-            double startX = (double) ((float) (anglerX - hookX));
-            double startY = (double) ((float) (anglerY - hookY)) + anglerEye;
-            double startZ = (double) ((float) (anglerZ - hookZ));
+            fov = MathHelper.lerp((double) partialTicks, bobber.prevPosX, bobber.posX);
+            double d14 = MathHelper.lerp((double) partialTicks, bobber.prevPosY, bobber.posY) + 0.25D;
+            double d9 = MathHelper.lerp((double) partialTicks, bobber.prevPosZ, bobber.posZ);
+            double startX = (double) ((float) (anglerX - fov));
+            double startY = (double) ((float) (anglerY - d14)) + anglerEye;
+            double startZ = (double) ((float) (anglerZ - d9));
             GlStateManager.disableTexture();
             GlStateManager.disableLighting();
             builder.begin(3, DefaultVertexFormats.POSITION_COLOR);
@@ -114,13 +119,13 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
             tessellator.draw();
             GlStateManager.enableLighting();
             GlStateManager.enableTexture();
-            super.doRender(bobber, x, y, z, entityYaw, partialTicks);
+            super.func_76986_a(bobber, x, y, z, entityYaw, partialTicks);
         }
     }
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(@Nonnull AquaFishingBobberEntity fishHook) {
-        return FISH_PARTICLES;
+    protected ResourceLocation func_110775_a(@Nonnull AquaFishingBobberEntity fishHook) {
+        return BOBBER;
     }
 }

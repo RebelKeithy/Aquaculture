@@ -8,9 +8,6 @@
   "item.aquaculture.diamond_fishing_rod": "Vara de Pesca de Diamante",
   "item.aquaculture.admin_fishing_rod": "Vara de Pesca do Admin",
 
-  "item.aquaculture.seaweed": "Algas Marinhas",
-  "item.aquaculture.algae": "Algas",
-
   "_comment": "Comida",
   "item.aquaculture.whale_steak_raw": "Carne de Baleia Crua",
   "item.aquaculture.fish_fillet_raw": "Peixe Cru",
@@ -23,6 +20,7 @@
   "item.aquaculture.sushi": "Sushi",
 
   "_comment": "Micelânia de Itens",
+  "item.aquaculture.algae": "Algas",
   "item.aquaculture.driftwood": "Madeira Petrificada",
   "item.aquaculture.tin_can": "Lata de Estanho",
   "item_aquaculture_message_in_a_bottle": "Mensagem na Garrafa",

@@ -8,9 +8,6 @@
   "item.aquaculture.diamond_fishing_rod": "다이아몬드 낚싯대",
   "item.aquaculture.admin_fishing_rod": "관리자 낚싯대",
 
-  "item.aquaculture.seaweed": "해초",
-  "item.aquaculture.algae": "조류",
-
   "_comment": "Food",
   "item.aquaculture.whale_steak_raw": "날 고래 살코기",
   "item.aquaculture.fish_fillet_raw": "날 생선 살코기",
@@ -23,6 +20,7 @@
   "item.aquaculture.sushi": "초밥",
 
   "_comment": "Misc Items",
+  "item.aquaculture.algae": "조류",
   "item.aquaculture.driftwood": "유목",
   "item.aquaculture.tin_can": "빈 깡통",
   "item.aquaculture.message_in_a_bottle": "병 속의 메세지",

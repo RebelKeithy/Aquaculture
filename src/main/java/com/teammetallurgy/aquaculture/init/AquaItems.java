@@ -99,7 +99,7 @@ public class AquaItems {
 
     public static void register() {
         //TODO Add Seaweed and Kelp as junk in OCEAN tags. Seaweed weight was 25
-        //FishLoot.instance().addJunkLoot(ALGAE.getItemStack(), new BiomeType[]{BiomeType.arctic, BiomeType.arid, BiomeType.brackish, BiomeType.freshwater, BiomeType.mushroom, BiomeType.tropical}, Config.junkRarity.get("Algae"));
+        //addJunkLoot(ALGAE.getItemStack(), arctic, arid, brackish, freshwater, mushroom, tropical, Config.junkRarity.get("Algae"));
         //TODO ^ Add to junk when BiomeDictionary tag condition have been made. Old weight was 25
     }
 

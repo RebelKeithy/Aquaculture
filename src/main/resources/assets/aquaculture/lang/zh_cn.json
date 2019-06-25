@@ -8,8 +8,6 @@
   "item.aquaculture.diamond_fishing_rod": "钻石鱼竿",
   "item.aquaculture.admin_fishing_rod": "管理员鱼竿",
 
-  "item.aquaculture.seaweed": "海草",
-  "item.aquaculture.algae": "海藻",
 
   "_comment": "Food",
   "item.aquaculture.whale_steak_raw": "生鲸鱼排",
@@ -23,6 +21,7 @@
   "item.aquaculture.sushi": "寿司",
 
   "_comment": "Misc Items",
+  "item.aquaculture.algae": "海藻",
   "item.aquaculture.driftwood": "浮木",
   "item.aquaculture.tin_can": "锡罐",
   "item.aquaculture.message_in_a_bottle": "漂流瓶",

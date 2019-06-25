@@ -8,9 +8,6 @@
   "item.aquaculture.diamond_fishing_rod": "Алмазная удочка",
   "item.aquaculture.admin_fishing_rod": "Удочка администратора",
 
-  "item.aquaculture.seaweed": "Морская капуста",
-  "item.aquaculture.algae": "Водоросли",
-
   "_comment": "Food",
   "item.aquaculture.whale_steak_raw": "Сырой китовый стейк",
   "item.aquaculture.fish_fillet_raw": "Сырое рыбное филе",
@@ -23,6 +20,7 @@
   "item.aquaculture.sushi": "Суши",
 
   "_comment": "Misc Items",
+  "item.aquaculture.algae": "Водоросли",
   "item.aquaculture.driftwood": "Коряга",
   "item.aquaculture.tin_can": "консервная банка",
   "item.aquaculture.message_in_abottle": "Сообщение в бутылке",
