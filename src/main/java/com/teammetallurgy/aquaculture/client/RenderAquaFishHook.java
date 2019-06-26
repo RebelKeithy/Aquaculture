@@ -32,7 +32,7 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
     }
 
     @Override
-    public void func_76986_a(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void doRender(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) {
         PlayerEntity angler = bobber.getAngler();
         System.out.println("Render RenderAquaFishHook");
 
@@ -119,13 +119,13 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
             tessellator.draw();
             GlStateManager.enableLighting();
             GlStateManager.enableTexture();
-            super.func_76986_a(bobber, x, y, z, entityYaw, partialTicks);
+            super.doRender(bobber, x, y, z, entityYaw, partialTicks);
         }
     }
 
     @Nullable
     @Override
-    protected ResourceLocation func_110775_a(@Nonnull AquaFishingBobberEntity fishHook) {
+    protected ResourceLocation getEntityTexture(@Nonnull AquaFishingBobberEntity fishHook) {
         return BOBBER;
     }
 }

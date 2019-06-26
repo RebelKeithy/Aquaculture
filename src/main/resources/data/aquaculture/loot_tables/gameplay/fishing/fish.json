@@ -13,7 +13,7 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "biome_tag": "OCEAN"
+                    "include": ["OCEAN", "BEACH"]
                   }
                 }
               ]
@@ -31,7 +31,7 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "biome_tag": "OCEAN"
+                    "include": ["OCEAN", "BEACH"]
                   }
                 }
               ]
@@ -49,7 +49,7 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "biome_tag": "OCEAN"
+                    "include": ["OCEAN", "BEACH"]
                   }
                 }
               ]
@@ -67,7 +67,7 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "biome_tag": "OCEAN"
+                    "include": ["OCEAN", "BEACH"]
                   }
                 }
               ]
@@ -85,7 +85,7 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "biome_tag": "OCEAN"
+                    "include": ["OCEAN", "BEACH"]
                   }
                 }
               ]
@@ -103,7 +103,7 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "biome_tag": "OCEAN"
+                    "include": ["OCEAN", "BEACH"]
                   }
                 }
               ]
@@ -121,7 +121,7 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "biome_tag": "OCEAN"
+                    "include": ["OCEAN", "BEACH"]
                   }
                 }
               ]

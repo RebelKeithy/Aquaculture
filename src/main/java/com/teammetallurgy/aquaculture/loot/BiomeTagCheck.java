@@ -25,23 +25,19 @@ public class BiomeTagCheck implements ILootCondition {
         return pos != null && this.predicate.test(context.getWorld(), (float) pos.getX(), (float) pos.getY(), (float) pos.getZ());
     }
 
-    public static ILootCondition.IBuilder builder(BiomeTagPredicate.Builder builder) {
-        return () -> new BiomeTagCheck(builder.build());
-    }
-
     public static class Serializer extends ILootCondition.AbstractSerializer<BiomeTagCheck> {
         public Serializer() {
             super(new ResourceLocation(Aquaculture.MOD_ID, "biome_tag_check"), BiomeTagCheck.class);
         }
 
         @Override
-        public void func_186605_a(JsonObject json, BiomeTagCheck value, @Nonnull JsonSerializationContext context) {
+        public void serialize(JsonObject json, BiomeTagCheck value, @Nonnull JsonSerializationContext context) {
             json.add("predicate", value.predicate.serialize());
         }
 
         @Override
         @Nonnull
-        public BiomeTagCheck func_186603_b(JsonObject json, @Nonnull JsonDeserializationContext context) {
+        public BiomeTagCheck deserialize(JsonObject json, @Nonnull JsonDeserializationContext context) {
             BiomeTagPredicate predicate = BiomeTagPredicate.deserialize(json.get("predicate"));
             return new BiomeTagCheck(predicate);
         }

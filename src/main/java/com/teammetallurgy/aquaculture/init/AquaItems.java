@@ -97,12 +97,6 @@ public class AquaItems {
     public static final Item GOLDFISH = register(new FishItem(1, 4), "goldfish");
     public static final Item FISH_BONES = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "fish_bones");
 
-    public static void register() {
-        //TODO Add Seaweed and Kelp as junk in OCEAN tags. Seaweed weight was 25
-        //addJunkLoot(ALGAE.getItemStack(), arctic, arid, brackish, freshwater, mushroom, tropical, Config.junkRarity.get("Algae"));
-        //TODO ^ Add to junk when BiomeDictionary tag condition have been made. Old weight was 25
-    }
-
     /**
      * Registers an item
      *
