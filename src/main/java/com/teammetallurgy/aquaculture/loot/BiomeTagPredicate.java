@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.utils.BiomeDictionaryHelper;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.util.JSONUtils;
@@ -53,15 +54,22 @@ public class BiomeTagPredicate {
             }
             if (!includeList.isEmpty()) {
                 for (BiomeDictionary.Type type : includeList) {
-                    biomes.addAll(BiomeDictionary.getBiomes(type));
+                    if (type == null) {
+                        Aquaculture.LOG.error("Failed to include BiomeDictionary Tag. Please check your loot tables");
+                    } else {
+                        biomes.addAll(BiomeDictionary.getBiomes(type));
+                    }
                 }
             }
             if (!excludeList.isEmpty()) {
                 for (BiomeDictionary.Type type : excludeList) {
-                    biomes.removeAll(BiomeDictionary.getBiomes(type));
+                    if (type == null) {
+                        Aquaculture.LOG.error("Failed to exclude BiomeDictionary Tag. Please check your loot tables");
+                    } else {
+                        biomes.removeAll(BiomeDictionary.getBiomes(type));
+                    }
                 }
             }
-
             BlockPos pos = new BlockPos((double) x, (double) y, (double) z);
             return biomes.contains(world.getBiome(pos));
         }

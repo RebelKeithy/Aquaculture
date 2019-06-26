@@ -1,7 +1,8 @@
-/*package com.teammetallurgy.aquaculture.utils;
-
+/*
 public class Config { //TODO Old config, patially kept for reference atm.
-    static {
+    static { //Should be order in json
+        // Saltwater
+
         // Freshwater
         fishRarity.put("Bluegill", 30);
         fishRarity.put("Perch", 30);
@@ -13,17 +14,10 @@ public class Config { //TODO Old config, patially kept for reference atm.
         fishRarity.put("Carp", 1);
 
         // Brackish
-        fishRarity.put("Frog", 1);
-        fishRarity.put("Turtle", 1);
-        fishRarity.put("Leech", 30);
 
-        // Jungle
-        fishRarity.put("Pirahna", 60);
-        fishRarity.put("Electric Eel", 25);
-        fishRarity.put("Tambaqui", 5);
-        fishRarity.put("Arapaima", 1);
+        // Topical
 
-        // Tundra
+        // Arctic
         fishRarity.put("Pollock", 25);
         fishRarity.put("Herring", 60);
         fishRarity.put("Halibut", 1);
@@ -31,15 +25,13 @@ public class Config { //TODO Old config, patially kept for reference atm.
         fishRarity.put("Rainbow Trout", 20);
         fishRarity.put("Blackfish", 45);
 
-        // Desert
+        // Arid
         fishRarity.put("Capitaine", 1);
         fishRarity.put("Boulti", 30);
         fishRarity.put("Bagrid", 20);
         fishRarity.put("Syndontis", 60);
 
-        // Mushroom Island
-        fishRarity.put("Red Shrooma", 20);
-        fishRarity.put("Brown Shrooma", 20);
+        // Mushroom
     }
 
     private static void loadConfiguration() {
