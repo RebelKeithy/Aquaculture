@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.utils;
+package com.teammetallurgy.aquaculture.misc;
 
 import net.minecraftforge.common.BiomeDictionary;
 

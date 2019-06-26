@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.utils.BiomeDictionaryHelper;
+import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.math.BlockPos;

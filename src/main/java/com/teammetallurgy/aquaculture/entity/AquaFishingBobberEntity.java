@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.*;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemFishedEvent;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -38,6 +40,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                 builder.withParameter(LootParameters.KILLER_ENTITY, this.angler).withParameter(LootParameters.THIS_ENTITY, this);
                 LootTable table = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING);
                 List<ItemStack> list = table.generate(builder.build(LootParameterSets.FISHING));
+                MinecraftForge.EVENT_BUS.post(new ItemFishedEvent(list, 0, this));
 
                 for (ItemStack loot : list) {
                     ItemEntity itemEntity = new ItemEntity(this.world, this.posX, this.posY, this.posZ, loot);

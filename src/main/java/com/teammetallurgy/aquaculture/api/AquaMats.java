@@ -10,8 +10,8 @@ import net.minecraft.util.SoundEvents;
 
 import javax.annotation.Nonnull;
 
-public class AquaEnums {
-    public static IItemTier NEPTUNIUM_TOOL = new IItemTier() {
+public class AquaMats {
+    public IItemTier NEPTUNIUM_TOOL = new IItemTier() {
         @Override
         public int getMaxUses() {
             return 2500;
@@ -38,7 +38,7 @@ public class AquaEnums {
             return Ingredient.fromItems(AquaItems.NEPTUNIUM_INGOT);
         }
     };
-    public static IArmorMaterial NEPTINIUM_ARMOR = new IArmorMaterial() {
+    public IArmorMaterial NEPTINIUM_ARMOR = new IArmorMaterial() {
         @Override
         public int getDurability(@Nonnull EquipmentSlotType slot) {
             int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};

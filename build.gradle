@@ -9,6 +9,7 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -50,6 +51,35 @@ jar {
             "Implementation-Version": "${version}"
         ])
     }
+}
+
+task apiJar(type: Jar) {
+	from sourceSets.main.allSource
+	from sourceSets.main.output
+    include 'com/teammetallurgy/aquaculture/api/**/*'
+    classifier = 'api'
+}
+
+publishing {
+    tasks.publish.dependsOn 'build'
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId "aquaculture2_${minecraft_version}"
+            artifact jar
+			artifact apiJar
+        }
+    }
+    repositories {
+        if (project.hasProperty('maven_repo')) {
+            maven { url maven_repo }
+        } else {
+            mavenLocal()
+        }
+    }
+}
+
+artifacts {
+    archives apiJar
 }
 
 String getBuildNumber() {

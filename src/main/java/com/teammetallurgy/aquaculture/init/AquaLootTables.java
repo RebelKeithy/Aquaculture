@@ -1,14 +1,22 @@
 package com.teammetallurgy.aquaculture.init;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootEntry;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.LootTables;
-import net.minecraft.world.storage.loot.TableLootEntry;
+import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
+import net.minecraft.world.storage.loot.conditions.LootConditionManager;
+import net.minecraft.world.storage.loot.functions.ILootFunction;
+import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class AquaLootTables {
@@ -30,19 +38,19 @@ public class AquaLootTables {
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
         if (name.equals(LootTables.GAMEPLAY_FISHING_FISH)) {
-            event.getTable().addPool(getInjectPool(FISH));
+            LootPool pool = event.getTable().getPool("main");
+            if (pool != null) {
+                pool
+            }
+            event.getTable().getPool("main").builder().addEntry(TableLootEntry.func_216171_a(FISH));
         } else if (name.equals(LootTables.GAMEPLAY_FISHING_TREASURE)) {
-            event.getTable().addPool(getInjectPool(TREASURE));
+            event.getTable().getPool("main").builder().addEntry(TableLootEntry.func_216171_a(TREASURE));
         } else if (name.equals(LootTables.GAMEPLAY_FISHING_JUNK)) {
-            event.getTable().addPool(getInjectPool(JUNK));
+            event.getTable().getPool("main").builder().addEntry(TableLootEntry.func_216171_a(JUNK));
         }
     }
 
     private static LootPool getInjectPool(ResourceLocation location) {
-        return LootPool.builder().addEntry(getInjectEntry(location, 1)).build();
-    }
-
-    private static LootEntry.Builder getInjectEntry(ResourceLocation location, int weight) {
-        return TableLootEntry.func_216171_a(location).weight(weight);
+        return LootPool.builder().addEntry(TableLootEntry.func_216171_a(location)).build();
     }
 }
