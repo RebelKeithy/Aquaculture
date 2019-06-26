@@ -3,8 +3,10 @@ package com.teammetallurgy.aquaculture;
 import com.teammetallurgy.aquaculture.client.RenderAquaFishHook;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -35,7 +37,7 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
-
+        LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
     }
 
     private void setupClient(FMLClientSetupEvent event) {

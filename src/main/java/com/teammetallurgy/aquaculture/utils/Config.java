@@ -12,15 +12,6 @@ public class Config { //TODO Old config, patially kept for reference atm.
         fishRarity.put("Catfish", 5);
         fishRarity.put("Carp", 1);
 
-        // Saltwater
-        fishRarity.put("Red Grouper", 30);
-        fishRarity.put("Tuna", 10);
-        fishRarity.put("Swordfish", 5);
-        fishRarity.put("Shark", 1);
-        fishRarity.put("Whale", 1);
-        fishRarity.put("Squid", 40);
-        fishRarity.put("Jellyfish", 40);
-
         // Brackish
         fishRarity.put("Frog", 1);
         fishRarity.put("Turtle", 1);
