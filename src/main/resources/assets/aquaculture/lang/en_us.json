@@ -1,12 +1,10 @@
 {
   "itemGroup.aquaculture": "Aquaculture",
-
   "_comment": "Rod",
   "item.aquaculture.iron_fishing_rod": "Iron Fishing Rod",
   "item.aquaculture.gold_fishing_rod": "Golden Fishing Rod",
   "item.aquaculture.diamond_fishing_rod": "Diamond Fishing Rod",
   "item.aquaculture.admin_fishing_rod": "Admin Fishing Rod",
-
   "_comment": "Food",
   "item.aquaculture.whale_steak_raw": "Raw Whale Steak",
   "item.aquaculture.fish_fillet_raw": "Raw Fish Fillet",
@@ -17,7 +15,6 @@
   "item.aquaculture.frog_legs_cooked": "Cooked Frog Legs",
   "item.aquaculture.turtle_soup": "Turtle Soup",
   "item.aquaculture.sushi": "Sushi",
-
   "_comment": "Misc Items",
   "item.aquaculture.algae": "Algae",
   "item.aquaculture.driftwood": "Driftwood",
@@ -26,7 +23,7 @@
   "item.aquaculture.box": "Box",
   "item.aquaculture.lockbox": "Lockbox",
   "item.aquaculture.treasure_chest": "Treasure Chest",
-
+  "_comment": "Neptinium",
   "item.aquaculture.neptunium_ingot": "Neptunium Ingot",
   "item.aquaculture.neptunes_bounty": "Neptune's Bounty",
   "item.aquaculture.neptunium_pickaxe": "Neptunium Pickaxe",
@@ -38,7 +35,6 @@
   "item.aquaculture.neptunium_chestplate": "Neptunium Chestplate",
   "item.aquaculture.neptunium_leggings": "Neptunium Leggings",
   "item.aquaculture.neptunium_boots": "Neptunium Boots",
-
   "_comment": "Fish",
   "item.aquaculture.bluegill": "Bluegill",
   "item.aquaculture.perch": "Perch",
@@ -76,9 +72,8 @@
   "item.aquaculture.brown_shrooma": "Brown Shrooma",
   "item.aquaculture.goldfish": "Goldfish",
   "item.aquaculture.fish_bones": "Fish Bones",
-
-  "entity.aquaculture.aqua_bobber" : "Aquaculture Fishing Bobber",
-
+  "_comment": "Entity",
+  "entity.aquaculture.aqua_bobber": "Aquaculture Fishing Bobber",
   "_comment": "Message in a bottle",
   "aquaculture.message": "ERROR! Fish Escaping!",
   "aquaculture.message1": "How do I mine for fish?",
@@ -109,5 +104,12 @@
   "aquaculture.message26": "I grind up diamond armor every morning and eat it for fast. - mDiyo",
   "aquaculture.message27": "-The message magically fades from your hand.-",
   "aquaculture.message28": "Look up at me, now back at your inventory, now back at me, this message is now DIAMONDS! Nah just kidding, its still paper.",
-  "aquaculture.message29": "Recycle for 5 Brass."
+  "aquaculture.message29": "Recycle for 5 Brass.",
+
+  "_comment": "Misc",
+  "aquaculture.fishWeight.weight": "Weight: %s",
+  "aquaculture.fishWeight.juvenile": "Juvenile",
+  "aquaculture.fishWeight.small": "Small",
+  "aquaculture.fishWeight.large": "Large",
+  "aquaculture.fishWeight.massive": "Massive"
 }

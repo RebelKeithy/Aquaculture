@@ -23,7 +23,7 @@ public class AquaEntities {
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-        System.out.println("REGISTER ENTITY");
+        System.out.println("REGISTER FISH_HOOK");
         event.getRegistry().register(FISH_HOOK);
     }
 
