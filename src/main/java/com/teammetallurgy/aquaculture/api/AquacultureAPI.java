@@ -1,6 +1,6 @@
 package com.teammetallurgy.aquaculture.api;
 
-import com.teammetallurgy.aquaculture.api.weight.FishWeight;
+import com.teammetallurgy.aquaculture.api.fish.FishData;
 
 public class AquacultureAPI {
     /**
@@ -11,5 +11,5 @@ public class AquacultureAPI {
     /**
      * Reference to setting weight for fish
      **/
-    public static FishWeight FISH_WEIGHT = new FishWeight();
+    public static FishData FISH_DATA = new FishData();
 }

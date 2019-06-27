@@ -46,7 +46,7 @@ public class Aquaculture {
     private void setupCommon(FMLCommonSetupEvent event) {
         LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
         ConditionFactory.registerConditions();
-        FishWeightHandler.registerWeight();
+        FishWeightHandler.registerFishData();
         BiomeDictionary.Type.getType("TWILIGHT"); //Add Twilight tag, for Twilight Forest support
     }
 

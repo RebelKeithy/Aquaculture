@@ -1,9 +1,9 @@
 package com.teammetallurgy.aquaculture.loot;
 
-import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
-import com.teammetallurgy.aquaculture.api.weight.FishWeight;
+import com.teammetallurgy.aquaculture.api.fish.FishData;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -31,8 +31,8 @@ public class FishWeightHandler {
     public static void onItemFished(ItemFishedEvent event) {
         ItemStack fish = event.getDrops().get(0);
         if (AquaConfig.BASIC_OPTIONS.randomWeight.get()) {
-            if (AquacultureAPI.FISH_WEIGHT.hasWeight(fish.getItem())) {
-                FishWeight fishWeight = AquacultureAPI.FISH_WEIGHT;
+            if (AquacultureAPI.FISH_DATA.hasWeight(fish.getItem())) {
+                FishData fishWeight = AquacultureAPI.FISH_DATA;
                 assignRandomWeight(fish, fishWeight.getMinWeight(fish.getItem()), fishWeight.getMaxWeight(fish.getItem()));
             } else if (fish.getItem().isIn(ItemTags.FISHES)) { //Adds weight to any fish that does not have one specified
                 assignRandomWeight(fish, 0, 100);
@@ -91,43 +91,43 @@ public class FishWeightHandler {
         }
     }
 
-    public static void registerWeight() {
-        AquacultureAPI.FISH_WEIGHT.addWeight(BLUEGILL, 1, 5);
-        AquacultureAPI.FISH_WEIGHT.addWeight(PERCH, 1, 5);
-        AquacultureAPI.FISH_WEIGHT.addWeight(GAR, 1, 10);
-        AquacultureAPI.FISH_WEIGHT.addWeight(BASS, 1, 25);
-        AquacultureAPI.FISH_WEIGHT.addWeight(MUSKELLUNGE, 1, 35);
-        AquacultureAPI.FISH_WEIGHT.addWeight(BROWN_TROUT, 1, 40);
-        AquacultureAPI.FISH_WEIGHT.addWeight(CATFISH, 1, 50);
-        AquacultureAPI.FISH_WEIGHT.addWeight(CARP, 1, 100);
-        AquacultureAPI.FISH_WEIGHT.addWeight(RED_GROUPER, 1, 50);
-        AquacultureAPI.FISH_WEIGHT.addWeight(TUNA, 1, 135);
-        AquacultureAPI.FISH_WEIGHT.addWeight(SWORDFISH, 1, 1400);
-        AquacultureAPI.FISH_WEIGHT.addWeight(SHARK, 1, 5000);
-        AquacultureAPI.FISH_WEIGHT.addWeight(WHALE, 1, 190000);
-        AquacultureAPI.FISH_WEIGHT.addWeight(SQUID, 1, 1000);
-        AquacultureAPI.FISH_WEIGHT.addWeight(JELLYFISH, 1, 500);
-        AquacultureAPI.FISH_WEIGHT.addWeight(PIRANHA, 1, 8);
-        AquacultureAPI.FISH_WEIGHT.addWeight(ELECTRIC_EEL, 1, 45);
-        AquacultureAPI.FISH_WEIGHT.addWeight(TAMBAQUI, 1, 75);
-        AquacultureAPI.FISH_WEIGHT.addWeight(ARAPAIMA, 1, 220);
-        AquacultureAPI.FISH_WEIGHT.addWeight(POLLOCK, 1, 45);
-        AquacultureAPI.FISH_WEIGHT.addWeight(HERRING, 1, 3);
-        AquacultureAPI.FISH_WEIGHT.addWeight(HALIBUT, 1, 700);
-        AquacultureAPI.FISH_WEIGHT.addWeight(PINK_SALMON, 1, 100);
-        AquacultureAPI.FISH_WEIGHT.addWeight(RAINBOW_TROUT, 1, 50);
-        AquacultureAPI.FISH_WEIGHT.addWeight(BLACKFISH, 1, 10);
-        AquacultureAPI.FISH_WEIGHT.addWeight(CAPITAINE, 1, 450);
-        AquacultureAPI.FISH_WEIGHT.addWeight(BOULTI, 1, 10);
-        AquacultureAPI.FISH_WEIGHT.addWeight(BAGRID, 1, 25);
-        AquacultureAPI.FISH_WEIGHT.addWeight(SYNDONTIS, 1, 3);
-        AquacultureAPI.FISH_WEIGHT.addWeight(RED_SHROOMA, 1, 5);
-        AquacultureAPI.FISH_WEIGHT.addWeight(BROWN_SHROOMA, 1, 5);
-        AquacultureAPI.FISH_WEIGHT.addWeight(GOLDFISH, 1, 4);
+    public static void registerFishData() {
+        AquacultureAPI.FISH_DATA.addAll(BLUEGILL, 1, 5);
+        AquacultureAPI.FISH_DATA.addAll(PERCH, 1, 5);
+        AquacultureAPI.FISH_DATA.addAll(GAR, 1, 10, 2);
+        AquacultureAPI.FISH_DATA.addAll(BASS, 1, 25, 3);
+        AquacultureAPI.FISH_DATA.addAll(MUSKELLUNGE, 1, 35, 3);
+        AquacultureAPI.FISH_DATA.addAll(BROWN_TROUT, 1, 40, 3);
+        AquacultureAPI.FISH_DATA.addAll(CATFISH, 1, 50, 4);
+        AquacultureAPI.FISH_DATA.addAll(CARP, 1, 100, 5);
+        AquacultureAPI.FISH_DATA.addAll(RED_GROUPER, 1, 50, 4);
+        AquacultureAPI.FISH_DATA.addAll(TUNA, 1, 135, 5);
+        AquacultureAPI.FISH_DATA.addAll(SWORDFISH, 1, 1400, 7);
+        AquacultureAPI.FISH_DATA.addAll(SHARK, 1, 5000, 8);
+        AquacultureAPI.FISH_DATA.addAll(WHALE, 1, 190000, 0);
+        AquacultureAPI.FISH_DATA.addAll(SQUID, 1, 1000, 0);
+        AquacultureAPI.FISH_DATA.addAll(JELLYFISH, 1, 500, 0);
+        AquacultureAPI.FISH_DATA.addAll(PIRANHA, 1, 8, 1);
+        AquacultureAPI.FISH_DATA.addAll(ELECTRIC_EEL, 1, 45, 3);
+        AquacultureAPI.FISH_DATA.addAll(TAMBAQUI, 1, 75, 4);
+        AquacultureAPI.FISH_DATA.addAll(ARAPAIMA, 1, 220, 6);
+        AquacultureAPI.FISH_DATA.addAll(POLLOCK, 1, 45, 3);
+        AquacultureAPI.FISH_DATA.addAll(HERRING, 1, 3);
+        AquacultureAPI.FISH_DATA.addAll(HALIBUT, 1, 700, 7);
+        AquacultureAPI.FISH_DATA.addAll(PINK_SALMON, 1, 100, 5);
+        AquacultureAPI.FISH_DATA.addAll(RAINBOW_TROUT, 1, 50, 4);
+        AquacultureAPI.FISH_DATA.addAll(BLACKFISH, 1, 10, 2);
+        AquacultureAPI.FISH_DATA.addAll(CAPITAINE, 1, 450, 4);
+        AquacultureAPI.FISH_DATA.addAll(BOULTI, 1, 10, 2);
+        AquacultureAPI.FISH_DATA.addAll(BAGRID, 1, 25, 3);
+        AquacultureAPI.FISH_DATA.addAll(SYNDONTIS, 1, 3);
+        AquacultureAPI.FISH_DATA.addAll(RED_SHROOMA, 1, 5, 0);
+        AquacultureAPI.FISH_DATA.addAll(BROWN_SHROOMA, 1, 5, 0);
+        AquacultureAPI.FISH_DATA.addAll(GOLDFISH, 1, 4, 0);
         //Vanilla
-        AquacultureAPI.FISH_WEIGHT.addWeight(Items.COD, 1, 210);
-        AquacultureAPI.FISH_WEIGHT.addWeight(Items.SALMON, 1, 135);
-        AquacultureAPI.FISH_WEIGHT.addWeight(Items.TROPICAL_FISH, 1, 5);
-        AquacultureAPI.FISH_WEIGHT.addWeight(Items.PUFFERFISH, 1, 25);
+        AquacultureAPI.FISH_DATA.addAll(Items.COD, 1, 210, 6);
+        AquacultureAPI.FISH_DATA.addAll(Items.SALMON, 1, 135, 5);
+        AquacultureAPI.FISH_DATA.addAll(Items.TROPICAL_FISH, 1, 5, 0);
+        AquacultureAPI.FISH_DATA.addAll(Items.PUFFERFISH, 1, 25);
     }
 }
