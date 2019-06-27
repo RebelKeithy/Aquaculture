@@ -1,7 +1,6 @@
 package com.teammetallurgy.aquaculture.misc;
 
 import com.google.gson.JsonObject;
-import com.teammetallurgy.aquaculture.AquaConfig;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;

@@ -5,6 +5,7 @@ import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.ConditionFactory;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

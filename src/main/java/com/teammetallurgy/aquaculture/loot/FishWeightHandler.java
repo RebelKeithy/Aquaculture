@@ -1,6 +1,6 @@
 package com.teammetallurgy.aquaculture.loot;
 
-import com.teammetallurgy.aquaculture.AquaConfig;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.weight.FishWeight;

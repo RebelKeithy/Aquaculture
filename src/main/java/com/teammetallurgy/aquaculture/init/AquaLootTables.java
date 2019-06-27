@@ -1,6 +1,6 @@
 package com.teammetallurgy.aquaculture.init;
 
-import com.teammetallurgy.aquaculture.AquaConfig;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
