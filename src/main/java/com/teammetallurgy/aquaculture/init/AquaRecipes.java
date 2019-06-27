@@ -19,16 +19,8 @@ import static net.minecraftforge.common.brewing.BrewingRecipeRegistry.addRecipe;
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AquaRecipes {
 
-    public static void addSmeltingRecipes() { //TODO Move to new Json system
-        /*GameRegistry.addSmelting(AquaItems.fishFillet.getItemStack(), AquaItems.cookedFillet.getItemStack(), 0.3F);
-        GameRegistry.addSmelting(AquaItems.whaleSteak.getItemStack(), AquaItems.cookedWhaleSteak.getItemStack(), 0.3F);
-        GameRegistry.addSmelting(AquaItems.frogLegs.getItemStack(), AquaItems.cookedFrogLegs.getItemStack(), 0.3F);
-        GameRegistry.addSmelting(AquaItems.fish.getItemStackFish("Jellyfish"), new ItemStack(Items.SLIME_BALL), 0.3F);
-        GameRegistry.addSmelting(AquaItems.tinCan.getItemStack(), OreDictionary.doesOreNameExist("nuggetTin") ? new ItemStack(getOreDict("nuggetTin").getItem(), 7, getOreDict("nuggetTin").getItemDamage()) : new ItemStack(Items.IRON_NUGGET, 7), 0.7F);*/
-    }
-
     @SubscribeEvent
-    public static void registerRecipes(RegistryEvent.Register<Potion> event) {
+    public static void registerBrewingRecipes(RegistryEvent.Register<Potion> event) {
         addBrewingRecipeWithSubPotions(AquaItems.JELLYFISH, Potions.POISON);
         addBrewingRecipeWithSubPotions(AquaItems.LEECH, Potions.HEALING);
     }

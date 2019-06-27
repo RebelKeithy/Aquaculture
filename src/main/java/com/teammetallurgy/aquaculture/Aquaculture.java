@@ -4,7 +4,8 @@ import com.teammetallurgy.aquaculture.client.RenderAquaFishHook;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
-import com.teammetallurgy.aquaculture.misc.FishWeightHandler;
+import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
+import com.teammetallurgy.aquaculture.misc.ConditionFactory;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
@@ -43,6 +44,7 @@ public class Aquaculture {
 
     private void setupCommon(FMLCommonSetupEvent event) {
         LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
+        ConditionFactory.registerConditions();
         FishWeightHandler.registerWeight();
         BiomeDictionary.Type.getType("TWILIGHT"); //Add Twilight tag, for Twilight Forest support
     }

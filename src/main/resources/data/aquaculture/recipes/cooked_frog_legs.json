@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aquaculture:frog_legs_raw"
+  },
+  "result": "aquaculture:frog_legs_cooked",
+  "experience": 0.2,
+  "cookingtime": 100
+}

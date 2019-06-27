@@ -1,6 +1,6 @@
 /*
-public class Config { //TODO Old config, patially kept for reference atm.
-    static { //Should be order in json
+public class Config { //Only kept for reference for fish weight
+    static { //Should be this order in json
         // Saltwater
 
         // Freshwater
@@ -32,11 +32,5 @@ public class Config { //TODO Old config, patially kept for reference atm.
         fishRarity.put("Syndontis", 60);
 
         // Mushroom
-    }
-
-    private static void loadConfiguration() {
-        enableNeptuniumArmor = config.get(categoryBasic, "Enable Neptunium armor", true).getBoolean(); //Not possible in 1.14
-        enableNeptuniumTools = config.get(categoryBasic, "Enable Neptunium tools", true).getBoolean(); //Not possible in 1.14
-        enableNeptuniumLoot = config.get(categoryBasic, "Enable Neptunium loot", true).getBoolean(); //Maybe possible, will have to look into if IConditionSerializer works for loot tables
     }
 }*/

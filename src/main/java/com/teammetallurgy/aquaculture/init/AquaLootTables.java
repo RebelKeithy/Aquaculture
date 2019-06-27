@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.init;
 
+import com.teammetallurgy.aquaculture.AquaConfig;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -33,8 +34,10 @@ public class AquaLootTables {
             LootPool pool = event.getTable().getPool("main");
             if (pool != null) {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
-                addEntry(pool, getInjectEntry(TREASURE, 2, 1)); //Not using vanilla numbers, to make it more rare
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
+                if (AquaConfig.BASIC_OPTIONS.addNeptunesBountyToLoot.get()) {
+                    addEntry(pool, getInjectEntry(TREASURE, 2, 1)); //Not using vanilla numbers, to make it more rare
+                }
             }
         }
     }

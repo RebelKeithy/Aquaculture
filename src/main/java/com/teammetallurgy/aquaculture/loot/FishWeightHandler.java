@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.misc;
+package com.teammetallurgy.aquaculture.loot;
 
 import com.teammetallurgy.aquaculture.AquaConfig;
 import com.teammetallurgy.aquaculture.Aquaculture;
@@ -43,7 +43,7 @@ public class FishWeightHandler {
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        if (!stack.isEmpty() && stack != null && stack.hasTag() && stack.getTag() != null) { //Keep stack null check, in case of other mods doing bad things
+        if (!stack.isEmpty() && stack != null && stack.hasTag() && stack.getTag() != null) { //Keep stack null check, in case of other mods is doing bad things
             if (stack.getTag().contains("fishSize")) {
                 Style style = new Style().setItalic(true).setColor(TextFormatting.AQUA);
                 event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize"))).setStyle(style));

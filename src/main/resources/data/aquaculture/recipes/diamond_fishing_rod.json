@@ -10,10 +10,10 @@
       "item": "minecraft:string"
     },
     "T": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     },
     "I": {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     }	
   },
   "result": {

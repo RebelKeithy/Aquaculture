@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "aquaculture:neptunium_items_enabled",
+      "value": true
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "SSS",
@@ -10,7 +16,7 @@
       "item": "aquaculture:neptunium_ingot"
     },
     "T": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "result": {

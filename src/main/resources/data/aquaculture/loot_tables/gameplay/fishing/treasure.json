@@ -1,5 +1,6 @@
 {
   "type": "minecraft:fishing",
+  "_comment": "Do not add anything to this loot table, besides Neptune's Bounty",
   "pools": [
     {
       "rolls": 1.0,

@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: false
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -17,8 +17,19 @@ version = "${minecraft_version}-${mod_version}" + getBuildNumber()
 group = "com.teammetallurgy.aquaculture"
 archivesBaseName = "Aquaculture"
 
+repositories {
+  maven {
+    name = "JEI maven"
+    url = "https://dvs1.progwml6.com/files/maven/"
+  }
+  maven {
+    name = "JEI backup maven"
+    url = "https://modmaven.k-4u.nl"
+  }
+}
+
 minecraft {
-    mappings channel: 'snapshot', version: '20190626-1.14.3'
+    mappings channel: 'snapshot', version: '20190627-1.14.3'
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -43,6 +54,8 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    //compileOnly fg.deobf("mezz.jei:jei-1.14.2:${jei_version}:api")
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.14.2:${jei_version}")
 }
 
 jar {
