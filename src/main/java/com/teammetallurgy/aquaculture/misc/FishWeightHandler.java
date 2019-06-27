@@ -1,19 +1,18 @@
 package com.teammetallurgy.aquaculture.misc;
 
+import com.teammetallurgy.aquaculture.AquaConfig;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.weight.FishWeight;
-import com.teammetallurgy.aquaculture.items.FishItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
@@ -23,14 +22,21 @@ import java.util.Random;
 import static com.teammetallurgy.aquaculture.init.AquaItems.*;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
-public class FishWeightHandler {
+public class FishWeightHandler { //TODO Add size tooltip. Tag already added
 
     @SubscribeEvent
-    public static void onItemFished(ItemFishedEvent event) { //TODO Config. Add support for non Aquaculture fish
+    public static void onItemFished(ItemFishedEvent event) {
         ItemStack fish = event.getDrops().get(0);
         System.out.println(fish.getItem());
-        if (AquacultureAPI.FISH_WEIGHT.hasWeight(fish.getItem())) {
-            System.out.println("Hi");
+        if (AquaConfig.BASIC_OPTIONS.randomWeight.get()) {
+            if (AquacultureAPI.FISH_WEIGHT.hasWeight(fish.getItem())) {
+                FishWeight fishWeight = AquacultureAPI.FISH_WEIGHT;
+                System.out.println(fishWeight.getMaxWeight(fish.getItem()));
+                assignRandomWeight(fish, fishWeight.getMinWeight(fish.getItem()), fishWeight.getMaxWeight(fish.getItem()));
+            } else if (fish.getItem().isIn(ItemTags.FISHES)) { //Adds weight to any fish that does not have one specified
+                System.out.println("Fish with no weight");
+                assignRandomWeight(fish, 0, 100);
+            }
         }
     }
 
@@ -53,21 +59,20 @@ public class FishWeightHandler {
         }
     }
 
-    public void assignRandomWeight(Item fish) {
-        ItemStack stack = new ItemStack(fish);
-        if (stack.isEmpty()) {
+    private static void assignRandomWeight(ItemStack fish, int min, int max) {
+        if (fish.isEmpty()) {
+            System.out.println("isEmpty");
             return;
         }
-        FishWeight fishWeight = AquacultureAPI.FISH_WEIGHT;
         Random rand = new Random();
-        int min = fishWeight.getMinWeight(fish);
-        int max = fishWeight.getMaxWeight(fish);
         float weight = rand.nextInt((max - min)) + max;
 
-        if (!stack.hasTag()) {
-            stack.setTag(new CompoundNBT());
+        if (!fish.hasTag()) {
+            System.out.println("set tag");
+            fish.setTag(new CompoundNBT());
         }
-        CompoundNBT tag = stack.getTag();
+
+        CompoundNBT tag = fish.getTag();
 
         if (tag != null) {
             tag.putFloat("weight", weight);
@@ -116,5 +121,7 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_WEIGHT.addWeight(RED_SHROOMA, 1, 5);
         AquacultureAPI.FISH_WEIGHT.addWeight(BROWN_SHROOMA, 1, 5);
         AquacultureAPI.FISH_WEIGHT.addWeight(GOLDFISH, 1, 4);
+        //Vanilla
+        //TODO Add vanilla fish
     }
 }

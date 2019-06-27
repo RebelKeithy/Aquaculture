@@ -7,13 +7,11 @@ public class AquaConfig {
     public static final BasicOptions BASIC_OPTIONS = new BasicOptions(BUILDER);
 
     public static class BasicOptions {
-        public ForgeConfigSpec.BooleanValue randomWeightAqua;
-        public ForgeConfigSpec.BooleanValue randomWeightAll;
+        public ForgeConfigSpec.BooleanValue randomWeight;
 
         public BasicOptions(ForgeConfigSpec.Builder builder) {
             builder.push("basic options");
-            randomWeightAqua = builder.comment("Enable fish weight for all Aquaculture fish?").define("Enable Aquaculture fish weight", false);
-            randomWeightAll= builder.comment("Enable fish weight for all fish, that is not from Aquaculture?").define("Enable non-Aquaculture fish weight", false);
+            randomWeight = builder.comment("Enable weight for fish? Useful for fishing competitions").define("Add weight?", false);
             builder.pop();
         }
     }

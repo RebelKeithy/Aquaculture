@@ -1,22 +1,14 @@
 package com.teammetallurgy.aquaculture.init;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.*;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
-import net.minecraft.world.storage.loot.conditions.LootConditionManager;
-import net.minecraft.world.storage.loot.functions.ILootFunction;
-import net.minecraft.world.storage.loot.functions.LootFunctionManager;
+import net.minecraft.world.storage.loot.LootEntry;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTables;
+import net.minecraft.world.storage.loot.TableLootEntry;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLPaths;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class AquaLootTables {
@@ -37,20 +29,24 @@ public class AquaLootTables {
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
-        if (name.equals(LootTables.GAMEPLAY_FISHING_FISH)) {
+        if (name.equals(LootTables.GAMEPLAY_FISHING)) {
             LootPool pool = event.getTable().getPool("main");
             if (pool != null) {
-                pool
+                addEntry(pool, getInjectEntry(FISH, 85, -1));
+                addEntry(pool, getInjectEntry(TREASURE, 2, 1)); //Not using vanilla numbers, to make it more rare
+                addEntry(pool, getInjectEntry(JUNK, 10, -2));
             }
-            event.getTable().getPool("main").builder().addEntry(TableLootEntry.func_216171_a(FISH));
-        } else if (name.equals(LootTables.GAMEPLAY_FISHING_TREASURE)) {
-            event.getTable().getPool("main").builder().addEntry(TableLootEntry.func_216171_a(TREASURE));
-        } else if (name.equals(LootTables.GAMEPLAY_FISHING_JUNK)) {
-            event.getTable().getPool("main").builder().addEntry(TableLootEntry.func_216171_a(JUNK));
         }
     }
 
-    private static LootPool getInjectPool(ResourceLocation location) {
-        return LootPool.builder().addEntry(TableLootEntry.func_216171_a(location)).build();
+    private static LootEntry getInjectEntry(ResourceLocation location, int weight, int quality) {
+        return TableLootEntry.func_216171_a(location).weight(weight).quality(quality).func_216081_b();
+    }
+
+    private static void addEntry(LootPool pool, LootEntry entry) {
+        if (pool.lootEntries.stream().anyMatch(e -> e == entry)) {
+            throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
+        }
+        pool.lootEntries.add(entry);
     }
 }

@@ -35,7 +35,6 @@ public class Config { //TODO Old config, patially kept for reference atm.
     }
 
     private static void loadConfiguration() {
-        assignRandomWeight = config.get(categoryBasic, "Enable fish weight", true).getBoolean();
         enableNeptuniumArmor = config.get(categoryBasic, "Enable Neptunium armor", true).getBoolean(); //Not possible in 1.14
         enableNeptuniumTools = config.get(categoryBasic, "Enable Neptunium tools", true).getBoolean(); //Not possible in 1.14
         enableNeptuniumLoot = config.get(categoryBasic, "Enable Neptunium loot", true).getBoolean(); //Maybe possible, will have to look into if IConditionSerializer works for loot tables
