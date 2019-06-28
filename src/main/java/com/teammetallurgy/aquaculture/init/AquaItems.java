@@ -18,7 +18,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaItems {
-    public static List<Item> ITEMS = Lists.newArrayList();
+    private static List<Item> ITEMS = Lists.newArrayList();
     public static final Item IRON_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.IRON, new Item.Properties().defaultMaxDamage(75).group(Aquaculture.TAB)), "iron_fishing_rod");
     public static final Item GOLD_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(50).group(Aquaculture.TAB)), "gold_fishing_rod");
     public static final Item DIAMOND_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(250).group(Aquaculture.TAB)), "diamond_fishing_rod");
@@ -27,11 +27,11 @@ public class AquaItems {
     // Neptunium
     public static final Item NEPTUNIUM_INGOT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "neptunium_ingot");
 
-    public static final Item NEPTUNIUM_PICKAXE = register(new AquaItemPickaxe(AquacultureAPI.MATS.NEPTUNIUM_TOOL, 1, -2.8F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_pickaxe");
-    public static final Item NEPTUNIUM_SHOVEL = register(new ShovelItem(AquacultureAPI.MATS.NEPTUNIUM_TOOL, 1.5F, -3.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_shovel");
-    public static final Item NEPTUNIUM_AXE = register(new AquaAxeItem(AquacultureAPI.MATS.NEPTUNIUM_TOOL, 8.0F, -3.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_axe");
-    public static final Item NEPTUNIUM_HOE = register(new HoeItem(AquacultureAPI.MATS.NEPTUNIUM_TOOL, 0.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_hoe");
-    public static final Item NEPTUNIUM_SWORD = register(new SwordItem(AquacultureAPI.MATS.NEPTUNIUM_TOOL, 3, -2.4F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_sword");
+    public static final Item NEPTUNIUM_PICKAXE = register(new AquaItemPickaxe(AquacultureAPI.MATS.NEPTUNIUM, 1, -2.8F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_pickaxe");
+    public static final Item NEPTUNIUM_SHOVEL = register(new ShovelItem(AquacultureAPI.MATS.NEPTUNIUM, 1.5F, -3.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_shovel");
+    public static final Item NEPTUNIUM_AXE = register(new AquaAxeItem(AquacultureAPI.MATS.NEPTUNIUM, 8.0F, -3.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_axe");
+    public static final Item NEPTUNIUM_HOE = register(new HoeItem(AquacultureAPI.MATS.NEPTUNIUM, 0.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_hoe");
+    public static final Item NEPTUNIUM_SWORD = register(new SwordItem(AquacultureAPI.MATS.NEPTUNIUM, 3, -2.4F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_sword");
 
     public static final Item NEPTUNIUM_HELMET = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.HEAD, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_helmet");
     public static final Item NEPTUNIUM_PLATE = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.CHEST, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_chestplate");
@@ -39,6 +39,7 @@ public class AquaItems {
     public static final Item NEPTUNIUM_BOOTS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.FEET, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
 
     // Misc
+    public static final Item FILLET_KNIFE = register(new Item(new Item.Properties().group(Aquaculture.TAB).defaultMaxDamage(150)), "fillet_knife");
     public static final Item DRIFTWOOD = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "driftwood");
     public static final Item TIN_CAN = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "tin_can");
     public static final Item NESSAGE_IN_A_BOTTLE = register(new ItemMessageInABottle(new Item.Properties().group(Aquaculture.TAB)), "message_in_a_bottle");

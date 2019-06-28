@@ -32,7 +32,9 @@ public class FishData {
 
     public void addAll(Item fish, int min, int max, int filletAmount) {
         this.addWeight(fish, min, max);
-        this.addFilletAmount(fish, filletAmount);
+        if (filletAmount > 0) {
+            this.addFilletAmount(fish, filletAmount);
+        }
     }
 
     public void addFilletAmount(Item fish, int filletAmount) {
@@ -41,5 +43,9 @@ public class FishData {
 
     public boolean hasFilletAmount(Item fish) {
         return FILLET_AMOUNT.containsKey(fish);
+    }
+
+    public int getFilletAmount(Item fish) {
+        return FILLET_AMOUNT.get(fish);
     }
 }

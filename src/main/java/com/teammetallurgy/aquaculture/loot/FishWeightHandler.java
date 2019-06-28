@@ -125,8 +125,8 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.addAll(BROWN_SHROOMA, 1, 5, 0);
         AquacultureAPI.FISH_DATA.addAll(GOLDFISH, 1, 4, 0);
         //Vanilla
-        AquacultureAPI.FISH_DATA.addAll(Items.COD, 1, 210, 6);
-        AquacultureAPI.FISH_DATA.addAll(Items.SALMON, 1, 135, 5);
+        AquacultureAPI.FISH_DATA.addAll(Items.COD, 1, 210, 4);
+        AquacultureAPI.FISH_DATA.addAll(Items.SALMON, 1, 135, 3);
         AquacultureAPI.FISH_DATA.addAll(Items.TROPICAL_FISH, 1, 5, 0);
         AquacultureAPI.FISH_DATA.addAll(Items.PUFFERFISH, 1, 25);
     }

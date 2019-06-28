@@ -11,7 +11,7 @@ import net.minecraft.util.SoundEvents;
 import javax.annotation.Nonnull;
 
 public class AquaMats {
-    public IItemTier NEPTUNIUM_TOOL = new IItemTier() {
+    public IItemTier NEPTUNIUM = new IItemTier() {
         @Override
         public int getMaxUses() {
             return 2500;
