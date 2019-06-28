@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/syndontis"
+        "layer0": "aquaculture:items/synodontis"
     }
 }

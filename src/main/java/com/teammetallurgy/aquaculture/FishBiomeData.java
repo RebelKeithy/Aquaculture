@@ -37,7 +37,7 @@ public class BiomeType {
         fishRarity.put("Capitaine", 1);
         fishRarity.put("Boulti", 30);
         fishRarity.put("Bagrid", 20);
-        fishRarity.put("Syndontis", 60);
+        fishRarity.put("synodontis", 60);
 
         // Mushroom
 }*/

@@ -92,7 +92,7 @@ public class AquaItems {
     public static final Item CAPITAINE = register(new FishItem(), "capitaine");
     public static final Item BOULTI = register(new FishItem(), "boulti");
     public static final Item BAGRID = register(new FishItem(), "bagrid");
-    public static final Item SYNDONTIS = register(new FishItem(), "syndontis");
+    public static final Item SYNODONTIS = register(new FishItem(), "synodontis");
     public static final Item RED_SHROOMA = register(new FishItem(), "red_shrooma");
     public static final Item BROWN_SHROOMA = register(new FishItem(), "brown_shrooma");
     public static final Item GOLDFISH = register(new FishItem(), "goldfish");

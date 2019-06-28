@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.entity;
 
+import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
@@ -28,7 +29,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     @Override
     @Nonnull
     public EntityType<?> getType() {
-        return super.getType(); //AquaEntities.FISH_HOOK
+        return AquaEntities.FISH_HOOK; //AquaEntities.FISH_HOOK
     }
 
     @Override
