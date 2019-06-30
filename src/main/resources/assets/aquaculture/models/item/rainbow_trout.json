@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/trout_rainbow"
+        "layer0": "aquaculture:items/rainbow_trout"
     }
 }

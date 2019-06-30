@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/salmon_pink"
+        "layer0": "aquaculture:items/pink_salmon"
     }
 }
