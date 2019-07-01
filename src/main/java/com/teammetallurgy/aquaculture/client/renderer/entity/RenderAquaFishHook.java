@@ -25,14 +25,11 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
 
     public RenderAquaFishHook(EntityRendererManager manager) {
         super(manager);
-        System.out.println("RenderAquaFishHook constructor");
     }
 
     @Override
     public void doRender(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) {
         PlayerEntity angler = bobber.getAngler();
-        System.out.println("Render RenderAquaFishHook");
-
         if (angler != null && !this.renderOutlines) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef((float) x, (float) y, (float) z);

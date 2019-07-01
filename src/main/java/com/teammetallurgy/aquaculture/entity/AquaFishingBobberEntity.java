@@ -1,23 +1,34 @@
 package com.teammetallurgy.aquaculture.entity;
 
+import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.IPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
+import net.minecraftforge.fml.network.FMLPlayMessages;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public class AquaFishingBobberEntity extends FishingBobberEntity {
     private final int luck;
+
+    public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawPacket, World world) {
+        super(world, Minecraft.getInstance().player, 0, 0, 0);
+        this.luck = 0;
+
+    }
 
     public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed) {
         super(player, world, luck, lureSpeed);
@@ -28,7 +39,13 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     @Override
     @Nonnull
     public EntityType<?> getType() {
-        return super.getType(); //AquaEntities.FISH_HOOK
+        return AquaEntities.FISH_HOOK;
+    }
+
+    @Override
+    @Nonnull
+    public IPacket<?> createSpawnPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override

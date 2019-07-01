@@ -18,8 +18,9 @@ public class AquaEntities {
             .disableSerialization()
             .disableSummoning()
             .size(0.25F, 0.25F)
-            .setTrackingRange(64)
-            .setUpdateInterval(5));
+            .setTrackingRange(4)
+            .setUpdateInterval(5)
+            .setCustomClientFactory(AquaFishingBobberEntity::new));
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
