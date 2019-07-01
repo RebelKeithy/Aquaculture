@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/fish_bones"
+        "layer0": "aquaculture:item/fish_bones"
     }
 }

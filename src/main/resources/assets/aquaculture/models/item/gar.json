@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/gar"
+        "layer0": "aquaculture:item/gar"
     }
 }

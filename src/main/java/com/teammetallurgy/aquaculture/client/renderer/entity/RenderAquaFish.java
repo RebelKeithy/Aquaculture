@@ -30,11 +30,11 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
         ResourceLocation location = fishEntity.getType().getRegistryName();
         if (location != null) {
             switch (location.getPath()) {
-                case "blackfish": //TODO, just a test
-                    field_77045_g = TROPICAL_FISH_A_MODEL;
+                case "bluegill":
+                    this.field_77045_g = TROPICAL_FISH_A_MODEL;
                     break;
                 default:
-                    field_77045_g = COD_MODEL;
+                    this.field_77045_g = COD_MODEL;
                     break;
             }
         }

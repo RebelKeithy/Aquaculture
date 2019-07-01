@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/bass"
+        "layer0": "aquaculture:item/bass"
     }
 }

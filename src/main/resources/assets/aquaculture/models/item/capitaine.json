@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/capitaine"
+        "layer0": "aquaculture:item/capitaine"
     }
 }

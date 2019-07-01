@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "aquaculture:items/neptunium_hoe"
+        "layer0": "aquaculture:item/neptunium_hoe"
     }
 }

@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "aquaculture:items/neptunium_pickaxe"
+        "layer0": "aquaculture:item/neptunium_pickaxe"
     }
 }

@@ -57,8 +57,5 @@ public class FishRegistry {
             event.getRegistry().register(entityType);
             EntitySpawnPlacementRegistry.register(entityType, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::func_223363_b);
         }
-        /*Item bucket = new FishBucketItem(EntityType.COD, Fluids.WATER, (new Item.Properties()).maxStackSize(1).group(Aquaculture.TAB));
-        bucket.setRegistryName(new ResourceLocation(Aquaculture.MOD_ID, Objects.requireNonNull(EntityType.COD.getRegistryName()).getPath() + "_bucket"));
-        ForgeRegistries.ITEMS.register(bucket); //Can't use the RegistryEvent, since items gets registered before entities*/
     }
 }

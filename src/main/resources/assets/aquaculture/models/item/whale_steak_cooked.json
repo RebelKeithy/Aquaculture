@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/whale_steak_cooked"
+        "layer0": "aquaculture:item/whale_steak_cooked"
     }
 }

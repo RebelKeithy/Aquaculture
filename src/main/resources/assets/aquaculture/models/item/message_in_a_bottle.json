@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/message_in_a_bottle"
+        "layer0": "aquaculture:item/message_in_a_bottle"
     }
 }

@@ -1,7 +1,7 @@
 {
     "parent": "item/handheld_rod",
     "textures": {
-        "layer0": "aquaculture:items/admin_fishing_rod_uncast"
+        "layer0": "aquaculture:item/admin_fishing_rod_uncast"
     },
     "overrides": [
         {

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/neptunes_bounty"
+        "layer0": "aquaculture:item/neptunes_bounty"
     }
 }

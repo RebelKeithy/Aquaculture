@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:items/frog_legs_raw"
+        "layer0": "aquaculture:item/frog_legs_raw"
     }
 }
