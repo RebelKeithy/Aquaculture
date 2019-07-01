@@ -1,6 +1,6 @@
 package com.teammetallurgy.aquaculture;
 
-import com.teammetallurgy.aquaculture.client.RenderAquaFishHook;
+import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaFishHook;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;

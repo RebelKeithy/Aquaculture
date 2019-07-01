@@ -31,8 +31,8 @@ public class BiomeTagCheck implements ILootCondition {
         }
 
         @Override
-        public void serialize(JsonObject json, BiomeTagCheck value, @Nonnull JsonSerializationContext context) {
-            json.add("predicate", value.predicate.serialize());
+        public void serialize(JsonObject json, BiomeTagCheck tagCheck, @Nonnull JsonSerializationContext context) {
+            json.add("predicate", tagCheck.predicate.serialize());
         }
 
         @Override

@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.client;
+package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;

@@ -31,6 +31,8 @@ public class BiomeTagPredicate {
         this.z = z;
         this.include = include;
         this.exclude = exclude;
+
+        System.out.println(getValidBiomes());
     }
 
     public boolean test(ServerWorld world, float x, float y, float z) {
@@ -41,38 +43,42 @@ public class BiomeTagPredicate {
         } else if (!this.z.test(z)) {
             return false;
         } else {
-            List<Biome> biomes = Lists.newArrayList();
-            List<BiomeDictionary.Type> includeList = this.include;
-            List<BiomeDictionary.Type> excludeList = this.exclude;
-
-            if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
-                for (BiomeDictionary.Type type : BiomeDictionary.Type.getAll()) {
-                    if (type != BiomeDictionary.Type.NETHER && type != BiomeDictionary.Type.END && type != BiomeDictionary.Type.VOID) {
-                        biomes.addAll(BiomeDictionary.getBiomes(type));
-                    }
-                }
-            }
-            if (!includeList.isEmpty()) {
-                for (BiomeDictionary.Type type : includeList) {
-                    if (type == null) {
-                        Aquaculture.LOG.error("Failed to include BiomeDictionary Tag. Please check your loot tables");
-                    } else {
-                        biomes.addAll(BiomeDictionary.getBiomes(type));
-                    }
-                }
-            }
-            if (!excludeList.isEmpty()) {
-                for (BiomeDictionary.Type type : excludeList) {
-                    if (type == null) {
-                        Aquaculture.LOG.error("Failed to exclude BiomeDictionary Tag. Please check your loot tables");
-                    } else {
-                        biomes.removeAll(BiomeDictionary.getBiomes(type));
-                    }
-                }
-            }
             BlockPos pos = new BlockPos((double) x, (double) y, (double) z);
-            return biomes.contains(world.getBiome(pos));
+            return this.getValidBiomes().contains(world.getBiome(pos));
         }
+    }
+
+    public List<Biome> getValidBiomes() {
+        List<Biome> biomes = Lists.newArrayList();
+        List<BiomeDictionary.Type> includeList = this.include;
+        List<BiomeDictionary.Type> excludeList = this.exclude;
+
+        if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
+            for (BiomeDictionary.Type type : BiomeDictionary.Type.getAll()) {
+                if (type != BiomeDictionary.Type.NETHER && type != BiomeDictionary.Type.END && type != BiomeDictionary.Type.VOID) {
+                    biomes.addAll(BiomeDictionary.getBiomes(type));
+                }
+            }
+        }
+        if (!includeList.isEmpty()) {
+            for (BiomeDictionary.Type type : includeList) {
+                if (type == null) {
+                    Aquaculture.LOG.error("Failed to include BiomeDictionary Tag. Please check your loot tables");
+                } else {
+                    biomes.addAll(BiomeDictionary.getBiomes(type));
+                }
+            }
+        }
+        if (!excludeList.isEmpty()) {
+            for (BiomeDictionary.Type type : excludeList) {
+                if (type == null) {
+                    Aquaculture.LOG.error("Failed to exclude BiomeDictionary Tag. Please check your loot tables");
+                } else {
+                    biomes.removeAll(BiomeDictionary.getBiomes(type));
+                }
+            }
+        }
+        return biomes;
     }
 
     public JsonElement serialize() {
@@ -115,6 +121,7 @@ public class BiomeTagPredicate {
                     include.add(BiomeDictionaryHelper.getType(includeArray.get(entry).getAsString()));
                 }
             }
+
             List<BiomeDictionary.Type> exclude = Lists.newArrayList();
             if (location.has("exclude")) {
                 JsonArray excludeArray = JSONUtils.getJsonArray(location, "exclude");

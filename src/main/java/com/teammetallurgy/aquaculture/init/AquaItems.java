@@ -84,8 +84,8 @@ public class AquaItems {
     public static final Item TAMBAQUI = register(new FishItem(), "tambaqui");
     public static final Item ARAPAIMA = register(new FishItem(), "arapaima");
     public static final Item POLLOCK = register(new FishItem(), "pollock");
-    public static final Item HERRING = register(new FishItem(), "herring");
-    public static final Item HALIBUT = register(new FishItem(), "halibut");
+    public static final Item ATLANTIC_HERRING = register(new FishItem(), "atlantic_herring");
+    public static final Item PACIFIC_HALIBUT = register(new FishItem(), "pacific_halibut");
     public static final Item PINK_SALMON = register(new FishItem(), "pink_salmon");
     public static final Item RAINBOW_TROUT = register(new FishItem(), "rainbow_trout");
     public static final Item BLACKFISH = register(new FishItem(), "blackfish");

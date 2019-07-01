@@ -114,8 +114,8 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.addAll(TAMBAQUI, 1, 75, 4);
         AquacultureAPI.FISH_DATA.addAll(ARAPAIMA, 1, 220, 6);
         AquacultureAPI.FISH_DATA.addAll(POLLOCK, 1, 45, 3);
-        AquacultureAPI.FISH_DATA.addAll(HERRING, 1, 3);
-        AquacultureAPI.FISH_DATA.addAll(HALIBUT, 1, 700, 7);
+        AquacultureAPI.FISH_DATA.addAll(ATLANTIC_HERRING, 1, 3);
+        AquacultureAPI.FISH_DATA.addAll(PACIFIC_HALIBUT, 1, 700, 7);
         AquacultureAPI.FISH_DATA.addAll(PINK_SALMON, 1, 100, 5);
         AquacultureAPI.FISH_DATA.addAll(RAINBOW_TROUT, 1, 50, 4);
         AquacultureAPI.FISH_DATA.addAll(BLACKFISH, 1, 10, 2);
