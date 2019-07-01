@@ -15,20 +15,17 @@ import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-@OnlyIn(Dist.CLIENT)
 public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> {
     private static final ResourceLocation BOBBER = new ResourceLocation("textures/entity/fishing_hook.png");
 
     public RenderAquaFishHook(EntityRendererManager manager) {
         super(manager);
-        System.out.println("RenderAquaFishHook");
+        System.out.println("RenderAquaFishHook constructor");
     }
 
     @Override
