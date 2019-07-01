@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.items;
+package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.item.Item;

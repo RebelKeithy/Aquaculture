@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.misc;
+package com.teammetallurgy.aquaculture.item.crafting;
 
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
@@ -119,6 +119,6 @@ public class FishFilletRecipe extends SpecialRecipe {
 
     @SubscribeEvent
     public static void registerRecipe(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        event.getRegistry().register(FISH_FILLET_SERIALIZER);
+        //event.getRegistry().register(FISH_FILLET_SERIALIZER);
     }
 }

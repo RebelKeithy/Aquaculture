@@ -48,7 +48,8 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "include": ["OCEAN", "BEACH"]
+                    "include": ["WATER", "BEACH", "SWAMP"],
+                    "exclude": ["SNOWY"]
                   }
                 }
               ]
@@ -66,13 +67,14 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "include": ["OCEAN", "BEACH"]
+                    "include": ["OCEAN", "BEACH"],
+                    "exclude": ["HOT", "SNOWY"]
                   }
                 }
               ]
             }
           ],
-          "weight": 8,
+          "weight": 9,
           "name": "minecraft:kelp"
         },
         {

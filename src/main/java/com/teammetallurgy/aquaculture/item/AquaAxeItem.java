@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.items;
+package com.teammetallurgy.aquaculture.item;
 
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.IItemTier;

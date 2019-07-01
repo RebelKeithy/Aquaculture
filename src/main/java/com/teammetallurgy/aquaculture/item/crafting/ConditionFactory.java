@@ -1,7 +1,8 @@
-package com.teammetallurgy.aquaculture.misc;
+package com.teammetallurgy.aquaculture.item.crafting;
 
 import com.google.gson.JsonObject;
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;

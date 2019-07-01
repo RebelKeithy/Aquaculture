@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.items;
+package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
