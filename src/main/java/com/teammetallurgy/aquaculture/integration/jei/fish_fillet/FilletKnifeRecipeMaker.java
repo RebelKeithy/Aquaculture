@@ -20,11 +20,15 @@ public class FilletKnifeRecipeMaker {
         List<ShapelessRecipe> recipes = new ArrayList<>();
 
         for (Item fish : AquacultureAPI.FISH_DATA.getFish()) {
-            NonNullList<Ingredient> input = NonNullList.from(Ingredient.fromItems(AquaItems.FILLET_KNIFE), Ingredient.fromItems(fish));
-            ItemStack output = new ItemStack(AquaItems.FISH_FILLET, AquacultureAPI.FISH_DATA.getFilletAmount(fish));
-            ResourceLocation id = new ResourceLocation(Aquaculture.MOD_ID, "fish_fillet." + fish.getRegistryName());
-            ShapelessRecipe recipe = new ShapelessRecipe(id, VanillaRecipeCategoryUid.CRAFTING.getPath(), output, input);
-            recipes.add(recipe);
+            NonNullList<Ingredient> input = NonNullList.from(Ingredient.EMPTY, Ingredient.fromItems(AquaItems.FILLET_KNIFE), Ingredient.fromItems(fish));
+            if (AquacultureAPI.FISH_DATA.hasFilletAmount(fish)) {
+                ItemStack output = new ItemStack(AquaItems.FISH_FILLET, AquacultureAPI.FISH_DATA.getFilletAmount(fish));
+                if (fish.getRegistryName() != null) {
+                    ResourceLocation id = new ResourceLocation(Aquaculture.MOD_ID, "fish_fillet." + fish.getRegistryName().getPath());
+                    ShapelessRecipe recipe = new ShapelessRecipe(id, VanillaRecipeCategoryUid.CRAFTING.getPath(), output, input);
+                    recipes.add(recipe);
+                }
+            }
         }
         return recipes;
     }

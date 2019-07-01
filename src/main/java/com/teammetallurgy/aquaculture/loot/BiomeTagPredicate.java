@@ -71,7 +71,6 @@ public class BiomeTagPredicate {
                 }
             }
             BlockPos pos = new BlockPos((double) x, (double) y, (double) z);
-            //System.out.println(biomes);
             return biomes.contains(world.getBiome(pos));
         }
     }
