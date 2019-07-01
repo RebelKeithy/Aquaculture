@@ -2,7 +2,9 @@ package com.teammetallurgy.aquaculture.api.fish;
 
 import net.minecraft.item.Item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class FishData {
     private HashMap<Item, Integer> WEIGHT_MIN = new HashMap<>();
@@ -24,6 +26,10 @@ public class FishData {
 
     public boolean hasWeight(Item fish) {
         return WEIGHT_MIN.containsKey(fish) || WEIGHT_MAX.containsKey(fish);
+    }
+
+    public List<Item> getFish() {
+        return new ArrayList<>(WEIGHT_MIN.keySet());
     }
 
     public void addAll(Item fish, int min, int max) {

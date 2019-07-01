@@ -97,7 +97,7 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
                 anglerX = MathHelper.lerp((double) partialTicks, angler.prevPosX, angler.posX) - cos * handOffset - sin * 0.8D;
                 anglerY = angler.prevPosY + (double) angler.getEyeHeight() + (angler.posY - angler.prevPosY) * (double) partialTicks - 0.45D;
                 anglerZ = MathHelper.lerp((double) partialTicks, angler.prevPosZ, angler.posZ) - sin * handOffset + cos * 0.8D;
-                anglerEye = angler.func_213287_bg() ? -0.1875D : 0.0D;
+                anglerEye = angler.shouldRenderSneaking() ? -0.1875D : 0.0D;
             }
 
             fov = MathHelper.lerp((double) partialTicks, bobber.prevPosX, bobber.posX);

@@ -22,10 +22,6 @@ repositories {
     name = "JEI maven"
     url = "https://dvs1.progwml6.com/files/maven/"
   }
-  maven {
-    name = "JEI backup maven"
-    url = "https://modmaven.k-4u.nl"
-  }
 }
 
 minecraft {
@@ -54,8 +50,8 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    //compileOnly fg.deobf("mezz.jei:jei-1.14.2:${jei_version}:api")
-    //runtimeOnly fg.deobf("mezz.jei:jei-1.14.2:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 }
 
 jar {

@@ -29,13 +29,15 @@ public class FishWeightHandler {
 
     @SubscribeEvent
     public static void onItemFished(ItemFishedEvent event) {
-        ItemStack fish = event.getDrops().get(0);
-        if (AquaConfig.BASIC_OPTIONS.randomWeight.get()) {
-            if (AquacultureAPI.FISH_DATA.hasWeight(fish.getItem())) {
-                FishData fishWeight = AquacultureAPI.FISH_DATA;
-                assignRandomWeight(fish, fishWeight.getMinWeight(fish.getItem()), fishWeight.getMaxWeight(fish.getItem()));
-            } else if (fish.getItem().isIn(ItemTags.FISHES)) { //Adds weight to any fish that does not have one specified
-                assignRandomWeight(fish, 0, 100);
+        if (!event.getDrops().isEmpty()) {
+            ItemStack fish = event.getDrops().get(0);
+            if (AquaConfig.BASIC_OPTIONS.randomWeight.get()) {
+                if (AquacultureAPI.FISH_DATA.hasWeight(fish.getItem())) {
+                    FishData fishWeight = AquacultureAPI.FISH_DATA;
+                    assignRandomWeight(fish, fishWeight.getMinWeight(fish.getItem()), fishWeight.getMaxWeight(fish.getItem()));
+                } else if (fish.getItem().isIn(ItemTags.FISHES)) { //Adds weight to any fish that does not have one specified
+                    assignRandomWeight(fish, 0, 100);
+                }
             }
         }
     }
