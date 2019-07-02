@@ -40,7 +40,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     @Override
     @Nonnull
     public EntityType<?> getType() {
-        return AquaEntities.FISH_HOOK;
+        return AquaEntities.BOBBER;
     }
 
     @Override

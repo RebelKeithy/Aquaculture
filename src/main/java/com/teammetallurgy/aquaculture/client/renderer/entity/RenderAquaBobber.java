@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -20,15 +21,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> {
-    private static final ResourceLocation BOBBER = new ResourceLocation("textures/entity/fishing_hook.png");
+public class RenderAquaBobber extends EntityRenderer<AquaFishingBobberEntity> {
+    private static final ResourceLocation BOBBER = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber.png");
+    private static final ResourceLocation HOOK = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/hook.png");
 
-    public RenderAquaFishHook(EntityRendererManager manager) {
+    public RenderAquaBobber(EntityRendererManager manager) {
         super(manager);
     }
 
     @Override
-    public void doRender(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void doRender(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) { //Render bobber and line
         PlayerEntity angler = bobber.getAngler();
         if (angler != null && !this.renderOutlines) {
             GlStateManager.pushMatrix();
@@ -114,6 +116,46 @@ public class RenderAquaFishHook extends EntityRenderer<AquaFishingBobberEntity> 
             GlStateManager.enableLighting();
             GlStateManager.enableTexture();
             super.doRender(bobber, x, y, z, entityYaw, partialTicks);
+        }
+    }
+
+    @Override
+    public boolean isMultipass() {
+        return true;
+    }
+
+    @Override
+    public void renderMultipass(AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) { //Render hook
+        PlayerEntity angler = bobber.getAngler();
+        if (angler != null && !this.renderOutlines) {
+            GlStateManager.pushMatrix();
+            GlStateManager.translatef((float) x, (float) y, (float) z);
+            GlStateManager.enableRescaleNormal();
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
+            this.bindTexture(HOOK);
+            Tessellator tessellator = Tessellator.getInstance();
+            BufferBuilder builder = tessellator.getBuffer();
+            GlStateManager.rotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotatef((float) (this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+            if (this.renderOutlines) {
+                GlStateManager.enableColorMaterial();
+                GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(bobber));
+            }
+
+            builder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+            builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            tessellator.draw();
+            if (this.renderOutlines) {
+                GlStateManager.tearDownSolidRenderingTextureCombine();
+                GlStateManager.disableColorMaterial();
+            }
+
+            GlStateManager.disableRescaleNormal();
+            GlStateManager.popMatrix();
+            super.renderMultipass(bobber, x, y, z, entityYaw, partialTicks);
         }
     }
 

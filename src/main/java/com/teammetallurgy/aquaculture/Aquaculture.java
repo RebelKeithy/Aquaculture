@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture;
 
 import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaFish;
-import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaFishHook;
+import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaBobber;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.init.AquaItems;
@@ -53,7 +53,7 @@ public class Aquaculture {
     }
 
     private void setupClient(FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(AquaFishingBobberEntity.class, RenderAquaFishHook::new);
+        RenderingRegistry.registerEntityRenderingHandler(AquaFishingBobberEntity.class, RenderAquaBobber::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaFishEntity.class, RenderAquaFish::new);
     }
 }
