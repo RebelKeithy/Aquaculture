@@ -138,7 +138,7 @@ public class AquaItems {
         for (Item item : ITEMS) {
             event.getRegistry().register(item);
         }
-        for (EntityType fishType : FishRegistry.fishEntities) { //Register Fish buckets
+        for (EntityType fishType : FishRegistry.fishEntities) { //Registers fish buckets
             if (fishType.getRegistryName() != null) {
                 Item bucket = new FishBucketItem(fishType, Fluids.WATER, (new Item.Properties()).maxStackSize(1).group(Aquaculture.TAB));
                 bucket.setRegistryName(fishType.getRegistryName().getPath() + "_bucket");

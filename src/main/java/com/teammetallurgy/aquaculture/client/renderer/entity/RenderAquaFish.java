@@ -22,7 +22,7 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
 
     public RenderAquaFish(EntityRendererManager manager) {
         super(manager, COD_MODEL, 0.3F);
-        this.shadowSize = this.field_77045_g == SALMON_MODEL ? 0.4F : this.field_77045_g == TROPICAL_FISH_A_MODEL ? 0.15F : 0.3F;
+        this.shadowSize = this.entityModel == SALMON_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL ? 0.15F : 0.3F;
     }
 
     @Override
@@ -31,10 +31,10 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
         if (location != null) {
             switch (location.getPath()) {
                 case "bluegill":
-                    this.field_77045_g = TROPICAL_FISH_A_MODEL;
+                    this.entityModel = TROPICAL_FISH_A_MODEL;
                     break;
                 default:
-                    this.field_77045_g = COD_MODEL;
+                    this.entityModel = COD_MODEL;
                     break;
             }
         }
@@ -56,20 +56,20 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
         super.applyRotations(fishEntity, ageInTicks, rotationYaw, partialTicks);
         float salmonRotation = 1.0F;
         float salmonMultiplier = 1.0F;
-        if (this.field_77045_g == SALMON_MODEL) {
+        if (this.entityModel == SALMON_MODEL) {
             if (!fishEntity.isInWater()) {
                 salmonRotation = 1.3F;
                 salmonMultiplier = 1.7F;
             }
         }
-        float fishRotation = this.field_77045_g == SALMON_MODEL ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
+        float fishRotation = this.entityModel == SALMON_MODEL ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
 
         GlStateManager.rotatef(fishRotation, 0.0F, 1.0F, 0.0F);
-        if (this.field_77045_g == SALMON_MODEL) {
+        if (this.entityModel == SALMON_MODEL) {
             GlStateManager.translatef(0.0F, 0.0F, -0.4F);
         }
         if (!fishEntity.isInWater()) {
-            if (this.field_77045_g == COD_MODEL) {
+            if (this.entityModel == COD_MODEL) {
                 GlStateManager.translatef(0.1F, 0.1F, -0.1F);
             } else {
                 GlStateManager.translatef(0.2F, 0.1F, 0.0F);
