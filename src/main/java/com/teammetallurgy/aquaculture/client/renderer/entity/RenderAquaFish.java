@@ -5,10 +5,7 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.CodModel;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.SalmonModel;
-import net.minecraft.client.renderer.entity.model.TropicalFishAModel;
+import net.minecraft.client.renderer.entity.model.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
@@ -17,6 +14,7 @@ import javax.annotation.Nullable;
 
 public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<AquaFishEntity>> {
     private static final TropicalFishAModel<AquaFishEntity> TROPICAL_FISH_A_MODEL = new TropicalFishAModel<>();
+    private static final TropicalFishBModel<AquaFishEntity> TROPICAL_FISH_B_MODEL = new TropicalFishBModel<>();
     private static final CodModel<AquaFishEntity> COD_MODEL = new CodModel<>();
     private static final SalmonModel<AquaFishEntity> SALMON_MODEL = new SalmonModel<>();
 

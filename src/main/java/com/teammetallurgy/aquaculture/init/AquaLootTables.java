@@ -36,7 +36,7 @@ public class AquaLootTables {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.BASIC_OPTIONS.addNeptunesBountyToLoot.get()) {
-                    addEntry(pool, getInjectEntry(TREASURE, 3, 1)); //Not using vanilla numbers, to make it more rare
+                    addEntry(pool, getInjectEntry(TREASURE, 2, 2)); //Not using vanilla numbers, to make it more rare
                 }
             }
         }
