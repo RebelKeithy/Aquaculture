@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
@@ -50,7 +51,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
 
     @Override
     public int handleHookRetraction(@Nonnull ItemStack stack) {
-        if (stack.getItem() == AquaItems.ADMIN_FISHING_ROD) {
+        if (AquaConfig.BASIC_OPTIONS.debugMode.get() && stack.getItem() == AquaItems.NEPTUNIUM_FISHING_ROD) {
             if (this.world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) this.world;
                 LootContext.Builder builder = new LootContext.Builder(serverWorld).withParameter(LootParameters.POSITION, new BlockPos(this)).withParameter(LootParameters.TOOL, stack).withRandom(this.rand).withLuck((float) this.luck + this.angler.getLuck());

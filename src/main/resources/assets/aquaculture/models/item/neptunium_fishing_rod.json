@@ -1,14 +1,14 @@
 {
     "parent": "item/handheld_rod",
     "textures": {
-        "layer0": "aquaculture:item/admin_fishing_rod_uncast"
+        "layer0": "aquaculture:item/neptunium_fishing_rod_uncast"
     },
     "overrides": [
         {
             "predicate": {
                 "cast": 1
             },
-            "model": "aquaculture:item/admin_fishing_rod_cast"
+            "model": "aquaculture:item/neptunium_fishing_rod_cast"
         }
     ]
 }

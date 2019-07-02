@@ -4,7 +4,7 @@
   "item.aquaculture.iron_fishing_rod": "Iron Fishing Rod",
   "item.aquaculture.gold_fishing_rod": "Golden Fishing Rod",
   "item.aquaculture.diamond_fishing_rod": "Diamond Fishing Rod",
-  "item.aquaculture.admin_fishing_rod": "Admin Fishing Rod",
+  "item.aquaculture.neptunium_fishing_rod": "Neptunium Fishing Rod",
 
   "_comment": "Food",
   "item.aquaculture.whale_steak_raw": "Raw Whale Steak",
@@ -88,7 +88,7 @@
   "item.aquaculture.sardine": "Sardine",
   "item.aquaculture.shark": "Shark",
   "item.aquaculture.squid": "Squid",
-  "item.aquaculture.swordfish": "Sword Fish",
+  "item.aquaculture.swordfish": "Swordfish",
   "item.aquaculture.tarpon": "Tarpon",
   "item.aquaculture.tuna": "Tuna",
   "item.aquaculture.whale": "Whale",
@@ -237,5 +237,6 @@
   "aquaculture.fishWeight.juvenile": "Juvenile",
   "aquaculture.fishWeight.small": "Small",
   "aquaculture.fishWeight.large": "Large",
-  "aquaculture.fishWeight.massive": "Massive"
+  "aquaculture.fishWeight.massive": "Massive",
+  "aquaculture.fishing_rod.broken": "Broken"
 }

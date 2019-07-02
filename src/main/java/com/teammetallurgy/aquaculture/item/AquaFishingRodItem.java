@@ -1,29 +1,35 @@
 package com.teammetallurgy.aquaculture.item;
 
+import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class AquaFishingRodItem extends FishingRodItem {
+    private IItemTier material;
     private int enchantability;
-    private boolean isAdminRod;
 
-    public AquaFishingRodItem(@Nullable ItemTier material, Properties properties) {
+    public AquaFishingRodItem(IItemTier material, Properties properties) {
         super(properties);
-        if (material == null) {
-            isAdminRod = true;
-        } else {
-            this.enchantability = material == ItemTier.WOOD ? 10 : material.getEnchantability();
-        }
+        this.enchantability = material == ItemTier.WOOD ? 10 : material.getEnchantability();
+        this.material = material;
     }
 
     @Override
@@ -32,15 +38,26 @@ public class AquaFishingRodItem extends FishingRodItem {
     }
 
     @Override
+    public boolean showDurabilityBar(@Nonnull ItemStack stack) {
+        return this.getDamage(stack) < this.getMaxDamage(stack) && super.showDurabilityBar(stack);
+    }
+
+    @Override
     @Nonnull
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
         int lureSpeed;
+        int damage = this.getDamage(heldStack);
+        if (damage >= this.getMaxDamage(heldStack)) return new ActionResult<>(ActionResultType.FAIL, heldStack);
         if (player.fishingBobber != null) {
             if (!world.isRemote) {
                 lureSpeed = player.fishingBobber.handleHookRetraction(heldStack);
-                if (!isAdminRod) {
-                    heldStack.damageItem(lureSpeed, player, (entity) -> entity.sendBreakAnimation(hand));
+                int currentDamage = this.getMaxDamage(heldStack) - damage;
+                if (lureSpeed >= currentDamage) {
+                    lureSpeed = currentDamage;
+                }
+                if (!(AquaConfig.BASIC_OPTIONS.debugMode.get() && this.material == AquacultureAPI.MATS.NEPTUNIUM)) {
+                    heldStack.attemptDamageItem(lureSpeed, world.rand, null);
                 }
             }
             player.swingArm(hand);
@@ -57,5 +74,13 @@ public class AquaFishingRodItem extends FishingRodItem {
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
+    }
+
+    @Override
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag tooltipFlag) {
+        if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
+            tooltips.add(new TranslationTextComponent("aquaculture.fishing_rod.broken").setStyle(new Style().setItalic(true).setColor(TextFormatting.GRAY)));
+        }
+        super.addInformation(stack, world, tooltips, tooltipFlag);
     }
 }

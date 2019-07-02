@@ -11,6 +11,7 @@ public class AquaConfig {
         public ForgeConfigSpec.BooleanValue enableNeptuniumArmor;
         public ForgeConfigSpec.BooleanValue addNeptunesBountyToLoot;
         public ForgeConfigSpec.BooleanValue randomWeight;
+        public ForgeConfigSpec.BooleanValue debugMode;
 
         public BasicOptions(ForgeConfigSpec.Builder builder) {
             builder.push("basic options");
@@ -18,6 +19,7 @@ public class AquaConfig {
             enableNeptuniumArmor = builder.comment("Enable recipes for Neptunium armor?").define("Enable Neptunium armor?", true);
             addNeptunesBountyToLoot = builder.comment("Should Neptune's bounty be added to the treasure loot table?").define("Add Neptune's Bounty as loot?", true);
             randomWeight = builder.comment("Enable weight for fish? Useful for fishing competitions").define("Add weight?", false);
+            debugMode = builder.comment("Enable Aquaculture's debug mode").define("Enable debug mode?", false);
             builder.pop();
         }
     }

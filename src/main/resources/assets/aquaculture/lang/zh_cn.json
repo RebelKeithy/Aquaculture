@@ -6,7 +6,7 @@
   "item.aquaculture.iron_fishing_rod": "铁制鱼竿",
   "item.aquaculture.gold_fishing_rod": "黄金鱼竿",
   "item.aquaculture.diamond_fishing_rod": "钻石鱼竿",
-  "item.aquaculture.admin_fishing_rod": "管理员鱼竿",
+  "item.aquaculture.neptunium_fishing_rod": "海王鱼竿",
 
 
   "_comment": "Food",
@@ -29,7 +29,7 @@
   "item.aquaculture.lockbox": "加锁盒",
   "item.aquaculture.treasure_chest": "财宝箱",
 
-  "item.aquaculture.NeptuniumIngot": "海王锭",
+  "item.aquaculture.neptunium_ingot": "海王锭",
   "item.aquaculture.neptunes_bounty": "海王恩惠",
   "item.aquaculture.neptunium_pickaxe": "海王镐",
   "item.aquaculture.neptunium_shovel": "海王铲",
