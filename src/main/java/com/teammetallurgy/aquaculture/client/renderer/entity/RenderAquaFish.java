@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishMediumModel;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -17,6 +18,7 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
     private static final TropicalFishBModel<AquaFishEntity> TROPICAL_FISH_B_MODEL = new TropicalFishBModel<>();
     private static final CodModel<AquaFishEntity> COD_MODEL = new CodModel<>();
     private static final SalmonModel<AquaFishEntity> SALMON_MODEL = new SalmonModel<>();
+    private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
 
     public RenderAquaFish(EntityRendererManager manager) {
         super(manager, COD_MODEL, 0.3F);
@@ -30,6 +32,12 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
             switch (location.getPath()) {
                 case "bluegill":
                     this.entityModel = TROPICAL_FISH_A_MODEL;
+                    break;
+                case "bass":
+                    this.entityModel = MEDIUM_MODEL;
+                    break;
+                case "pink_salmon":
+                    this.entityModel = SALMON_MODEL;
                     break;
                 default:
                     this.entityModel = COD_MODEL;
@@ -67,7 +75,7 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
             GlStateManager.translatef(0.0F, 0.0F, -0.4F);
         }
         if (!fishEntity.isInWater()) {
-            if (this.entityModel == COD_MODEL) {
+            if (this.entityModel == COD_MODEL || this.entityModel == MEDIUM_MODEL) {
                 GlStateManager.translatef(0.1F, 0.1F, -0.1F);
             } else {
                 GlStateManager.translatef(0.2F, 0.1F, 0.0F);
