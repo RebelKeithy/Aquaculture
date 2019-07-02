@@ -10,12 +10,12 @@
             {
               "condition": "aquaculture:biome_tag_check",
               "predicate": {
-                "include": ["OCEAN", "BEACH"]
+                "include": ["COLD", "OCEAN", "BEACH"]
               }
             }
           ],
-          "weight": 30,
-          "name": "aquaculture:red_grouper"
+          "weight": 45,
+          "name": "aquaculture:blackfish"
         },
         {
           "type": "minecraft:item",
@@ -23,116 +23,12 @@
             {
               "condition": "aquaculture:biome_tag_check",
               "predicate": {
-                "include": ["OCEAN", "BEACH"]
-              }
-            }
-          ],
-          "weight": 10,
-          "name": "aquaculture:tuna"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["OCEAN", "BEACH"]
-              }
-            }
-          ],
-          "weight": 5,
-          "name": "aquaculture:swordfish"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["OCEAN", "BEACH"]
+                "include": ["COLD", "OCEAN", "BEACH"]
               }
             }
           ],
           "weight": 1,
-          "name": "aquaculture:shark"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["OCEAN", "BEACH"]
-              }
-            }
-          ],
-          "weight": 1,
-          "name": "aquaculture:whale"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["OCEAN", "BEACH"]
-              }
-            }
-          ],
-          "weight": 25,
-          "name": "aquaculture:squid"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["OCEAN", "BEACH"]
-              }
-            }
-          ],
-          "weight": 40,
-          "name": "aquaculture:jellyfish"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["SWAMP"]
-              }
-            }
-          ],
-          "weight": 5,
-          "name": "aquaculture:frog"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["SWAMP"]
-              }
-            }
-          ],
-          "weight": 5,
-          "name": "aquaculture:turtle"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["SWAMP"]
-              }
-            }
-          ],
-          "weight": 30,
-          "name": "aquaculture:leech"
+          "name": "aquaculture:halibut"
         },
         {
           "type": "minecraft:item",
@@ -144,8 +40,8 @@
               }
             }
           ],
-          "weight": 60,
-          "name": "aquaculture:piranha"
+          "weight": 1,
+          "name": "aquaculture:arapaima"
         },
         {
           "type": "minecraft:item",
@@ -170,8 +66,8 @@
               }
             }
           ],
-          "weight": 5,
-          "name": "aquaculture:tambaqui"
+          "weight": 60,
+          "name": "aquaculture:piranha"
         },
         {
           "type": "minecraft:item",
@@ -183,8 +79,21 @@
               }
             }
           ],
-          "weight": 1,
-          "name": "aquaculture:arapaima"
+          "weight": 5,
+          "name": "aquaculture:tambaqui"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["MUSHROOM"]
+              }
+            }
+          ],
+          "weight": 80,
+          "name": "aquaculture:brown_shrooma"
         },
         {
           "type": "minecraft:item",
@@ -205,12 +114,129 @@
             {
               "condition": "aquaculture:biome_tag_check",
               "predicate": {
-                "include": ["MUSHROOM"]
+                "include": ["OCEAN", "BEACH"]
               }
             }
           ],
-          "weight": 80,
-          "name": "aquaculture:brown_shrooma"
+          "weight": 40,
+          "name": "aquaculture:jellyfish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["OCEAN", "BEACH"]
+              }
+            }
+          ],
+          "weight": 30,
+          "name": "aquaculture:red_grouper"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["OCEAN", "BEACH"]
+              }
+            }
+          ],
+          "weight": 1,
+          "name": "aquaculture:shark"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["OCEAN", "BEACH"]
+              }
+            }
+          ],
+          "weight": 25,
+          "name": "aquaculture:squid"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["OCEAN", "BEACH"]
+              }
+            }
+          ],
+          "weight": 5,
+          "name": "aquaculture:swordfish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["OCEAN", "BEACH"]
+              }
+            }
+          ],
+          "weight": 10,
+          "name": "aquaculture:tuna"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["OCEAN", "BEACH"]
+              }
+            }
+          ],
+          "weight": 1,
+          "name": "aquaculture:whale"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["SWAMP"]
+              }
+            }
+          ],
+          "weight": 5,
+          "name": "aquaculture:frog"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["SWAMP"]
+              }
+            }
+          ],
+          "weight": 30,
+          "name": "aquaculture:leech"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["SWAMP"]
+              }
+            }
+          ],
+          "weight": 5,
+          "name": "aquaculture:turtle"
         }
       ]
     }
