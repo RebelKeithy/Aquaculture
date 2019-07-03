@@ -15,24 +15,27 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class BiomeTagPredicate {
-    private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList());
+    private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList(), false);
     private final MinMaxBounds.FloatBound x;
     private final MinMaxBounds.FloatBound y;
     private final MinMaxBounds.FloatBound z;
     private final List<BiomeDictionary.Type> include;
     private final List<BiomeDictionary.Type> exclude;
+    private final boolean and;
 
-    public BiomeTagPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude) {
+    public BiomeTagPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.include = include;
         this.exclude = exclude;
-
-        System.out.println(getValidBiomes());
+        this.and = and;
     }
 
     public boolean test(ServerWorld world, float x, float y, float z) {
@@ -50,32 +53,30 @@ public class BiomeTagPredicate {
 
     public List<Biome> getValidBiomes() {
         List<Biome> biomes = Lists.newArrayList();
-        List<BiomeDictionary.Type> includeList = this.include;
-        List<BiomeDictionary.Type> excludeList = this.exclude;
 
-        if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
-            for (BiomeDictionary.Type type : BiomeDictionary.Type.getAll()) {
-                if (type != BiomeDictionary.Type.NETHER && type != BiomeDictionary.Type.END && type != BiomeDictionary.Type.VOID) {
-                    biomes.addAll(BiomeDictionary.getBiomes(type));
+        if (this.include.isEmpty() && !this.exclude.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
+            Set<BiomeDictionary.Type> validTags = new HashSet<>(BiomeDictionary.Type.getAll());
+            List<BiomeDictionary.Type> invalidTags = Arrays.asList(BiomeDictionary.Type.NETHER, BiomeDictionary.Type.END, BiomeDictionary.Type.VOID);
+            this.include.addAll(validTags);
+            this.exclude.addAll(invalidTags);
+        }
+
+        if (!this.include.isEmpty()) {
+            List<Biome> addBiomes = Lists.newArrayList();
+            for (BiomeDictionary.Type type : this.include) {
+                addBiomes.addAll(BiomeDictionary.getBiomes(type));
+            }
+
+            if (this.and) {
+                for (BiomeDictionary.Type type : this.include) {
+                    addBiomes.removeIf(biome -> !BiomeDictionary.hasType(biome, type));
                 }
             }
+            biomes.addAll(addBiomes);
         }
-        if (!includeList.isEmpty()) {
-            for (BiomeDictionary.Type type : includeList) {
-                if (type == null) {
-                    Aquaculture.LOG.error("Failed to include BiomeDictionary Tag. Please check your loot tables");
-                } else {
-                    biomes.addAll(BiomeDictionary.getBiomes(type));
-                }
-            }
-        }
-        if (!excludeList.isEmpty()) {
-            for (BiomeDictionary.Type type : excludeList) {
-                if (type == null) {
-                    Aquaculture.LOG.error("Failed to exclude BiomeDictionary Tag. Please check your loot tables");
-                } else {
-                    biomes.removeAll(BiomeDictionary.getBiomes(type));
-                }
+        if (!this.exclude.isEmpty()) {
+            for (BiomeDictionary.Type type : this.exclude) {
+                biomes.removeAll(BiomeDictionary.getBiomes(type));
             }
         }
         return biomes;
@@ -103,6 +104,7 @@ public class BiomeTagPredicate {
                     object.add("exclude", object.getAsJsonArray(type.toString()));
                 }
             }
+            object.addProperty("add", object.getAsBoolean());
             return object;
         }
     }
@@ -118,7 +120,11 @@ public class BiomeTagPredicate {
             if (location.has("include")) {
                 JsonArray includeArray = JSONUtils.getJsonArray(location, "include");
                 for (int entry = 0; entry < includeArray.size(); entry++) {
-                    include.add(BiomeDictionaryHelper.getType(includeArray.get(entry).getAsString()));
+                    BiomeDictionary.Type type = BiomeDictionaryHelper.getType(includeArray.get(entry).getAsString());
+                    if (type == null) {
+                        Aquaculture.LOG.error("Failed to include BiomeDictionary Tag. Please check your loot tables");
+                    }
+                    include.add(type);
                 }
             }
 
@@ -126,10 +132,19 @@ public class BiomeTagPredicate {
             if (location.has("exclude")) {
                 JsonArray excludeArray = JSONUtils.getJsonArray(location, "exclude");
                 for (int entry = 0; entry < excludeArray.size(); entry++) {
-                    exclude.add(BiomeDictionaryHelper.getType(excludeArray.get(entry).getAsString()));
+                    BiomeDictionary.Type type = BiomeDictionaryHelper.getType(excludeArray.get(entry).getAsString());
+                    if (type == null) {
+                        Aquaculture.LOG.error("Failed to exclude BiomeDictionary Tag. Please check your loot tables");
+                    }
+                    exclude.add(type);
                 }
             }
-            return new BiomeTagPredicate(x, y, z, include, exclude);
+
+            boolean and = false;
+            if (location.has("and")) {
+                and = JSONUtils.getBoolean(location, "and");
+            }
+            return new BiomeTagPredicate(x, y, z, include, exclude, and);
         } else {
             return ANY;
         }

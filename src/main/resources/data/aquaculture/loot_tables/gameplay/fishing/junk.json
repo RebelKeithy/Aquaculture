@@ -48,6 +48,15 @@
                 "include": ["WATER", "BEACH", "SWAMP"],
                 "exclude": ["SNOWY"]
               }
+            },
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:location_check",
+                "predicate": {
+                  "biome": "minecraft:deep_frozen_ocean"
+                }
+              }
             }
           ],
           "weight": 10,

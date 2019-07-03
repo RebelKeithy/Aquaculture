@@ -4,13 +4,17 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BiomeTagCheck implements ILootCondition {
     private final BiomeTagPredicate predicate;
@@ -39,6 +43,18 @@ public class BiomeTagCheck implements ILootCondition {
         @Nonnull
         public BiomeTagCheck deserialize(JsonObject json, @Nonnull JsonDeserializationContext context) {
             BiomeTagPredicate predicate = BiomeTagPredicate.deserialize(json.get("predicate"));
+
+            if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
+                List<String> strings = new ArrayList<>();
+                for (Biome biome : predicate.getValidBiomes()) {
+                    if (biome.getRegistryName() != null) {
+                        strings.add(biome.getRegistryName().getPath());
+                    }
+                }
+                Aquaculture.LOG.info("Biomes: " + strings);
+                Aquaculture.LOG.info(json.get("predicate"));
+            }
+
             return new BiomeTagCheck(predicate);
         }
     }

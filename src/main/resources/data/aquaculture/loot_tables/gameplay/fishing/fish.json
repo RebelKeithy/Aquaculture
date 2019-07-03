@@ -8,10 +8,23 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["COLD", "OCEAN", "BEACH"]
-              }
+              "condition": "minecraft:alternative",
+              "terms": [
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "OCEAN"],
+                    "and": true
+                  }
+                },
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "BEACH"],
+                    "and": true
+                  }
+                }
+              ]
             }
           ],
           "weight": 45,
@@ -21,14 +34,27 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["COLD", "OCEAN", "BEACH"]
-              }
+              "condition": "minecraft:alternative",
+              "terms": [
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "OCEAN"],
+                    "and": true
+                  }
+                },
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "BEACH"],
+                    "and": true
+                  }
+                }
+              ]
             }
           ],
           "weight": 1,
-          "name": "aquaculture:halibut"
+          "name": "aquaculture:pacific_halibut"
         },
         {
           "type": "minecraft:item",
