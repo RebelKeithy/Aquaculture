@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture;
 
-import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaFish;
 import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaBobber;
+import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaFish;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.init.AquaItems;

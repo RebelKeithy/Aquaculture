@@ -39,10 +39,12 @@ public class AquaMats {
         }
     };
     public IArmorMaterial NEPTINIUM_ARMOR = new IArmorMaterial() {
+        private final int MAX_DAMAGE_FACTOR = 75;
+
         @Override
         public int getDurability(@Nonnull EquipmentSlotType slot) {
-            int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
-            return MAX_DAMAGE_ARRAY[slot.getIndex()] * 75;
+            int[] maxDamageArray = new int[]{13, 15, 16, 11};
+            return maxDamageArray[slot.getIndex()] * MAX_DAMAGE_FACTOR;
         }
         @Override
         public int getDamageReductionAmount(@Nonnull EquipmentSlotType slot) {

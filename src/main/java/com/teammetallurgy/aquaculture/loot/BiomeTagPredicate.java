@@ -22,6 +22,7 @@ import java.util.Set;
 
 public class BiomeTagPredicate {
     private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList(), false);
+    private static final List<BiomeDictionary.Type> INVALID_TAGS = Arrays.asList(BiomeDictionary.Type.NETHER, BiomeDictionary.Type.END, BiomeDictionary.Type.VOID);
     private final MinMaxBounds.FloatBound x;
     private final MinMaxBounds.FloatBound y;
     private final MinMaxBounds.FloatBound z;
@@ -56,9 +57,8 @@ public class BiomeTagPredicate {
 
         if (this.include.isEmpty() && !this.exclude.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
             Set<BiomeDictionary.Type> validTags = new HashSet<>(BiomeDictionary.Type.getAll());
-            List<BiomeDictionary.Type> invalidTags = Arrays.asList(BiomeDictionary.Type.NETHER, BiomeDictionary.Type.END, BiomeDictionary.Type.VOID);
             this.include.addAll(validTags);
-            this.exclude.addAll(invalidTags);
+            this.exclude.addAll(INVALID_TAGS);
         }
 
         if (!this.include.isEmpty()) {
@@ -71,6 +71,10 @@ public class BiomeTagPredicate {
                 for (BiomeDictionary.Type type : this.include) {
                     addBiomes.removeIf(biome -> !BiomeDictionary.hasType(biome, type));
                 }
+            }
+
+            if (this.include.stream().noneMatch(INVALID_TAGS::contains)) { //Exclude invalid tags, as long as they're not specified in include
+                this.exclude.addAll(INVALID_TAGS);
             }
             biomes.addAll(addBiomes);
         }

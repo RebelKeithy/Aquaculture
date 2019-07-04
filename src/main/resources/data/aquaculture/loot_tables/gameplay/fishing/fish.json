@@ -62,6 +62,62 @@
             {
               "condition": "aquaculture:biome_tag_check",
               "predicate": {
+                "include": ["DRY"],
+                "exclude": ["COLD"]
+              }
+            }
+          ],
+          "weight": 20,
+          "name": "aquaculture:bagrid"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["DRY"],
+                "exclude": ["COLD"]
+              }
+            }
+          ],
+          "weight": 30,
+          "name": "aquaculture:boulti"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["DRY"],
+                "exclude": ["COLD"]
+              }
+            }
+          ],
+          "weight": 1,
+          "name": "aquaculture:capitaine"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
+                "include": ["DRY"],
+                "exclude": ["COLD"]
+              }
+            }
+          ],
+          "weight": 60,
+          "name": "aquaculture:synodontis"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aquaculture:biome_tag_check",
+              "predicate": {
                 "include": ["JUNGLE"]
               }
             }
