@@ -34,7 +34,7 @@ public class FishMediumModel<T extends Entity> extends EntityModel<T> { //Based 
         this.finLeft = new RendererModel(this, 22, 4);
         this.finLeft.setRotationPoint(1.0F, 23.0F, 0.0F);
         this.finLeft.addBox(0.0F, 0.0F, -1.0F, 2, 0, 2, 0.0F);
-        this.finLeft.rotateAngleZ = -0.7853981633974483F;
+        this.finLeft.rotateAngleZ = 0.7853981633974483F;
         this.tail = new RendererModel(this, 22, 3);
         this.tail.setRotationPoint(0.0F, 22.0F, 7.0F);
         this.tail.addBox(0.0F, -2.0F, 0.0F, 0, 4, 4, 0.0F);

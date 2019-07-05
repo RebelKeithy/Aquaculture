@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.client.renderer.entity;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishMediumModel;
+import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishSmallModel;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -18,11 +19,12 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
     private static final TropicalFishBModel<AquaFishEntity> TROPICAL_FISH_B_MODEL = new TropicalFishBModel<>();
     private static final CodModel<AquaFishEntity> COD_MODEL = new CodModel<>();
     private static final SalmonModel<AquaFishEntity> SALMON_MODEL = new SalmonModel<>();
+    private static final FishSmallModel<AquaFishEntity> SMALL_MODEL = new FishSmallModel<>();
     private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
 
     public RenderAquaFish(EntityRendererManager manager) {
         super(manager, COD_MODEL, 0.3F);
-        this.shadowSize = this.entityModel == SALMON_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL ? 0.15F : 0.3F;
+        this.shadowSize = this.entityModel == SALMON_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
     }
 
     @Override
@@ -31,9 +33,10 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
         if (location != null) {
             switch (location.getPath()) {
                 case "bluegill":
-                    this.entityModel = TROPICAL_FISH_A_MODEL;
+                    this.entityModel = SMALL_MODEL;
                     break;
                 case "bass":
+                case "brown_trout":
                     this.entityModel = MEDIUM_MODEL;
                     break;
                 case "pink_salmon":
