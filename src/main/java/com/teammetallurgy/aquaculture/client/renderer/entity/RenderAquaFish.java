@@ -98,6 +98,9 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
                 case "blackfish":
                     scale = 1.2F;
                     break;
+                case "brown_trout":
+                    scale = 0.9F;
+                    break;
             }
         }
         if (scale > 0) {
