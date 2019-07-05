@@ -32,9 +32,11 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
         ResourceLocation location = fishEntity.getType().getRegistryName();
         if (location != null) {
             switch (location.getPath()) {
+                case "atlantic_herring":
                 case "bluegill":
                     this.entityModel = SMALL_MODEL;
                     break;
+                case "blackfish":
                 case "bass":
                 case "brown_trout":
                     this.entityModel = MEDIUM_MODEL;
@@ -84,6 +86,22 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
                 GlStateManager.translatef(0.2F, 0.1F, 0.0F);
             }
             GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
+        }
+    }
+
+    @Override
+    protected void preRenderCallback(AquaFishEntity fishEntity, float partialTickTime) {
+        ResourceLocation location = fishEntity.getType().getRegistryName();
+        float scale = 0.0F;
+        if (location != null) {
+            switch (location.getPath()) {
+                case "blackfish":
+                    scale = 1.2F;
+                    break;
+            }
+        }
+        if (scale > 0) {
+            GlStateManager.scalef(scale, scale, scale);
         }
     }
 }
