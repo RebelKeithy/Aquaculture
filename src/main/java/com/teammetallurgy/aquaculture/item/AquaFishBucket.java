@@ -1,10 +1,11 @@
 package com.teammetallurgy.aquaculture.item;
 
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.FishBucketItem;
 import net.minecraft.item.ItemStack;
@@ -39,20 +40,21 @@ public class AquaFishBucket extends FishBucketItem {
             if (raytrace.getType() != RayTraceResult.Type.BLOCK) {
                 return new ActionResult<>(ActionResultType.PASS, heldStack);
             } else {
-                BlockRayTraceResult blockRaytrace = (BlockRayTraceResult)raytrace;
+                BlockRayTraceResult blockRaytrace = (BlockRayTraceResult) raytrace;
                 BlockPos pos = blockRaytrace.getPos();
                 if (!(world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) {
                     return super.onItemRightClick(world, player, hand);
                 } else if (world.isBlockModifiable(player, pos) && player.canPlayerEdit(pos, blockRaytrace.getFace(), heldStack)) {
-                    if (this.fishType.spawn(world, heldStack, player, pos, SpawnReason.SPAWN_EGG, false, false) == null) {
-                        return new ActionResult<>(ActionResultType.PASS, heldStack);
-                    } else {
+                    Entity fishEntity = this.fishType.spawn(world, heldStack, null, pos, SpawnReason.BUCKET, true, false);
+                    if (fishEntity instanceof AbstractFishEntity) {
                         if (!player.abilities.isCreativeMode) {
                             heldStack.shrink(1);
                         }
-                        this.onLiquidPlaced(world, heldStack, pos);
+                        ((AbstractFishEntity) fishEntity).setFromBucket(true);
                         player.addStat(Stats.ITEM_USED.get(this));
                         return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
+                    } else {
+                        return new ActionResult<>(ActionResultType.PASS, heldStack);
                     }
                 } else {
                     return new ActionResult<>(ActionResultType.FAIL, heldStack);
