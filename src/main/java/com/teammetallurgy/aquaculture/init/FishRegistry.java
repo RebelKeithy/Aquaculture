@@ -36,9 +36,8 @@ public class FishRegistry {
      * @return The fish Item that was registered
      */
     public static Item register(@Nonnull Item fishItem, @Nonnull String name, float width, float height) {
-        ResourceLocation location = new ResourceLocation(Aquaculture.MOD_ID, name);
         AquaItems.register(fishItem, name);
-        EntityType<AquaFishEntity> entity = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(width, height).build(location.toString()); //TODO figure out how to make data fixers work
+        EntityType<AquaFishEntity> entity = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(width, height).build("minecraft:cod"); //TODO figure out how to make data fixers work or not error
         registerEntity(name, entity);
         return fishItem;
     }
