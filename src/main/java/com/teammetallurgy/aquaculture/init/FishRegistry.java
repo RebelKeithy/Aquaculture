@@ -38,7 +38,7 @@ public class FishRegistry {
     public static Item register(@Nonnull Item fishItem, @Nonnull String name, float width, float height) {
         ResourceLocation location = new ResourceLocation(Aquaculture.MOD_ID, name);
         AquaItems.register(fishItem, name);
-        EntityType<AquaFishEntity> entity = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(width, height).disableSerialization().build(location.toString()); //TODO remove disableSerialization, and figure out how to make data fixers work
+        EntityType<AquaFishEntity> entity = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(width, height).build(location.toString()); //TODO figure out how to make data fixers work
         registerEntity(name, entity);
         return fishItem;
     }

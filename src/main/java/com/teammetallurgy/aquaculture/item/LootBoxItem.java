@@ -35,6 +35,7 @@ public class LootBoxItem extends Item {
             LootContext.Builder builder = new LootContext.Builder(worldServer);
             List<ItemStack> loot = worldServer.getServer().getLootTableManager().getLootTableFromLocation(this.lootTable).generate(builder.build(LootParameterSets.EMPTY));
             this.giveItem(player, loot.get(0));
+            heldStack.shrink(1);
             return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
         }
         return super.onItemRightClick(world, player, hand);
