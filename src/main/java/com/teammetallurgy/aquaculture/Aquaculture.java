@@ -7,6 +7,7 @@ import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
+import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.item.ItemGroup;
@@ -50,6 +51,8 @@ public class Aquaculture {
         ConditionFactory.registerConditions();
         FishWeightHandler.registerFishData();
         BiomeDictionary.Type.getType("TWILIGHT"); //Add Twilight tag, for Twilight Forest support
+        FishReadFromJson.read();
+        FishReadFromJson.addFishSpawns();
     }
 
     private void setupClient(FMLClientSetupEvent event) {

@@ -46,7 +46,7 @@ public class BiomeTagCheck implements ILootCondition {
 
             if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
                 List<String> strings = new ArrayList<>();
-                for (Biome biome : predicate.getValidBiomes()) {
+                for (Biome biome : BiomeTagPredicate.getValidBiomes(predicate.include, predicate.exclude, predicate.and)) {
                     if (biome.getRegistryName() != null) {
                         strings.add(biome.getRegistryName().getPath());
                     }

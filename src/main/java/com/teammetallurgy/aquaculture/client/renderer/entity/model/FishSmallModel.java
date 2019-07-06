@@ -32,7 +32,7 @@ public class FishSmallModel<T extends Entity> extends EntityModel<T> { //Based o
         this.finRight = new RendererModel(this, 2, 16);
         this.finRight.setRotationPoint(-1.0F, 22.5F, 0.0F);
         this.finRight.addBox(-2.0F, -1.0F, 0.0F, 2, 2, 0, 0.0F);
-        this.finRight.rotateAngleZ = 0.7853981852531433F;
+        this.finRight.rotateAngleZ = -0.7853981852531433F;
         this.finBottom = new RendererModel(this, 10, 5);
         this.finBottom.setRotationPoint(0.0F, 23.5F, -3.0F);
         this.finBottom.addBox(0.0F, 0.0F, 0.0F, 0, 3, 6, 0.0F);

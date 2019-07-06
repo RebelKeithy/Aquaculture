@@ -26,9 +26,9 @@ public class BiomeTagPredicate {
     private final MinMaxBounds.FloatBound x;
     private final MinMaxBounds.FloatBound y;
     private final MinMaxBounds.FloatBound z;
-    private final List<BiomeDictionary.Type> include;
-    private final List<BiomeDictionary.Type> exclude;
-    private final boolean and;
+    public final List<BiomeDictionary.Type> include;
+    public final List<BiomeDictionary.Type> exclude;
+    public final boolean and;
 
     public BiomeTagPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
         this.x = x;
@@ -48,38 +48,38 @@ public class BiomeTagPredicate {
             return false;
         } else {
             BlockPos pos = new BlockPos((double) x, (double) y, (double) z);
-            return this.getValidBiomes().contains(world.getBiome(pos));
+            return getValidBiomes(this.include, this.exclude, this.and).contains(world.getBiome(pos));
         }
     }
 
-    public List<Biome> getValidBiomes() {
+    public static List<Biome> getValidBiomes(List<BiomeDictionary.Type> includeList, List<BiomeDictionary.Type> excludeList, boolean and) {
         List<Biome> biomes = Lists.newArrayList();
 
-        if (this.include.isEmpty() && !this.exclude.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
+        if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
             Set<BiomeDictionary.Type> validTags = new HashSet<>(BiomeDictionary.Type.getAll());
-            this.include.addAll(validTags);
-            this.exclude.addAll(INVALID_TAGS);
+            includeList.addAll(validTags);
+            excludeList.addAll(INVALID_TAGS);
         }
 
-        if (!this.include.isEmpty()) {
+        if (!includeList.isEmpty()) {
             List<Biome> addBiomes = Lists.newArrayList();
-            for (BiomeDictionary.Type type : this.include) {
+            for (BiomeDictionary.Type type : includeList) {
                 addBiomes.addAll(BiomeDictionary.getBiomes(type));
             }
 
-            if (this.and) {
-                for (BiomeDictionary.Type type : this.include) {
+            if (and) {
+                for (BiomeDictionary.Type type : includeList) {
                     addBiomes.removeIf(biome -> !BiomeDictionary.hasType(biome, type));
                 }
             }
 
-            if (this.include.stream().noneMatch(INVALID_TAGS::contains)) { //Exclude invalid tags, as long as they're not specified in include
-                this.exclude.addAll(INVALID_TAGS);
+            if (includeList.stream().noneMatch(INVALID_TAGS::contains)) { //Exclude invalid tags, as long as they're not specified in include
+                excludeList.addAll(INVALID_TAGS);
             }
             biomes.addAll(addBiomes);
         }
-        if (!this.exclude.isEmpty()) {
-            for (BiomeDictionary.Type type : this.exclude) {
+        if (!excludeList.isEmpty()) {
+            for (BiomeDictionary.Type type : excludeList) {
                 biomes.removeAll(BiomeDictionary.getBiomes(type));
             }
         }
