@@ -5,6 +5,7 @@ import com.google.gson.*;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaLootTables;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class FishReadFromJson {
     public static HashMap<EntityType<?>, List<Biome>> FISH_BIOME_MAP = new HashMap<>();
+    public static HashMap<EntityType<?>, Integer> FISH_WEIGHT_MAP = new HashMap<>();
     private static final Gson GSON_INSTANCE = new GsonBuilder().setPrettyPrinting().create();
 
     public static void read() {
@@ -34,22 +36,31 @@ public class FishReadFromJson {
                 JsonArray entries = poolsObject.getAsJsonArray("entries");
                 for (JsonElement entry : entries) {
                     JsonArray conditions = entry.getAsJsonObject().getAsJsonArray("conditions");
+                    EntityType fish = getEntityFromString(entry.getAsJsonObject().get("name").toString());
                     for (JsonElement conditionElement : conditions) {
                         JsonObject condition = conditionElement.getAsJsonObject();
                         if (condition.get("condition").getAsString().equals("aquaculture:biome_tag_check")) {
-                            FISH_BIOME_MAP.put(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entry.getAsJsonObject().get("name").toString().replace("\"", ""))), getSpawnableBiomes(condition.get("predicate")));
+                            FISH_BIOME_MAP.put(fish, getSpawnableBiomes(condition.get("predicate")));
                         } else if (condition.get("condition").getAsString().equals("minecraft:alternative")) {
                             for (JsonElement term : condition.getAsJsonObject().getAsJsonArray("terms")) {
-                                FISH_BIOME_MAP.put(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entry.getAsJsonObject().get("name").toString().replace("\"", ""))), getSpawnableBiomes(term.getAsJsonObject().get("predicate")));
+                                FISH_BIOME_MAP.put(fish, getSpawnableBiomes(term.getAsJsonObject().get("predicate")));
                             }
                         }
                     }
+                    FISH_WEIGHT_MAP.put(fish, entry.getAsJsonObject().get("weight").getAsInt());
                 }
-                FISH_BIOME_MAP.keySet().retainAll(FishRegistry.fishEntities); //Remove loot entries that does not have an entity
+                //Remove loot entries that does not have an entity
+                FISH_BIOME_MAP.keySet().retainAll(FishRegistry.fishEntities);
+                FISH_WEIGHT_MAP.keySet().retainAll(FishRegistry.fishEntities);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static EntityType getEntityFromString(String name) {
+        name = name.replace("\"", "");
+        return ForgeRegistries.ENTITIES.getValue(new ResourceLocation(name));
     }
 
     private static List<Biome> getSpawnableBiomes(JsonElement predicate) {
@@ -79,9 +90,19 @@ public class FishReadFromJson {
     }
 
     public static void addFishSpawns() {
-        for (EntityType fish : FISH_BIOME_MAP.keySet()) {
-            for (Biome biome : FISH_BIOME_MAP.get(fish)) {
-                biome.addSpawn(EntityClassification.WATER_CREATURE, new Biome.SpawnListEntry(fish, 60, 1, 1)); //TODO Weight and group szie
+        if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
+            read();
+            for (EntityType fish : FISH_BIOME_MAP.keySet()) {
+                int weight = FISH_WEIGHT_MAP.get(fish) / 3;
+                int maxGroupSize = weight / 4;
+                if (weight < 1) weight = 1;
+                if (maxGroupSize < 1) maxGroupSize = 1;
+                if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
+                    Aquaculture.LOG.info(fish.getRegistryName() + " = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
+                }
+                for (Biome biome : FISH_BIOME_MAP.get(fish)) {
+                    biome.addSpawn(EntityClassification.WATER_CREATURE, new Biome.SpawnListEntry(fish, weight, 1, maxGroupSize));
+                }
             }
         }
     }

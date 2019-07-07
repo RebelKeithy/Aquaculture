@@ -33,11 +33,15 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
         if (location != null) {
             switch (location.getPath()) {
                 case "atlantic_herring":
+                case "boulti":
                 case "bluegill":
+                case "piranha":
+                case "brown_shrooma":
+                case "red_shrooma":
                     this.entityModel = SMALL_MODEL;
                     break;
                 case "blackfish":
-                case "bass":
+                case "smallmouth_bass":
                 case "brown_trout":
                     this.entityModel = MEDIUM_MODEL;
                     break;
@@ -99,6 +103,7 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
                     scale = 1.2F;
                     break;
                 case "brown_trout":
+                case "piranha":
                     scale = 0.9F;
                     break;
             }

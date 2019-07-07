@@ -77,7 +77,7 @@ public class AquaItems {
     public static final Item BOULTI = FishRegistry.register(new FishItem(), "boulti");
     public static final Item CAPITAINE = FishRegistry.register(new FishItem(), "capitaine");
     public static final Item SYNODONTIS = FishRegistry.register(new FishItem(), "synodontis");
-    public static final Item BASS = FishRegistry.register(new FishItem(), "bass");
+    public static final Item SMALLMOUTH_BASS = FishRegistry.register(new FishItem(), "smallmouth_bass");
     public static final Item BLUEGILL = FishRegistry.register(new FishItem(), "bluegill");
     public static final Item BROWN_TROUT = FishRegistry.register(new FishItem(), "brown_trout");
     public static final Item CARP = FishRegistry.register(new FishItem(), "carp");
