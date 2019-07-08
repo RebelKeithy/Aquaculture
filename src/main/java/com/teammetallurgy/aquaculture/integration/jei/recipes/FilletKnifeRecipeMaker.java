@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.integration.jei.fish_fillet;
+package com.teammetallurgy.aquaculture.integration.jei.recipes;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
@@ -20,7 +20,7 @@ public class FilletKnifeRecipeMaker {
         List<ShapelessRecipe> recipes = new ArrayList<>();
 
         for (Item fish : AquacultureAPI.FISH_DATA.getFish()) {
-            NonNullList<Ingredient> input = NonNullList.from(Ingredient.EMPTY, Ingredient.fromItems(AquaItems.FILLET_KNIFE), Ingredient.fromItems(fish));
+            NonNullList<Ingredient> input = NonNullList.from(Ingredient.EMPTY, Ingredient.fromTag(AquacultureAPI.Tags.FILLET_KNIFE), Ingredient.fromItems(fish));
             if (AquacultureAPI.FISH_DATA.hasFilletAmount(fish)) {
                 ItemStack output = new ItemStack(AquaItems.FISH_FILLET, AquacultureAPI.FISH_DATA.getFilletAmount(fish));
                 if (fish.getRegistryName() != null) {

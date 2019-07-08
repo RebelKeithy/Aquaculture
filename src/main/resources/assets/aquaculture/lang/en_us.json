@@ -18,7 +18,11 @@
   "item.aquaculture.sushi": "Sushi",
 
   "_comment": "Misc Items",
-  "item.aquaculture.fillet_knife": "Fillet Knife",
+  "item.aquaculture.stone_fillet_knife": "Stone Fillet Knife",
+  "item.aquaculture.iron_fillet_knife": "Iron Fillet Knife",
+  "item.aquaculture.gold_fillet_knife": "Gold Fillet Knife",
+  "item.aquaculture.diamond_fillet_knife": "Diamond Fillet Knife",
+  "item.aquaculture.neptunium_fillet_knife": "Neptunium Fillet Knife",
   "item.aquaculture.algae": "Algae",
   "item.aquaculture.driftwood": "Driftwood",
   "item.aquaculture.tin_can": "Tin Can",
