@@ -10,6 +10,7 @@ import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.ModList;
@@ -94,9 +95,8 @@ public class FishReadFromJson {
             read();
             for (EntityType fish : FISH_BIOME_MAP.keySet()) {
                 int weight = FISH_WEIGHT_MAP.get(fish) / 3;
-                int maxGroupSize = weight / 4;
+                int maxGroupSize = MathHelper.clamp((FISH_WEIGHT_MAP.get(fish) / 10), 1, 8);
                 if (weight < 1) weight = 1;
-                if (maxGroupSize < 1) maxGroupSize = 1;
                 if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
                     Aquaculture.LOG.info(fish.getRegistryName() + " = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
                 }
