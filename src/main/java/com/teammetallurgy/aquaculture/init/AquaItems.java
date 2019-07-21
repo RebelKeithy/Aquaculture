@@ -42,6 +42,7 @@ public class AquaItems {
     public static final Item NEPTUNIUM_BOOTS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.FEET, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
 
     // Fillet Knifes
+    public static final Item WOOD_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.WOOD), "wood_fillet_knife");
     public static final Item STONE_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.STONE), "stone_fillet_knife");
     public static final Item IRON_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.IRON), "iron_fillet_knife");
     public static final Item GOLD_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.GOLD), "gold_fillet_knife");
