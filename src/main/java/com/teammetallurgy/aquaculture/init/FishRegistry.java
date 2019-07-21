@@ -37,7 +37,7 @@ public class FishRegistry {
      */
     public static Item register(@Nonnull Item fishItem, @Nonnull String name, float width, float height) {
         AquaItems.register(fishItem, name);
-        EntityType<AquaFishEntity> entity = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(width, height).build("minecraft:cod"); //TODO figure out how to make data fixers work or not error
+        EntityType<AquaFishEntity> entity = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(width, height).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
         registerEntity(name, entity);
         return fishItem;
     }

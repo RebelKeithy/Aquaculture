@@ -7,6 +7,7 @@ import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.TieredItem;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
@@ -49,7 +50,7 @@ public class FishFilletRecipe extends SpecialRecipe {
                     }
                     stack = slotStack;
                 } else {
-                    if (!(slotStack.getItem().isIn(AquacultureAPI.Tags.FILLET_KNIFE) && slotStack.isDamageable())) {
+                    if (!(slotStack.getItem().isIn(AquacultureAPI.Tags.FILLET_KNIFE) && slotStack.isDamageable() && slotStack.getItem() instanceof TieredItem)) {
                         return false;
                     }
                     list.add(slotStack);
@@ -62,28 +63,32 @@ public class FishFilletRecipe extends SpecialRecipe {
     @Override
     @Nonnull
     public ItemStack getCraftingResult(@Nonnull CraftingInventory craftingInventory) {
-        List<Item> list = Lists.newArrayList();
-        ItemStack stack = ItemStack.EMPTY;
+        ItemStack fish = ItemStack.EMPTY;
+        Item knife = null;
 
         for (int i = 0; i < craftingInventory.getSizeInventory(); ++i) {
             ItemStack stackSlot = craftingInventory.getStackInSlot(i);
             if (!stackSlot.isEmpty()) {
                 Item item = stackSlot.getItem();
                 if (AquacultureAPI.FISH_DATA.hasFilletAmount(item.getItem())) {
-                    if (!stack.isEmpty()) {
+                    if (!fish.isEmpty()) {
                         return ItemStack.EMPTY;
                     }
-                    stack = stackSlot.copy();
+                    fish = stackSlot.copy();
                 } else {
                     if (!(item.isIn(AquacultureAPI.Tags.FILLET_KNIFE))) {
                         return ItemStack.EMPTY;
                     }
-                    list.add(item);
+                    knife = item;
                 }
             }
         }
-        if (!stack.isEmpty() && !list.isEmpty()) {
-            return new ItemStack(AquaItems.FISH_FILLET, AquacultureAPI.FISH_DATA.getFilletAmount(stack.getItem()));
+        if (!fish.isEmpty() && knife != null) {
+            int filletAmount = AquacultureAPI.FISH_DATA.getFilletAmount(fish.getItem());
+            if (knife instanceof TieredItem && ((TieredItem) knife).getTier() == AquacultureAPI.MATS.NEPTUNIUM) {
+                filletAmount += filletAmount * (25.0F / 100.0F);
+            }
+            return new ItemStack(AquaItems.FISH_FILLET, filletAmount);
         } else {
             return ItemStack.EMPTY;
         }
@@ -97,8 +102,10 @@ public class FishFilletRecipe extends SpecialRecipe {
             ItemStack stack = craftingInventory.getStackInSlot(i);
             if (stack.getItem().isIn(AquacultureAPI.Tags.FILLET_KNIFE)) {
                 ItemStack knife = stack.copy();
-                if (knife.attemptDamageItem(1, new Random(), null)) {
-                    knife.shrink(1);
+                if (!(knife.getItem() instanceof TieredItem && ((TieredItem) knife.getItem()).getTier() == AquacultureAPI.MATS.NEPTUNIUM)) {
+                    if (knife.attemptDamageItem(1, new Random(), null)) {
+                        knife.shrink(1);
+                    }
                 }
                 list.set(i, knife);
             }

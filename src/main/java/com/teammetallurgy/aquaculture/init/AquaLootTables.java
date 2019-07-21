@@ -43,7 +43,7 @@ public class AquaLootTables {
     }
 
     private static LootEntry getInjectEntry(ResourceLocation location, int weight, int quality) {
-        return TableLootEntry.func_216171_a(location).weight(weight).quality(quality).func_216081_b();
+        return TableLootEntry.builder(location).weight(weight).quality(quality).func_216081_b();
     }
 
     private static void addEntry(LootPool pool, LootEntry entry) {

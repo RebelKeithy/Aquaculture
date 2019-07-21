@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.integration.jei;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.integration.jei.fish_fillet.FilletKnifeRecipeMaker;
+import com.teammetallurgy.aquaculture.integration.jei.recipes.FilletKnifeRecipeMaker;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;

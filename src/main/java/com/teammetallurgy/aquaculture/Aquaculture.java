@@ -51,7 +51,6 @@ public class Aquaculture {
         ConditionFactory.registerConditions();
         FishWeightHandler.registerFishData();
         BiomeDictionary.Type.getType("TWILIGHT"); //Add Twilight tag, for Twilight Forest support
-        FishReadFromJson.read();
         FishReadFromJson.addFishSpawns();
     }
 

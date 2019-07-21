@@ -41,8 +41,14 @@ public class AquaItems {
     public static final Item NEPTUNIUM_LEGS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.LEGS, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_2"), "neptunium_leggings");
     public static final Item NEPTUNIUM_BOOTS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.FEET, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
 
+    // Fillet Knifes
+    public static final Item STONE_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.STONE), "stone_fillet_knife");
+    public static final Item IRON_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.IRON), "iron_fillet_knife");
+    public static final Item GOLD_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.GOLD), "gold_fillet_knife");
+    public static final Item DIAMOND_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.DIAMOND), "diamond_fillet_knife");
+    public static final Item NEPTINIUM_FILLET_KNIFE = register(new ItemFilletKnife(AquacultureAPI.MATS.NEPTUNIUM), "neptunium_fillet_knife");
+
     // Misc
-    public static final Item FILLET_KNIFE = register(new Item(new Item.Properties().group(Aquaculture.TAB).defaultMaxDamage(150)), "fillet_knife");
     public static final Item DRIFTWOOD = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "driftwood");
     public static final Item TIN_CAN = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "tin_can");
     public static final Item NESSAGE_IN_A_BOTTLE = register(new ItemMessageInABottle(new Item.Properties().group(Aquaculture.TAB)), "message_in_a_bottle");
@@ -77,7 +83,7 @@ public class AquaItems {
     public static final Item BOULTI = FishRegistry.register(new FishItem(), "boulti");
     public static final Item CAPITAINE = FishRegistry.register(new FishItem(), "capitaine");
     public static final Item SYNODONTIS = FishRegistry.register(new FishItem(), "synodontis");
-    public static final Item BASS = FishRegistry.register(new FishItem(), "bass");
+    public static final Item SMALLMOUTH_BASS = FishRegistry.register(new FishItem(), "smallmouth_bass");
     public static final Item BLUEGILL = FishRegistry.register(new FishItem(), "bluegill");
     public static final Item BROWN_TROUT = FishRegistry.register(new FishItem(), "brown_trout");
     public static final Item CARP = FishRegistry.register(new FishItem(), "carp");

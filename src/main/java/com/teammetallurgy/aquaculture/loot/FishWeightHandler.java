@@ -104,7 +104,7 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.addAll(BOULTI, 1, 10, 2);
         AquacultureAPI.FISH_DATA.addAll(CAPITAINE, 1, 450, 4);
         AquacultureAPI.FISH_DATA.addAll(SYNODONTIS, 1, 3);
-        AquacultureAPI.FISH_DATA.addAll(BASS, 1, 25, 3);
+        AquacultureAPI.FISH_DATA.addAll(SMALLMOUTH_BASS, 1, 25, 3);
         AquacultureAPI.FISH_DATA.addAll(BLUEGILL, 1, 5);
         AquacultureAPI.FISH_DATA.addAll(BROWN_TROUT, 1, 40, 3);
         AquacultureAPI.FISH_DATA.addAll(CARP, 1, 100, 5);

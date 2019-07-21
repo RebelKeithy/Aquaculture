@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld_rod",
     "textures": {
-        "layer0": "aquaculture:item/fillet_knife"
+        "layer0": "aquaculture:item/stone_fillet_knife"
     }
 }
