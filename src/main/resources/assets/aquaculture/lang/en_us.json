@@ -18,6 +18,7 @@
   "item.aquaculture.sushi": "Sushi",
 
   "_comment": "Misc Items",
+  "item.aquaculture.wood_fillet_knife": "Wooden Fillet Knife",
   "item.aquaculture.stone_fillet_knife": "Stone Fillet Knife",
   "item.aquaculture.iron_fillet_knife": "Iron Fillet Knife",
   "item.aquaculture.gold_fillet_knife": "Gold Fillet Knife",
@@ -230,11 +231,14 @@
   "aquaculture.message28": "Look up at me, now back at your inventory, now back at me, this message is now DIAMONDS! Nah just kidding, its still paper.",
   "aquaculture.message29": "Recycle for 5 Brass.",
 
-  "_comment": "Misc",
+  "_comment": "Tooltip",
   "aquaculture.fishWeight.weight": "Weight: %s",
   "aquaculture.fishWeight.juvenile": "Juvenile",
   "aquaculture.fishWeight.small": "Small",
   "aquaculture.fishWeight.large": "Large",
   "aquaculture.fishWeight.massive": "Massive",
-  "aquaculture.fishing_rod.broken": "Broken"
+  "aquaculture.fishing_rod.broken": "Broken",
+  "aquaculture.neptunium_fishing_rod.line1.tooltip" : "Test 1",
+  "aquaculture.neptunium_fishing_rod.line2.tooltip" : "Test 1",
+  "aquaculture.neptunium_fishing_rod.shift.tooltip" : "Test 1"
 }
