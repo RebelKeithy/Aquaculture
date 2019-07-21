@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.api;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ItemTags;
@@ -18,10 +19,11 @@ public class AquacultureAPI {
     public static FishData FISH_DATA = new FishData();
 
     public static class Tags {
-        public static final Tag<Item> FILLET_KNIFE = tag("fillet_knife");
+        public static final Tag<Item> FILLET_KNIFE = tag("forge", "fillet_knife");
+        public static final Tag<Item> TOOLTIP = tag(Aquaculture.MOD_ID, "tooltip");
 
-        public static Tag<Item> tag(String name) {
-            return new ItemTags.Wrapper(new ResourceLocation("forge", name));
+        public static Tag<Item> tag(String modID, String name) {
+            return new ItemTags.Wrapper(new ResourceLocation(modID, name));
         }
     }
 }

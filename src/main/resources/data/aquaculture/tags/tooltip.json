@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "aquaculture:neptunium_fishing_rod",
+    "aquaculture:neptunium_helmet",
+    "aquaculture:neptunium_chest",
+    "aquaculture:neptunium_legs",
+    "aquaculture:neptunium_boots",
+    "aquaculture:neptunium_pickaxe",
+    "aquaculture:neptunium_axe",
+    "aquaculture:neptunium_hoe",
+    "aquaculture:neptunium_shovel",
+    "aquaculture:neptunium_sword"
+  ]
+}

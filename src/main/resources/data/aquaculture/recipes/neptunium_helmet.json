@@ -12,7 +12,7 @@
   ],
   "key": {
     "S": {
-      "item": "aquaculture:neptunium_ingot"
+      "tag": "forge:ingots/neptunium"
     }
   },
   "result": {
