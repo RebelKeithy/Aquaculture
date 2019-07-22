@@ -1,7 +1,5 @@
 package com.teammetallurgy.aquaculture.item;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,11 +12,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
 
-@Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class NeptuniumArmor extends ArmorItem {
     private String texture;
 
@@ -33,9 +29,10 @@ public class NeptuniumArmor extends ArmorItem {
                 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 1, 0, false, false, false));
             } else if (this.slot == EquipmentSlotType.CHEST) {
                 player.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 1, 0, false, false, false));
-            } else if(this.slot == EquipmentSlotType.LEGS) {
-                System.out.println(player.getMotion().y);
-                player.setMotion(player.getMotion().add(0, player.getMotion().y, 0));
+            } else if (this.slot == EquipmentSlotType.LEGS) {
+                if (!player.isSneaking()) {
+                    player.setMotion(player.getMotion().add(0, player.fallDistance, 0));
+                }
             } else if (this.slot == EquipmentSlotType.FEET) {
                 player.addPotionEffect(new EffectInstance(Effects.SPEED, 1, 0, false, false, false));
                 player.move(MoverType.PLAYER, player.getMotion()); //Make the swimming react to the swiftness potion
