@@ -30,10 +30,10 @@ public class AquaItems {
     // Neptunium
     public static final Item NEPTUNIUM_INGOT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "neptunium_ingot");
 
-    public static final Item NEPTUNIUM_PICKAXE = register(new AquaItemPickaxe(AquacultureAPI.MATS.NEPTUNIUM, 1, -2.8F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_pickaxe");
-    public static final Item NEPTUNIUM_SHOVEL = register(new ShovelItem(AquacultureAPI.MATS.NEPTUNIUM, 1.5F, -3.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_shovel");
-    public static final Item NEPTUNIUM_AXE = register(new AquaAxeItem(AquacultureAPI.MATS.NEPTUNIUM, 8.0F, -3.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_axe");
-    public static final Item NEPTUNIUM_HOE = register(new HoeItem(AquacultureAPI.MATS.NEPTUNIUM, 0.0F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_hoe");
+    public static final Item NEPTUNIUM_PICKAXE = register(new NeptuniumPickaxe(AquacultureAPI.MATS.NEPTUNIUM, 1, -2.8F), "neptunium_pickaxe");
+    public static final Item NEPTUNIUM_SHOVEL = register(new NeptuniumShovel(AquacultureAPI.MATS.NEPTUNIUM, 1.5F, -3.0F), "neptunium_shovel");
+    public static final Item NEPTUNIUM_AXE = register(new NeptuniumAxe(AquacultureAPI.MATS.NEPTUNIUM, 8.0F, -3.0F), "neptunium_axe");
+    public static final Item NEPTUNIUM_HOE = register(new NeptuniumHoe(AquacultureAPI.MATS.NEPTUNIUM, 0.4F), "neptunium_hoe");
     public static final Item NEPTUNIUM_SWORD = register(new SwordItem(AquacultureAPI.MATS.NEPTUNIUM, 3, -2.4F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_sword");
 
     public static final Item NEPTUNIUM_HELMET = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.HEAD, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_helmet");
