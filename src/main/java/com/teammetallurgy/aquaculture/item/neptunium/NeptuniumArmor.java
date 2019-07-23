@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.item;
+package com.teammetallurgy.aquaculture.item.neptunium;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;

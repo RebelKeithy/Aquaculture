@@ -17,6 +17,9 @@
   "item.aquaculture.turtle_soup": "Turtle Soup",
   "item.aquaculture.sushi": "Sushi",
 
+  "_comment": "Blocks",
+  "block.aquaculture.farmland": "Farmland",
+
   "_comment": "Misc Items",
   "item.aquaculture.wood_fillet_knife": "Wooden Fillet Knife",
   "item.aquaculture.stone_fillet_knife": "Stone Fillet Knife",

@@ -26,16 +26,20 @@ public class AquaRecipes {
     }
 
     private static void addBrewingRecipeWithSubPotions(Item item, Potion potionType) {
-        addBrewingRecipeWithSubPotions(new ItemStack(item), potionType);
+        //addBrewingRecipeWithSubPotions(new ItemStack(item), potionType); //TODO
     }
 
-    private static void addBrewingRecipeWithSubPotions(@Nonnull ItemStack stack, Potion potionType) {
-        Ingredient ingredient = Ingredient.fromStacks(stack);
-        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), Potions.MUNDANE));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.POTION), Potions.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), potionType));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), potionType));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.MUNDANE));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.WATER), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.MUNDANE));
-        addRecipe(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), potionType));
+    private static void addBrewingRecipeWithSubPotions(@Nonnull ItemStack input, Potion potionType) {
+        Ingredient ingredient = toIngredient(input);
+        addRecipe(toIngredient(addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER)), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), Potions.MUNDANE));
+        addRecipe(toIngredient(addPotionToItemStack(new ItemStack(Items.POTION), Potions.AWKWARD)), ingredient, addPotionToItemStack(new ItemStack(Items.POTION), potionType));
+        addRecipe(toIngredient(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.AWKWARD)), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), potionType));
+        addRecipe(toIngredient(addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.WATER)), ingredient, addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), Potions.MUNDANE));
+        addRecipe(toIngredient(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.WATER)), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.MUNDANE));
+        addRecipe(toIngredient(addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), Potions.AWKWARD)), ingredient, addPotionToItemStack(new ItemStack(Items.LINGERING_POTION), potionType));
+    }
+
+    private static Ingredient toIngredient(@Nonnull ItemStack stack) {
+        return Ingredient.fromStacks(stack);
     }
 }

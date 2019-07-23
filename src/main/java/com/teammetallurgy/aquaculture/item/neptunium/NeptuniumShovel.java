@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.item;
+package com.teammetallurgy.aquaculture.item.neptunium;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.block.BlockState;
@@ -6,17 +6,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShovelItem;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class NeptuniumPickaxe extends PickaxeItem {
+public class NeptuniumShovel extends ShovelItem {
     private boolean inWater = false;
 
-    public NeptuniumPickaxe(IItemTier tier, int attackDamage, float attackSpeed) {
-        super(tier, attackDamage, attackSpeed, new Item.Properties().group(Aquaculture.TAB));
+    public NeptuniumShovel(IItemTier tier, float damage, float speed) {
+        super(tier, damage, speed, new Item.Properties().group(Aquaculture.TAB));
     }
 
     @Override

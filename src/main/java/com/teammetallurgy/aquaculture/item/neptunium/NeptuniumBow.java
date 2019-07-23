@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.item;
+package com.teammetallurgy.aquaculture.item.neptunium;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
