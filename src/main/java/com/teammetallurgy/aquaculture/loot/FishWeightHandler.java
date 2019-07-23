@@ -20,7 +20,6 @@ import net.minecraftforge.fml.loading.StringUtils;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
-import java.util.Random;
 
 import static com.teammetallurgy.aquaculture.init.AquaItems.*;
 
@@ -51,27 +50,27 @@ public class FishWeightHandler {
                 event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize"))).setStyle(style));
             }
             if (stack.getTag().contains("fishWeight")) {
-                float weight = stack.getTag().getFloat("fishWeight");
+                double weight = stack.getTag().getDouble("fishWeight");
+                String lb = weight >= 2.0D ? " lbs" : " lb";
 
                 DecimalFormat df = new DecimalFormat("#,###.##");
                 BigDecimal bd = new BigDecimal(weight);
                 bd = bd.round(new MathContext(3));
                 Style style = new Style().setItalic(true).setColor(TextFormatting.GRAY);
                 if (bd.doubleValue() > 999) {
-                    event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + "lb").setStyle(style));
+                    event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb).setStyle(style));
                 } else {
-                    event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight.weight", bd + "lb").setStyle(style));
+                    event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight.weight", bd + lb).setStyle(style));
                 }
             }
         }
     }
 
-    private static void assignRandomWeight(ItemStack fish, int min, int max) {
+    private static void assignRandomWeight(ItemStack fish, double min, double max) {
         if (fish.isEmpty()) {
             return;
         }
-        Random rand = new Random();
-        float weight = rand.nextInt((max - min)) + min;
+        double weight = min + Math.random() * (max - min);
 
         if (!fish.hasTag()) {
             fish.setTag(new CompoundNBT());
@@ -80,7 +79,7 @@ public class FishWeightHandler {
         CompoundNBT tag = fish.getTag();
 
         if (tag != null) {
-            tag.putFloat("fishWeight", weight);
+            tag.putDouble("fishWeight", weight);
             if (weight <= max * 0.10F) {
                 tag.putString("fishSize", "juvenile");
             } else if (weight > max * 0.10F && weight <= max * 0.20F) {
@@ -94,42 +93,42 @@ public class FishWeightHandler {
     }
 
     public static void registerFishData() {
-        AquacultureAPI.FISH_DATA.addAll(BLACKFISH, 1, 10, 2);
-        AquacultureAPI.FISH_DATA.addAll(PACIFIC_HALIBUT, 1, 700, 7);
-        AquacultureAPI.FISH_DATA.addAll(ATLANTIC_HERRING, 1, 3);
-        AquacultureAPI.FISH_DATA.addAll(PINK_SALMON, 1, 100, 5);
-        AquacultureAPI.FISH_DATA.addAll(POLLOCK, 1, 45, 3);
-        AquacultureAPI.FISH_DATA.addAll(RAINBOW_TROUT, 1, 50, 4);
-        AquacultureAPI.FISH_DATA.addAll(BAGRID, 1, 25, 3);
-        AquacultureAPI.FISH_DATA.addAll(BOULTI, 1, 10, 2);
-        AquacultureAPI.FISH_DATA.addAll(CAPITAINE, 1, 450, 4);
-        AquacultureAPI.FISH_DATA.addAll(SYNODONTIS, 1, 3);
-        AquacultureAPI.FISH_DATA.addAll(SMALLMOUTH_BASS, 1, 25, 3);
-        AquacultureAPI.FISH_DATA.addAll(BLUEGILL, 1, 5);
-        AquacultureAPI.FISH_DATA.addAll(BROWN_TROUT, 1, 40, 3);
-        AquacultureAPI.FISH_DATA.addAll(CARP, 1, 100, 5);
-        AquacultureAPI.FISH_DATA.addAll(CATFISH, 1, 50, 4);
-        AquacultureAPI.FISH_DATA.addAll(GAR, 1, 10, 2);
-        AquacultureAPI.FISH_DATA.addAll(MUSKELLUNGE, 1, 35, 3);
-        AquacultureAPI.FISH_DATA.addAll(PERCH, 1, 5);
-        AquacultureAPI.FISH_DATA.addAll(ARAPAIMA, 1, 220, 6);
-        AquacultureAPI.FISH_DATA.addAll(ELECTRIC_EEL, 1, 45, 3);
-        AquacultureAPI.FISH_DATA.addAll(PIRANHA, 1, 8, 1);
-        AquacultureAPI.FISH_DATA.addAll(TAMBAQUI, 1, 75, 4);
-        AquacultureAPI.FISH_DATA.addAll(BROWN_SHROOMA, 1, 5, 0);
-        AquacultureAPI.FISH_DATA.addAll(RED_SHROOMA, 1, 5, 0);
-        AquacultureAPI.FISH_DATA.addAll(JELLYFISH, 1, 500, 0);
-        AquacultureAPI.FISH_DATA.addAll(RED_GROUPER, 1, 50, 4);
-        AquacultureAPI.FISH_DATA.addAll(SHARK, 1, 5000, 8);
-        AquacultureAPI.FISH_DATA.addAll(SQUID, 1, 1000, 0);
-        AquacultureAPI.FISH_DATA.addAll(SWORDFISH, 1, 1400, 7);
-        AquacultureAPI.FISH_DATA.addAll(TUNA, 1, 135, 5);
-        AquacultureAPI.FISH_DATA.addAll(WHALE, 1, 190000, 0);
-        AquacultureAPI.FISH_DATA.addAll(GOLDFISH, 1, 4, 0);
+        AquacultureAPI.FISH_DATA.add(BLACKFISH, 1, 10, 2);
+        AquacultureAPI.FISH_DATA.add(PACIFIC_HALIBUT, 1, 700, 7);
+        AquacultureAPI.FISH_DATA.add(ATLANTIC_HERRING, 1, 3);
+        AquacultureAPI.FISH_DATA.add(PINK_SALMON, 1, 100, 5);
+        AquacultureAPI.FISH_DATA.add(POLLOCK, 1, 45, 3);
+        AquacultureAPI.FISH_DATA.add(RAINBOW_TROUT, 1, 50, 4);
+        AquacultureAPI.FISH_DATA.add(BAGRID, 1, 25, 3);
+        AquacultureAPI.FISH_DATA.add(BOULTI, 1, 10, 2);
+        AquacultureAPI.FISH_DATA.add(CAPITAINE, 1, 450, 4);
+        AquacultureAPI.FISH_DATA.add(SYNODONTIS, 1, 3);
+        AquacultureAPI.FISH_DATA.add(SMALLMOUTH_BASS, 1, 25, 3);
+        AquacultureAPI.FISH_DATA.add(BLUEGILL, 1, 5);
+        AquacultureAPI.FISH_DATA.add(BROWN_TROUT, 1, 40, 3);
+        AquacultureAPI.FISH_DATA.add(CARP, 1, 100, 5);
+        AquacultureAPI.FISH_DATA.add(CATFISH, 1, 50, 4);
+        AquacultureAPI.FISH_DATA.add(GAR, 1, 10, 2);
+        AquacultureAPI.FISH_DATA.add(MUSKELLUNGE, 1, 35, 3);
+        AquacultureAPI.FISH_DATA.add(PERCH, 1, 5);
+        AquacultureAPI.FISH_DATA.add(ARAPAIMA, 1, 220, 6);
+        AquacultureAPI.FISH_DATA.add(ELECTRIC_EEL, 1, 45, 3);
+        AquacultureAPI.FISH_DATA.add(PIRANHA, 1, 8);
+        AquacultureAPI.FISH_DATA.add(TAMBAQUI, 1, 75, 4);
+        AquacultureAPI.FISH_DATA.add(BROWN_SHROOMA, 1, 5, 0);
+        AquacultureAPI.FISH_DATA.add(RED_SHROOMA, 1, 5, 0);
+        AquacultureAPI.FISH_DATA.add(JELLYFISH, 1, 500, 0);
+        AquacultureAPI.FISH_DATA.add(RED_GROUPER, 1, 50, 4);
+        AquacultureAPI.FISH_DATA.add(SHARK, 1, 5000, 8);
+        AquacultureAPI.FISH_DATA.add(SQUID, 1, 1000, 0);
+        AquacultureAPI.FISH_DATA.add(SWORDFISH, 1, 1400, 7);
+        AquacultureAPI.FISH_DATA.add(TUNA, 1, 135, 5);
+        AquacultureAPI.FISH_DATA.add(WHALE, 1, 190000, 0);
+        AquacultureAPI.FISH_DATA.add(GOLDFISH, 1, 4, 0);
         //Vanilla
-        AquacultureAPI.FISH_DATA.addAll(Items.COD, 1, 210, 4);
-        AquacultureAPI.FISH_DATA.addAll(Items.SALMON, 1, 135, 3);
-        AquacultureAPI.FISH_DATA.addAll(Items.TROPICAL_FISH, 1, 5, 0);
-        AquacultureAPI.FISH_DATA.addAll(Items.PUFFERFISH, 1, 25);
+        AquacultureAPI.FISH_DATA.add(Items.COD, 1, 210, 4);
+        AquacultureAPI.FISH_DATA.add(Items.SALMON, 1, 135, 3);
+        AquacultureAPI.FISH_DATA.add(Items.TROPICAL_FISH, 1, 5, 0);
+        AquacultureAPI.FISH_DATA.add(Items.PUFFERFISH, 1, 25);
     }
 }
