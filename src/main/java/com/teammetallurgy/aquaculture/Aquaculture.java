@@ -1,15 +1,19 @@
 package com.teammetallurgy.aquaculture;
 
-import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaBobber;
-import com.teammetallurgy.aquaculture.client.renderer.entity.RenderAquaFish;
+import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
+import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
+import com.teammetallurgy.aquaculture.client.renderer.entity.NeptuniumTridentRenderer;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
+import com.teammetallurgy.aquaculture.entity.NeptuniumTridentEntity;
+import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
+import net.minecraft.client.renderer.entity.TippedArrowRenderer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
@@ -55,7 +59,9 @@ public class Aquaculture {
     }
 
     private void setupClient(FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(AquaFishingBobberEntity.class, RenderAquaBobber::new);
-        RenderingRegistry.registerEntityRenderingHandler(AquaFishEntity.class, RenderAquaFish::new);
+        RenderingRegistry.registerEntityRenderingHandler(AquaFishingBobberEntity.class, AquaBobberRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AquaFishEntity.class, AquaFishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(NeptuniumTridentEntity.class, NeptuniumTridentRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(WaterArrowEntity.class, TippedArrowRenderer::new);
     }
 }

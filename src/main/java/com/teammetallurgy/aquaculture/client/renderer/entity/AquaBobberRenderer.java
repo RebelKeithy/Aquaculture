@@ -21,11 +21,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class RenderAquaBobber extends EntityRenderer<AquaFishingBobberEntity> {
+public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> {
     private static final ResourceLocation BOBBER = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber.png");
     private static final ResourceLocation HOOK = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/hook.png");
 
-    public RenderAquaBobber(EntityRendererManager manager) {
+    public AquaBobberRenderer(EntityRendererManager manager) {
         super(manager);
     }
 

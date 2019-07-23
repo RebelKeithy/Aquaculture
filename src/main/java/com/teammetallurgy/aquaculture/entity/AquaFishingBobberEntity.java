@@ -28,7 +28,6 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawPacket, World world) {
         super(world, Minecraft.getInstance().player, 0, 0, 0);
         this.luck = 0;
-
     }
 
     public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed) {

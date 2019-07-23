@@ -7,19 +7,19 @@
   ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "  I",
-    " I ",
-    "S  "
+    " NS",
+    "N S",
+    " NS"
   ],
   "key": {
-    "S": {
-      "tag": "forge:rods/wooden"
-    },
-    "I": {
+    "N": {
       "tag": "forge:ingots/neptunium"
-    }	
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
   },
   "result": {
-    "item": "aquaculture:neptunium_fillet_knife"
+    "item": "aquaculture:neptunium_bow"
   }
 }

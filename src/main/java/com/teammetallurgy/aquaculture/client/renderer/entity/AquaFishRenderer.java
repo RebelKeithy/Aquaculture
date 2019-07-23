@@ -14,7 +14,7 @@ import net.minecraft.util.math.MathHelper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<AquaFishEntity>> {
+public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<AquaFishEntity>> {
     private static final TropicalFishAModel<AquaFishEntity> TROPICAL_FISH_A_MODEL = new TropicalFishAModel<>();
     private static final TropicalFishBModel<AquaFishEntity> TROPICAL_FISH_B_MODEL = new TropicalFishBModel<>();
     private static final CodModel<AquaFishEntity> COD_MODEL = new CodModel<>();
@@ -22,7 +22,7 @@ public class RenderAquaFish extends MobRenderer<AquaFishEntity, EntityModel<Aqua
     private static final FishSmallModel<AquaFishEntity> SMALL_MODEL = new FishSmallModel<>();
     private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
 
-    public RenderAquaFish(EntityRendererManager manager) {
+    public AquaFishRenderer(EntityRendererManager manager) {
         super(manager, COD_MODEL, 0.3F);
         this.shadowSize = this.entityModel == SALMON_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
     }

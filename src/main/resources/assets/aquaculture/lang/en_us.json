@@ -33,7 +33,7 @@
   "item.aquaculture.lockbox": "Lockbox",
   "item.aquaculture.treasure_chest": "Treasure Chest",
 
-  "_comment": "Neptinium",
+  "_comment": "Neptunium",
   "item.aquaculture.neptunium_ingot": "Neptunium Ingot",
   "item.aquaculture.neptunes_bounty": "Neptune's Bounty",
   "item.aquaculture.neptunium_pickaxe": "Neptunium Pickaxe",
@@ -45,6 +45,8 @@
   "item.aquaculture.neptunium_chestplate": "Neptunium Chestplate",
   "item.aquaculture.neptunium_leggings": "Neptunium Leggings",
   "item.aquaculture.neptunium_boots": "Neptunium Boots",
+  "item.aquaculture.neptunium_trident": "Neptunium Trident",
+  "item.aquaculture.neptunium_bow": "Neptunium Bow",
 
   "_comment": "Fish",
   "item.aquaculture.atlantic_cod": "Atlantic Cod",

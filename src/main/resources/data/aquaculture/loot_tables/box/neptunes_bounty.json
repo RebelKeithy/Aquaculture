@@ -72,6 +72,30 @@
           "name": "aquaculture:neptunium_boots",
           "entryName": "neptunium_boots",
           "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "aquaculture:neptunium_fishing_rod",
+          "entryName": "neptunium_fishing_rod",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "aquaculture:neptunium_fillet_knife",
+          "entryName": "neptunium_fillet_knife",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "aquaculture:neptunium_bow",
+          "entryName": "neptunium_bow",
+          "weight": 1
+        },
+        {
+          "type": "item",
+          "name": "aquaculture:neptunium_trident",
+          "entryName": "neptunium_trident",
+          "weight": 2
         }
       ]
     }
