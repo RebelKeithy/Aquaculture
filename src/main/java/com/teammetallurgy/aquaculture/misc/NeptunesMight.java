@@ -18,7 +18,6 @@ public class NeptunesMight {
         Entity source = event.getSource().getTrueSource();
         if (source instanceof LivingEntity) {
             LivingEntity living = (LivingEntity) source;
-            System.out.println(living.getName());
             if (living.areEyesInFluid(FluidTags.WATER)) {
                 ItemStack heldStack = living.getHeldItemMainhand();
                 if (heldStack.getItem() == AquaItems.NEPTUNIUM_SWORD || heldStack.getItem() == AquaItems.NEPTUNIUM_AXE) {

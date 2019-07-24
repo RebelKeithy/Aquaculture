@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "aquaculture:light_hook",
+    "aquaculture:weighted_hook",
+    "aquaculture:double_hook",
+    "aquaculture:note_hook",
+    "aquaculture:obsidian_hook",
+    "aquaculture:gold_hook",
+    "aquaculture:red_hook"
+  ]
+}

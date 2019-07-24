@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture;
 
+import com.teammetallurgy.aquaculture.client.gui.screen.TackleBoxScreen;
 import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.NeptuniumTridentRenderer;
@@ -7,12 +8,14 @@ import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.entity.NeptuniumTridentEntity;
 import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
+import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.entity.TippedArrowRenderer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -59,6 +62,7 @@ public class Aquaculture {
     }
 
     private void setupClient(FMLClientSetupEvent event) {
+        ScreenManager.registerFactory(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaFishingBobberEntity.class, AquaBobberRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaFishEntity.class, AquaFishRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NeptuniumTridentEntity.class, NeptuniumTridentRenderer::new);
