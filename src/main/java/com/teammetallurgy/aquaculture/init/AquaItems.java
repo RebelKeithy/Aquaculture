@@ -3,6 +3,8 @@ package com.teammetallurgy.aquaculture.init;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.api.fishing.Hook;
+import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.item.*;
 import com.teammetallurgy.aquaculture.item.neptunium.*;
@@ -23,10 +25,19 @@ import java.util.List;
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaItems {
     public static List<Item> ITEMS = Lists.newArrayList();
+
+    //Fishing
     public static final Item IRON_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.IRON, new Item.Properties().defaultMaxDamage(125).group(Aquaculture.TAB)), "iron_fishing_rod");
     public static final Item GOLD_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(55).group(Aquaculture.TAB)), "gold_fishing_rod");
     public static final Item DIAMOND_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(450).group(Aquaculture.TAB)), "diamond_fishing_rod");
     public static final Item NEPTUNIUM_FISHING_ROD = register(new AquaFishingRodItem(AquacultureAPI.MATS.NEPTUNIUM, new Item.Properties().defaultMaxDamage(1000).group(Aquaculture.TAB)), "neptunium_fishing_rod");
+    public static final Item LIGHT = register(new HookItem(Hooks.LIGHT), "light_hook");
+    public static final Item WEIGHTED = register(new HookItem(Hooks.WEIGHTED), "weighted_hook");
+    public static final Item DOUBLE = register(new HookItem(Hooks.DOUBLE), "double_hook");
+    public static final Item NOTE = register(new HookItem(Hooks.NOTE), "note_hook");
+    public static final Item OBSIDIAN = register(new HookItem(Hooks.OBSIDIAN), "obsidian_hook");
+    public static final Item GOLD = register(new HookItem(Hooks.GOLD), "gold_hook");
+    public static final Item RED = register(new HookItem(Hooks.RED), "red_hook");
 
     // Neptunium
     public static final Item NEPTUNIUM_INGOT = register(new Item(new Item.Properties().group(Aquaculture.TAB)), "neptunium_ingot");
@@ -37,11 +48,10 @@ public class AquaItems {
     public static final Item NEPTUNIUM_SWORD = register(new SwordItem(AquacultureAPI.MATS.NEPTUNIUM, 3, -2.4F, new Item.Properties().group(Aquaculture.TAB)), "neptunium_sword");
     public static final Item NEPTUNIUM_TRIDENT = register(new NeptuniumTrident(), "neptunium_trident");
     public static final Item NEPTUNIUM_BOW = register(new NeptuniumBow(), "neptunium_bow");
-
-    public static final Item NEPTUNIUM_HELMET = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.HEAD, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_helmet");
-    public static final Item NEPTUNIUM_PLATE = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.CHEST, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_chestplate");
-    public static final Item NEPTUNIUM_LEGS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.LEGS, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_2"), "neptunium_leggings");
-    public static final Item NEPTUNIUM_BOOTS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.FEET, new Item.Properties().group(Aquaculture.TAB)).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
+    public static final Item NEPTUNIUM_HELMET = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.HEAD).setArmorTexture("neptunium_layer_1"), "neptunium_helmet");
+    public static final Item NEPTUNIUM_PLATE = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.CHEST).setArmorTexture("neptunium_layer_1"), "neptunium_chestplate");
+    public static final Item NEPTUNIUM_LEGS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.LEGS).setArmorTexture("neptunium_layer_2"), "neptunium_leggings");
+    public static final Item NEPTUNIUM_BOOTS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.FEET).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
 
     // Fillet Knifes
     public static final Item WOOD_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.WOOD), "wood_fillet_knife");

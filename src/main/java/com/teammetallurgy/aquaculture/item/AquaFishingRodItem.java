@@ -66,6 +66,7 @@ public class AquaFishingRodItem extends FishingRodItem {
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
             if (!world.isRemote) {
                 lureSpeed = EnchantmentHelper.getFishingSpeedBonus(heldStack);
+                if (this.material == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 1;
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
                 world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed));
             }

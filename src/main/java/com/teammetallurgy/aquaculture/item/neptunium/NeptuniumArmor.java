@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.item.neptunium;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,8 +19,8 @@ import javax.annotation.Nonnull;
 public class NeptuniumArmor extends ArmorItem {
     private String texture;
 
-    public NeptuniumArmor(IArmorMaterial armorMaterial, EquipmentSlotType equipmentSlot, Item.Properties builder) {
-        super(armorMaterial, equipmentSlot, builder);
+    public NeptuniumArmor(IArmorMaterial armorMaterial, EquipmentSlotType equipmentSlot) {
+        super(armorMaterial, equipmentSlot, new Item.Properties().group(Aquaculture.TAB));
     }
 
     @Override
