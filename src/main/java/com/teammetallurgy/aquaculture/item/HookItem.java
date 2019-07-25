@@ -8,7 +8,7 @@ public class HookItem extends Item {
     private Hook hook;
 
     public HookItem(Hook hook) {
-        super(new Item.Properties().group(Aquaculture.TAB).maxStackSize(16));
+        super(new Item.Properties().group(Aquaculture.GROUP).maxStackSize(16));
         this.hook = hook;
     }
 

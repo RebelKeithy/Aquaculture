@@ -19,7 +19,7 @@ public class ItemFilletKnife extends SwordItem {
     private final float attackDamage;
 
     public ItemFilletKnife(IItemTier material) {
-        super(material, 0, 0.0F, new Item.Properties().group(Aquaculture.TAB).defaultMaxDamage((int) (material.getMaxUses() * 0.75F))); //Setting values to 0, since overriding vanilla behaviour anyways
+        super(material, 0, 0.0F, new Item.Properties().group(Aquaculture.GROUP).defaultMaxDamage((int) (material.getMaxUses() * 0.75F))); //Setting values to 0, since overriding vanilla behaviour anyways
         this.attackDamage = material.getAttackDamage() / 2;
     }
 

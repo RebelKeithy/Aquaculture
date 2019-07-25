@@ -6,6 +6,6 @@ import net.minecraft.item.Item;
 public class FishItem extends Item {
 
     public FishItem() {
-        super(new Item.Properties().group(Aquaculture.TAB));
+        super(new Item.Properties().group(Aquaculture.GROUP));
     }
 }

@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 public class NeptuniumBow extends BowItem {
 
     public NeptuniumBow() {
-        super(new Item.Properties().group(Aquaculture.TAB).maxStackSize(1).maxDamage(2500));
+        super(new Item.Properties().group(Aquaculture.GROUP).maxStackSize(1).maxDamage(2500));
     }
 
     @Override

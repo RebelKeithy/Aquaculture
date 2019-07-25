@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 public class NeptuniumHoe extends HoeItem {
 
     public NeptuniumHoe(IItemTier tier, float speed) {
-        super(tier, speed, new Item.Properties().group(Aquaculture.TAB));
+        super(tier, speed, new Item.Properties().group(Aquaculture.GROUP));
     }
 
     @Override

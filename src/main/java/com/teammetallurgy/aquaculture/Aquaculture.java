@@ -38,7 +38,7 @@ import javax.annotation.Nonnull;
 public class Aquaculture {
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
-    public static final ItemGroup TAB = new ItemGroup(Aquaculture.MOD_ID) {
+    public static final ItemGroup GROUP = new ItemGroup(Aquaculture.MOD_ID) {
         @Override
         @Nonnull
         public ItemStack createIcon() {

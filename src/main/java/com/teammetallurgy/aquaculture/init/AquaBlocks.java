@@ -23,7 +23,7 @@ import java.util.List;
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaBlocks {
     public static List<Block> BLOCKS = Lists.newArrayList();
-    public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box", new Item.Properties().maxStackSize(1));
+    public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box", new Item.Properties().maxStackSize(1).group(Aquaculture.GROUP));
     public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", new Item.Properties());
 
     /**

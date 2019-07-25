@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TackleBoxTileEntity extends TileEntity implements INamedContainerProvider {
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
+    public LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
     public TackleBoxTileEntity() {
         super(AquaBlocks.AquaTileEntities.TACKLE_BOX);
@@ -57,7 +57,7 @@ public class TackleBoxTileEntity extends TileEntity implements INamedContainerPr
     }
 
     private IItemHandler createHandler() {
-        return new ItemStackHandler(16);
+        return new ItemStackHandler(17);
     }
 
     @Nonnull

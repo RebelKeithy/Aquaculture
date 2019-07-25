@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 public class NeptuniumTrident extends TridentItem {
 
     public NeptuniumTrident() {
-        super(new Item.Properties().group(Aquaculture.TAB).maxDamage(2500));
+        super(new Item.Properties().group(Aquaculture.GROUP).maxDamage(2500));
     }
 
     @Override

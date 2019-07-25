@@ -16,7 +16,7 @@ public class NeptuniumShovel extends ShovelItem {
     private boolean inWater = false;
 
     public NeptuniumShovel(IItemTier tier, float damage, float speed) {
-        super(tier, damage, speed, new Item.Properties().group(Aquaculture.TAB));
+        super(tier, damage, speed, new Item.Properties().group(Aquaculture.GROUP));
     }
 
     @Override

@@ -1,36 +1,80 @@
 package com.teammetallurgy.aquaculture.inventory.container;
 
+import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
-import com.teammetallurgy.aquaculture.inventory.container.slot.TackleBoxSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class TackleBoxContainer extends Container {
     private TileEntity tileEntity;
-    private int rows = 4;
-    private int collumns = 4;
+    public int rows = 4;
+    public int collumns = 4;
 
     public TackleBoxContainer(int windowID, BlockPos pos, PlayerInventory playerInventory) {
         super(AquaGuis.TACKLE_BOX, windowID);
         this.tileEntity = playerInventory.player.world.getTileEntity(pos);
 
-        //Tackle Box
         if (this.tileEntity != null) {
             this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+                //Fishing Pole
+                this.addSlot(new SlotItemHandler(handler, 0, 35, 16) {
+                    @Override
+                    public boolean isItemValid(@Nonnull ItemStack stack) {
+                        Item item = stack.getItem();
+                        return item instanceof FishingRodItem;
+                    }
+                });
+                /*//Hook
+                this.addSlot(new SlotItemHandler(handler, 1, 16, 48) {
+                    @Override
+                    public boolean isItemValid(@Nonnull ItemStack stack) {
+                        Item item = stack.getItem();
+                        return item.isIn(AquacultureAPI.Tags.HOOKS);
+                    }
+
+                    @Override
+                    public boolean isEnabled() {
+                        return !handler.getStackInSlot(0).isEmpty();
+                    }
+                });
+                //Bait
+                this.addSlot(new SlotItemHandler(handler, 2, 32, 32) {
+                    @Override
+                    public boolean isItemValid(@Nonnull ItemStack stack) {
+                        Item item = stack.getItem();
+                        return item.isIn(AquacultureAPI.Tags.BAIT);
+                    }
+
+                    @Override
+                    public boolean isEnabled() {
+                        return !handler.getStackInSlot(0).isEmpty();
+                    }
+                });*/
+                //Tackle Box
                 for (int column = 0; column < collumns; ++column) {
                     for (int row = 0; row < rows; ++row) {
-                        this.addSlot(new TackleBoxSlot(handler, row + column * collumns, 8 + row * 18, 18 + column * 18));
+                        this.addSlot(new SlotItemHandler(handler, 1 + row + column * collumns, 89 + row * 18, 8 + column * 18) {
+                            @Override
+                            public boolean isItemValid(@Nonnull ItemStack stack) { //TODO Use Forge tag for string, when added
+                                Item item = stack.getItem();
+                                return item == Items.STRING || item.isIn(AquacultureAPI.Tags.HOOKS) || item.isIn(AquacultureAPI.Tags.BAIT);
+                            }
+                        });
                     }
                 }
             });
@@ -38,14 +82,15 @@ public class TackleBoxContainer extends Container {
 
         //Player Inventory
         int playerRows = (rows - 4) * 18;
-
         for (int column = 0; column < 3; ++column) {
             for (int row = 0; row < 9; ++row) {
-                this.addSlot(new Slot(playerInventory, row + column * 9 + 9, 8 + row * 18, 103 + column * 18 + playerRows));
+                this.addSlot(new Slot(playerInventory, row + column * 9 + 9, 8 + row * 18, 84 + column * 18 + playerRows));
             }
         }
+
+        //Hotbat
         for (int row = 0; row < 9; ++row) {
-            this.addSlot(new Slot(playerInventory, row, 8 + row * 18, 161 + playerRows));
+            this.addSlot(new Slot(playerInventory, row, 8 + row * 18, 142 + playerRows));
         }
     }
 

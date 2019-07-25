@@ -16,7 +16,7 @@ public class NeptuniumPickaxe extends PickaxeItem {
     private boolean inWater = false;
 
     public NeptuniumPickaxe(IItemTier tier, int attackDamage, float attackSpeed) {
-        super(tier, attackDamage, attackSpeed, new Item.Properties().group(Aquaculture.TAB));
+        super(tier, attackDamage, attackSpeed, new Item.Properties().group(Aquaculture.GROUP));
     }
 
     @Override
