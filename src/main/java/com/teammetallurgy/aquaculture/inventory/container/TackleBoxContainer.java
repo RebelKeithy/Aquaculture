@@ -3,11 +3,11 @@ package com.teammetallurgy.aquaculture.inventory.container;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
+import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -15,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -36,35 +37,20 @@ public class TackleBoxContainer extends Container {
                     @Override
                     public boolean isItemValid(@Nonnull ItemStack stack) {
                         Item item = stack.getItem();
-                        return item instanceof FishingRodItem;
-                    }
-                });
-                /*//Hook
-                this.addSlot(new SlotItemHandler(handler, 1, 16, 48) {
-                    @Override
-                    public boolean isItemValid(@Nonnull ItemStack stack) {
-                        Item item = stack.getItem();
-                        return item.isIn(AquacultureAPI.Tags.HOOKS);
+                        return item instanceof AquaFishingRodItem;
                     }
 
                     @Override
-                    public boolean isEnabled() {
-                        return !handler.getStackInSlot(0).isEmpty();
+                    public void onSlotChanged() {
+                        super.onSlotChanged();
+
+                        //TODO Fix updating slots
                     }
                 });
-                //Bait
-                this.addSlot(new SlotItemHandler(handler, 2, 32, 32) {
-                    @Override
-                    public boolean isItemValid(@Nonnull ItemStack stack) {
-                        Item item = stack.getItem();
-                        return item.isIn(AquacultureAPI.Tags.BAIT);
-                    }
 
-                    @Override
-                    public boolean isEnabled() {
-                        return !handler.getStackInSlot(0).isEmpty();
-                    }
-                });*/
+                //Fishing Rod slots
+                TackleBoxContainer.this.addFishingRodSlots(handler.getStackInSlot(0));
+
                 //Tackle Box
                 for (int column = 0; column < collumns; ++column) {
                     for (int row = 0; row < rows; ++row) {
@@ -91,6 +77,58 @@ public class TackleBoxContainer extends Container {
         //Hotbat
         for (int row = 0; row < 9; ++row) {
             this.addSlot(new Slot(playerInventory, row, 8 + row * 18, 142 + playerRows));
+        }
+    }
+
+    private void addFishingRodSlots(@Nonnull ItemStack fishingRod) {
+        if (!fishingRod.isEmpty()) {
+            fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(rodHandler -> {
+                //Hook
+                this.addSlot(new SlotItemHandler(rodHandler, 0, 16, 35) {
+                    @Override
+                    public boolean isItemValid(@Nonnull ItemStack stack) {
+                        Item item = stack.getItem();
+                        return item.isIn(AquacultureAPI.Tags.HOOKS);
+                    }
+
+                    @Override
+                    public int getSlotStackLimit() {
+                        return 1;
+                    }
+
+                    @Override
+                    public boolean isEnabled() {
+                        return !fishingRod.isEmpty();
+                    }
+                });
+                //Bait
+                this.addSlot(new SlotItemHandler(rodHandler, 1, 48, 35) {
+                    @Override
+                    public boolean isItemValid(@Nonnull ItemStack stack) {
+                        Item item = stack.getItem();
+                        return item.isIn(AquacultureAPI.Tags.BAIT);
+                    }
+
+                    @Override
+                    public boolean canTakeStack(PlayerEntity playerIn) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean isEnabled() {
+                        return !fishingRod.isEmpty();
+                    }
+                });
+            });
+        }
+    }
+
+    private void updateHookSlot(IItemHandler handler, boolean hasFishingRod) {
+        if (hasFishingRod) {
+            getInventory().add(ItemStack.EMPTY);
+        } else {
+            inventorySlots.remove(0);
+            getInventory().remove(0);
         }
     }
 

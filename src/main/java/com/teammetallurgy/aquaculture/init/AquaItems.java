@@ -3,7 +3,6 @@ package com.teammetallurgy.aquaculture.init;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
-import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.item.*;
 import com.teammetallurgy.aquaculture.item.neptunium.*;
@@ -30,13 +29,6 @@ public class AquaItems {
     public static final Item GOLD_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(55).group(Aquaculture.GROUP)), "gold_fishing_rod");
     public static final Item DIAMOND_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(450).group(Aquaculture.GROUP)), "diamond_fishing_rod");
     public static final Item NEPTUNIUM_FISHING_ROD = register(new AquaFishingRodItem(AquacultureAPI.MATS.NEPTUNIUM, new Item.Properties().defaultMaxDamage(1000).group(Aquaculture.GROUP)), "neptunium_fishing_rod");
-    public static final Item LIGHT = register(new HookItem(Hooks.LIGHT), "light_hook");
-    public static final Item WEIGHTED = register(new HookItem(Hooks.WEIGHTED), "weighted_hook");
-    public static final Item DOUBLE = register(new HookItem(Hooks.DOUBLE), "double_hook");
-    public static final Item NOTE = register(new HookItem(Hooks.NOTE), "note_hook");
-    public static final Item OBSIDIAN = register(new HookItem(Hooks.OBSIDIAN), "obsidian_hook");
-    public static final Item GOLD = register(new HookItem(Hooks.GOLD), "gold_hook");
-    public static final Item RED = register(new HookItem(Hooks.RED), "red_hook");
 
     // Neptunium
     public static final Item NEPTUNIUM_INGOT = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "neptunium_ingot");

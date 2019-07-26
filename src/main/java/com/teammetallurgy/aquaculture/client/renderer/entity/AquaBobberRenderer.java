@@ -69,8 +69,8 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             float swingProgress = angler.getSwingProgress(partialTicks);
             float swingProgressSqrt = MathHelper.sin(MathHelper.sqrt(swingProgress) * 3.1415927F);
             float yawOffset = MathHelper.lerp(partialTicks, angler.prevRenderYawOffset, angler.renderYawOffset) * 0.017453292F;
-            double sin = (double) MathHelper.sin(yawOffset);
-            double cos = (double) MathHelper.cos(yawOffset);
+            double sin = MathHelper.sin(yawOffset);
+            double cos = MathHelper.cos(yawOffset);
             double handOffset = (double) hand * 0.35D;
             double anglerX;
             double anglerY;
@@ -85,23 +85,23 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 rod = rod.rotateYaw(-MathHelper.lerp(partialTicks, angler.prevRotationYaw, angler.rotationYaw) * 0.017453292F);
                 rod = rod.rotateYaw(swingProgressSqrt * 0.5F);
                 rod = rod.rotatePitch(-swingProgressSqrt * 0.7F);
-                anglerX = MathHelper.lerp((double) partialTicks, angler.prevPosX, angler.posX) + rod.x;
-                anglerY = MathHelper.lerp((double) partialTicks, angler.prevPosY, angler.posY) + rod.y;
-                anglerZ = MathHelper.lerp((double) partialTicks, angler.prevPosZ, angler.posZ) + rod.z;
-                anglerEye = (double) angler.getEyeHeight();
+                anglerX = MathHelper.lerp(partialTicks, angler.prevPosX, angler.posX) + rod.x;
+                anglerY = MathHelper.lerp(partialTicks, angler.prevPosY, angler.posY) + rod.y;
+                anglerZ = MathHelper.lerp(partialTicks, angler.prevPosZ, angler.posZ) + rod.z;
+                anglerEye = angler.getEyeHeight();
             } else {
-                anglerX = MathHelper.lerp((double) partialTicks, angler.prevPosX, angler.posX) - cos * handOffset - sin * 0.8D;
+                anglerX = MathHelper.lerp(partialTicks, angler.prevPosX, angler.posX) - cos * handOffset - sin * 0.8D;
                 anglerY = angler.prevPosY + (double) angler.getEyeHeight() + (angler.posY - angler.prevPosY) * (double) partialTicks - 0.45D;
-                anglerZ = MathHelper.lerp((double) partialTicks, angler.prevPosZ, angler.posZ) - sin * handOffset + cos * 0.8D;
+                anglerZ = MathHelper.lerp(partialTicks, angler.prevPosZ, angler.posZ) - sin * handOffset + cos * 0.8D;
                 anglerEye = angler.shouldRenderSneaking() ? -0.1875D : 0.0D;
             }
 
-            fov = MathHelper.lerp((double) partialTicks, bobber.prevPosX, bobber.posX);
-            double d14 = MathHelper.lerp((double) partialTicks, bobber.prevPosY, bobber.posY) + 0.25D;
-            double d9 = MathHelper.lerp((double) partialTicks, bobber.prevPosZ, bobber.posZ);
-            double startX = (double) ((float) (anglerX - fov));
+            fov = MathHelper.lerp(partialTicks, bobber.prevPosX, bobber.posX);
+            double d14 = MathHelper.lerp(partialTicks, bobber.prevPosY, bobber.posY) + 0.25D;
+            double d9 = MathHelper.lerp(partialTicks, bobber.prevPosZ, bobber.posZ);
+            double startX = (float) (anglerX - fov);
             double startY = (double) ((float) (anglerY - d14)) + anglerEye;
-            double startZ = (double) ((float) (anglerZ - d9));
+            double startZ = (float) (anglerZ - d9);
             GlStateManager.disableTexture();
             GlStateManager.disableLighting();
             builder.begin(3, DefaultVertexFormats.POSITION_COLOR);

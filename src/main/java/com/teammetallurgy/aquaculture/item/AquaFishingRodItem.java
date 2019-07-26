@@ -1,6 +1,8 @@
 package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.api.fishing.Hook;
+import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.client.util.ITooltipFlag;
@@ -10,6 +12,8 @@ import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTier;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
@@ -17,6 +21,13 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,7 +79,9 @@ public class AquaFishingRodItem extends FishingRodItem {
                 lureSpeed = EnchantmentHelper.getFishingSpeedBonus(heldStack);
                 if (this.material == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 1;
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
-                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed));
+                Hook hook = this.getHookType(heldStack);
+                if (hook == Hooks.GOLD) luck += 1;
+                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook));
             }
             player.swingArm(hand);
             player.addStat(Stats.ITEM_USED.get(this));
@@ -77,11 +90,64 @@ public class AquaFishingRodItem extends FishingRodItem {
         return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
     }
 
+    @Nullable
+    public Hook getHookType(@Nonnull ItemStack fishingRod) {
+        Hook hook = null;
+        ItemStack hookStack = fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseGet(null).getStackInSlot(0);
+        if (hookStack.getItem() instanceof HookItem) {
+            hook = ((HookItem) hookStack.getItem()).getHookType();
+        }
+        return hook;
+    }
+
+    @Override
+    @Nullable
+    public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt) {
+        return new FishingRodEquipementHandler();
+    }
+
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag tooltipFlag) {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
             tooltips.add(new TranslationTextComponent("aquaculture.fishing_rod.broken").setStyle(new Style().setItalic(true).setColor(TextFormatting.GRAY)));
         }
+        Hook hook = this.getHookType(stack);
+        if (hook != null) {
+            tooltips.add(new TranslationTextComponent(hook.getItem().getTranslationKey()).setStyle(new Style().setColor(hook.getColor())));
+        }
         super.addInformation(stack, world, tooltips, tooltipFlag);
+    }
+
+    public static class FishingRodEquipementHandler implements ICapabilitySerializable<INBT> {
+        private final IItemHandler items = new ItemStackHandler(2) {
+            @Override
+            protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
+                return 1;
+            }
+        };
+
+        @Override
+        @Nonnull
+        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction direction) {
+            if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+                return LazyOptional.of(this::getItems).cast();
+            }
+            return LazyOptional.empty();
+        }
+
+        @Override
+        public INBT serializeNBT() {
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(this.getItems(), null);
+        }
+
+        @Override
+        public void deserializeNBT(INBT nbt) {
+            CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(this.getItems(), null, nbt);
+        }
+
+        @Nonnull
+        public IItemHandler getItems() {
+            return items;
+        }
     }
 }
