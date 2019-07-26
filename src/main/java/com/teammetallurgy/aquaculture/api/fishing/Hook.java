@@ -18,7 +18,7 @@ public class Hook {
         this.name = name;
         this.color = color;
         this.fluid = fluid;
-        this.hookItem = AquaItems.register(new HookItem(this), name);
+        this.hookItem = AquaItems.register(new HookItem(this), name + "_hook");
     }
 
     public String getName() {

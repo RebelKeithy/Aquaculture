@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ServerWorld;
@@ -47,7 +46,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         this.luck = luck;
         this.angler.fishingBobber = this;
         this.hook = hook;
-        if (this.hook == Hooks.WEIGHTED) {
+        if (this.hook == Hooks.HEAVY) {
             this.setMotion(this.getMotion().mul(0.6D, 0.15D, 0.6D));
         }
         if (this.hook == Hooks.LIGHT) {
