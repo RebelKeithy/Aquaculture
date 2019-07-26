@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.misc;
 
+import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
@@ -38,5 +39,15 @@ public class StackHelper {
         for (int slot = 0; slot < handler.getSlots(); ++slot) {
             InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(slot));
         }
+    }
+
+    public static Hand getActiveHand(@Nonnull ItemStack stackMainHand) {
+        Hand hand;
+        if (stackMainHand.getItem() instanceof AquaFishingRodItem) {
+            hand = Hand.MAIN_HAND;
+        } else {
+            hand = Hand.OFF_HAND;
+        }
+        return hand;
     }
 }

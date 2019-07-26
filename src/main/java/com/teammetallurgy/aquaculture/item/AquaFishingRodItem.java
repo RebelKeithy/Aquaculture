@@ -79,7 +79,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 lureSpeed = EnchantmentHelper.getFishingSpeedBonus(heldStack);
                 if (this.material == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 1;
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
-                Hook hook = this.getHookType(heldStack);
+                Hook hook = getHookType(heldStack);
                 if (hook == Hooks.GOLD) luck += 1;
                 world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook));
             }
@@ -91,7 +91,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     }
 
     @Nullable
-    public Hook getHookType(@Nonnull ItemStack fishingRod) {
+    public static Hook getHookType(@Nonnull ItemStack fishingRod) {
         Hook hook = null;
         ItemStack hookStack = fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseGet(null).getStackInSlot(0);
         if (hookStack.getItem() instanceof HookItem) {

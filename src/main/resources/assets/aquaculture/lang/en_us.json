@@ -16,7 +16,8 @@
   "item.aquaculture.note_hook": "Note Hook",
   "item.aquaculture.obsidian_hook": "Obsidian Hook",
   "item.aquaculture.gold_hook": "Gold Hook",
-  "item.aquaculture.red_hook": "Red Hook",
+  "item.aquaculture.redstone_hook": "Redstone Hook",
+  "item.aquaculture.glowstone_hook": "Glowstone Hook",
 
   "_comment": "Food",
   "item.aquaculture.whale_steak_raw": "Raw Whale Steak",

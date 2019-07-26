@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> {
     private static final ResourceLocation BOBBER = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber.png");
-    private static final ResourceLocation HOOK = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/hook.png");
+    private static final ResourceLocation HOOK = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/hook/hook.png");
 
     public AquaBobberRenderer(EntityRendererManager manager) {
         super(manager);
@@ -125,14 +125,18 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
     }
 
     @Override
-    public void renderMultipass(AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) { //Render hook
+    public void renderMultipass(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) { //Render hook
         PlayerEntity angler = bobber.getAngler();
         if (angler != null && !this.renderOutlines) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef((float) x, (float) y, (float) z);
             GlStateManager.enableRescaleNormal();
             GlStateManager.scalef(0.5F, 0.5F, 0.5F);
-            this.bindTexture(HOOK);
+            if (bobber.getHook() != null) {
+                this.bindTexture(bobber.getHook().getTexture());
+            } else {
+                this.bindTexture(HOOK);
+            }
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder builder = tessellator.getBuffer();
             GlStateManager.rotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);

@@ -4,7 +4,9 @@ import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
+import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
@@ -35,10 +37,11 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     private final Hook hook;
     private final int luck;
 
-    public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawPacket, World world) {
+    public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
         super(world, Minecraft.getInstance().player, 0, 0, 0);
         this.luck = 0;
-        this.hook = null;
+        PlayerEntity player = Minecraft.getInstance().player;
+        this.hook = AquaFishingRodItem.getHookType(player.getHeldItem(StackHelper.getActiveHand(player.getHeldItemMainhand())));
     }
 
     public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, Hook hook) {
@@ -52,6 +55,10 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         if (this.hook == Hooks.LIGHT) {
             this.setMotion(this.getMotion().mul(1.5D, 1.0D, 1.5D));
         }
+    }
+
+    public Hook getHook() {
+        return hook;
     }
 
     @Override

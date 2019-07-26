@@ -1,9 +1,9 @@
 package com.teammetallurgy.aquaculture.inventory.container;
 
-import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
+import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -58,7 +58,7 @@ public class TackleBoxContainer extends Container {
                             @Override
                             public boolean isItemValid(@Nonnull ItemStack stack) { //TODO Use Forge tag for string, when added
                                 Item item = stack.getItem();
-                                return item == Items.STRING || item.isIn(AquacultureAPI.Tags.HOOKS) || item.isIn(AquacultureAPI.Tags.BAIT);
+                                return item == Items.STRING || item instanceof HookItem /*|| item.isIn(AquacultureAPI.Tags.BAIT)*/;
                             }
                         });
                     }
@@ -87,8 +87,7 @@ public class TackleBoxContainer extends Container {
                 this.addSlot(new SlotItemHandler(rodHandler, 0, 16, 35) {
                     @Override
                     public boolean isItemValid(@Nonnull ItemStack stack) {
-                        Item item = stack.getItem();
-                        return item.isIn(AquacultureAPI.Tags.HOOKS);
+                        return stack.getItem() instanceof HookItem;
                     }
 
                     @Override
@@ -103,11 +102,11 @@ public class TackleBoxContainer extends Container {
                 });
                 //Bait
                 this.addSlot(new SlotItemHandler(rodHandler, 1, 48, 35) {
-                    @Override
+                    /*@Override
                     public boolean isItemValid(@Nonnull ItemStack stack) {
                         Item item = stack.getItem();
                         return item.isIn(AquacultureAPI.Tags.BAIT);
-                    }
+                    }*/
 
                     @Override
                     public boolean canTakeStack(PlayerEntity playerIn) {

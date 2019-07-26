@@ -138,7 +138,11 @@ public class AquaItems {
      * @return The Item that was registered
      */
     public static Item register(@Nonnull Item item, @Nonnull String name) {
-        item.setRegistryName(new ResourceLocation(Aquaculture.MOD_ID, name));
+        return register(item, new ResourceLocation(Aquaculture.MOD_ID, name));
+    }
+
+    public static Item register(@Nonnull Item item, @Nonnull ResourceLocation registryName) {
+        item.setRegistryName(registryName);
         ITEMS.add(item);
         return item;
     }

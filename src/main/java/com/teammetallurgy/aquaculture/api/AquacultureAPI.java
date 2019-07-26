@@ -19,9 +19,7 @@ public class AquacultureAPI {
     public static FishData FISH_DATA = new FishData();
 
     public static class Tags {
-        public static final Tag<Item> BAIT = tag(Aquaculture.MOD_ID, "bait");
         public static final Tag<Item> FILLET_KNIFE = tag("forge", "fillet_knife");
-        public static final Tag<Item> HOOKS = tag(Aquaculture.MOD_ID, "hooks");
         public static final Tag<Item> TOOLTIP = tag(Aquaculture.MOD_ID, "tooltip");
 
         public static Tag<Item> tag(String modID, String name) {
