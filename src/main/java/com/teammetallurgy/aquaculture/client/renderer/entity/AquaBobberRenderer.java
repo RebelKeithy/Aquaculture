@@ -132,7 +132,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             GlStateManager.translatef((float) x, (float) y, (float) z);
             GlStateManager.enableRescaleNormal();
             GlStateManager.scalef(0.5F, 0.5F, 0.5F);
-            if (bobber.getHook() != null) {
+            if (bobber.hasHook()) {
                 this.bindTexture(bobber.getHook().getTexture());
             } else {
                 this.bindTexture(HOOK);

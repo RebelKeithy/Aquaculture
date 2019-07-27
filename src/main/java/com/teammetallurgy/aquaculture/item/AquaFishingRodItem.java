@@ -111,7 +111,7 @@ public class AquaFishingRodItem extends FishingRodItem {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
             tooltips.add(new TranslationTextComponent("aquaculture.fishing_rod.broken").setStyle(new Style().setItalic(true).setColor(TextFormatting.GRAY)));
         }
-        Hook hook = this.getHookType(stack);
+        Hook hook = getHookType(stack);
         if (hook != null) {
             tooltips.add(new TranslationTextComponent(hook.getItem().getTranslationKey()).setStyle(new Style().setColor(hook.getColor())));
         }

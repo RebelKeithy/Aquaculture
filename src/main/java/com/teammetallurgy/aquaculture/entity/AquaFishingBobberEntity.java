@@ -10,17 +10,22 @@ import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.*;
@@ -49,16 +54,20 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         this.luck = luck;
         this.angler.fishingBobber = this;
         this.hook = hook;
-        if (this.hook == Hooks.HEAVY) {
+        if (hook == Hooks.HEAVY) {
             this.setMotion(this.getMotion().mul(0.6D, 0.15D, 0.6D));
         }
-        if (this.hook == Hooks.LIGHT) {
+        if (hook == Hooks.LIGHT) {
             this.setMotion(this.getMotion().mul(1.5D, 1.0D, 1.5D));
         }
     }
 
     public Hook getHook() {
-        return hook;
+        return this.hook;
+    }
+
+    public boolean hasHook() {
+        return this.hook != null;
     }
 
     @Override
@@ -100,8 +109,8 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                 CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayerEntity) this.angler, stack, this, lootEntries);
 
                 spawnLoot(lootEntries);
-                if (this.hook == Hooks.DOUBLE) {
-                    if (rand.nextDouble() <= 0.10D) {
+                if (this.hasHook() && this.hook == Hooks.DOUBLE) {
+                    if (this.rand.nextDouble() <= 0.10D) {
                         spawnLoot(goldHookLoot);
                         this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                     }
@@ -120,16 +129,133 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
 
     private void spawnLoot(List<ItemStack> lootEntries) {
         for (ItemStack loot : lootEntries) {
-            ItemEntity lootEntity = new ItemEntity(this.world, this.posX, this.posY, this.posZ, loot);
+            ItemEntity lootEntity = new ItemEntity(this.world, this.posX, this.posY, this.posZ, loot) {
+                @Override
+                public boolean canRenderOnFire() {
+                    return false;
+                }
+
+                @Override
+                protected void setOnFireFromLava() {
+                }
+
+                @Override
+                public boolean isInvulnerableTo(@Nonnull DamageSource source) {
+                    BlockPos spawnPos = new BlockPos(AquaFishingBobberEntity.this.posX, AquaFishingBobberEntity.this.posY, AquaFishingBobberEntity.this.posZ);
+                    return (AquaFishingBobberEntity.this.hasHook() && AquaFishingBobberEntity.this.hook.getFluid() == FluidTags.LAVA) && this.world.getFluidState(spawnPos).isTagged(FluidTags.LAVA)
+                            || super.isInvulnerableTo(source);
+                }
+            };
             double x = this.angler.posX - this.posX;
             double y = this.angler.posY - this.posY;
             double z = this.angler.posZ - this.posZ;
-            lootEntity.setMotion(x * 0.1D, y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D, z * 0.1D);
+            lootEntity.setMotion(x * 0.1D, (y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D) + (this.hasHook() && this.hook.getFluid() == FluidTags.LAVA ? 0.2D : 0.0D), z * 0.1D);
             this.world.addEntity(lootEntity);
             this.angler.world.addEntity(new ExperienceOrbEntity(this.angler.world, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
             if (loot.getItem().isIn(ItemTags.FISHES)) {
                 this.angler.addStat(Stats.FISH_CAUGHT, 1);
             }
         }
+    }
+
+    @Override
+    public void tick() {
+        if (this.hasHook() && this.hook.getFluid() == FluidTags.LAVA) {
+            this.lavaFishingTick();
+        } else {
+            super.tick();
+        }
+    }
+
+    private void lavaFishingTick() {
+        super.baseTick();
+        if (this.angler == null) {
+            this.remove();
+        } else if (this.world.isRemote || !this.shouldStopFishing()) {
+            if (this.inGround) {
+                ++this.ticksInGround;
+                if (this.ticksInGround >= 1200) {
+                    this.remove();
+                    return;
+                }
+            }
+
+            float f = 0.0F;
+            BlockPos bobberPos = new BlockPos(this);
+            IFluidState fluidState = this.world.getFluidState(bobberPos);
+            if (fluidState.isTagged(FluidTags.LAVA)) {
+                f = fluidState.func_215679_a(this.world, bobberPos);
+            }
+
+            if (this.currentState == State.FLYING) {
+                if (this.caughtEntity != null) {
+                    this.setMotion(Vec3d.ZERO);
+                    this.currentState = State.HOOKED_IN_ENTITY;
+                    return;
+                }
+
+                if (f > 0.0F) {
+                    this.setMotion(this.getMotion().mul(0.3D, 0.2D, 0.3D));
+                    this.currentState = State.BOBBING;
+                    return;
+                }
+
+                if (!this.world.isRemote) {
+                    this.checkCollision();
+                }
+
+                if (!this.inGround && !this.onGround && !this.collidedHorizontally) {
+                    ++this.ticksInAir;
+                } else {
+                    this.ticksInAir = 0;
+                    this.setMotion(Vec3d.ZERO);
+                }
+            } else {
+                if (this.currentState == State.HOOKED_IN_ENTITY) {
+                    if (this.caughtEntity != null) {
+                        if (this.caughtEntity.removed) {
+                            this.caughtEntity = null;
+                            this.currentState = State.FLYING;
+                        } else {
+                            this.posX = this.caughtEntity.posX;
+                            this.posY = this.caughtEntity.getBoundingBox().minY + (double) this.caughtEntity.getHeight() * 0.8D;
+                            this.posZ = this.caughtEntity.posZ;
+                            this.setPosition(this.posX, this.posY, this.posZ);
+                        }
+                    }
+                    return;
+                }
+
+                if (this.currentState == State.BOBBING) {
+                    Vec3d motion = this.getMotion();
+                    double y = this.posY + motion.y - (double) bobberPos.getY() - (double) f;
+                    if (Math.abs(y) < 0.01D) {
+                        y += Math.signum(y) * 0.1D;
+                    }
+                    this.setMotion(motion.x * 0.9D, motion.y - y * (double) this.rand.nextFloat() * 0.2D, motion.z * 0.9D);
+                    if (!this.world.isRemote && f > 0.0F) {
+                        this.catchingFish(bobberPos);
+                    }
+                }
+            }
+            if (!fluidState.isTagged(FluidTags.LAVA)) {
+                this.setMotion(this.getMotion().add(0.0D, -0.03D, 0.0D));
+            }
+
+            this.move(MoverType.SELF, this.getMotion());
+            this.updateRotation();
+            this.setMotion(this.getMotion().scale(0.92D));
+            this.setPosition(this.posX, this.posY, this.posZ);
+        }
+    }
+
+    @Override
+    public boolean isInvulnerableTo(@Nonnull DamageSource source) {
+        return super.isInvulnerableTo(source);
+    }
+
+    @Override
+    public boolean canRenderOnFire() {
+        return (this.hasHook() && this.hook.getFluid() != FluidTags.LAVA) && super.canRenderOnFire();
     }
 }
