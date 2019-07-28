@@ -4,6 +4,7 @@ import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import com.teammetallurgy.aquaculture.init.AquaLootTables;
 import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
@@ -23,6 +24,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -35,6 +37,7 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -97,25 +100,30 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                 ServerWorld serverWorld = (ServerWorld) this.world;
                 LootContext.Builder builder = new LootContext.Builder(serverWorld).withParameter(LootParameters.POSITION, new BlockPos(this)).withParameter(LootParameters.TOOL, stack).withRandom(this.rand).withLuck((float) this.luck + this.angler.getLuck());
                 builder.withParameter(LootParameters.KILLER_ENTITY, this.angler).withParameter(LootParameters.THIS_ENTITY, this);
-                LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING);
-                List<ItemStack> lootEntries = lootTable.generate(builder.build(LootParameterSets.FISHING));
-                List<ItemStack> goldHookLoot = lootTable.generate(builder.build(LootParameterSets.FISHING));
-                event = new ItemFishedEvent(lootEntries, this.inGround ? 2 : 1, this);
-                MinecraftForge.EVENT_BUS.post(event);
-                if (event.isCanceled()) {
-                    this.remove();
-                    return event.getRodDamage();
-                }
-                CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayerEntity) this.angler, stack, this, lootEntries);
 
-                spawnLoot(lootEntries);
-                if (this.hasHook() && this.hook == Hooks.DOUBLE) {
-                    if (this.rand.nextDouble() <= 0.10D) {
-                        spawnLoot(goldHookLoot);
-                        this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                List<ItemStack> lootEntries = getLoot(builder, serverWorld);
+                if (!lootEntries.isEmpty()) {
+                    event = new ItemFishedEvent(lootEntries, this.inGround ? 2 : 1, this);
+                    MinecraftForge.EVENT_BUS.post(event);
+                    if (event.isCanceled()) {
+                        this.remove();
+                        return event.getRodDamage();
                     }
+                    CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayerEntity) this.angler, stack, this, lootEntries);
+
+                    spawnLoot(lootEntries);
+                    if (this.hasHook() && this.hook == Hooks.DOUBLE) {
+                        if (this.rand.nextDouble() <= 0.10D) {
+                            List<ItemStack> goldHookLoot = getLoot(builder, serverWorld);
+                            if (!goldHookLoot.isEmpty()) {
+                                MinecraftForge.EVENT_BUS.post(new ItemFishedEvent(goldHookLoot, 0, this));
+                                spawnLoot(goldHookLoot);
+                                this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                            }
+                        }
+                    }
+                    rodDamage = 1;
                 }
-                rodDamage = 1;
             }
             if (this.inGround) {
                 rodDamage = 2;
@@ -125,6 +133,28 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         } else {
             return 0;
         }
+    }
+
+    private List<ItemStack> getLoot(LootContext.Builder builder, ServerWorld serverWorld) {
+        IFluidState fluidState = this.world.getFluidState(new BlockPos(this));
+        ResourceLocation lootTableLocation = null;
+        if (fluidState.isTagged(FluidTags.WATER)) {
+            lootTableLocation = LootTables.GAMEPLAY_FISHING;
+        }
+        if (this.hasHook() && this.hook.getFluid() == FluidTags.LAVA) {
+            if (fluidState.isTagged(FluidTags.LAVA)) {
+                if (serverWorld.getWorld().getDimension().isNether()) {
+                    lootTableLocation = AquaLootTables.NETHER_FISHING;
+                } else {
+                    lootTableLocation = AquaLootTables.LAVA_FISHING;
+                }
+            }
+        }
+        if (lootTableLocation != null) {
+            LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootTableLocation);
+            return lootTable.generate(builder.build(LootParameterSets.FISHING));
+        }
+        return new ArrayList<>();
     }
 
     private void spawnLoot(List<ItemStack> lootEntries) {

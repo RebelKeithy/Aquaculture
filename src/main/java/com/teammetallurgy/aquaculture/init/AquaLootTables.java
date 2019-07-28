@@ -22,6 +22,14 @@ public class AquaLootTables {
     public static final ResourceLocation FISH = register("gameplay/fishing/fish");
     public static final ResourceLocation JUNK = register("gameplay/fishing/junk");
     public static final ResourceLocation TREASURE = register("gameplay/fishing/treasure");
+    public static final ResourceLocation LAVA_FISHING = register("gameplay/fishing/lava/fishing");
+    public static final ResourceLocation LAVA_FISH = register("gameplay/fishing/lava/fish");
+    public static final ResourceLocation LAVA_JUNK = register("gameplay/fishing/lava/junk");
+    public static final ResourceLocation LAVA_TREASURE = register("gameplay/fishing/lava/treasure");
+    public static final ResourceLocation NETHER_FISHING = register("gameplay/fishing/nether/fishing");
+    public static final ResourceLocation NETHER_FISH = register("gameplay/fishing/nether/fish");
+    public static final ResourceLocation NETHER_JUNK = register("gameplay/fishing/nether/junk");
+    public static final ResourceLocation NETHER_TREASURE = register("gameplay/fishing/nether/treasure");
 
     private static ResourceLocation register(String path) {
         return LootTables.register(new ResourceLocation(Aquaculture.MOD_ID, path));
