@@ -21,6 +21,7 @@ import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
@@ -28,6 +29,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
@@ -289,8 +291,113 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     }
 
     @Override
-    public boolean isInvulnerableTo(@Nonnull DamageSource source) {
-        return super.isInvulnerableTo(source);
+    protected void catchingFish(BlockPos pos) { //Copied from vanilla. Only changed marked things
+        ServerWorld serverworld = (ServerWorld) this.world;
+        int delay = 1;
+        BlockPos posUp = pos.up();
+        if (this.rand.nextFloat() < 0.25F && this.world.isRainingAt(posUp)) {
+            ++delay;
+        }
+
+        if (this.rand.nextFloat() < 0.5F && !this.world.isSkyLightMax(posUp)) {
+            --delay;
+        }
+
+        if (this.ticksCatchable > 0) {
+            --this.ticksCatchable;
+            if (this.ticksCatchable <= 0) {
+                this.ticksCaughtDelay = 0;
+                this.ticksCatchableDelay = 0;
+            } else {
+                this.setMotion(this.getMotion().add(0.0D, -0.2D * (double) this.rand.nextFloat() * (double) this.rand.nextFloat(), 0.0D));
+            }
+        } else {
+            float angle;
+            float sin;
+            float cos;
+            double x;
+            double y;
+            double z;
+            IFluidState fluidState; //Replaced BlockState checks with fluidState checks
+            if (this.ticksCatchableDelay > 0) {
+                this.ticksCatchableDelay -= delay;
+                if (this.ticksCatchableDelay > 0) {
+                    this.fishApproachAngle = (float) ((double) this.fishApproachAngle + this.rand.nextGaussian() * 4.0D);
+                    angle = this.fishApproachAngle * 0.017453292F;
+                    sin = MathHelper.sin(angle);
+                    cos = MathHelper.cos(angle);
+                    x = this.posX + (double) (sin * (float) this.ticksCatchableDelay * 0.1F);
+                    y = ((float) MathHelper.floor(this.getBoundingBox().minY) + 1.0F);
+                    z = this.posZ + (double) (cos * (float) this.ticksCatchableDelay * 0.1F);
+                    fluidState = serverworld.getFluidState(new BlockPos(x, y - 1.0D, z));
+                    if (fluidState.isTagged(FluidTags.WATER)) {
+                        if (this.rand.nextFloat() < 0.15F) {
+                            serverworld.spawnParticle(ParticleTypes.BUBBLE, x, y - 0.10000000149011612D, z, 1, sin, 0.1D, cos, 0.0D);
+                        }
+                        float zOffset = sin * 0.04F;
+                        float xOffset = cos * 0.04F;
+                        serverworld.spawnParticle(ParticleTypes.FISHING, x, y, z, 0, xOffset, 0.01D, -zOffset, 1.0D);
+                        serverworld.spawnParticle(ParticleTypes.FISHING, x, y, z, 0, -xOffset, 0.01D, zOffset, 1.0D);
+                    }
+                    if (fluidState.isTagged(FluidTags.LAVA)) {
+                        if (this.rand.nextFloat() < 0.15F) {
+                            serverworld.spawnParticle(ParticleTypes.LAVA, x, y - 0.10000000149011612D, z, 1, sin, 0.1D, cos, 0.0D);
+                        }
+                        float zOffset = sin * 0.04F;
+                        float xOffset = cos * 0.04F;
+                        serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, xOffset, 0.01D, -zOffset, 1.0D);
+                        serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, -xOffset, 0.01D, zOffset, 1.0D);
+                    }
+                } else {
+                    Vec3d motion = this.getMotion();
+                    this.setMotion(motion.x, (-0.4F * MathHelper.nextFloat(this.rand, 0.6F, 1.0F)), motion.z);
+                    double boundingBox = this.getBoundingBox().minY + 0.5D;
+                    if (serverworld.getFluidState(new BlockPos(this)).isTagged(FluidTags.WATER)) { //Water check added
+                        this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                        serverworld.spawnParticle(ParticleTypes.BUBBLE, this.posX, boundingBox, this.posZ, (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.20000000298023224D);
+                        serverworld.spawnParticle(ParticleTypes.FISHING, this.posX, boundingBox, this.posZ, (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.20000000298023224D);
+                    }
+
+                    //Lava sound added
+                    if (serverworld.getFluidState(new BlockPos(this)).isTagged(FluidTags.LAVA)) {
+                        this.playSound(SoundEvents.BLOCK_LAVA_EXTINGUISH, 1.00F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
+                        serverworld.spawnParticle(ParticleTypes.LAVA, this.posX, boundingBox, this.posZ, (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.20000000298023224D);
+                    }
+                    this.ticksCatchable = MathHelper.nextInt(this.rand, 20, 40);
+                }
+            } else if (this.ticksCaughtDelay > 0) {
+                this.ticksCaughtDelay -= delay;
+                angle = 0.15F;
+                if (this.ticksCaughtDelay < 20) {
+                    angle = (float) ((double) angle + (double) (20 - this.ticksCaughtDelay) * 0.05D);
+                } else if (this.ticksCaughtDelay < 40) {
+                    angle = (float) ((double) angle + (double) (40 - this.ticksCaughtDelay) * 0.02D);
+                } else if (this.ticksCaughtDelay < 60) {
+                    angle = (float) ((double) angle + (double) (60 - this.ticksCaughtDelay) * 0.01D);
+                }
+
+                if (this.rand.nextFloat() < angle) {
+                    sin = MathHelper.nextFloat(this.rand, 0.0F, 360.0F) * 0.017453292F;
+                    cos = MathHelper.nextFloat(this.rand, 25.0F, 60.0F);
+                    x = this.posX + (double) (MathHelper.sin(sin) * cos * 0.1F);
+                    y = ((float) MathHelper.floor(this.getBoundingBox().minY) + 1.0F);
+                    z = this.posZ + (double) (MathHelper.cos(sin) * cos * 0.1F);
+                    fluidState = serverworld.getFluidState(new BlockPos(x, y - 1.0D, z));
+                    if (fluidState.isTagged(FluidTags.WATER)) {
+                        serverworld.spawnParticle(ParticleTypes.SPLASH, x, y, z, 2 + this.rand.nextInt(2), 0.10000000149011612D, 0.0D, 0.10000000149011612D, 0.0D);
+                    }
+                }
+
+                if (this.ticksCaughtDelay <= 0) {
+                    this.fishApproachAngle = MathHelper.nextFloat(this.rand, 0.0F, 360.0F);
+                    this.ticksCatchableDelay = MathHelper.nextInt(this.rand, 20, 80);
+                }
+            } else {
+                this.ticksCaughtDelay = MathHelper.nextInt(this.rand, 100, 600);
+                this.ticksCaughtDelay -= this.lureSpeed * 20 * 5;
+            }
+        }
+
     }
 
     @Override
