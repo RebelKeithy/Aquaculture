@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.entity;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
@@ -102,6 +103,11 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                 builder.withParameter(LootParameters.KILLER_ENTITY, this.angler).withParameter(LootParameters.THIS_ENTITY, this);
 
                 List<ItemStack> lootEntries = getLoot(builder, serverWorld);
+                if (lootEntries.isEmpty()) { //TODO for debug purposes
+                    if (!this.world.isAirBlock(new BlockPos(this))) {
+                        Aquaculture.LOG.info("Loot was empty. This is an issue, please tell Girafi how you managed to do it");
+                    }
+                }
                 if (!lootEntries.isEmpty()) {
                     event = new ItemFishedEvent(lootEntries, this.inGround ? 2 : 1, this);
                     MinecraftForge.EVENT_BUS.post(event);
@@ -148,13 +154,16 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                 } else {
                     lootTableLocation = AquaLootTables.LAVA_FISHING;
                 }
+            } else {
+                lootTableLocation = null;
             }
         }
-        if (lootTableLocation != null) {
+        if (lootTableLocation == null) {
+            return new ArrayList<>();
+        } else {
             LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootTableLocation);
             return lootTable.generate(builder.build(LootParameterSets.FISHING));
         }
-        return new ArrayList<>();
     }
 
     private void spawnLoot(List<ItemStack> lootEntries) {
