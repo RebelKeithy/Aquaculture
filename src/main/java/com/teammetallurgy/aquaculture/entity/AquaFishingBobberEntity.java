@@ -330,12 +330,12 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                     y = ((float) MathHelper.floor(this.getBoundingBox().minY) + 1.0F);
                     z = this.posZ + (double) (cos * (float) this.ticksCatchableDelay * 0.1F);
                     fluidState = serverworld.getFluidState(new BlockPos(x, y - 1.0D, z));
+                    float zOffset = sin * 0.04F;
+                    float xOffset = cos * 0.04F;
                     if (fluidState.isTagged(FluidTags.WATER)) {
                         if (this.rand.nextFloat() < 0.15F) {
                             serverworld.spawnParticle(ParticleTypes.BUBBLE, x, y - 0.10000000149011612D, z, 1, sin, 0.1D, cos, 0.0D);
                         }
-                        float zOffset = sin * 0.04F;
-                        float xOffset = cos * 0.04F;
                         serverworld.spawnParticle(ParticleTypes.FISHING, x, y, z, 0, xOffset, 0.01D, -zOffset, 1.0D);
                         serverworld.spawnParticle(ParticleTypes.FISHING, x, y, z, 0, -xOffset, 0.01D, zOffset, 1.0D);
                     }
@@ -343,10 +343,12 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                         if (this.rand.nextFloat() < 0.15F) {
                             serverworld.spawnParticle(ParticleTypes.LAVA, x, y - 0.10000000149011612D, z, 1, sin, 0.1D, cos, 0.0D);
                         }
-                        float zOffset = sin * 0.04F;
-                        float xOffset = cos * 0.04F;
                         serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, xOffset, 0.01D, -zOffset, 1.0D);
                         serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, -xOffset, 0.01D, zOffset, 1.0D);
+                    }
+                    if (this.hasHook() && this.hook == Hooks.NOTE) {
+                        System.out.println("NOTE");
+                        this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_LEVELUP, this.getSoundCategory(), 0.20F, 0.1F);
                     }
                 } else {
                     Vec3d motion = this.getMotion();
@@ -397,7 +399,13 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                 this.ticksCaughtDelay -= this.lureSpeed * 20 * 5;
             }
         }
+    }
 
+    @Override
+    protected void setOnFireFromLava() {
+        if (!this.hasHook() || this.hasHook() && this.hook.getFluid() != FluidTags.LAVA) {
+            super.setOnFireFromLava();
+        }
     }
 
     @Override
