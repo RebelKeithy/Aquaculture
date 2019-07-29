@@ -347,7 +347,6 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                         serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, -xOffset, 0.01D, zOffset, 1.0D);
                     }
                     if (this.hasHook() && this.hook == Hooks.NOTE) {
-                        System.out.println("NOTE");
                         this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_LEVELUP, this.getSoundCategory(), 0.20F, 0.1F);
                     }
                 } else {
