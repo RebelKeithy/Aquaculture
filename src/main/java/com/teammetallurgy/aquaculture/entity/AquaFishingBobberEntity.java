@@ -60,11 +60,8 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         this.luck = luck;
         this.angler.fishingBobber = this;
         this.hook = hook;
-        if (hook == Hooks.HEAVY) {
-            this.setMotion(this.getMotion().mul(0.6D, 0.15D, 0.6D));
-        }
-        if (hook == Hooks.LIGHT) {
-            this.setMotion(this.getMotion().mul(1.5D, 1.0D, 1.5D));
+        if (this.hasHook() && hook.getWeight() != null) {
+            this.setMotion(this.getMotion().mul(hook.getWeight()));
         }
     }
 
@@ -107,7 +104,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                 List<ItemStack> lootEntries = getLoot(builder, serverWorld);
                 if (lootEntries.isEmpty()) { //TODO for debug purposes
                     if (!this.world.isAirBlock(new BlockPos(this))) {
-                        Aquaculture.LOG.info("Loot was empty. This is an issue, please tell Girafi how you managed to do it");
+                        Aquaculture.LOG.error("Loot was empty in Biome: " + this.world.getBiome(new BlockPos(this)) + ". This is an issue, please tell Girafi how you managed to do it");
                     }
                 }
                 if (!lootEntries.isEmpty()) {
@@ -364,7 +361,11 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                         this.playSound(SoundEvents.BLOCK_LAVA_EXTINGUISH, 1.00F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                         serverworld.spawnParticle(ParticleTypes.LAVA, this.posX, boundingBox, this.posZ, (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.20000000298023224D);
                     }
-                    this.ticksCatchable = MathHelper.nextInt(this.rand, 20, 40);
+                    if (this.hasHook() && this.hook.getMaxCatchable() > 0) {
+                        this.ticksCatchable = MathHelper.nextInt(this.rand, this.hook.getMinCatchable(), this.hook.getMaxCatchable());
+                    } else {
+                        this.ticksCatchable = MathHelper.nextInt(this.rand, 20, 40);
+                    }
                 }
             } else if (this.ticksCaughtDelay > 0) {
                 this.ticksCaughtDelay -= delay;
