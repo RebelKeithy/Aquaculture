@@ -60,6 +60,7 @@ public class AquaFishingRodItem extends FishingRodItem {
         int lureSpeed;
         int damage = this.getDamage(heldStack);
         if (damage >= this.getMaxDamage(heldStack)) return new ActionResult<>(ActionResultType.FAIL, heldStack);
+        Hook hook = getHookType(heldStack);
         if (player.fishingBobber != null) {
             if (!world.isRemote) {
                 lureSpeed = player.fishingBobber.handleHookRetraction(heldStack);
@@ -68,7 +69,13 @@ public class AquaFishingRodItem extends FishingRodItem {
                     lureSpeed = currentDamage;
                 }
                 if (!(AquaConfig.BASIC_OPTIONS.debugMode.get() && this.material == AquacultureAPI.MATS.NEPTUNIUM)) {
-                    heldStack.attemptDamageItem(lureSpeed, world.rand, null);
+                    if (hook != null && hook.getDurabilityChance() > 0) {
+                        if (random.nextDouble() >= hook.getDurabilityChance()) {
+                            heldStack.attemptDamageItem(lureSpeed, world.rand, null);
+                        }
+                    } else {
+                        heldStack.attemptDamageItem(lureSpeed, world.rand, null);
+                    }
                 }
             }
             player.swingArm(hand);
@@ -79,8 +86,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 lureSpeed = EnchantmentHelper.getFishingSpeedBonus(heldStack);
                 if (this.material == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 1;
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
-                Hook hook = getHookType(heldStack);
-                if (hook == Hooks.GOLD) luck += 1;
+                if (hook != null && hook == Hooks.GOLD) luck += 1;
                 world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook));
             }
             player.swingArm(hand);

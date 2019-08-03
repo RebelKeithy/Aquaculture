@@ -20,15 +20,17 @@ public class Hook {
     private final int minCatchable;
     private final int maxCatchable;
     private final Vec3d weight;
+    private final double durabilityChance;
     private final Tag<Fluid> fluid;
 
-    private Hook(String name, String modID, TextFormatting color, int minCatchable, int maxCatchable, Vec3d weight, Tag<Fluid> fluid) {
+    private Hook(String name, String modID, TextFormatting color, int minCatchable, int maxCatchable, Vec3d weight, double durabilityChance, Tag<Fluid> fluid) {
         this.name = name;
         this.modID = modID;
         this.color = color;
         this.minCatchable = minCatchable;
         this.maxCatchable = maxCatchable;
         this.weight = weight;
+        this.durabilityChance = durabilityChance;
         this.fluid = fluid;
         this.texture = new ResourceLocation(modID, "textures/entity/rod/hook/" + name + "_hook" + ".png");
         this.hookItem = AquaItems.register(new HookItem(this), new ResourceLocation(modID, name + "_hook"));
@@ -66,6 +68,10 @@ public class Hook {
         return weight;
     }
 
+    public double getDurabilityChance() {
+        return durabilityChance;
+    }
+
     public Tag<Fluid> getFluid() {
         return fluid;
     }
@@ -77,6 +83,7 @@ public class Hook {
         private int minCatchable;
         private int maxCatchable;
         private Vec3d weightModifier;
+        private double durabilityChance;
         private Tag<Fluid> fluid = FluidTags.WATER;
 
         public HookBuilder(String name) {
@@ -108,13 +115,21 @@ public class Hook {
             return this;
         }
 
+        /*
+         * Sets the percentage chance that the rod will not take damage when using this rod
+         */
+        public HookBuilder setDurabilityChance(double durabilityChance) {
+            this.durabilityChance = durabilityChance;
+            return this;
+        }
+
         public HookBuilder setFluid(Tag<Fluid> fluid) {
             this.fluid = fluid;
             return this;
         }
 
         public Hook build() {
-            return new Hook(this.name, this.modID, this.color, this.minCatchable, this.maxCatchable, this.weightModifier, this.fluid);
+            return new Hook(this.name, this.modID, this.color, this.minCatchable, this.maxCatchable, this.weightModifier, this.durabilityChance, this.fluid);
         }
     }
 }
