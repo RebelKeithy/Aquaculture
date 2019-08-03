@@ -68,7 +68,7 @@
             }
           ],
           "weight": 20,
-          "name": "aquaculture:bagrid"
+          "name": "aquaculture:bayad"
         },
         {
           "type": "minecraft:item",
@@ -226,19 +226,6 @@
               }
             }
           ],
-          "weight": 1,
-          "name": "aquaculture:shark"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["OCEAN", "BEACH"]
-              }
-            }
-          ],
           "weight": 25,
           "name": "aquaculture:squid"
         },
@@ -267,19 +254,6 @@
           ],
           "weight": 10,
           "name": "aquaculture:tuna"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["OCEAN", "BEACH"]
-              }
-            }
-          ],
-          "weight": 1,
-          "name": "aquaculture:whale"
         },
         {
           "type": "minecraft:item",

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:item/whale"
+        "layer0": "aquaculture:item/black_grouper_bucket"
     }
 }

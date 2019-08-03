@@ -99,7 +99,7 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.add(PINK_SALMON, 1, 100, 5);
         AquacultureAPI.FISH_DATA.add(POLLOCK, 1, 45, 3);
         AquacultureAPI.FISH_DATA.add(RAINBOW_TROUT, 1, 50, 4);
-        AquacultureAPI.FISH_DATA.add(BAGRID, 1, 25, 3);
+        AquacultureAPI.FISH_DATA.add(BAYAD, 1, 25, 3);
         AquacultureAPI.FISH_DATA.add(BOULTI, 1, 10, 2);
         AquacultureAPI.FISH_DATA.add(CAPITAINE, 1, 450, 4);
         AquacultureAPI.FISH_DATA.add(SYNODONTIS, 1, 3);
@@ -119,11 +119,9 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.add(RED_SHROOMA, 1, 5, 0);
         AquacultureAPI.FISH_DATA.add(JELLYFISH, 1, 500, 0);
         AquacultureAPI.FISH_DATA.add(RED_GROUPER, 1, 50, 4);
-        AquacultureAPI.FISH_DATA.add(SHARK, 1, 5000, 8);
         AquacultureAPI.FISH_DATA.add(SQUID, 1, 1000, 0);
         AquacultureAPI.FISH_DATA.add(SWORDFISH, 1, 1400, 7);
         AquacultureAPI.FISH_DATA.add(TUNA, 1, 135, 5);
-        AquacultureAPI.FISH_DATA.add(WHALE, 1, 190000, 0);
         AquacultureAPI.FISH_DATA.add(GOLDFISH, 1, 4, 0);
         //Vanilla
         AquacultureAPI.FISH_DATA.add(Items.COD, 1, 210, 4);

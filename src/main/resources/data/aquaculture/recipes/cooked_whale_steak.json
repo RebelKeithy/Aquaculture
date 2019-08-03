@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "aquaculture:whale_steak_raw"
-  },
-  "result": "aquaculture:whale_steak_cooked",
-  "experience": 0.35,
-  "cookingtime": 350
-}

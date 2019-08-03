@@ -64,9 +64,6 @@ public class AquaItems {
     public static final Item FISH_BONES = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "fish_bones");
 
     // Food
-    public static final Item WHALE_STEAK = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.FISH_RAW)), "whale_steak_raw");
-    public static final Item COOKED_WHALE_STEAK = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.WHALE_STEAK)), "whale_steak_cooked");
-    public static final Item WHALE_BURGER = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.WHALE_BURGER)), "whale_burger");
     public static final Item FISH_FILLET = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.FISH_RAW)), "fish_fillet_raw");
     public static final Item COOKED_FILLET = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.FISH_FILLET)), "fish_fillet_cooked");
     public static final Item FROG_LEGS = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.FISH_RAW)), "frog_legs_raw");
@@ -83,11 +80,12 @@ public class AquaItems {
     public static final Item PINK_SALMON = FishRegistry.register(new FishItem(), "pink_salmon");
     public static final Item POLLOCK = FishRegistry.register(new FishItem(), "pollock");
     public static final Item RAINBOW_TROUT = FishRegistry.register(new FishItem(), "rainbow_trout");
-    public static final Item BAGRID = FishRegistry.register(new FishItem(), "bagrid");
+    public static final Item BAYAD = FishRegistry.register(new FishItem(), "bayad");
     public static final Item BOULTI = FishRegistry.register(new FishItem(), "boulti");
     public static final Item CAPITAINE = FishRegistry.register(new FishItem(), "capitaine");
     public static final Item SYNODONTIS = FishRegistry.register(new FishItem(), "synodontis");
     public static final Item SMALLMOUTH_BASS = FishRegistry.register(new FishItem(), "smallmouth_bass");
+    public static final Item LARGEMOUTH_BASS = FishRegistry.register(new FishItem(), "largemouth_bass");
     public static final Item BLUEGILL = FishRegistry.register(new FishItem(), "bluegill");
     public static final Item BROWN_TROUT = FishRegistry.register(new FishItem(), "brown_trout");
     public static final Item CARP = FishRegistry.register(new FishItem(), "carp");
@@ -110,21 +108,19 @@ public class AquaItems {
     public static final Item BONITO = FishRegistry.register(new FishItem(), "bonito");
     public static final Item COELACANTH = FishRegistry.register(new FishItem(), "coelacanth");
     public static final Item EEL = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "eel");
-    public static final Item FLOUNDER = FishRegistry.register(new FishItem(), "flounder");
-    public static final Item GROUPER = FishRegistry.register(new FishItem(), "grouper");
+    public static final Item EUROPEAN_FLOUNDER = FishRegistry.register(new FishItem(), "european_flounder");
+    public static final Item BLACK_GROUPER = FishRegistry.register(new FishItem(), "black_grouper");
     public static final Item JELLYFISH = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "jellyfish");
     public static final Item LUNG_FISH = FishRegistry.register(new FishItem(), "lung_fish");
     public static final Item MACKEREL = FishRegistry.register(new FishItem(), "mackerel");
     public static final Item RABBITFISH = FishRegistry.register(new FishItem(), "rabbitfish");
     public static final Item RED_GROUPER = FishRegistry.register(new FishItem(), "red_grouper");
-    public static final Item RED_SNAPPER = FishRegistry.register(new FishItem(), "red_snapper");
+    public static final Item YELLOWEYE_ROCKFISH = FishRegistry.register(new FishItem(), "yelloweye_rockfish");
     public static final Item SARDINE = FishRegistry.register(new FishItem(), "sardine");
-    public static final Item SHARK = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "shark");
     public static final Item SQUID = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "squid");
     public static final Item SWORDFISH = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "swordfish");
     public static final Item TARPON = FishRegistry.register(new FishItem(), "tarpon");
     public static final Item TUNA = FishRegistry.register(new FishItem(), "tuna");
-    public static final Item WHALE = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "whale");
     public static final Item FROG = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "frog");
     public static final Item LEECH = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "leech");
     public static final Item TURTLE = register(new Item(new Item.Properties().group(Aquaculture.GROUP)), "turtle");

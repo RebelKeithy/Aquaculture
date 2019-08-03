@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "aquaculture:item/yelloweye_rockfish_bucket"
+    }
+}
