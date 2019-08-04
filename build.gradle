@@ -25,7 +25,7 @@ repositories {
 }
 
 minecraft {
-    mappings channel: 'snapshot', version: project.mappings + "-" + project.minecraft_version
+    mappings channel: 'snapshot', version: project.mappings + "-" + "1.14.3"
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -50,9 +50,8 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
-    //runtimeOnly fg.deobf("com.github.glitchfiend.biomesoplenty:BiomesOPlenty:1.14.3-9.0.0.172:deobf")
+    compileOnly fg.deobf("mezz.jei:jei-1.14.3:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.14.3:${jei_version}")
 }
 
 jar {

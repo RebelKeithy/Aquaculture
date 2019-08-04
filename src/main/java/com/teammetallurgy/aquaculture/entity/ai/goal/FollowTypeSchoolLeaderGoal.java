@@ -22,26 +22,26 @@ public class FollowTypeSchoolLeaderGoal extends Goal {
 
     @Override
     public boolean shouldExecute() {
-        if (this.taskOwner.func_212812_dE()) {
+        if (this.taskOwner.isGroupLeader()) {
             return false;
-        } else if (this.taskOwner.func_212802_dB()) {
+        } else if (this.taskOwner.hasGroupLeader()) {
             return true;
         } else if (this.field_222740_c > 0) {
             --this.field_222740_c;
             return false;
         } else {
             this.field_222740_c = this.func_212825_a(this.taskOwner);
-            Predicate<AbstractGroupFishEntity> predicate = (fishEntity) -> fishEntity.getType() == this.taskOwner.getType() && (fishEntity.func_212811_dD() || !fishEntity.func_212802_dB());
+            Predicate<AbstractGroupFishEntity> predicate = (fishEntity) -> fishEntity.getType() == this.taskOwner.getType() && (fishEntity.canGroupGrow() || !fishEntity.hasGroupLeader());
             List<AbstractGroupFishEntity> schoolList = this.taskOwner.world.getEntitiesWithinAABB(this.taskOwner.getClass(), this.taskOwner.getBoundingBox().grow(8.0D, 8.0D, 8.0D), predicate);
-            AbstractGroupFishEntity fishEntity = schoolList.stream().filter(AbstractGroupFishEntity::func_212811_dD).findAny().orElse(this.taskOwner);
-            fishEntity.func_212810_a(schoolList.stream().filter((schoolFish) -> !schoolFish.func_212802_dB()));
-            return this.taskOwner.func_212802_dB();
+            AbstractGroupFishEntity fishEntity = schoolList.stream().filter(AbstractGroupFishEntity::canGroupGrow).findAny().orElse(this.taskOwner);
+            fishEntity.func_212810_a(schoolList.stream().filter((schoolFish) -> !schoolFish.hasGroupLeader()));
+            return this.taskOwner.hasGroupLeader();
         }
     }
 
     @Override
     public boolean shouldContinueExecuting() {
-        return this.taskOwner.func_212802_dB() && this.taskOwner.func_212809_dF();
+        return this.taskOwner.hasGroupLeader() && this.taskOwner.inRangeOfGroupLeader();
     }
 
     @Override
@@ -51,14 +51,14 @@ public class FollowTypeSchoolLeaderGoal extends Goal {
 
     @Override
     public void resetTask() {
-        this.taskOwner.func_212808_dC();
+        this.taskOwner.leaveGroup();
     }
 
     @Override
     public void tick() {
         if (--this.navigateTimer <= 0) {
             this.navigateTimer = 10;
-            this.taskOwner.func_212805_dG();
+            this.taskOwner.moveToGroupLeader();
         }
     }
 }

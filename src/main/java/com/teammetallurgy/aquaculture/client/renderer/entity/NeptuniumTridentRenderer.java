@@ -13,6 +13,6 @@ public class NeptuniumTridentRenderer extends TridentRenderer {
 
     @Override
     protected ResourceLocation getEntityTexture(TridentEntity tridentEntity) {
-        return field_203087_a;
+        return TRIDENT;
     }
 }

@@ -10,8 +10,8 @@ import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ServerWorld;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.BiomeDictionary;
 
 import javax.annotation.Nullable;

@@ -26,8 +26,8 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
         super.registerGoals();
 
         this.goalSelector.goals.forEach(prioritizedGoal -> { //Remove vanilla schooling goal
-            if (prioritizedGoal.func_220772_j().getClass() == FollowSchoolLeaderGoal.class)
-                this.goalSelector.removeGoal(prioritizedGoal.func_220772_j());
+            if (prioritizedGoal.getGoal().getClass() == FollowSchoolLeaderGoal.class)
+                this.goalSelector.removeGoal(prioritizedGoal.getGoal());
         });
         this.goalSelector.addGoal(5, new FollowTypeSchoolLeaderGoal(this));
     }

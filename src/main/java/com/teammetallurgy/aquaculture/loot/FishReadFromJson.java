@@ -101,7 +101,7 @@ public class FishReadFromJson {
                     Aquaculture.LOG.info(fish.getRegistryName() + " = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
                 }
                 for (Biome biome : FISH_BIOME_MAP.get(fish)) {
-                    biome.addSpawn(EntityClassification.WATER_CREATURE, new Biome.SpawnListEntry(fish, weight, 1, maxGroupSize));
+                    biome.getSpawns(EntityClassification.WATER_CREATURE).add(new Biome.SpawnListEntry(fish, weight, 1, maxGroupSize));
                 }
             }
         }
