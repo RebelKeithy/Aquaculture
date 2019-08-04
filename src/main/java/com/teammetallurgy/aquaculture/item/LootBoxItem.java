@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.item;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -19,8 +20,8 @@ import java.util.List;
 public class LootBoxItem extends Item {
     private final ResourceLocation lootTable;
 
-    public LootBoxItem(Properties properties, ResourceLocation lootTable) {
-        super(properties);
+    public LootBoxItem(ResourceLocation lootTable) {
+        super(new Item.Properties().group(Aquaculture.GROUP));
         this.lootTable = lootTable;
     }
 

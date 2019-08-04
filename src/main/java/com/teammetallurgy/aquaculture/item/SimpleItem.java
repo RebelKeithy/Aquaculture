@@ -3,9 +3,9 @@ package com.teammetallurgy.aquaculture.item;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.item.Item;
 
-public class FishItem extends Item {
+public class SimpleItem extends Item {
 
-    public FishItem() {
+    public SimpleItem() {
         super(new Item.Properties().group(Aquaculture.GROUP));
     }
 }

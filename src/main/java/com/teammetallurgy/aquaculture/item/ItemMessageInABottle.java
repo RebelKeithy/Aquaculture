@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.item;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -17,8 +18,8 @@ import java.util.Random;
 public class ItemMessageInABottle extends Item {
     private Random rand = new Random();
 
-    public ItemMessageInABottle(Properties properties) {
-        super(properties);
+    public ItemMessageInABottle() {
+        super(new Item.Properties().group(Aquaculture.GROUP));
     }
 
     @Override
