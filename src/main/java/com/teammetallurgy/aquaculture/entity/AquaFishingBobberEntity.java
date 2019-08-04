@@ -46,20 +46,24 @@ import java.util.List;
 
 public class AquaFishingBobberEntity extends FishingBobberEntity {
     private final Hook hook;
+    private final ItemStack bait;
     private final int luck;
 
     public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
         super(world, Minecraft.getInstance().player, 0, 0, 0);
         this.luck = 0;
         PlayerEntity player = Minecraft.getInstance().player;
-        this.hook = AquaFishingRodItem.getHookType(player.getHeldItem(StackHelper.getActiveHand(player.getHeldItemMainhand())));
+        ItemStack fishingRod = player.getHeldItem(StackHelper.getUsedHand(player.getHeldItemMainhand(), AquaFishingRodItem.class));
+        this.hook = AquaFishingRodItem.getHookType(fishingRod);
+        this.bait = AquaFishingRodItem.getBait(fishingRod);
     }
 
-    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, Hook hook) {
+    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, Hook hook, @Nonnull ItemStack bait) {
         super(player, world, luck, lureSpeed);
         this.luck = luck;
         this.angler.fishingBobber = this;
         this.hook = hook;
+        this.bait = bait;
         if (this.hasHook() && hook.getWeight() != null) {
             this.setMotion(this.getMotion().mul(hook.getWeight()));
         }
@@ -71,6 +75,14 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
 
     public boolean hasHook() {
         return this.hook != null;
+    }
+
+    public ItemStack getBait() {
+        return bait;
+    }
+
+    public boolean hasBait() {
+        return !bait.isEmpty();
     }
 
     @Override
@@ -127,6 +139,15 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                             }
                         }
                     }
+
+                    //Bait
+                    ItemStack bait = getBait();
+                    if (!bait.isEmpty()) {
+                        if (bait.attemptDamageItem(1, world.rand, null)) {
+                            bait.shrink(1);
+                        }
+                    }
+
                     rodDamage = 1;
                 }
             }

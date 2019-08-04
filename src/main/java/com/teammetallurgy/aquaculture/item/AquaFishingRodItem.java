@@ -57,6 +57,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     @Nonnull
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
+        boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && this.material == AquacultureAPI.MATS.NEPTUNIUM;
         int lureSpeed;
         int damage = this.getDamage(heldStack);
         if (damage >= this.getMaxDamage(heldStack)) return new ActionResult<>(ActionResultType.FAIL, heldStack);
@@ -68,7 +69,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 if (lureSpeed >= currentDamage) {
                     lureSpeed = currentDamage;
                 }
-                if (!(AquaConfig.BASIC_OPTIONS.debugMode.get() && this.material == AquacultureAPI.MATS.NEPTUNIUM)) {
+                if (!isAdminRod) {
                     if (hook != null && hook.getDurabilityChance() > 0) {
                         if (random.nextDouble() >= hook.getDurabilityChance()) {
                             heldStack.attemptDamageItem(lureSpeed, world.rand, null);
@@ -83,16 +84,22 @@ public class AquaFishingRodItem extends FishingRodItem {
         } else {
             world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
             if (!world.isRemote) {
+                //Lure Speed
                 lureSpeed = EnchantmentHelper.getFishingSpeedBonus(heldStack);
                 if (this.material == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 1;
+                ItemStack bait = getBait(heldStack);
+                if (!isAdminRod && !bait.isEmpty()) {
+                    lureSpeed += ((BaitItem) bait.getItem()).getLureSpeedModifier();
+                }
+                //Luck
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
                 if (hook != null && hook == Hooks.GOLD) luck += 1;
-                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook));
+
+                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, bait));
             }
             player.swingArm(hand);
             player.addStat(Stats.ITEM_USED.get(this));
         }
-
         return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
     }
 
@@ -104,6 +111,11 @@ public class AquaFishingRodItem extends FishingRodItem {
             hook = ((HookItem) hookStack.getItem()).getHookType();
         }
         return hook;
+    }
+
+    @Nonnull
+    public static ItemStack getBait(@Nonnull ItemStack fishingRod) {
+        return fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseGet(null).getStackInSlot(1);
     }
 
     @Override

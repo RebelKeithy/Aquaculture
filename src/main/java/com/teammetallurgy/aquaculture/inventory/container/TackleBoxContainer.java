@@ -4,6 +4,7 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
+import com.teammetallurgy.aquaculture.item.BaitItem;
 import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -57,6 +58,11 @@ public class TackleBoxContainer extends Container {
                             }
 
                             @Override
+                            public int getSlotStackLimit() {
+                                return 1;
+                            }
+
+                            @Override
                             public boolean isEnabled() {
                                 return !handler.getStackInSlot(0).isEmpty();
                             }
@@ -66,7 +72,12 @@ public class TackleBoxContainer extends Container {
                         this.addSlot(new SlotItemHandler(rodHandler, 1, 48, 35) {
                             @Override
                             public boolean isItemValid(@Nonnull ItemStack stack) {
-                                return !(stack.getItem() instanceof HookItem); //TODO Make it bait when added
+                                return stack.getItem() instanceof BaitItem;
+                            }
+
+                            @Override
+                            public int getSlotStackLimit() {
+                                return 1;
                             }
 
                             @Override
@@ -84,7 +95,7 @@ public class TackleBoxContainer extends Container {
                             @Override
                             public boolean isItemValid(@Nonnull ItemStack stack) {
                                 Item item = stack.getItem();
-                                return item.isIn(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem /*|| item.isIn(AquacultureAPI.Tags.BAIT)*/;
+                                return item.isIn(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem;
                             }
                         });
                     }

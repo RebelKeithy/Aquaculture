@@ -2,7 +2,9 @@ package com.teammetallurgy.aquaculture.api;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
+import com.teammetallurgy.aquaculture.item.BaitItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
@@ -17,6 +19,10 @@ public class AquacultureAPI {
      * Reference to setting weight for fish
      **/
     public static FishData FISH_DATA = new FishData();
+
+    public static BaitItem createBait(int durability, int lureSpeedModifier, ItemGroup group) {
+        return new BaitItem(durability, lureSpeedModifier, group);
+    }
 
     public static class Tags {
         public static final Tag<Item> FILLET_KNIFE = tag("forge", "fillet_knife");

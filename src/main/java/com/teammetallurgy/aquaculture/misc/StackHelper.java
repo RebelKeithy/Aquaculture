@@ -1,9 +1,9 @@
 package com.teammetallurgy.aquaculture.misc;
 
-import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -41,13 +41,7 @@ public class StackHelper {
         }
     }
 
-    public static Hand getActiveHand(@Nonnull ItemStack stackMainHand) {
-        Hand hand;
-        if (stackMainHand.getItem() instanceof AquaFishingRodItem) {
-            hand = Hand.MAIN_HAND;
-        } else {
-            hand = Hand.OFF_HAND;
-        }
-        return hand;
+    public static Hand getUsedHand(@Nonnull ItemStack stackMainHand, Class<? extends Item> clazz) {
+        return clazz.isAssignableFrom(stackMainHand.getItem().getClass()) ? Hand.MAIN_HAND : Hand.OFF_HAND;
     }
 }
