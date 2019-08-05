@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " G ",
-    "GHG",
-    " G "
+    " D ",
+    "DHD",
+    " D "
   ],
   "key": {
-    "G": {
-      "tag": "forge:nuggets/gold"
+    "D": {
+      "tag": "forge:gems/diamond"
     },
     "H": {
       "item": "aquaculture:iron_hook"
     }
   },
   "result": {
-    "item": "aquaculture:gold_hook"
+    "item": "aquaculture:diamond_hook"
   }
 }

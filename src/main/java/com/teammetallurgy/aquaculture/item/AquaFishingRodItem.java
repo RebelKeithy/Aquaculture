@@ -2,7 +2,6 @@ package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
-import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.client.util.ITooltipFlag;
@@ -93,7 +92,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 }
                 //Luck
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
-                if (hook != null && hook == Hooks.GOLD) luck += 1;
+                if (hook != null && hook.getLuckModifier() > 0) luck += hook.getLuckModifier();
 
                 world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, bait));
             }

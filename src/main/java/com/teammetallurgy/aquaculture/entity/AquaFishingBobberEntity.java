@@ -2,7 +2,6 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
-import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.AquaLootTables;
@@ -129,12 +128,12 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                     CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayerEntity) this.angler, stack, this, lootEntries);
 
                     spawnLoot(lootEntries);
-                    if (this.hasHook() && this.hook == Hooks.DOUBLE) {
-                        if (this.rand.nextDouble() <= 0.10D) {
-                            List<ItemStack> goldHookLoot = getLoot(builder, serverWorld);
-                            if (!goldHookLoot.isEmpty()) {
-                                MinecraftForge.EVENT_BUS.post(new ItemFishedEvent(goldHookLoot, 0, this));
-                                spawnLoot(goldHookLoot);
+                    if (this.hasHook() && this.hook.getDoubleCatchChance() > 0) {
+                        if (this.rand.nextDouble() <= this.hook.getDoubleCatchChance()) {
+                            List<ItemStack> doubleLoot = getLoot(builder, serverWorld);
+                            if (!doubleLoot.isEmpty()) {
+                                MinecraftForge.EVENT_BUS.post(new ItemFishedEvent(doubleLoot, 0, this));
+                                spawnLoot(doubleLoot);
                                 this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                             }
                         }
@@ -367,8 +366,8 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                         serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, xOffset, 0.01D, -zOffset, 1.0D);
                         serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, -xOffset, 0.01D, zOffset, 1.0D);
                     }
-                    if (this.hasHook() && this.hook == Hooks.NOTE) {
-                        this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PLAYER_LEVELUP, this.getSoundCategory(), 0.20F, 0.1F);
+                    if (this.hasHook() && this.hook.getCatchSound() != null) {
+                        this.world.playSound(null, this.posX, this.posY, this.posZ, this.hook.getCatchSound(), this.getSoundCategory(), 0.20F, 0.1F);
                     }
                 } else {
                     Vec3d motion = this.getMotion();

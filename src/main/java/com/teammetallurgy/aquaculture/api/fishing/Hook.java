@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 
@@ -21,9 +22,12 @@ public class Hook {
     private final int maxCatchable;
     private final Vec3d weight;
     private final double durabilityChance;
+    private final int luckModifier;
+    private final double doubleCatchChance;
+    private final SoundEvent catchSound;
     private final Tag<Fluid> fluid;
 
-    private Hook(String name, String modID, TextFormatting color, int minCatchable, int maxCatchable, Vec3d weight, double durabilityChance, Tag<Fluid> fluid) {
+    private Hook(String name, String modID, TextFormatting color, int minCatchable, int maxCatchable, Vec3d weight, double durabilityChance, int luckModifier, double doubleCatchChance, SoundEvent catchSound, Tag<Fluid> fluid) {
         this.name = name;
         this.modID = modID;
         this.color = color;
@@ -32,6 +36,9 @@ public class Hook {
         this.weight = weight;
         this.durabilityChance = durabilityChance;
         this.fluid = fluid;
+        this.luckModifier = luckModifier;
+        this.doubleCatchChance = doubleCatchChance;
+        this.catchSound = catchSound;
         this.texture = new ResourceLocation(modID, "textures/entity/rod/hook/" + name + "_hook" + ".png");
         this.hookItem = AquaItems.register(new HookItem(this), new ResourceLocation(modID, name + "_hook"));
     }
@@ -72,6 +79,18 @@ public class Hook {
         return durabilityChance;
     }
 
+    public int getLuckModifier() {
+        return luckModifier;
+    }
+
+    public double getDoubleCatchChance() {
+        return doubleCatchChance;
+    }
+
+    public SoundEvent getCatchSound() {
+        return catchSound;
+    }
+
     public Tag<Fluid> getFluid() {
         return fluid;
     }
@@ -84,6 +103,9 @@ public class Hook {
         private int maxCatchable;
         private Vec3d weightModifier;
         private double durabilityChance;
+        private int luckModifier;
+        private double doubleCatchChance;
+        private SoundEvent catchSound;
         private Tag<Fluid> fluid = FluidTags.WATER;
 
         public HookBuilder(String name) {
@@ -123,13 +145,28 @@ public class Hook {
             return this;
         }
 
+        public HookBuilder setLuckModifier(int luckModifier) {
+            this.luckModifier = luckModifier;
+            return this;
+        }
+
+        public HookBuilder setDoubleCatchChance(double doubleCatchChance) {
+            this.doubleCatchChance = doubleCatchChance;
+            return this;
+        }
+
+        public HookBuilder setCatchSound(SoundEvent catchSound) {
+            this.catchSound = catchSound;
+            return this;
+        }
+
         public HookBuilder setFluid(Tag<Fluid> fluid) {
             this.fluid = fluid;
             return this;
         }
 
         public Hook build() {
-            return new Hook(this.name, this.modID, this.color, this.minCatchable, this.maxCatchable, this.weightModifier, this.durabilityChance, this.fluid);
+            return new Hook(this.name, this.modID, this.color, this.minCatchable, this.maxCatchable, this.weightModifier, this.durabilityChance, this.luckModifier, this.doubleCatchChance, this.catchSound, this.fluid);
         }
     }
 }
