@@ -139,7 +139,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     public static class FishingRodEquipementHandler implements ICapabilitySerializable<INBT> {
         private final IItemHandler items = new ItemStackHandler(2) {
             @Override
-            protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
+            public int getSlotLimit(int slot) {
                 return 1;
             }
         };

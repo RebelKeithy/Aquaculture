@@ -8,6 +8,7 @@ import com.teammetallurgy.aquaculture.item.BaitItem;
 import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
@@ -58,11 +59,6 @@ public class TackleBoxContainer extends Container {
                             }
 
                             @Override
-                            public int getSlotStackLimit() {
-                                return 1;
-                            }
-
-                            @Override
                             public boolean isEnabled() {
                                 return !handler.getStackInSlot(0).isEmpty();
                             }
@@ -76,8 +72,8 @@ public class TackleBoxContainer extends Container {
                             }
 
                             @Override
-                            public int getSlotStackLimit() {
-                                return 1;
+                            public boolean canTakeStack(PlayerEntity player) {
+                                return false;
                             }
 
                             @Override
@@ -143,5 +139,23 @@ public class TackleBoxContainer extends Container {
             }
         }
         return transferStack;
+    }
+
+    @Override
+    @Nonnull
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickType, PlayerEntity player) {
+        //Bait replacing
+        if (slotId >= 0 && clickType == ClickType.PICKUP) {
+            Slot slot = this.inventorySlots.get(slotId);
+            if (slot instanceof SlotItemHandler) {
+                SlotItemHandler slotHandler = (SlotItemHandler) slot;
+                if (slotHandler.getItemHandler().getSlotLimit(1) == 1 && slotHandler.slotNumber == 2) {
+                    if (slotHandler.isItemValid(player.inventory.getItemStack())) {
+                        slotHandler.putStack(ItemStack.EMPTY); //Set to empty, to allow new bait to get put in
+                    }
+                }
+            }
+        }
+        return super.slotClick(slotId, dragType, clickType, player);
     }
 }

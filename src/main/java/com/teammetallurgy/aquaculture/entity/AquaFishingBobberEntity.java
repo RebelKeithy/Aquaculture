@@ -141,10 +141,13 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                     }
 
                     //Bait
-                    ItemStack bait = getBait();
-                    if (!bait.isEmpty()) {
-                        if (bait.attemptDamageItem(1, world.rand, null)) {
-                            bait.shrink(1);
+                    if (!this.angler.isCreative()) {
+                        ItemStack bait = this.getBait();
+                        if (!bait.isEmpty()) {
+                            if (bait.attemptDamageItem(1, world.rand, null)) {
+                                bait.shrink(1);
+                                this.playSound(SoundEvents.ITEM_TRIDENT_HIT_GROUND, 0.7F, 0.2F);
+                            }
                         }
                     }
 

@@ -8,14 +8,21 @@ import javax.annotation.Nonnull;
 
 public class BaitItem extends Item {
     private int lureSpeedModifier;
+    private int durability;
 
     public BaitItem(int durability, int lureSpeedModifier, ItemGroup group) {
-        super(new Item.Properties().maxStackSize(1).defaultMaxDamage(durability).group(group).setNoRepair());
+        super(new Item.Properties().group(group).setNoRepair());
         this.lureSpeedModifier = lureSpeedModifier;
+        this.durability = durability;
     }
 
     public int getLureSpeedModifier() {
         return this.lureSpeedModifier;
+    }
+
+    @Override
+    public int getMaxDamage(ItemStack stack) {
+        return this.durability;
     }
 
     @Override
