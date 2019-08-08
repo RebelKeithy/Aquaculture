@@ -1,7 +1,6 @@
 package com.teammetallurgy.aquaculture.block.tileentity;
 
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
-import com.teammetallurgy.aquaculture.inventory.container.TackleBoxContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -13,10 +12,10 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TackleBoxTileEntity extends IItemHandlerTEBase implements INamedContainerProvider {
+public class FishTrapTileEntity extends IItemHandlerTEBase implements INamedContainerProvider {
 
-    public TackleBoxTileEntity() {
-        super(AquaBlocks.AquaTileEntities.TACKLE_BOX);
+    public FishTrapTileEntity() {
+        super(AquaBlocks.AquaTileEntities.FISH_TRAP);
     }
 
     @Override
@@ -25,15 +24,15 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements INamedCon
         return this.getBlockState().getBlock().getNameTextComponent();
     }
 
-    @Nullable
     @Override
+    @Nullable
     public Container createMenu(int windowID, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
-        return new TackleBoxContainer(windowID, pos, playerInventory);
+        return null; //TODO
     }
 
     @Override
     @Nonnull
     protected IItemHandler createItemHandler() {
-        return new ItemStackHandler(17);
+        return new ItemStackHandler(9);
     }
 }

@@ -21,7 +21,7 @@ public class AquaLootTables {
     //Fishing
     public static final ResourceLocation FISH = register("gameplay/fishing/fish");
     public static final ResourceLocation JUNK = register("gameplay/fishing/junk");
-    public static final ResourceLocation TREASURE = register("gameplay/fishing/treasure");
+    public static final ResourceLocation NEPTUNIUM = register("gameplay/fishing/neptunium");
     public static final ResourceLocation LAVA_FISHING = register("gameplay/fishing/lava/fishing");
     public static final ResourceLocation LAVA_FISH = register("gameplay/fishing/lava/fish");
     public static final ResourceLocation LAVA_JUNK = register("gameplay/fishing/lava/junk");
@@ -44,7 +44,7 @@ public class AquaLootTables {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.BASIC_OPTIONS.addNeptunesBountyToLoot.get()) {
-                    addEntry(pool, getInjectEntry(TREASURE, 2, 2)); //Not using vanilla numbers, to make it more rare
+                    addEntry(pool, getInjectEntry(NEPTUNIUM, 2, 2)); //Not using vanilla numbers, to make it more rare
                 }
             }
         }
@@ -55,9 +55,9 @@ public class AquaLootTables {
     }
 
     private static void addEntry(LootPool pool, LootEntry entry) {
-        if (pool.lootEntries.stream().anyMatch(e -> e == entry)) {
+        /*if (pool.lootEntries.stream().anyMatch(e -> e == entry)) {
             throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
         }
-        pool.lootEntries.add(entry);
+        pool.lootEntries.add(entry);*/
     }
 }

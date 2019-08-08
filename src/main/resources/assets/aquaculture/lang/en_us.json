@@ -2,6 +2,7 @@
   "itemGroup.aquaculture": "Aquaculture",
 
   "_comment": "Blocks",
+  "block.aquaculture.fish_trap": "Fish Trap",
   "block.aquaculture.tackle_box": "Tackle Box",
   "block.aquaculture.farmland": "Farmland",
 

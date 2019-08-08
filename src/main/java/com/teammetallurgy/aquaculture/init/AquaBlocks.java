@@ -3,7 +3,9 @@ package com.teammetallurgy.aquaculture.init;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.block.FarmlandMoistBlock;
+import com.teammetallurgy.aquaculture.block.FishTrapBlock;
 import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
+import com.teammetallurgy.aquaculture.block.tileentity.FishTrapTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -23,6 +25,7 @@ import java.util.List;
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaBlocks {
     public static List<Block> BLOCKS = Lists.newArrayList();
+    public static final Block FISH_TRAP = register(new FishTrapBlock(), "fish_trap", new Item.Properties().group(Aquaculture.GROUP));
     public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box", new Item.Properties().maxStackSize(1).group(Aquaculture.GROUP));
     public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", new Item.Properties());
 
@@ -51,6 +54,7 @@ public class AquaBlocks {
     @ObjectHolder(Aquaculture.MOD_ID)
     public static class AquaTileEntities {
         public static List<TileEntityType> TILE_ENTITIES = Lists.newArrayList();
+        public static final TileEntityType<FishTrapTileEntity> FISH_TRAP = register("fish_trap", TileEntityType.Builder.create(FishTrapTileEntity::new, AquaBlocks.FISH_TRAP));
         public static final TileEntityType<TackleBoxTileEntity> TACKLE_BOX = register("tackle_box", TileEntityType.Builder.create(TackleBoxTileEntity::new, AquaBlocks.TACKLE_BOX));
 
         public static <T extends TileEntity> TileEntityType<T> register(@Nonnull String name, @Nonnull TileEntityType.Builder<T> builder) {
