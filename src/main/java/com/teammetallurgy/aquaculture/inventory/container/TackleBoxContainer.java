@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.inventory.container;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
@@ -13,7 +14,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -23,18 +23,19 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class TackleBoxContainer extends Container {
-    private TileEntity tileEntity;
+    public TackleBoxTileEntity tackleBox;
     public int rows = 4;
     public int collumns = 4;
 
     public TackleBoxContainer(int windowID, BlockPos pos, PlayerInventory playerInventory) {
         super(AquaGuis.TACKLE_BOX, windowID);
-        this.tileEntity = playerInventory.player.world.getTileEntity(pos);
+        this.tackleBox = (TackleBoxTileEntity) playerInventory.player.world.getTileEntity(pos);
 
-        if (this.tileEntity != null) {
-            this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+        if (this.tackleBox != null) {
+            this.tackleBox.openInventory(playerInventory.player);
+            this.tackleBox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
                 //Fishing Pole
-                this.addSlot(new SlotItemHandler(handler, 0, 35, 16) {
+                this.addSlot(new SlotItemHandler(handler, 0, 117, 21) {
                     @Override
                     public boolean isItemValid(@Nonnull ItemStack stack) {
                         Item item = stack.getItem();
@@ -52,7 +53,7 @@ public class TackleBoxContainer extends Container {
                 if (!fishingRod.isEmpty()) {
                     fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(rodHandler -> {
                         //Hook
-                        this.addSlot(new SlotItemHandler(rodHandler, 0, 16, 35) {
+                        this.addSlot(new SlotItemHandler(rodHandler, 0, 96, 44) {
                             @Override
                             public boolean isItemValid(@Nonnull ItemStack stack) {
                                 return stack.getItem() instanceof HookItem;
@@ -65,7 +66,7 @@ public class TackleBoxContainer extends Container {
                         });
 
                         //Bait
-                        this.addSlot(new SlotItemHandler(rodHandler, 1, 48, 35) {
+                        this.addSlot(new SlotItemHandler(rodHandler, 1, 117, 44) {
                             @Override
                             public boolean isItemValid(@Nonnull ItemStack stack) {
                                 return stack.getItem() instanceof BaitItem;
@@ -81,13 +82,14 @@ public class TackleBoxContainer extends Container {
                                 return !handler.getStackInSlot(0).isEmpty();
                             }
                         });
+                        //TODO Add line slot
                     });
                 }
 
                 //Tackle Box
                 for (int column = 0; column < collumns; ++column) {
                     for (int row = 0; row < rows; ++row) {
-                        this.addSlot(new SlotItemHandler(handler, 1 + row + column * collumns, 89 + row * 18, 8 + column * 18) {
+                        this.addSlot(new SlotItemHandler(handler, 1 + row + column * collumns, 8 + row * 18, 8 + column * 18) {
                             @Override
                             public boolean isItemValid(@Nonnull ItemStack stack) {
                                 Item item = stack.getItem();
@@ -114,7 +116,7 @@ public class TackleBoxContainer extends Container {
 
     @Override
     public boolean canInteractWith(@Nonnull PlayerEntity player) {
-        return isWithinUsableDistance(IWorldPosCallable.of(Objects.requireNonNull(tileEntity.getWorld()), tileEntity.getPos()), player, AquaBlocks.TACKLE_BOX);
+        return isWithinUsableDistance(IWorldPosCallable.of(Objects.requireNonNull(tackleBox.getWorld()), tackleBox.getPos()), player, AquaBlocks.TACKLE_BOX);
     }
 
     @Override
@@ -139,6 +141,14 @@ public class TackleBoxContainer extends Container {
             }
         }
         return transferStack;
+    }
+
+    @Override
+    public void onContainerClosed(PlayerEntity player) {
+        super.onContainerClosed(player);
+        if (this.tackleBox != null) {
+            this.tackleBox.closeInventory(player);
+        }
     }
 
     @Override

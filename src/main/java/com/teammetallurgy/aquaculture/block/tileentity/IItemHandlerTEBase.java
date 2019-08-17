@@ -4,6 +4,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.INameable;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -13,7 +15,8 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class IItemHandlerTEBase extends TileEntity {
+public abstract class IItemHandlerTEBase extends TileEntity implements INameable {
+    private ITextComponent customName;
     private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createItemHandler);
 
     public IItemHandlerTEBase(TileEntityType<?> tileEntityType) {
@@ -26,17 +29,23 @@ public abstract class IItemHandlerTEBase extends TileEntity {
     @Override
     public void read(CompoundNBT tag) {
         CompoundNBT invTag = tag.getCompound("inv");
-        handler.ifPresent(stack -> ((INBTSerializable<CompoundNBT>) stack).deserializeNBT(invTag));
+        this.handler.ifPresent(stack -> ((INBTSerializable<CompoundNBT>) stack).deserializeNBT(invTag));
+        if (tag.contains("CustomName", 8)) {
+            this.customName = ITextComponent.Serializer.fromJson(tag.getString("CustomName"));
+        }
         super.read(tag);
     }
 
     @Override
     @Nonnull
     public CompoundNBT write(CompoundNBT tag) {
-        handler.ifPresent(stack -> {
+        this.handler.ifPresent(stack -> {
             CompoundNBT compound = ((INBTSerializable<CompoundNBT>) stack).serializeNBT();
             tag.put("inv", compound);
         });
+        if (this.customName != null) {
+            tag.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
+        }
         return super.write(tag);
     }
 
@@ -47,5 +56,21 @@ public abstract class IItemHandlerTEBase extends TileEntity {
             return handler.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    @Nonnull
+    public ITextComponent getName() {
+        return this.customName != null ? this.customName : this.getBlockState().getBlock().getNameTextComponent();
+    }
+
+    @Override
+    @Nonnull
+    public ITextComponent getDisplayName() {
+        return getName();
+    }
+
+    public void setCustomName(ITextComponent name) {
+        this.customName = name;
     }
 }

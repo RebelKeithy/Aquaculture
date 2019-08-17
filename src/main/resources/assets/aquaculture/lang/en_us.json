@@ -259,6 +259,7 @@
   "aquaculture.fishWeight.massive": "Massive",
   "aquaculture.fishing_rod.broken": "Broken",
   "aquaculture.shift" : "[SHIFT]",
+  "aquaculture.unbreakable" : "Unbreakable",
   "aquaculture.neptunium_fishing_rod.tooltip.title" : "Neptune's Song",
   "aquaculture.neptunium_fishing_rod.tooltip.line1" : "Fish are more likely to bite",
   "aquaculture.neptunium_helmet.tooltip.title" : "Neptune's Gaze",
@@ -282,5 +283,7 @@
   "aquaculture.neptunium_trident.tooltip.title" : "Neptune's Might",
   "aquaculture.neptunium_trident.tooltip.line1" : "Increases damage against enemies underwater",
   "aquaculture.neptunium_bow.tooltip.title" : "Neptune's Srike",
-  "aquaculture.neptunium_bow.tooltip.line1" : "Makes arrows go smoothly through water"
+  "aquaculture.neptunium_bow.tooltip.line1" : "Makes arrows go smoothly through water",
+  "aquaculture.neptunium_fillet_knife.tooltip.title" : "Neptune's Feast",
+  "aquaculture.neptunium_fillet_knife.tooltip.line1" : "Increases the amount of fillets you get"
 }
