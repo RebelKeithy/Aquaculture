@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishLargeModel;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishMediumModel;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishSmallModel;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
@@ -21,10 +22,11 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     private static final SalmonModel<AquaFishEntity> SALMON_MODEL = new SalmonModel<>();
     private static final FishSmallModel<AquaFishEntity> SMALL_MODEL = new FishSmallModel<>();
     private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
+    private static final FishLargeModel<AquaFishEntity> LARGE_MODEL = new FishLargeModel<>();
 
     public AquaFishRenderer(EntityRendererManager manager) {
         super(manager, COD_MODEL, 0.3F);
-        this.shadowSize = this.entityModel == SALMON_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
+        this.shadowSize = this.entityModel == SALMON_MODEL || this.entityModel == LARGE_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
     }
 
     @Override
@@ -32,6 +34,10 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
         ResourceLocation location = fishEntity.getType().getRegistryName();
         if (location != null) {
             switch (location.getPath()) {
+                case "pacific_halibut":
+                case "atlantic_halibut":
+                    this.entityModel = TROPICAL_FISH_B_MODEL;
+                    break;
                 case "atlantic_herring":
                 case "boulti":
                 case "bluegill":
@@ -41,10 +47,14 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 case "red_shrooma":
                     this.entityModel = SMALL_MODEL;
                     break;
+                case "atlantic_cod":
                 case "blackfish":
                 case "smallmouth_bass":
                 case "brown_trout":
                     this.entityModel = MEDIUM_MODEL;
+                    break;
+                case "carp":
+                    this.entityModel = LARGE_MODEL;
                     break;
                 case "pink_salmon":
                     this.entityModel = SALMON_MODEL;
@@ -85,7 +95,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             GlStateManager.translatef(0.0F, 0.0F, -0.4F);
         }
         if (!fishEntity.isInWater()) {
-            if (this.entityModel == COD_MODEL || this.entityModel == MEDIUM_MODEL) {
+            if (this.entityModel == COD_MODEL || this.entityModel == MEDIUM_MODEL || this.entityModel == LARGE_MODEL) {
                 GlStateManager.translatef(0.1F, 0.1F, -0.1F);
             } else {
                 GlStateManager.translatef(0.2F, 0.1F, 0.0F);
@@ -100,15 +110,20 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
         float scale = 0.0F;
         if (location != null) {
             switch (location.getPath()) {
+                case "atlantic_cod":
                 case "blackfish":
                     scale = 1.2F;
                     break;
-                case "minnow":
-                    scale = 0.5F;
+                case "pacific_halibut":
+                case "atlantic_halibut":
+                    scale = 1.4F;
                     break;
                 case "brown_trout":
                 case "piranha":
                     scale = 0.9F;
+                    break;
+                case "minnow":
+                    scale = 0.5F;
                     break;
             }
         }
