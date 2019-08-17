@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.api.fish;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.item.Item;
 
 import java.util.ArrayList;
@@ -12,8 +13,12 @@ public class FishData {
     private HashMap<Item, Integer> FILLET_AMOUNT = new HashMap<>();
 
     public void addWeight(Item fish, double min, double max) {
-        WEIGHT_MIN.put(fish, min);
-        WEIGHT_MAX.put(fish, max);
+        if (!WEIGHT_MAX.containsKey(fish)) {
+            WEIGHT_MIN.put(fish, min);
+            WEIGHT_MAX.put(fish, max);
+        } else {
+            Aquaculture.LOG.error(fish.getRegistryName() + " already have a fish weight assigned to it");
+        }
     }
 
     public double getMinWeight(Item fish) {
@@ -44,7 +49,11 @@ public class FishData {
     }
 
     public void addFilletAmount(Item fish, int filletAmount) {
-        FILLET_AMOUNT.put(fish, filletAmount);
+        if (!FILLET_AMOUNT.containsKey(fish)) {
+            FILLET_AMOUNT.put(fish, filletAmount);
+        } else {
+            Aquaculture.LOG.error(fish.getRegistryName() + " already have a fish fillet amount assigned to it");
+        }
     }
 
     public boolean hasFilletAmount(Item fish) {
