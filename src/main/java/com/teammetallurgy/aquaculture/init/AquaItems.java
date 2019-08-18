@@ -30,6 +30,7 @@ public class AquaItems {
     public static final Item DIAMOND_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(450).group(Aquaculture.GROUP)), "diamond_fishing_rod");
     public static final Item NEPTUNIUM_FISHING_ROD = register(new AquaFishingRodItem(AquacultureAPI.MATS.NEPTUNIUM, new Item.Properties().defaultMaxDamage(1000).group(Aquaculture.GROUP)), "neptunium_fishing_rod");
     public static final Item WORM = register(AquacultureAPI.createBait(20, 1, Aquaculture.GROUP), "worm");
+    public static final Item FISHING_LINE = register(new FishingLineItem(), "fishing_line");
 
     // Neptunium
     public static final Item NEPTUNIUM_INGOT = register(new SimpleItem(), "neptunium_ingot");

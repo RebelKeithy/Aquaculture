@@ -55,9 +55,9 @@ public class AquaLootTables {
     }
 
     private static void addEntry(LootPool pool, LootEntry entry) {
-        if (pool.lootEntries.stream().anyMatch(e -> e == entry)) {
+        /*if (pool.lootEntries.stream().anyMatch(e -> e == entry)) {
             throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
         }
-        pool.lootEntries.add(entry);
+        pool.lootEntries.add(entry);*/
     }
 }

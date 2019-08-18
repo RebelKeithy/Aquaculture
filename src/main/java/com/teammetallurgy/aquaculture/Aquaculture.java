@@ -12,12 +12,15 @@ import com.teammetallurgy.aquaculture.entity.NeptuniumTridentEntity;
 import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import com.teammetallurgy.aquaculture.item.FishingLineItem;
 import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.TippedArrowRenderer;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -71,5 +74,8 @@ public class Aquaculture {
         RenderingRegistry.registerEntityRenderingHandler(AquaFishEntity.class, AquaFishRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NeptuniumTridentEntity.class, NeptuniumTridentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(WaterArrowEntity.class, TippedArrowRenderer::new);
+        //Item Colors
+        ItemColors itemColor = Minecraft.getInstance().getItemColors();
+        itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((FishingLineItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE);
     }
 }

@@ -94,7 +94,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
                 if (hook != null && hook.getLuckModifier() > 0) luck += hook.getLuckModifier();
 
-                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, bait));
+                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, bait, getFishingLine(heldStack)));
             }
             player.swingArm(hand);
             player.addStat(Stats.ITEM_USED.get(this));
@@ -117,6 +117,11 @@ public class AquaFishingRodItem extends FishingRodItem {
         return fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseGet(null).getStackInSlot(1);
     }
 
+    @Nonnull
+    public static ItemStack getFishingLine(@Nonnull ItemStack fishingRod) {
+        return fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseGet(null).getStackInSlot(2);
+    }
+
     @Override
     @Nullable
     public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt) {
@@ -136,7 +141,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     }
 
     public static class FishingRodEquipementHandler implements ICapabilitySerializable<INBT> {
-        private final IItemHandler items = new ItemStackHandler(2) {
+        private final IItemHandler items = new ItemStackHandler(3) {
             @Override
             public int getSlotLimit(int slot) {
                 return 1;

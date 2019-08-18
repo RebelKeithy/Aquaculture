@@ -54,6 +54,11 @@ public class TackleBoxScreen extends ContainerScreen<TackleBoxContainer> {
             } else {
                 this.renderEmptySlot(x + 116, y + 43);
             }
+            if (rodHandler.getStackInSlot(2).isEmpty()) {
+                this.blit(x + 137, y + 43, 176, 36, 18, 18);
+            } else {
+                this.renderEmptySlot(x + 137, y + 43);
+            }
         });
     }
 

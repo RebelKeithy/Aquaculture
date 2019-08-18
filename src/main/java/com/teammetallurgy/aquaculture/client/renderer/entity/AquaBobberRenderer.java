@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
@@ -106,10 +107,23 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             GlStateManager.disableLighting();
             builder.begin(3, DefaultVertexFormats.POSITION_COLOR);
 
+            //Line color
+            ItemStack line = bobber.getFishingLine();
+            float r = 0;
+            float g = 0;
+            float b = 0;
+            if (!line.isEmpty()) {
+                IDyeableArmorItem lineItem = (IDyeableArmorItem) line.getItem();
+                if (lineItem.hasColor(line)) {
+                    int colorInt = lineItem.getColor(line);
+                    r = (float) (colorInt >> 16 & 255) / 255.0F;
+                    g = (float) (colorInt >> 8 & 255) / 255.0F;
+                    b = (float) (colorInt & 255) / 255.0F;
+                }
+            }
             for (int size = 0; size <= 16; ++size) {
                 float length = (float) size / 16.0F;
-                //Line color
-                builder.pos(x + startX * (double) length, y + startY * (double) (length * length + length) * 0.5D + 0.25D, z + startZ * (double) length).color(0, 0, 0, 255).endVertex();
+                builder.pos(x + startX * (double) length, y + startY * (double) (length * length + length) * 0.5D + 0.25D, z + startZ * (double) length).color(r, g, b, 1.0F).endVertex();
             }
 
             tessellator.draw();

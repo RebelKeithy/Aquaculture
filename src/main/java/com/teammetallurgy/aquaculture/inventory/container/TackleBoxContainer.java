@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
@@ -64,7 +65,6 @@ public class TackleBoxContainer extends Container {
                                 return !handler.getStackInSlot(0).isEmpty();
                             }
                         });
-
                         //Bait
                         this.addSlot(new SlotItemHandler(rodHandler, 1, 117, 44) {
                             @Override
@@ -82,7 +82,19 @@ public class TackleBoxContainer extends Container {
                                 return !handler.getStackInSlot(0).isEmpty();
                             }
                         });
-                        //TODO Add line slot
+                        //Fishing Line
+                        this.addSlot(new SlotItemHandler(rodHandler, 2, 138, 44) {
+                            @Override
+                            public boolean isItemValid(@Nonnull ItemStack stack) {
+                                Item item = stack.getItem();
+                                return item.isIn(AquacultureAPI.Tags.FISHING_LINE) && item instanceof IDyeableArmorItem;
+                            }
+
+                            @Override
+                            public boolean isEnabled() {
+                                return !handler.getStackInSlot(0).isEmpty();
+                            }
+                        });
                     });
                 }
 
@@ -93,7 +105,7 @@ public class TackleBoxContainer extends Container {
                             @Override
                             public boolean isItemValid(@Nonnull ItemStack stack) {
                                 Item item = stack.getItem();
-                                return item.isIn(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem;
+                                return item.isIn(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem || item.isIn(AquacultureAPI.Tags.FISHING_LINE);
                             }
                         });
                     }

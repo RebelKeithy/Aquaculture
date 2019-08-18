@@ -46,6 +46,7 @@ import java.util.List;
 public class AquaFishingBobberEntity extends FishingBobberEntity {
     private final Hook hook;
     private final ItemStack bait;
+    private final ItemStack fishingLine;
     private final int luck;
 
     public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
@@ -55,14 +56,16 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         ItemStack fishingRod = player.getHeldItem(StackHelper.getUsedHand(player.getHeldItemMainhand(), AquaFishingRodItem.class));
         this.hook = AquaFishingRodItem.getHookType(fishingRod);
         this.bait = AquaFishingRodItem.getBait(fishingRod);
+        this.fishingLine = AquaFishingRodItem.getFishingLine(fishingRod);
     }
 
-    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, Hook hook, @Nonnull ItemStack bait) {
+    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, Hook hook, @Nonnull ItemStack bait, @Nonnull ItemStack fishingLine) {
         super(player, world, luck, lureSpeed);
         this.luck = luck;
         this.angler.fishingBobber = this;
         this.hook = hook;
         this.bait = bait;
+        this.fishingLine = fishingLine;
         if (this.hasHook() && hook.getWeight() != null) {
             this.setMotion(this.getMotion().mul(hook.getWeight()));
         }
@@ -77,11 +80,15 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     }
 
     public ItemStack getBait() {
-        return bait;
+        return this.bait;
     }
 
     public boolean hasBait() {
-        return !bait.isEmpty();
+        return !this.bait.isEmpty();
+    }
+
+    public ItemStack getFishingLine() {
+        return this.fishingLine;
     }
 
     @Override
