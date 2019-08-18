@@ -156,7 +156,6 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                             }
                         }
                     }
-
                     rodDamage = 1;
                 }
             }
@@ -176,15 +175,11 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         if (fluidState.isTagged(FluidTags.WATER)) {
             lootTableLocation = LootTables.GAMEPLAY_FISHING;
         }
-        if (this.hasHook() && this.hook.getFluid() == FluidTags.LAVA) {
-            if (fluidState.isTagged(FluidTags.LAVA)) {
-                if (serverWorld.getWorld().getDimension().isNether()) {
-                    lootTableLocation = AquaLootTables.NETHER_FISHING;
-                } else {
-                    lootTableLocation = AquaLootTables.LAVA_FISHING;
-                }
+        if (this.isLavaHookInLava(this, this.world, new BlockPos(this))) {
+            if (serverWorld.getWorld().getDimension().isNether()) {
+                lootTableLocation = AquaLootTables.NETHER_FISHING;
             } else {
-                lootTableLocation = null;
+                lootTableLocation = AquaLootTables.LAVA_FISHING;
             }
         }
         if (lootTableLocation == null) {
@@ -210,14 +205,13 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
                 @Override
                 public boolean isInvulnerableTo(@Nonnull DamageSource source) {
                     BlockPos spawnPos = new BlockPos(AquaFishingBobberEntity.this.posX, AquaFishingBobberEntity.this.posY, AquaFishingBobberEntity.this.posZ);
-                    return (AquaFishingBobberEntity.this.hasHook() && AquaFishingBobberEntity.this.hook.getFluid() == FluidTags.LAVA) && this.world.getFluidState(spawnPos).isTagged(FluidTags.LAVA)
-                            || super.isInvulnerableTo(source);
+                    return AquaFishingBobberEntity.this.isLavaHookInLava(AquaFishingBobberEntity.this, this.world, spawnPos) || super.isInvulnerableTo(source);
                 }
             };
             double x = this.angler.posX - this.posX;
             double y = this.angler.posY - this.posY;
             double z = this.angler.posZ - this.posZ;
-            lootEntity.setMotion(x * 0.1D, (y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D) + (this.hasHook() && this.hook.getFluid() == FluidTags.LAVA ? 0.2D : 0.0D), z * 0.1D);
+            lootEntity.setMotion(x * 0.1D, (y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D) + (this.hasHook() && this.isLavaHookInLava(this, this.world, new BlockPos(x, y, z)) ? 0.2D : 0.0D), z * 0.1D);
             this.world.addEntity(lootEntity);
             this.angler.world.addEntity(new ExperienceOrbEntity(this.angler.world, this.angler.posX, this.angler.posY + 0.5D, this.angler.posZ + 0.5D, this.rand.nextInt(6) + 1));
             if (loot.getItem().isIn(ItemTags.FISHES)) {
@@ -226,10 +220,18 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         }
     }
 
+    public boolean isLavaHookInLava(AquaFishingBobberEntity bobber, World world, BlockPos pos) {
+        return bobber.hasHook() && bobber.hook.getFluids().contains(FluidTags.LAVA) && world.getFluidState(pos).isTagged(FluidTags.LAVA);
+    }
+
     @Override
     public void tick() {
-        if (this.hasHook() && this.hook.getFluid() == FluidTags.LAVA) {
-            this.lavaFishingTick();
+        if (this.hasHook() && this.hook.getFluids().contains(FluidTags.LAVA)) {
+            if (this.hook.getFluids().contains(FluidTags.WATER) && world.getFluidState(new BlockPos(this)).isTagged(FluidTags.WATER)) {
+                super.tick();;
+            } else {
+                this.lavaFishingTick();
+            }
         } else {
             super.tick();
         }
@@ -433,13 +435,13 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
 
     @Override
     protected void setOnFireFromLava() {
-        if (!this.hasHook() || this.hasHook() && this.hook.getFluid() != FluidTags.LAVA) {
+        if (!this.hasHook() || this.hasHook() && !this.hook.getFluids().contains(FluidTags.LAVA)) {
             super.setOnFireFromLava();
         }
     }
 
     @Override
     public boolean canRenderOnFire() {
-        return (this.hasHook() && this.hook.getFluid() != FluidTags.LAVA) && super.canRenderOnFire();
+        return (this.hasHook() && !this.hook.getFluids().contains(FluidTags.LAVA)) && super.canRenderOnFire();
     }
 }

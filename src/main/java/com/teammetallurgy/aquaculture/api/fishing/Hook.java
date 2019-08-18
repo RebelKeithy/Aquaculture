@@ -12,6 +12,9 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Hook {
     private final String name;
     private final String modID;
@@ -25,9 +28,9 @@ public class Hook {
     private final int luckModifier;
     private final double doubleCatchChance;
     private final SoundEvent catchSound;
-    private final Tag<Fluid> fluid;
+    private final List<Tag<Fluid>> fluids;
 
-    private Hook(String name, String modID, TextFormatting color, int minCatchable, int maxCatchable, Vec3d weight, double durabilityChance, int luckModifier, double doubleCatchChance, SoundEvent catchSound, Tag<Fluid> fluid) {
+    private Hook(String name, String modID, TextFormatting color, int minCatchable, int maxCatchable, Vec3d weight, double durabilityChance, int luckModifier, double doubleCatchChance, SoundEvent catchSound, List<Tag<Fluid>> fluids) {
         this.name = name;
         this.modID = modID;
         this.color = color;
@@ -35,7 +38,7 @@ public class Hook {
         this.maxCatchable = maxCatchable;
         this.weight = weight;
         this.durabilityChance = durabilityChance;
-        this.fluid = fluid;
+        this.fluids = fluids;
         this.luckModifier = luckModifier;
         this.doubleCatchChance = doubleCatchChance;
         this.catchSound = catchSound;
@@ -91,8 +94,8 @@ public class Hook {
         return catchSound;
     }
 
-    public Tag<Fluid> getFluid() {
-        return fluid;
+    public List<Tag<Fluid>> getFluids() {
+        return fluids;
     }
 
     public static class HookBuilder {
@@ -106,7 +109,7 @@ public class Hook {
         private int luckModifier;
         private double doubleCatchChance;
         private SoundEvent catchSound;
-        private Tag<Fluid> fluid = FluidTags.WATER;
+        private List<Tag<Fluid>> fluids = new ArrayList<>();
 
         public HookBuilder(String name) {
             this.name = name;
@@ -161,12 +164,15 @@ public class Hook {
         }
 
         public HookBuilder setFluid(Tag<Fluid> fluid) {
-            this.fluid = fluid;
+            this.fluids.add(fluid);
             return this;
         }
 
         public Hook build() {
-            return new Hook(this.name, this.modID, this.color, this.minCatchable, this.maxCatchable, this.weightModifier, this.durabilityChance, this.luckModifier, this.doubleCatchChance, this.catchSound, this.fluid);
+            if (this.fluids.isEmpty()) {
+                this.fluids.add(FluidTags.WATER);
+            }
+            return new Hook(this.name, this.modID, this.color, this.minCatchable, this.maxCatchable, this.weightModifier, this.durabilityChance, this.luckModifier, this.doubleCatchChance, this.catchSound, this.fluids);
         }
     }
 }

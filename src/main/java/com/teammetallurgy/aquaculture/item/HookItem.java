@@ -32,8 +32,12 @@ public class HookItem extends Item {
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag tooltipFlag) {
         Hook hook = getHookType();
-        if (hook != null && hook.getFluid() == FluidTags.LAVA) {
-            tooltips.add(new TranslationTextComponent(Blocks.LAVA.getTranslationKey()).setStyle(new Style().setColor(TextFormatting.RED)));
+        if (hook != null && hook.getFluids().contains(FluidTags.LAVA)) {
+            if (hook.getFluids().contains(FluidTags.WATER)) {
+                tooltips.add(new TranslationTextComponent("aquaculture.universal").setStyle(new Style().setColor(TextFormatting.BOLD)));
+            } else {
+                tooltips.add(new TranslationTextComponent(Blocks.LAVA.getTranslationKey()).setStyle(new Style().setColor(TextFormatting.RED)));
+            }
         }
         super.addInformation(stack, world, tooltips, tooltipFlag);
     }
