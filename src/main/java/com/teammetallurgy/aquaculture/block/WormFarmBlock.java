@@ -28,6 +28,7 @@ public class WormFarmBlock extends ComposterBlock {
 
     public WormFarmBlock() {
         super(Block.Properties.create(Material.WOOD).hardnessAndResistance(0.6F).sound(SoundType.WOOD));
+        CHANCES.put(AquaItems.ALGAE.asItem(), 0.3F);
     }
 
     @Override
@@ -42,9 +43,8 @@ public class WormFarmBlock extends ComposterBlock {
                 if (!player.abilities.isCreativeMode) {
                     heldStack.shrink(1);
                 }
-                return true;
             }
-            return false;
+            return true;
         } else if (level > 0) {
             if (!world.isRemote) {
                 double x = (double) (world.rand.nextFloat() * 0.7F) + 0.15000000596046448D;
