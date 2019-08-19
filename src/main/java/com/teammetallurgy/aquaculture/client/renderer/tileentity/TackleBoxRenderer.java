@@ -16,13 +16,17 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity & IChestLid> exten
     private static final ResourceLocation TACKLE_BOX_TEXTURE = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/tileentity/tackle_box.png");
     private final TackleBoxModel tackleBoxModel = new TackleBoxModel();
 
+    public TackleBoxRenderer() {
+
+    }
+
     @Override
     public void render(T tackleBox, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.enableDepthTest();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
         BlockState tackleBoxSouth = tackleBox.hasWorld() ? tackleBox.getBlockState() : AquaBlocks.TACKLE_BOX.getDefaultState().with(TackleBoxBlock.FACING, Direction.SOUTH);
-        if (destroyStage >= 0) {
+        if (destroyStage >= 0) { //TODO
             GlStateManager.matrixMode(5890);
             GlStateManager.pushMatrix();
             GlStateManager.scalef(4.0F, 4.0F, 1.0F);

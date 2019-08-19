@@ -4,6 +4,7 @@ import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -28,6 +29,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -42,7 +44,7 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
     private static final VoxelShape EAST_WEST = Block.makeCuboidShape(3.9D, 0.0D, 0.8D, 12.2D, 9.0D, 15.2D);
 
     public TackleBoxBlock() {
-        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F).sound(SoundType.METAL));
+        super(Block.Properties.create(Material.IRON, MaterialColor.IRON).hardnessAndResistance(4.0F, 5.0F).sound(SoundType.METAL));
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(WATERLOGGED, false));
     }
 
@@ -105,14 +107,6 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         Direction placerFacing = context.getPlacementHorizontalFacing().getOpposite();
         IFluidState fluidState = context.getWorld().getFluidState(context.getPos());
-        boolean isSneaking = context.isPlacerSneaking();
-        Direction direction = context.getFace();
-        if (direction.getAxis().isHorizontal() && isSneaking) {
-            Direction attachDirection = context.getWorld().getBlockState(context.getPos().offset(direction.getOpposite())).get(FACING);
-            if (attachDirection.getAxis() != direction.getAxis()) {
-                placerFacing = attachDirection;
-            }
-        }
         return this.getDefaultState().with(FACING, placerFacing).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
 

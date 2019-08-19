@@ -7,6 +7,7 @@ import com.teammetallurgy.aquaculture.block.FishTrapBlock;
 import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
 import com.teammetallurgy.aquaculture.block.tileentity.FishTrapTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
+import com.teammetallurgy.aquaculture.client.renderer.AquatemRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -26,7 +27,7 @@ import java.util.List;
 public class AquaBlocks {
     public static List<Block> BLOCKS = Lists.newArrayList();
     public static final Block FISH_TRAP = register(new FishTrapBlock(), "fish_trap", new Item.Properties().group(Aquaculture.GROUP));
-    public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box", new Item.Properties().maxStackSize(1).group(Aquaculture.GROUP));
+    public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box", new Item.Properties().maxStackSize(1).group(Aquaculture.GROUP).setTEISR(() -> AquatemRenderer::new));
     public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", new Item.Properties());
 
     /**
