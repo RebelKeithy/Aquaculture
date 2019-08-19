@@ -76,7 +76,11 @@ public class BiomeTagPredicate {
             if (includeList.stream().noneMatch(INVALID_TAGS::contains)) { //Exclude invalid tags, as long as they're not specified in include
                 excludeList.addAll(INVALID_TAGS);
             }
-            biomes.addAll(addBiomes);
+            for (Biome addBiome : addBiomes) {
+                if (!biomes.contains(addBiome)) {
+                    biomes.add(addBiome);
+                }
+            }
         }
         if (!excludeList.isEmpty()) {
             for (BiomeDictionary.Type type : excludeList) {

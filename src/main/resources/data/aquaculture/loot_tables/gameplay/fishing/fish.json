@@ -60,6 +60,110 @@
           "type": "minecraft:item",
           "conditions": [
             {
+              "condition": "minecraft:alternative",
+              "terms": [
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "OCEAN"],
+                    "and": true
+                  }
+                },
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "BEACH"],
+                    "and": true
+                  }
+                }
+              ]
+            }
+          ],
+          "weight": 60,
+          "name": "aquaculture:atlantic_herring"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:alternative",
+              "terms": [
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "BEACH"],
+                    "and": true
+                  }
+                },
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "WATER"],
+                    "and": true
+                  }
+                }
+              ]
+            }
+          ],
+          "weight": 10,
+          "name": "aquaculture:pink_salmon"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:alternative",
+              "terms": [
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "OCEAN"],
+                    "and": true
+                  }
+                },
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "BEACH"],
+                    "and": true
+                  }
+                }
+              ]
+            }
+          ],
+          "weight": 25,
+          "name": "aquaculture:pollock"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:alternative",
+              "terms": [
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "OCEAN"],
+                    "and": true
+                  }
+                },
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["COLD", "BEACH"],
+                    "and": true
+                  }
+                }
+              ]
+            }
+          ],
+          "weight": 20,
+          "name": "aquaculture:rainbow_trout"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
               "condition": "aquaculture:biome_tag_check",
               "predicate": {
                 "include": ["DRY"],

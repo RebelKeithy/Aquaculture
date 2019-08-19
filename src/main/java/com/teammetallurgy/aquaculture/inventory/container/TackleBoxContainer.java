@@ -51,52 +51,50 @@ public class TackleBoxContainer extends Container {
 
                 //Fishing Rod slots
                 ItemStack fishingRod = handler.getStackInSlot(0);
-                if (!fishingRod.isEmpty()) {
-                    fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(rodHandler -> {
-                        //Hook
-                        this.addSlot(new SlotItemHandler(rodHandler, 0, 96, 44) {
-                            @Override
-                            public boolean isItemValid(@Nonnull ItemStack stack) {
-                                return stack.getItem() instanceof HookItem;
-                            }
+                fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(rodHandler -> {
+                    //Hook
+                    this.addSlot(new SlotItemHandler(rodHandler, 0, 96, 44) {
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack) {
+                            return stack.getItem() instanceof HookItem;
+                        }
 
-                            @Override
-                            public boolean isEnabled() {
-                                return !handler.getStackInSlot(0).isEmpty();
-                            }
-                        });
-                        //Bait
-                        this.addSlot(new SlotItemHandler(rodHandler, 1, 117, 44) {
-                            @Override
-                            public boolean isItemValid(@Nonnull ItemStack stack) {
-                                return stack.getItem() instanceof BaitItem;
-                            }
-
-                            @Override
-                            public boolean canTakeStack(PlayerEntity player) {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean isEnabled() {
-                                return !handler.getStackInSlot(0).isEmpty();
-                            }
-                        });
-                        //Fishing Line
-                        this.addSlot(new SlotItemHandler(rodHandler, 2, 138, 44) {
-                            @Override
-                            public boolean isItemValid(@Nonnull ItemStack stack) {
-                                Item item = stack.getItem();
-                                return item.isIn(AquacultureAPI.Tags.FISHING_LINE) && item instanceof IDyeableArmorItem;
-                            }
-
-                            @Override
-                            public boolean isEnabled() {
-                                return !handler.getStackInSlot(0).isEmpty();
-                            }
-                        });
+                        @Override
+                        public boolean isEnabled() {
+                            return !handler.getStackInSlot(0).isEmpty();
+                        }
                     });
-                }
+                    //Bait
+                    this.addSlot(new SlotItemHandler(rodHandler, 1, 117, 44) {
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack) {
+                            return stack.getItem() instanceof BaitItem;
+                        }
+
+                        @Override
+                        public boolean canTakeStack(PlayerEntity player) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean isEnabled() {
+                            return !handler.getStackInSlot(0).isEmpty();
+                        }
+                    });
+                    //Fishing Line
+                    this.addSlot(new SlotItemHandler(rodHandler, 2, 138, 44) {
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack) {
+                            Item item = stack.getItem();
+                            return item.isIn(AquacultureAPI.Tags.FISHING_LINE) && item instanceof IDyeableArmorItem;
+                        }
+
+                        @Override
+                        public boolean isEnabled() {
+                            return !handler.getStackInSlot(0).isEmpty();
+                        }
+                    });
+                });
 
                 //Tackle Box
                 for (int column = 0; column < collumns; ++column) {
