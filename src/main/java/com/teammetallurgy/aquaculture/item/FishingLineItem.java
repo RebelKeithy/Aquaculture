@@ -17,6 +17,6 @@ public class FishingLineItem extends Item implements IDyeableArmorItem {
     @Override
     public int getColor(@Nonnull ItemStack stack) {
         CompoundNBT nbt = stack.getChildTag("display");
-        return nbt != null && nbt.contains("color", 99) ? nbt.getInt("color") : -1;
+        return nbt != null && nbt.contains("color", 99) ? nbt.getInt("color") : 0;
     }
 }

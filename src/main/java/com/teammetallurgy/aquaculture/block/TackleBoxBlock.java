@@ -26,6 +26,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -34,10 +35,11 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TackleBoxBlock extends ContainerBlock {
+public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(1.0D, 0.0D, 0.0D, 15.0D, 14.0D, 15.0D); //TODO
+    private static final VoxelShape NORTH_SOUTH = Block.makeCuboidShape(0.8D, 0.0D, 3.9D, 15.2D, 9.0D, 12.2D);
+    private static final VoxelShape EAST_WEST = Block.makeCuboidShape(3.9D, 0.0D, 0.8D, 12.2D, 9.0D, 15.2D);
 
     public TackleBoxBlock() {
         super(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F).sound(SoundType.METAL));
@@ -64,7 +66,15 @@ public class TackleBoxBlock extends ContainerBlock {
     @Override
     @Nonnull
     public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext context) {
-        return SHAPE;
+        switch (state.get(FACING)) {
+            case NORTH:
+            case SOUTH:
+                return NORTH_SOUTH;
+            case EAST:
+            case WEST:
+                return EAST_WEST;
+        }
+        return super.getShape(state, blockReader, pos, context);
     }
 
     @Override
@@ -123,6 +133,21 @@ public class TackleBoxBlock extends ContainerBlock {
             world.updateComparatorOutputLevel(pos, this);
             super.onReplaced(state, world, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    @Nonnull
+    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+        if (state.get(WATERLOGGED)) {
+            world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+        return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+    }
+
+    @Override
+    @Nonnull
+    public IFluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Override

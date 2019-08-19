@@ -35,18 +35,26 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity & IChestLid> exten
         GlStateManager.pushMatrix();
         GlStateManager.enableRescaleNormal();
         this.bindTexture(TACKLE_BOX_TEXTURE);
-        GlStateManager.translatef((float) x, (float) y + 1.1F, (float) z + 0.66F);
+        GlStateManager.translatef((float) x, (float) y + 1.15F, (float) z);
         GlStateManager.scalef(1.0F, -1.0F, -1.0F); //Flip
         GlStateManager.scalef(0.065F, 0.065F, 0.065F); //Resize
-        float direction = tackleBoxSouth.get(TackleBoxBlock.FACING).getHorizontalAngle();
-        if ((double) Math.abs(direction) > 1.0E-5D) {
-            GlStateManager.translatef(0.5F, 0.5F, 0.5F);
-            GlStateManager.rotatef(direction, 0.0F, 1.0F, 0.0F);
-            GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
+        Direction direction = tackleBoxSouth.get(TackleBoxBlock.FACING);
+        if ((double) Math.abs(direction.getHorizontalAngle()) > 1.0E-5D) {
+            GlStateManager.rotatef(direction.getHorizontalAngle(), 0.0F, 1.0F, 0.0F);
+        }
+
+        if (direction == Direction.NORTH) {
+            GlStateManager.translatef(-14.65F, 0F, 7.75F);
+        } else if (direction == Direction.SOUTH) {
+            GlStateManager.translatef(0.65F, 0F, -7.75F);
+        } else if (direction == Direction.WEST) {
+            GlStateManager.translatef(0.65F, 0F, 7.75F);
+        } else if (direction == Direction.EAST) {
+            GlStateManager.translatef(-14.65F, 0F, -7.75F);
         }
 
         this.applyLidRotation(tackleBox, partialTicks, this.tackleBoxModel);
-        this.tackleBoxModel.render(0.6F); //TODO
+        this.tackleBoxModel.render(1.0F);
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
