@@ -1,6 +1,8 @@
 package com.teammetallurgy.aquaculture.client.renderer;
 
+import com.teammetallurgy.aquaculture.block.NeptunesBountyBlock;
 import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
+import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -11,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 
 public class AquatemRenderer extends ItemStackTileEntityRenderer {
+    private final NeptunesBountyTileEntity neptunesBounty = new NeptunesBountyTileEntity();
     private final TackleBoxTileEntity tackleBox = new TackleBoxTileEntity();
 
     @Override
@@ -19,6 +22,8 @@ public class AquatemRenderer extends ItemStackTileEntityRenderer {
         boolean isBlockItem = item instanceof BlockItem;
         if (isBlockItem && ((BlockItem) item).getBlock() instanceof TackleBoxBlock) {
             TileEntityRendererDispatcher.instance.renderAsItem(this.tackleBox);
+        } else if (isBlockItem && ((BlockItem) item).getBlock() instanceof NeptunesBountyBlock) {
+            TileEntityRendererDispatcher.instance.renderAsItem(this.neptunesBounty);
         }
     }
 }

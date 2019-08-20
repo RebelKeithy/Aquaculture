@@ -98,6 +98,17 @@
           "weight": 2
         }
       ]
+    },
+    {
+      "name": "aquaculture:neptunes_bounty_junk",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "loot_table",
+          "name": "aquaculture:box/neptunes_bounty_junk",
+          "weight": 1
+        }
+      ]
     }
   ]
 }

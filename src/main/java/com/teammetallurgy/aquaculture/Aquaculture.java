@@ -1,10 +1,12 @@
 package com.teammetallurgy.aquaculture;
 
+import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import com.teammetallurgy.aquaculture.client.gui.screen.TackleBoxScreen;
 import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.NeptuniumTridentRenderer;
+import com.teammetallurgy.aquaculture.client.renderer.tileentity.NeptunesBountyRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
@@ -69,6 +71,7 @@ public class Aquaculture {
 
     private void setupClient(FMLClientSetupEvent event) {
         ScreenManager.registerFactory(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
+        ClientRegistry.bindTileEntitySpecialRenderer(NeptunesBountyTileEntity.class, new NeptunesBountyRenderer<>());
         ClientRegistry.bindTileEntitySpecialRenderer(TackleBoxTileEntity.class, new TackleBoxRenderer<>());
         RenderingRegistry.registerEntityRenderingHandler(AquaFishingBobberEntity.class, AquaBobberRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaFishEntity.class, AquaFishRenderer::new);

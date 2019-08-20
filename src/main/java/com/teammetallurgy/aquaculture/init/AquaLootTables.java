@@ -44,14 +44,14 @@ public class AquaLootTables {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.BASIC_OPTIONS.addNeptunesBountyToLoot.get()) {
-                    addEntry(pool, getInjectEntry(NEPTUNIUM, 2, 2)); //Not using vanilla numbers, to make it more rare
+                    addEntry(pool, getInjectEntry(NEPTUNIUM, 1, 2)); //Not using vanilla numbers, to make it more rare
                 }
             }
         }
     }
 
     private static LootEntry getInjectEntry(ResourceLocation location, int weight, int quality) {
-        return TableLootEntry.builder(location).weight(weight).quality(quality).func_216081_b();
+        return TableLootEntry.builder(location).weight(weight).quality(quality).build();
     }
 
     private static void addEntry(LootPool pool, LootEntry entry) {

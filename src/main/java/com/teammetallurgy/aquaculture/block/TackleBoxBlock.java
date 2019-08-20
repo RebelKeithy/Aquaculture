@@ -198,9 +198,4 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> StackHelper.dropInventory(world, pos, handler));
         }
     }
-
-    @Override
-    public boolean canDropFromExplosion(BlockState state, IBlockReader world, BlockPos pos, Explosion explosion) {
-        return false;
-    }
 }

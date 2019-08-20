@@ -33,7 +33,7 @@ public class WormFarmBlock extends ComposterBlock {
 
     @Override
     public boolean onBlockActivated(BlockState state, @Nonnull World world, @Nonnull BlockPos pos, PlayerEntity player, @Nonnull Hand hand, BlockRayTraceResult raytrace) {
-        int level = state.get(field_220298_a);
+        int level = state.get(LEVEL);
         ItemStack heldStack = player.getHeldItem(hand);
 
         if (CHANCES.containsKey(heldStack.getItem())) {
@@ -54,7 +54,7 @@ public class WormFarmBlock extends ComposterBlock {
                 itemEntity.setDefaultPickupDelay();
                 world.addEntity(itemEntity);
             }
-            world.setBlockState(pos, state.with(field_220298_a, state.get(field_220298_a) - 1), 3);
+            world.setBlockState(pos, state.with(LEVEL, state.get(LEVEL) - 1), 3);
             world.playSound(null, pos, SoundEvents.BLOCK_COMPOSTER_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
             return true;
         } else {
@@ -67,13 +67,13 @@ public class WormFarmBlock extends ComposterBlock {
     }
     
     private static boolean addItem(BlockState state, IWorld world, BlockPos pos, @Nonnull ItemStack stack) {
-        int level = state.get(field_220298_a);
+        int level = state.get(LEVEL);
         float chance = CHANCES.getFloat(stack.getItem());
         if ((level != 0 || chance <= 0.0F) && world.getRandom().nextDouble() >= (double) chance) {
             return false;
         } else {
             int levelAdd = level + 1;
-            world.setBlockState(pos, state.with(field_220298_a, levelAdd), 3);
+            world.setBlockState(pos, state.with(LEVEL, levelAdd), 3);
             if (levelAdd == 7) {
                 world.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), 20);
             }
@@ -84,7 +84,7 @@ public class WormFarmBlock extends ComposterBlock {
     @Override
     @Nonnull
     public ISidedInventory createInventory(BlockState state, @Nonnull IWorld world, @Nonnull BlockPos pos) {
-        int level = state.get(field_220298_a);
+        int level = state.get(LEVEL);
         if (level == 8) {
             return new FullInventory(state, world, pos, new ItemStack(AquaItems.WORM));
         } else {
@@ -174,7 +174,7 @@ public class WormFarmBlock extends ComposterBlock {
 
         @Override
         public void markDirty() {
-            this.world.setBlockState(this.pos, this.state.with(field_220298_a, 0), 3);
+            this.world.setBlockState(this.pos, this.state.with(LEVEL, 0), 3);
             this.extracted = true;
         }
     }

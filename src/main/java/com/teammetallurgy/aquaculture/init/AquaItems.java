@@ -61,7 +61,6 @@ public class AquaItems {
     public static final Item BOX = register(new LootBoxItem(AquaLootTables.BOX), "box");
     public static final Item LOCKBOX = register(new LootBoxItem(AquaLootTables.LOCKBOX), "lockbox");
     public static final Item TREASURE_CHEST = register(new LootBoxItem(AquaLootTables.TREASURE_CHEST), "treasure_chest");
-    public static final Item NEPTUNES_BOUNTY = register(new LootBoxItem(AquaLootTables.NEPTUNES_BOUNTY), "neptunes_bounty");
     public static final Item ALGAE = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.ALGAE)), "algae");
     public static final Item FISH_BONES = register(new SimpleItem(), "fish_bones");
 

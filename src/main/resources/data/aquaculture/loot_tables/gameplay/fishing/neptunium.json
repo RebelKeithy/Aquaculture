@@ -7,6 +7,17 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_contents",
+              "entries": [
+                {
+                  "type": "minecraft:loot_table",
+                  "name": "aquaculture:box/neptunes_bounty"
+                }
+              ]
+            }
+          ],
           "name": "aquaculture:neptunes_bounty"
         }
       ]
