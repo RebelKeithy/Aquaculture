@@ -170,6 +170,11 @@
   "item.aquaculture.tarpon_bucket": "Bucket of Tarpon",
   "item.aquaculture.tuna_bucket": "Bucket of Tuna",
 
+  "_comment": "Spawn Egg",
+  "item.aquaculture.box_turtle_spawn_egg": "Box Turtle Spawn Egg",
+  "item.aquaculture.arrau_turtle_spawn_egg": "Arrau Turtle Spawn Egg",
+  "item.aquaculture.starshell_turtle_spawn_egg": "Starshell Turtle Spawn Egg",
+
   "_comment": "Entities",
   "entity.aquaculture.atlantic_cod": "Atlantic Cod",
   "entity.aquaculture.blackfish": "Blackfish",
@@ -217,9 +222,9 @@
   "entity.aquaculture.swordfish": "Sword Fish",
   "entity.aquaculture.tarpon": "Tarpon",
   "entity.aquaculture.tuna": "Tuna",
-  "entity.aquaculture.frog": "Frog",
-  "entity.aquaculture.leech": "Leech",
-  "entity.aquaculture.turtle": "Turtle",
+  "entity.aquaculture.box_turtle": "Box Turtle",
+  "entity.aquaculture.arrau_turtle": "Arrau Turtle",
+  "entity.aquaculture.starshell_turtle": "Starshell Turtle",
 
   "_comment": "Message in a bottle",
   "aquaculture.message": "ERROR! Fish Escaping!",
