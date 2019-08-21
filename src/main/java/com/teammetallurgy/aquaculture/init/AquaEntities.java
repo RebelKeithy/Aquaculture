@@ -38,11 +38,11 @@ public class AquaEntities {
             .size(0.5F, 0.5F)
             .setCustomClientFactory(WaterArrowEntity::new));
     public static final EntityType<TurtleLandEntity> BOX_TURTLE = registerMob("box_turtle", 0x7F8439, 0x5D612A, EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
-            .size(0.5F, 0.3F));
+            .size(0.5F, 0.25F));
     public static final EntityType<TurtleLandEntity> ARRAU_TURTLE = registerMob("arrau_turtle", 0x71857A, 0x4F6258, EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
-            .size(0.5F, 0.3F));
+            .size(0.5F, 0.25F));
     public static final EntityType<TurtleLandEntity> STARSHELL_TURTLE = registerMob("starshell_turtle", 0xDCE2E5, 0x464645, EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
-            .size(0.5F, 0.3F));
+            .size(0.5F, 0.25F));
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {

@@ -17,7 +17,7 @@ public class TurtleLandRenderer extends MobRenderer<TurtleLandEntity, TurtleLand
     private static final ResourceLocation STARSHELL_TURTLE = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/turtle/starshell_turtle.png");
 
     public TurtleLandRenderer(EntityRendererManager manager) {
-        super(manager, new TurtleLandModel<>(0.0F), 0.3F);
+        super(manager, new TurtleLandModel<>(), 0.3F);
     }
 
     @Nullable
