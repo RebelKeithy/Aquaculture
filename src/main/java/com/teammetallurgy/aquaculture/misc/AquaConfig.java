@@ -19,7 +19,7 @@ public class AquaConfig {
             enableFishSpawning = builder.comment("Enable fish mob spawning? Weight & biomes can be modified in the Aquaculture fish loot table").define("Enable fish spawning?", true);
             enableNeptuniumItems = builder.comment("Enable recipes for Neptunium items?").define("Enable Neptunium items?", true);
             enableNeptuniumArmor = builder.comment("Enable recipes for Neptunium armor?").define("Enable Neptunium armor?", true);
-            addNeptunesBountyToLoot = builder.comment("Should Neptune's bounty be added to the treasure loot table?").define("Add Neptune's Bounty as loot?", true);
+            addNeptunesBountyToLoot = builder.comment("Should Neptune's bounty be added as fishing loot? Very rare.").define("Add Neptune's Bounty as loot?", true);
             randomWeight = builder.comment("Enable weight for fish? Useful for fishing competitions").define("Add weight?", false);
             debugMode = builder.comment("Enable Aquaculture's debug mode").define("Enable debug mode?", false);
             builder.pop();

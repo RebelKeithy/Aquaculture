@@ -121,7 +121,9 @@
   "item.aquaculture.tuna": "Tuna",
   "item.aquaculture.frog": "Frog",
   "item.aquaculture.leech": "Leech",
-  "item.aquaculture.turtle": "Turtle",
+  "item.aquaculture.box_turtle": "Box Turtle",
+  "item.aquaculture.arrau_turtle": "Arrau Turtle",
+  "item.aquaculture.starshell_turtle": "Starshell Turtle",
   "item.aquaculture.goldfish": "Goldfish",
 
   "_comment": "Fish Buckets",

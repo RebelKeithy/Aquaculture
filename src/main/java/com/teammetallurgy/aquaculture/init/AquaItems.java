@@ -124,8 +124,10 @@ public class AquaItems {
     public static final Item TUNA = FishRegistry.register(new SimpleItem(), "tuna");
     public static final Item FROG = register(new SimpleItem(), "frog");
     public static final Item LEECH = register(new SimpleItem(), "leech");
-    public static final Item TURTLE = register(new SimpleItem(), "turtle");
     public static final Item GOLDFISH = register(new SimpleItem(), "goldfish");
+    public static final Item BOX_TURTLE = register(new SimpleItem(), "box_turtle");
+    public static final Item ARRAU_TURTLE = register(new SimpleItem(), "arrau_turtle");
+    public static final Item STARSHELL_TURTLE = register(new SimpleItem(), "starshell_turtle");
 
     /**
      * Registers an item

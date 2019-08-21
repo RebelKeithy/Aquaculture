@@ -10,6 +10,7 @@ import com.teammetallurgy.aquaculture.client.renderer.entity.TurtleLandRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.NeptunesBountyRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
 import com.teammetallurgy.aquaculture.entity.*;
+import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.item.FishingLineItem;
@@ -64,6 +65,7 @@ public class Aquaculture {
         ConditionFactory.registerConditions();
         FishWeightHandler.registerFishData();
         BiomeDictionary.Type.getType("TWILIGHT"); //Add Twilight tag, for Twilight Forest support
+        AquaEntities.setSpawnPlacement();
         FishReadFromJson.addFishSpawns();
     }
 

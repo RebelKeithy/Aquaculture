@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:item/turtle"
+        "layer0": "aquaculture:item/starshell_turtle"
     }
 }
