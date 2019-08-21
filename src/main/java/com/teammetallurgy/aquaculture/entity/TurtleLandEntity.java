@@ -103,9 +103,9 @@ public class TurtleLandEntity extends AnimalEntity {
         private void updateSpeed() {
             if (this.turtle.isInWater()) {
                 if (this.turtle.isChild()) {
-                    this.turtle.setAIMoveSpeed(0.14F);
+                    this.turtle.setAIMoveSpeed(0.2F);
                 } else {
-                    this.turtle.setAIMoveSpeed(0.12F);
+                    this.turtle.setAIMoveSpeed(0.18F);
                 }
             } else if (this.turtle.onGround) {
                 this.turtle.setAIMoveSpeed(0.1F);
@@ -123,6 +123,11 @@ public class TurtleLandEntity extends AnimalEntity {
         }
 
         @Override
+        public void tick() {
+            super.tick();
+        }
+
+        @Override
         public boolean shouldContinueExecuting() {
             return this.turtle.isInWater() && this.timeoutCounter <= 1200 && this.shouldMoveTo(this.turtle.world, this.destinationBlock);
         }
@@ -134,13 +139,12 @@ public class TurtleLandEntity extends AnimalEntity {
 
         @Override
         public boolean shouldMove() {
-            return this.timeoutCounter % 160 == 0;
+            return true;
         }
 
         @Override
         protected boolean shouldMoveTo(IWorldReader reader, @Nonnull BlockPos pos) {
             Block block = reader.getBlockState(pos).getBlock();
-            System.out.println("Hi: " + !(block instanceof FlowingFluidBlock));
             return !(block instanceof FlowingFluidBlock);
         }
     }
