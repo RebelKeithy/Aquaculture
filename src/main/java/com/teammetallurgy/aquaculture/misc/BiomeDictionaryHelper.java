@@ -1,12 +1,19 @@
 package com.teammetallurgy.aquaculture.misc;
 
+import com.google.common.collect.Lists;
+import net.minecraft.entity.EntityType;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class BiomeDictionaryHelper {
+    public static final BiomeDictionary.Type TWILIGHT = BiomeDictionary.Type.getType("TWILIGHT"); //Add Twilight tag, for Twilight Forest support
 
     /**
      * Retrieves a #BiomeDictionary.Type
@@ -19,5 +26,55 @@ public class BiomeDictionaryHelper {
         Map<String, BiomeDictionary.Type> byName = BiomeDictionary.Type.getAll().stream().collect(Collectors.toMap(BiomeDictionary.Type::getName, Function.identity()));
         name = name.toUpperCase();
         return byName.get(name);
+    }
+
+    /**
+     * Converts a List <? extends String> to a {@link BiomeDictionary.Type} array
+     *
+     * @param strings string array containing valid #BiomeDictionary.Types
+     * @return {@link BiomeDictionary.Type} based on the string input
+     */
+    public static BiomeDictionary.Type[] toBiomeTypeArray(List<? extends String> strings) {
+        BiomeDictionary.Type[] types = new BiomeDictionary.Type[strings.size()];
+        for (int i = 0; i < strings.size(); i++) {
+            String string = strings.get(i);
+            types[i] = getType(string);
+        }
+        return types;
+    }
+
+    /**
+     * Adds spawns for an entity, based on BiomeDictionary Types
+     */
+    public static void addSpawn(EntityType entityType, int min, int max, int weight, List<? extends String> include, List<? extends String> exclude) {
+        if (weight > 0) {
+            List<Biome> spawnableBiomes = Lists.newArrayList();
+            List<BiomeDictionary.Type> includeList = Arrays.asList(BiomeDictionaryHelper.toBiomeTypeArray(include));
+            List<BiomeDictionary.Type> excludeList = Arrays.asList(BiomeDictionaryHelper.toBiomeTypeArray(exclude));
+            if (!includeList.isEmpty()) {
+                for (BiomeDictionary.Type type : includeList) {
+                    for (Biome biome : BiomeDictionary.getBiomes(type)) {
+                        if (!biome.getSpawns(entityType.getClassification()).isEmpty()) {
+                            spawnableBiomes.add(biome);
+                        }
+                    }
+                }
+                if (!excludeList.isEmpty()) {
+                    for (BiomeDictionary.Type type : excludeList) {
+                        if (type != null) {
+                            Set<Biome> excludeBiomes = BiomeDictionary.getBiomes(type);
+                            for (Biome biome : excludeBiomes) {
+                                spawnableBiomes.remove(biome);
+                            }
+                        }
+                    }
+                }
+            } else {
+                throw new IllegalArgumentException("Do not leave the BiomeDictionary type inclusion list empty. If you wish to disable spawning of an entity, set the weight to 0 instead.");
+            }
+            for (Biome biome : spawnableBiomes) {
+                biome.getSpawns(entityType.getClassification()).add(new Biome.SpawnListEntry(entityType, weight, min, max));
+            }
+        }
     }
 }

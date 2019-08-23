@@ -19,6 +19,8 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -58,6 +60,7 @@ public class ItemFilletKnife extends SwordItem {
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag tooltipFlag) {
         if (this.getTier() == AquacultureAPI.MATS.NEPTUNIUM) {
             tooltip.add(new TranslationTextComponent("aquaculture.unbreakable").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
