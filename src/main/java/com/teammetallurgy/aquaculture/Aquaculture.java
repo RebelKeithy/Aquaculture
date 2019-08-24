@@ -8,6 +8,8 @@ import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.ClientHandler;
+import cpw.mods.modlauncher.Environment;
+import cpw.mods.modlauncher.Launcher;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
@@ -26,6 +28,8 @@ import javax.annotation.Nonnull;
 
 @Mod(value = Aquaculture.MOD_ID)
 public class Aquaculture {
+    public static Aquaculture instance;
+    public static final boolean IS_DEV = Launcher.INSTANCE.environment().getProperty(Environment.Keys.VERSION.get()).filter(v -> v.equals("MOD_DEV")).isPresent();
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
     public static final ItemGroup GROUP = new ItemGroup(Aquaculture.MOD_ID) {
@@ -37,6 +41,7 @@ public class Aquaculture {
     };
 
     public Aquaculture() {
+        instance = this;
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
