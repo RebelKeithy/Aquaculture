@@ -26,7 +26,7 @@ public class FishReadFromJson {
     public static HashMap<EntityType<?>, Integer> FISH_WEIGHT_MAP = new HashMap<>();
     private static final Gson GSON_INSTANCE = new GsonBuilder().setPrettyPrinting().create();
 
-    public static void read() {
+    public static void read() { //TODO Throws an exception outside the workspace. Look into once the loot table is done
         try {
             BufferedReader reader = new BufferedReader(new FileReader(ModList.get().getModFileById(Aquaculture.MOD_ID).getFile().findResource("data\\aquaculture\\loot_tables\\" + AquaLootTables.FISH.getPath() + ".json").toFile()));
             JsonElement json = GSON_INSTANCE.fromJson(reader, JsonElement.class);

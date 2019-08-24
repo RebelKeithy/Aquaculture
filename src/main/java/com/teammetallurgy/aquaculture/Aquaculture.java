@@ -12,6 +12,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -47,8 +48,8 @@ public class Aquaculture {
         ConditionFactory.registerConditions();
         FishWeightHandler.registerFishData();
         AquaEntities.setSpawnPlacement();
-        AquaEntities.addEntitySpawns();
-        FishReadFromJson.addFishSpawns();
+        DeferredWorkQueue.runLater(AquaEntities::addEntitySpawns);
+        DeferredWorkQueue.runLater(FishReadFromJson::addFishSpawns);
     }
 
     private void setupClient(FMLClientSetupEvent event) {

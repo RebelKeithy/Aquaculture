@@ -227,6 +227,7 @@
   "entity.aquaculture.box_turtle": "Box Turtle",
   "entity.aquaculture.arrau_turtle": "Arrau Turtle",
   "entity.aquaculture.starshell_turtle": "Starshell Turtle",
+  "entity.aquaculture.bobber": "Aquaculture Bobber",
 
   "_comment": "Message in a bottle",
   "aquaculture.message": "ERROR! Fish Escaping!",

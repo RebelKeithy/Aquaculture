@@ -35,13 +35,13 @@ import static com.teammetallurgy.aquaculture.misc.AquaConfig.Helper;
 public class AquaEntities {
     public static List<EntityType> entities = Lists.newArrayList();
     public static List<EntityType> mobs = Lists.newArrayList();
-    public static final EntityType<AquaFishingBobberEntity> BOBBER = register("aqua_bobber", EntityType.Builder.<AquaFishingBobberEntity>create(EntityClassification.MISC)
+    public static final EntityType<AquaFishingBobberEntity> BOBBER = register("bobber", EntityType.Builder.<AquaFishingBobberEntity>create(EntityClassification.MISC)
             .disableSerialization()
             .disableSummoning()
             .size(0.25F, 0.25F)
             .setTrackingRange(4)
             .setUpdateInterval(5)
-            .setCustomClientFactory(AquaFishingBobberEntity::new));
+            .setCustomClientFactory(AquaFishingBobberEntity::new)); //TODO. Crashes on server launch
     public static final EntityType<NeptuniumTridentEntity> NEPTUNIUM_TRIDENT = register("neptunium_trident", EntityType.Builder.<NeptuniumTridentEntity>create(NeptuniumTridentEntity::new, EntityClassification.MISC)
             .size(0.5F, 0.5F)
             .setCustomClientFactory(NeptuniumTridentEntity::new));
