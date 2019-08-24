@@ -52,6 +52,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 case "pink_salmon":
                 case "smallmouth_bass":
                 case "brown_trout":
+                case "red_grouper":
                     this.entityModel = MEDIUM_MODEL;
                     break;
                 case "carp":
