@@ -9,15 +9,19 @@ import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.moddiscovery.ModFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,7 +32,17 @@ public class FishReadFromJson {
 
     public static void read() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(ModList.get().getModFileById(Aquaculture.MOD_ID).getFile().findResource("data\\aquaculture\\loot_tables\\" + AquaLootTables.FISH.getPath() + ".json").toFile()));
+            String filePath = Aquaculture.MOD_ID + "/loot_tables/" + AquaLootTables.FISH.getPath() + ".json";
+            InputStreamReader fileReader;
+            if (Aquaculture.IS_DEV) {
+                ModFile modFile = ModList.get().getModFileById(Aquaculture.MOD_ID).getFile();
+                Path root = modFile.getLocator().findPath(modFile, ResourcePackType.SERVER_DATA.getDirectoryName()).toAbsolutePath();
+                fileReader = new FileReader(root.resolve(root.getFileSystem().getPath(filePath)).toFile());
+            } else {
+                fileReader = new InputStreamReader(Aquaculture.instance.getClass().getResourceAsStream("/data/" + filePath));
+            }
+
+            BufferedReader reader = new BufferedReader(fileReader);
             JsonElement json = GSON_INSTANCE.fromJson(reader, JsonElement.class);
             if (json != null && !json.isJsonNull()) {
                 JsonObject jsonObject = json.getAsJsonObject();

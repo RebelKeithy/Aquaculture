@@ -1,12 +1,19 @@
 package com.teammetallurgy.aquaculture.misc;
 
+import com.electronwill.nightconfig.core.file.FileConfig;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.io.File;
+import java.util.List;
 
 public class AquaConfig {
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final BasicOptions BASIC_OPTIONS = new BasicOptions(BUILDER);
 
     public static class BasicOptions {
+        public static final String BASIC_OPTIONS = "basic options";
         public ForgeConfigSpec.BooleanValue enableFishSpawning;
         public ForgeConfigSpec.BooleanValue enableNeptuniumItems;
         public ForgeConfigSpec.BooleanValue enableNeptuniumArmor;
@@ -15,7 +22,7 @@ public class AquaConfig {
         public ForgeConfigSpec.BooleanValue debugMode;
 
         public BasicOptions(ForgeConfigSpec.Builder builder) {
-            builder.push("basic options");
+            builder.push(BASIC_OPTIONS);
             enableFishSpawning = builder.comment("Enable fish mob spawning? Weight & biomes can be modified in the Aquaculture fish loot table").define("Enable fish spawning?", true);
             enableNeptuniumItems = builder.comment("Enable recipes for Neptunium items?").define("Enable Neptunium items?", true);
             enableNeptuniumArmor = builder.comment("Enable recipes for Neptunium armor?").define("Enable Neptunium armor?", true);
@@ -26,5 +33,42 @@ public class AquaConfig {
         }
     }
 
-    public static final ForgeConfigSpec spec = BUILDER.build();
+    public static class Spawn {
+        public static final String SPAWN_OPTIONS = "spawn options";
+        public final ForgeConfigSpec.IntValue min;
+        public final ForgeConfigSpec.IntValue max;
+        public final ForgeConfigSpec.IntValue weight;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> include;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> exclude;
+
+        public Spawn(ForgeConfigSpec.Builder builder, String name, int min, int max, int weight, List<? extends String> include, List<? extends String> exclude) {
+            builder.push(SPAWN_OPTIONS);
+            builder.push(name);
+            this.min = builder.defineInRange("min", min, 0, 64);
+            this.max = builder.defineInRange("max", max, 0, 64);
+            this.weight = builder.defineInRange("weight", weight, 0, 100);
+            this.include = builder.defineList("include", include, o -> BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(String.valueOf(o))));
+            this.exclude = builder.defineList("exclude", exclude, o -> BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(String.valueOf(o))));
+            builder.pop(2);
+        }
+    }
+
+    public static ForgeConfigSpec spec = BUILDER.build();
+
+    public static class Helper {
+        public static final FileConfig CONFIG_FILE = FileConfig.of(new File(FMLPaths.CONFIGDIR.get().toFile(), "aquaculture-common.toml"));
+
+        public static <T> T get(String category, String subCategory, String value) {
+            return get(category + "." + subCategory, value);
+        }
+
+        public static <T> T get(String category, String value) {
+            CONFIG_FILE.load();
+            return CONFIG_FILE.get(category + "." + value);
+        }
+
+        public static String getSubConfig(String category, String subCategory) {
+            return category + "." + subCategory;
+        }
+    }
 }

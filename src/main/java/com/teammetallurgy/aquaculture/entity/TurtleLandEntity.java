@@ -138,11 +138,6 @@ public class TurtleLandEntity extends AnimalEntity {
         }
 
         @Override
-        public boolean shouldMove() {
-            return true;
-        }
-
-        @Override
         protected boolean shouldMoveTo(IWorldReader reader, @Nonnull BlockPos pos) {
             Block block = reader.getBlockState(pos).getBlock();
             return !(block instanceof FlowingFluidBlock);

@@ -1,36 +1,21 @@
 package com.teammetallurgy.aquaculture;
 
-import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
-import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
-import com.teammetallurgy.aquaculture.client.gui.screen.TackleBoxScreen;
-import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.entity.NeptuniumTridentRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.entity.TurtleLandRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.tileentity.NeptunesBountyRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
-import com.teammetallurgy.aquaculture.entity.*;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
-import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import com.teammetallurgy.aquaculture.item.FishingLineItem;
 import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.client.renderer.entity.TippedArrowRenderer;
+import com.teammetallurgy.aquaculture.misc.ClientHandler;
+import cpw.mods.modlauncher.Environment;
+import cpw.mods.modlauncher.Launcher;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -43,6 +28,8 @@ import javax.annotation.Nonnull;
 
 @Mod(value = Aquaculture.MOD_ID)
 public class Aquaculture {
+    public static Aquaculture instance;
+    public static final boolean IS_DEV = Launcher.INSTANCE.environment().getProperty(Environment.Keys.VERSION.get()).filter(v -> v.equals("MOD_DEV")).isPresent();
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
     public static final ItemGroup GROUP = new ItemGroup(Aquaculture.MOD_ID) {
@@ -54,6 +41,7 @@ public class Aquaculture {
     };
 
     public Aquaculture() {
+        instance = this;
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
@@ -64,22 +52,12 @@ public class Aquaculture {
         LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
         ConditionFactory.registerConditions();
         FishWeightHandler.registerFishData();
-        BiomeDictionary.Type.getType("TWILIGHT"); //Add Twilight tag, for Twilight Forest support
         AquaEntities.setSpawnPlacement();
-        FishReadFromJson.addFishSpawns();
+        DeferredWorkQueue.runLater(AquaEntities::addEntitySpawns);
+        DeferredWorkQueue.runLater(FishReadFromJson::addFishSpawns);
     }
 
     private void setupClient(FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
-        ClientRegistry.bindTileEntitySpecialRenderer(NeptunesBountyTileEntity.class, new NeptunesBountyRenderer<>());
-        ClientRegistry.bindTileEntitySpecialRenderer(TackleBoxTileEntity.class, new TackleBoxRenderer<>());
-        RenderingRegistry.registerEntityRenderingHandler(AquaFishingBobberEntity.class, AquaBobberRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AquaFishEntity.class, AquaFishRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(NeptuniumTridentEntity.class, NeptuniumTridentRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(WaterArrowEntity.class, TippedArrowRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(TurtleLandEntity.class, TurtleLandRenderer::new);
-        //Item Colors
-        ItemColors itemColor = Minecraft.getInstance().getItemColors();
-        itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((FishingLineItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE);
+        ClientHandler.setupClient();
     }
 }

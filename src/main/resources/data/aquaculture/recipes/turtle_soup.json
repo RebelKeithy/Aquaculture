@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "aquaculture:turtle"
+      "item": "aquaculture:box_turtle"
     },
     {
       "item": "minecraft:water_bucket"

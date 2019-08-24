@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.init;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.client.renderer.AquatemRenderer;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.item.*;
 import com.teammetallurgy.aquaculture.item.neptunium.*;
@@ -128,6 +129,10 @@ public class AquaItems {
     public static final Item BOX_TURTLE = register(new SimpleItem(), "box_turtle");
     public static final Item ARRAU_TURTLE = register(new SimpleItem(), "arrau_turtle");
     public static final Item STARSHELL_TURTLE = register(new SimpleItem(), "starshell_turtle");
+
+    //Block Items - Have to be specified here, when using a TEISR
+    public static final Item NEPTUNES_BOUNTY = register(new BlockItem(AquaBlocks.NEPTUNES_BOUNTY, new Item.Properties().group(Aquaculture.GROUP).setTEISR(() -> AquatemRenderer::new)), "neptunes_bounty");
+    public static final Item TACKLE_BOX = register(new BlockItem(AquaBlocks.TACKLE_BOX, new Item.Properties().maxStackSize(1).group(Aquaculture.GROUP).setTEISR(() -> AquatemRenderer::new)), "tackle_box");
 
     /**
      * Registers an item
