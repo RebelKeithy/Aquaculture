@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.client.renderer.entity;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishLargeModel;
+import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishLongnoseModel;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishMediumModel;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishSmallModel;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
@@ -23,10 +24,11 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     private static final FishSmallModel<AquaFishEntity> SMALL_MODEL = new FishSmallModel<>();
     private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
     private static final FishLargeModel<AquaFishEntity> LARGE_MODEL = new FishLargeModel<>();
+    private static final FishLongnoseModel<AquaFishEntity> LONGNOSE_MODEL = new FishLongnoseModel<>();
 
     public AquaFishRenderer(EntityRendererManager manager) {
         super(manager, COD_MODEL, 0.3F);
-        this.shadowSize = this.entityModel == SALMON_MODEL || this.entityModel == LARGE_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
+        this.shadowSize = this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL || this.entityModel == LARGE_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
     }
 
     @Override
@@ -37,6 +39,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 case "pacific_halibut":
                 case "atlantic_halibut":
                     this.entityModel = TROPICAL_FISH_B_MODEL;
+                    break;
+                case "gar":
+                    this.entityModel = LONGNOSE_MODEL;
                     break;
                 case "atlantic_herring":
                 case "boulti":
@@ -81,16 +86,16 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
         super.applyRotations(fishEntity, ageInTicks, rotationYaw, partialTicks);
         float salmonRotation = 1.0F;
         float salmonMultiplier = 1.0F;
-        if (this.entityModel == SALMON_MODEL) {
+        if (this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL) {
             if (!fishEntity.isInWater()) {
                 salmonRotation = 1.3F;
                 salmonMultiplier = 1.7F;
             }
         }
-        float fishRotation = this.entityModel == SALMON_MODEL ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
+        float fishRotation = this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
 
         GlStateManager.rotatef(fishRotation, 0.0F, 1.0F, 0.0F);
-        if (this.entityModel == SALMON_MODEL) {
+        if (this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL) {
             GlStateManager.translatef(0.0F, 0.0F, -0.4F);
         }
         if (!fishEntity.isInWater()) {

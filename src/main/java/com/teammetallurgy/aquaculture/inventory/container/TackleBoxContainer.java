@@ -114,13 +114,13 @@ public class TackleBoxContainer extends Container {
         //Player Inventory
         for (int column = 0; column < 3; ++column) {
             for (int row = 0; row < 9; ++row) {
-                this.addSlot(new Slot(playerInventory, row + column * 9 + 9, 8 + row * 18, 84 + column * 18));
+                this.addSlot(new Slot(playerInventory, row + column * 9 + 9, 8 + row * 18, 90 + column * 18));
             }
         }
 
         //Hotbar
         for (int row = 0; row < 9; ++row) {
-            this.addSlot(new Slot(playerInventory, row, 8 + row * 18, 142));
+            this.addSlot(new Slot(playerInventory, row, 8 + row * 18, 148));
         }
     }
 
