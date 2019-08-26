@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.block.tileentity;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nonnull;
 
@@ -14,7 +15,7 @@ public class NeptunesBountyTileEntity extends ChestTileEntity {
 
     @Override
     @Nonnull
-    public ITextComponent getDisplayName() {
-        return this.getBlockState().getBlock().getNameTextComponent();
+    public ITextComponent getDefaultName() {
+        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
     }
 }

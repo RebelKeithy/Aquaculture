@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
+import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -35,7 +36,7 @@ public class HookItem extends Item {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag tooltipFlag) {
         Hook hook = getHookType();
-        if (hook != null && hook.getFluids().contains(FluidTags.LAVA)) {
+        if (hook != Hooks.EMPTY && hook.getFluids().contains(FluidTags.LAVA)) {
             if (hook.getFluids().contains(FluidTags.WATER)) {
                 tooltips.add(new TranslationTextComponent("aquaculture.universal").setStyle(new Style().setColor(TextFormatting.BOLD)));
             } else {

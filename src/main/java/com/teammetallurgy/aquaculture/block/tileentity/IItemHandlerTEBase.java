@@ -6,6 +6,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.INameable;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -61,7 +62,7 @@ public abstract class IItemHandlerTEBase extends TileEntity implements INameable
     @Override
     @Nonnull
     public ITextComponent getName() {
-        return this.customName != null ? this.customName : this.getBlockState().getBlock().getNameTextComponent();
+        return this.customName != null ? this.customName : new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
     }
 
     @Override

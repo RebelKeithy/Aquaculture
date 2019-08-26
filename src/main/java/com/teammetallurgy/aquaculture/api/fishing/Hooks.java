@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID) //To get the static registering working
 public class Hooks {
+    public static final Hook EMPTY = new Hook.HookBuilder().build();
     //Water
     public static final Hook IRON = new Hook.HookBuilder("iron").setDurabilityChance(0.20).setColor(TextFormatting.GRAY).build();
     public static final Hook GOLD = new Hook.HookBuilder("gold").setColor(TextFormatting.GOLD).setLuckModifier(1).build();

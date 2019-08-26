@@ -63,7 +63,7 @@ public class ItemFilletKnife extends SwordItem {
     @OnlyIn(Dist.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag tooltipFlag) {
         if (this.getTier() == AquacultureAPI.MATS.NEPTUNIUM) {
-            tooltip.add(new TranslationTextComponent("aquaculture.unbreakable").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
+            tooltip.add(new TranslationTextComponent("aquaculture.unbreakable").setStyle(new Style().setColor(TextFormatting.DARK_GRAY).setBold(true)));
         }
         super.addInformation(stack, world, tooltip, tooltipFlag);
     }

@@ -2,14 +2,13 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
+import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.AquaLootTables;
-import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
+import com.teammetallurgy.aquaculture.item.HookItem;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.ExperienceOrbEntity;
@@ -19,7 +18,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
@@ -35,6 +36,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -43,23 +46,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AquaFishingBobberEntity extends FishingBobberEntity {
+public class AquaFishingBobberEntity extends FishingBobberEntity implements IEntityAdditionalSpawnData {
     private final Hook hook;
     private final ItemStack bait;
     private final ItemStack fishingLine;
     private final int luck;
 
     public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
-        super(world, Minecraft.getInstance().player, 0, 0, 0);
-        this.luck = 0;
-        PlayerEntity player = Minecraft.getInstance().player;
-        ItemStack fishingRod = player.getHeldItem(StackHelper.getUsedHand(player.getHeldItemMainhand(), AquaFishingRodItem.class));
-        this.hook = AquaFishingRodItem.getHookType(fishingRod);
-        this.bait = AquaFishingRodItem.getBait(fishingRod);
-        this.fishingLine = AquaFishingRodItem.getFishingLine(fishingRod);
+        super(world.getPlayerByUuid(((PacketBuffer) ObfuscationReflectionHelper.getPrivateValue(FMLPlayMessages.SpawnEntity.class, spawnPacket, "buf")).readUniqueId()), world, 0, 0);
+        PacketBuffer buf = ObfuscationReflectionHelper.getPrivateValue(FMLPlayMessages.SpawnEntity.class, spawnPacket, "buf");
+        this.luck = buf.readInt();
+        HookItem hookItem = ((HookItem) Hook.HOOKS.get(buf.readString()));
+        if (hookItem != null && hookItem != Items.AIR) {
+            this.hook = hookItem.getHookType();
+        } else {
+            this.hook = Hooks.EMPTY;
+        }
+        this.bait = buf.readItemStack();
+        this.fishingLine = buf.readItemStack();
     }
 
-    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, Hook hook, @Nonnull ItemStack bait, @Nonnull ItemStack fishingLine) {
+    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack bait, @Nonnull ItemStack fishingLine) {
         super(player, world, luck, lureSpeed);
         this.luck = luck;
         this.angler.fishingBobber = this;
@@ -71,14 +78,16 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         }
     }
 
+    @Nonnull
     public Hook getHook() {
         return this.hook;
     }
 
     public boolean hasHook() {
-        return this.hook != null;
+        return this.hook != Hooks.EMPTY;
     }
 
+    @Nonnull
     public ItemStack getBait() {
         return this.bait;
     }
@@ -87,6 +96,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
         return !this.bait.isEmpty();
     }
 
+    @Nonnull
     public ItemStack getFishingLine() {
         return this.fishingLine;
     }
@@ -228,7 +238,8 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     public void tick() {
         if (this.hasHook() && this.hook.getFluids().contains(FluidTags.LAVA)) {
             if (this.hook.getFluids().contains(FluidTags.WATER) && world.getFluidState(new BlockPos(this)).isTagged(FluidTags.WATER)) {
-                super.tick();;
+                super.tick();
+                ;
             } else {
                 this.lavaFishingTick();
             }
@@ -443,5 +454,18 @@ public class AquaFishingBobberEntity extends FishingBobberEntity {
     @Override
     public boolean canRenderOnFire() {
         return (this.hasHook() && !this.hook.getFluids().contains(FluidTags.LAVA)) && super.canRenderOnFire();
+    }
+
+    @Override
+    public void writeSpawnData(PacketBuffer buffer) {
+        buffer.writeUniqueId(this.getAngler().getUniqueID());
+        buffer.writeInt(this.luck);
+        buffer.writeString(this.hook.getName() == null ? "" : this.hook.getName());
+        buffer.writeItemStack(this.bait);
+        buffer.writeItemStack(this.fishingLine);
+    }
+
+    @Override
+    public void readSpawnData(PacketBuffer additionalData) {
     }
 }

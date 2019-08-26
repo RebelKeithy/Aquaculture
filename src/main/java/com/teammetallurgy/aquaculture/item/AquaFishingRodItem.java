@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
+import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.client.util.ITooltipFlag;
@@ -71,7 +72,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                     lureSpeed = currentDamage;
                 }
                 if (!isAdminRod) {
-                    if (hook != null && hook.getDurabilityChance() > 0) {
+                    if (hook != Hooks.EMPTY && hook.getDurabilityChance() > 0) {
                         if (random.nextDouble() >= hook.getDurabilityChance()) {
                             heldStack.attemptDamageItem(lureSpeed, world.rand, null);
                         }
@@ -94,7 +95,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 }
                 //Luck
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
-                if (hook != null && hook.getLuckModifier() > 0) luck += hook.getLuckModifier();
+                if (hook != Hooks.EMPTY && hook.getLuckModifier() > 0) luck += hook.getLuckModifier();
 
                 world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, bait, getFishingLine(heldStack)));
             }
@@ -104,10 +105,11 @@ public class AquaFishingRodItem extends FishingRodItem {
         return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
     }
 
-    @Nullable
+    @Nonnull
     public static Hook getHookType(@Nonnull ItemStack fishingRod) {
-        Hook hook = null;
-        ItemStack hookStack = fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseGet(null).getStackInSlot(0);
+        Hook hook = Hooks.EMPTY;
+        LazyOptional<ItemStack> slotStack = fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(c -> c.getStackInSlot(0));
+        ItemStack hookStack = slotStack.orElse(ItemStack.EMPTY);
         if (hookStack.getItem() instanceof HookItem) {
             hook = ((HookItem) hookStack.getItem()).getHookType();
         }
@@ -116,12 +118,14 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     @Nonnull
     public static ItemStack getBait(@Nonnull ItemStack fishingRod) {
-        return fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseGet(null).getStackInSlot(1);
+        LazyOptional<ItemStack> slotStack = fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(c -> c.getStackInSlot(1));
+        return slotStack.orElse(ItemStack.EMPTY);
     }
 
     @Nonnull
     public static ItemStack getFishingLine(@Nonnull ItemStack fishingRod) {
-        return fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseGet(null).getStackInSlot(2);
+        LazyOptional<ItemStack> slotStack = fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(c -> c.getStackInSlot(2));
+        return slotStack.orElse(ItemStack.EMPTY);
     }
 
     @Override
@@ -136,8 +140,8 @@ public class AquaFishingRodItem extends FishingRodItem {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
             tooltips.add(new TranslationTextComponent("aquaculture.fishing_rod.broken").setStyle(new Style().setItalic(true).setColor(TextFormatting.GRAY)));
         }
-        Hook hook = getHookType(stack);
-        if (hook != null) {
+        Hook hook = getHookType(stack); //TODO Is null when on a server
+        if (hook != Hooks.EMPTY) {
             tooltips.add(new TranslationTextComponent(hook.getItem().getTranslationKey()).setStyle(new Style().setColor(hook.getColor())));
         }
         super.addInformation(stack, world, tooltips, tooltipFlag);

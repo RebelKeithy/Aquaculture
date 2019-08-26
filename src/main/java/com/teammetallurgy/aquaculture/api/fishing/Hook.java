@@ -5,6 +5,7 @@ import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
@@ -13,9 +14,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Hook {
+    public static final HashMap<String, Item> HOOKS = new HashMap<>();
     private final String name;
     private final String modID;
     private final Item hookItem;
@@ -43,7 +46,12 @@ public class Hook {
         this.doubleCatchChance = doubleCatchChance;
         this.catchSound = catchSound;
         this.texture = new ResourceLocation(modID, "textures/entity/rod/hook/" + name + "_hook" + ".png");
-        this.hookItem = AquaItems.register(new HookItem(this), new ResourceLocation(modID, name + "_hook"));
+        if (name != null) {
+            this.hookItem = AquaItems.register(new HookItem(this), new ResourceLocation(modID, name + "_hook"));
+            HOOKS.put(name, hookItem);
+        } else {
+            hookItem = Items.AIR;
+        }
     }
 
     public String getName() {
@@ -110,6 +118,9 @@ public class Hook {
         private double doubleCatchChance;
         private SoundEvent catchSound;
         private List<Tag<Fluid>> fluids = new ArrayList<>();
+
+        HookBuilder() {
+        }
 
         public HookBuilder(String name) {
             this.name = name;

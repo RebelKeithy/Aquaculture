@@ -8,8 +8,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class TackleBoxScreen extends ContainerScreen<TackleBoxContainer> {
     private static final ResourceLocation TACKLE_BOX_GUI = new ResourceLocation(Aquaculture.MOD_ID, "textures/gui/container/tackle_box.png");
@@ -42,9 +42,8 @@ public class TackleBoxScreen extends ContainerScreen<TackleBoxContainer> {
         int y = (this.height - this.ySize) / 2;
         this.blit(x, y, 0, 0, this.xSize, this.ySize);
 
-        IItemHandler tackleBoxInventory = this.container.tackleBox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElseGet(null);
-        ItemStack fishingRod = tackleBoxInventory.getStackInSlot(0);
-        fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(rodHandler -> {
+        LazyOptional<ItemStack> fishingRod = this.container.tackleBox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(c -> c.getStackInSlot(0));
+        fishingRod.orElse(ItemStack.EMPTY).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(rodHandler -> {
             if (rodHandler.getStackInSlot(0).isEmpty()) {
                 this.blit(x + 95, y + 43, 176, 0, 18, 18);
             } else {

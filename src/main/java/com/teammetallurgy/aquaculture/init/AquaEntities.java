@@ -41,7 +41,7 @@ public class AquaEntities {
             .size(0.25F, 0.25F)
             .setTrackingRange(4)
             .setUpdateInterval(5)
-            .setCustomClientFactory(AquaFishingBobberEntity::new)); //TODO. Crashes on server launch
+            .setCustomClientFactory(AquaFishingBobberEntity::new));
     public static final EntityType<NeptuniumTridentEntity> NEPTUNIUM_TRIDENT = register("neptunium_trident", EntityType.Builder.<NeptuniumTridentEntity>create(NeptuniumTridentEntity::new, EntityClassification.MISC)
             .size(0.5F, 0.5F)
             .setCustomClientFactory(NeptuniumTridentEntity::new));
