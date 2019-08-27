@@ -20,8 +20,8 @@ public class TurtleLandRenderer extends MobRenderer<TurtleLandEntity, TurtleLand
         super(manager, new TurtleLandModel<>(), 0.25F);
     }
 
-    @Nullable
     @Override
+    @Nullable
     protected ResourceLocation getEntityTexture(@Nonnull TurtleLandEntity turtle) {
         if (AquaEntities.ARRAU_TURTLE.equals(turtle.getType())) {
             return ARRAU_TURTLE;

@@ -2,10 +2,7 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
-import com.teammetallurgy.aquaculture.entity.NeptuniumTridentEntity;
-import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
-import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
+import com.teammetallurgy.aquaculture.entity.*;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.Entity;
@@ -57,6 +54,9 @@ public class AquaEntities {
     public static final EntityType<TurtleLandEntity> STARSHELL_TURTLE = registerMob("starshell_turtle", 1, 2, 5, BiomeDictionaryHelper.TWILIGHT, null, 0xDCE2E5, 0x464645,
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
             .size(0.5F, 0.25F));
+    public static final EntityType<JellyfishEntity> JELLYFISH = registerMob("jellyfish", 1, 2, 5, BiomeDictionary.Type.WATER, null, 0xFFFFFF, 0xFFFFFF,
+            EntityType.Builder.create(JellyfishEntity::new, EntityClassification.WATER_CREATURE)
+                    .size(0.7F, 0.5F));
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {

@@ -3,10 +3,7 @@ package com.teammetallurgy.aquaculture.misc;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import com.teammetallurgy.aquaculture.client.gui.screen.TackleBoxScreen;
-import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.entity.NeptuniumTridentRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.entity.TurtleLandRenderer;
+import com.teammetallurgy.aquaculture.client.renderer.entity.*;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.NeptunesBountyRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
 import com.teammetallurgy.aquaculture.entity.*;
@@ -31,6 +28,7 @@ public class ClientHandler {
         RenderingRegistry.registerEntityRenderingHandler(NeptuniumTridentEntity.class, NeptuniumTridentRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(WaterArrowEntity.class, TippedArrowRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(TurtleLandEntity.class, TurtleLandRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(JellyfishEntity.class, JellyfishRenderer::new);
         //Item Colors
         ItemColors itemColor = Minecraft.getInstance().getItemColors();
         itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((FishingLineItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE);
