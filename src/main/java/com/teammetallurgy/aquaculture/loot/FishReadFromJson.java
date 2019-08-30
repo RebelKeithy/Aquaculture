@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,7 +59,12 @@ public class FishReadFromJson {
                             FISH_BIOME_MAP.put(fish, getSpawnableBiomes(condition.get("predicate")));
                         } else if (condition.get("condition").getAsString().equals("minecraft:alternative")) {
                             for (JsonElement term : condition.getAsJsonObject().getAsJsonArray("terms")) {
-                                FISH_BIOME_MAP.put(fish, getSpawnableBiomes(term.getAsJsonObject().get("predicate")));
+                                List<Biome> spawnableBiomes = getSpawnableBiomes(term.getAsJsonObject().get("predicate"));
+                                if (!FISH_BIOME_MAP.containsKey(fish)) {
+                                    FISH_BIOME_MAP.put(fish, spawnableBiomes);
+                                } else {
+                                    spawnableBiomes.forEach(biome -> FISH_BIOME_MAP.get(fish).add(biome));
+                                }
                             }
                         }
                     }
@@ -108,11 +114,21 @@ public class FishReadFromJson {
         if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
             read();
             for (EntityType fish : FISH_BIOME_MAP.keySet()) {
+                if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
+                    List<String> strings = new ArrayList<>();
+                    for (Biome biome : FISH_BIOME_MAP.get(fish)) {
+                        if (biome.getRegistryName() != null) {
+                            strings.add(biome.getRegistryName().getPath());
+                        }
+                    }
+                    Aquaculture.LOG.info(fish.getRegistryName() + " Biomes: " + strings);
+                }
+
                 int weight = FISH_WEIGHT_MAP.get(fish) / 3;
                 int maxGroupSize = MathHelper.clamp((FISH_WEIGHT_MAP.get(fish) / 10), 1, 8);
                 if (weight < 1) weight = 1;
                 if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
-                    Aquaculture.LOG.info(fish.getRegistryName() + " = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
+                    Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
                 }
                 for (Biome biome : FISH_BIOME_MAP.get(fish)) {
                     biome.getSpawns(EntityClassification.WATER_CREATURE).add(new Biome.SpawnListEntry(fish, weight, 1, maxGroupSize));
