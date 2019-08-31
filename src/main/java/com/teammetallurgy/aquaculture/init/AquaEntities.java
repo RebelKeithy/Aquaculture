@@ -2,7 +2,10 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.entity.*;
+import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
+import com.teammetallurgy.aquaculture.entity.JellyfishEntity;
+import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
+import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.Entity;
@@ -39,9 +42,6 @@ public class AquaEntities {
             .setTrackingRange(4)
             .setUpdateInterval(5)
             .setCustomClientFactory(AquaFishingBobberEntity::new));
-    public static final EntityType<NeptuniumTridentEntity> NEPTUNIUM_TRIDENT = register("neptunium_trident", EntityType.Builder.<NeptuniumTridentEntity>create(NeptuniumTridentEntity::new, EntityClassification.MISC)
-            .size(0.5F, 0.5F)
-            .setCustomClientFactory(NeptuniumTridentEntity::new));
     public static final EntityType<WaterArrowEntity> WATER_ARROW = register("water_arrow", EntityType.Builder.<WaterArrowEntity>create(WaterArrowEntity::new, EntityClassification.MISC)
             .size(0.5F, 0.5F)
             .setCustomClientFactory(WaterArrowEntity::new));

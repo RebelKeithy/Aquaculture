@@ -66,7 +66,6 @@
   "item.aquaculture.neptunium_chestplate": "Neptunium Chestplate",
   "item.aquaculture.neptunium_leggings": "Neptunium Leggings",
   "item.aquaculture.neptunium_boots": "Neptunium Boots",
-  "item.aquaculture.neptunium_trident": "Neptunium Trident",
   "item.aquaculture.neptunium_bow": "Neptunium Bow",
 
   "_comment": "Fish",
@@ -296,8 +295,6 @@
   "aquaculture.neptunium_shovel.tooltip.line1" : "Usable without speed penalty underwater",
   "aquaculture.neptunium_sword.tooltip.title" : "Neptune's Might",
   "aquaculture.neptunium_sword.tooltip.line1" : "Increases damage against enemies underwater",
-  "aquaculture.neptunium_trident.tooltip.title" : "Neptune's Might",
-  "aquaculture.neptunium_trident.tooltip.line1" : "Increases damage against enemies underwater",
   "aquaculture.neptunium_bow.tooltip.title" : "Neptune's Srike",
   "aquaculture.neptunium_bow.tooltip.line1" : "Makes arrows go smoothly through water",
   "aquaculture.neptunium_fillet_knife.tooltip.title" : "Neptune's Feast",

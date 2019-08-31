@@ -101,12 +101,6 @@
           "name": "aquaculture:neptunium_bow",
           "entryName": "neptunium_bow",
           "weight": 1
-        },
-        {
-          "type": "item",
-          "name": "aquaculture:neptunium_trident",
-          "entryName": "neptunium_trident",
-          "weight": 2
         }
       ]
     },
