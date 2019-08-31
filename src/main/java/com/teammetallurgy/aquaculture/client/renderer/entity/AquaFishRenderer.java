@@ -141,6 +141,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                     break;
                 case "atlantic_cod":
                 case "blackfish":
+                case "catfish":
                 case "tambaqui":
                     scale = 1.2F;
                     break;
