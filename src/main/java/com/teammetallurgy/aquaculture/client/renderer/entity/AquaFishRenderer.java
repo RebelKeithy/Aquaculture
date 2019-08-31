@@ -2,10 +2,7 @@ package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishLargeModel;
-import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishLongnoseModel;
-import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishMediumModel;
-import com.teammetallurgy.aquaculture.client.renderer.entity.model.FishSmallModel;
+import com.teammetallurgy.aquaculture.client.renderer.entity.model.*;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -25,10 +22,11 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
     private static final FishLargeModel<AquaFishEntity> LARGE_MODEL = new FishLargeModel<>();
     private static final FishLongnoseModel<AquaFishEntity> LONGNOSE_MODEL = new FishLongnoseModel<>();
+    private static final FishCatchfishModel<AquaFishEntity> CATFISH_MODEL = new FishCatchfishModel<>();
 
     public AquaFishRenderer(EntityRendererManager manager) {
         super(manager, COD_MODEL, 0.3F);
-        this.shadowSize = this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL || this.entityModel == LARGE_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
+        this.shadowSize = this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL || this.entityModel == LARGE_MODEL || this.entityModel == CATFISH_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
     }
 
     @Override
@@ -42,6 +40,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                     break;
                 case "gar":
                 case "muskellunge":
+                case "arapaima":
                     this.entityModel = LONGNOSE_MODEL;
                     break;
                 case "atlantic_herring":
@@ -49,6 +48,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 case "synodontis":
                 case "bluegill":
                 case "minnow":
+                case "perch":
                 case "piranha":
                 case "brown_shrooma":
                 case "red_shrooma":
@@ -67,7 +67,13 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                     this.entityModel = MEDIUM_MODEL;
                     break;
                 case "carp":
+                case "tambaqui":
+                case "tuna":
                     this.entityModel = LARGE_MODEL;
+                    break;
+                case "bayad":
+                case "catfish":
+                    this.entityModel = CATFISH_MODEL;
                     break;
                 default:
                     this.entityModel = COD_MODEL;
@@ -105,7 +111,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             GlStateManager.translatef(0.0F, 0.0F, -0.4F);
         }
         if (!fishEntity.isInWater()) {
-            if (this.entityModel == COD_MODEL || this.entityModel == MEDIUM_MODEL || this.entityModel == LARGE_MODEL) {
+            if (this.entityModel == COD_MODEL || this.entityModel == MEDIUM_MODEL || this.entityModel == LARGE_MODEL || this.entityModel == CATFISH_MODEL) {
                 GlStateManager.translatef(0.1F, 0.1F, -0.1F);
             } else {
                 GlStateManager.translatef(0.2F, 0.1F, 0.0F);
@@ -135,6 +141,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                     break;
                 case "atlantic_cod":
                 case "blackfish":
+                case "tambaqui":
                     scale = 1.2F;
                     break;
                 case "pacific_halibut":
@@ -142,6 +149,8 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 case "capitaine":
                 case "largemouth_bass":
                 case "gar":
+                case "arapaima":
+                case "tuna":
                     scale = 1.4F;
                     break;
             }
