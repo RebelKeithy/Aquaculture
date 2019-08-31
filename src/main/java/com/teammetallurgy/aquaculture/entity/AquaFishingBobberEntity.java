@@ -36,7 +36,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -53,8 +52,8 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
     private final int luck;
 
     public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
-        super(world.getPlayerByUuid(((PacketBuffer) ObfuscationReflectionHelper.getPrivateValue(FMLPlayMessages.SpawnEntity.class, spawnPacket, "buf")).readUniqueId()), world, 0, 0);
-        PacketBuffer buf = ObfuscationReflectionHelper.getPrivateValue(FMLPlayMessages.SpawnEntity.class, spawnPacket, "buf");
+        super(world.getPlayerByUuid(spawnPacket.getAdditionalData().readUniqueId()), world, 0, 0);
+        PacketBuffer buf = spawnPacket.getAdditionalData();
         this.luck = buf.readInt();
         HookItem hookItem = ((HookItem) Hook.HOOKS.get(buf.readString()));
         if (hookItem != null && hookItem != Items.AIR) {

@@ -16,6 +16,6 @@ loaderVersion="[27,)"
 [[dependencies.aquaculture]]
     modId="forge"
     mandatory=true
-    versionRange="[28,)"
+    versionRange="[28.0.81,)"
     ordering="AFTER"
     side="BOTH"
