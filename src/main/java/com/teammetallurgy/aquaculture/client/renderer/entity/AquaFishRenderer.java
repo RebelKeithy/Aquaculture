@@ -41,10 +41,12 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                     this.entityModel = TROPICAL_FISH_B_MODEL;
                     break;
                 case "gar":
+                case "muskellunge":
                     this.entityModel = LONGNOSE_MODEL;
                     break;
                 case "atlantic_herring":
                 case "boulti":
+                case "synodontis":
                 case "bluegill":
                 case "minnow":
                 case "piranha":
@@ -55,7 +57,11 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 case "atlantic_cod":
                 case "blackfish":
                 case "pink_salmon":
+                case "pollock":
+                case "rainbow_trout":
+                case "capitaine":
                 case "smallmouth_bass":
+                case "largemouth_bass":
                 case "brown_trout":
                 case "red_grouper":
                     this.entityModel = MEDIUM_MODEL;
@@ -114,20 +120,29 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
         float scale = 0.0F;
         if (location != null) {
             switch (location.getPath()) {
+                case "minnow":
+                    scale = 0.5F;
+                    break;
+                case "synodontis":
+                    scale = 0.8F;
+                    break;
+                case "brown_trout":
+                case "piranha":
+                    scale = 0.9F;
+                    break;
+                case "pollock":
+                    scale = 1.1F;
+                    break;
                 case "atlantic_cod":
                 case "blackfish":
                     scale = 1.2F;
                     break;
                 case "pacific_halibut":
                 case "atlantic_halibut":
+                case "capitaine":
+                case "largemouth_bass":
+                case "gar":
                     scale = 1.4F;
-                    break;
-                case "brown_trout":
-                case "piranha":
-                    scale = 0.9F;
-                    break;
-                case "minnow":
-                    scale = 0.5F;
                     break;
             }
         }
