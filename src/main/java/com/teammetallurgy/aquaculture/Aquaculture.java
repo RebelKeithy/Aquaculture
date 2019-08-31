@@ -2,7 +2,6 @@ package com.teammetallurgy.aquaculture;
 
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
@@ -50,7 +49,6 @@ public class Aquaculture {
 
     private void setupCommon(FMLCommonSetupEvent event) {
         LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
-        ConditionFactory.registerConditions();
         FishWeightHandler.registerFishData();
         AquaEntities.setSpawnPlacement();
         DeferredWorkQueue.runLater(AquaEntities::addEntitySpawns);
