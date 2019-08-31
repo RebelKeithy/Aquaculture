@@ -11,24 +11,34 @@ import java.util.List;
 public class AquaConfig {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final BasicOptions BASIC_OPTIONS = new BasicOptions(BUILDER);
+    public static final NeptuniumOptions NEPTUNIUM_OPTIONS = new NeptuniumOptions(BUILDER);
 
     public static class BasicOptions {
         public static final String BASIC_OPTIONS = "basic options";
         public ForgeConfigSpec.BooleanValue enableFishSpawning;
-        public ForgeConfigSpec.BooleanValue enableNeptuniumItems;
-        public ForgeConfigSpec.BooleanValue enableNeptuniumArmor;
-        public ForgeConfigSpec.BooleanValue addNeptunesBountyToLoot;
         public ForgeConfigSpec.BooleanValue randomWeight;
         public ForgeConfigSpec.BooleanValue debugMode;
 
         public BasicOptions(ForgeConfigSpec.Builder builder) {
             builder.push(BASIC_OPTIONS);
             enableFishSpawning = builder.comment("Enable fish mob spawning? Weight & biomes can be modified in the Aquaculture fish loot table").define("Enable fish spawning?", true);
-            enableNeptuniumItems = builder.comment("Enable recipes for Neptunium items?").define("Enable Neptunium items?", true);
-            enableNeptuniumArmor = builder.comment("Enable recipes for Neptunium armor?").define("Enable Neptunium armor?", true);
+            randomWeight = builder.define("Enable weight for fish? Useful for fishing competitions", false);
+            debugMode = builder.define("Enable debug mode? (Enables additional logging)", false);
+            builder.pop();
+        }
+    }
+
+    public static class NeptuniumOptions {
+        public static final String NEPTUNIUM_OPTIONS = "neptunium options";
+        public ForgeConfigSpec.BooleanValue enableNeptuniumItems;
+        public ForgeConfigSpec.BooleanValue enableNeptuniumArmor;
+        public ForgeConfigSpec.BooleanValue addNeptunesBountyToLoot;
+
+        public NeptuniumOptions(ForgeConfigSpec.Builder builder) {
+            builder.push(NEPTUNIUM_OPTIONS);
+            enableNeptuniumItems = builder.define("Enable recipes for Neptunium items?", true);
+            enableNeptuniumArmor = builder.define("Enable recipes for Neptunium armor?", true);
             addNeptunesBountyToLoot = builder.comment("Should Neptune's bounty be added as fishing loot? Very rare.").define("Add Neptune's Bounty as loot?", true);
-            randomWeight = builder.comment("Enable weight for fish? Useful for fishing competitions").define("Add weight?", false);
-            debugMode = builder.comment("Enable Aquaculture's debug mode").define("Enable debug mode?", false);
             builder.pop();
         }
     }

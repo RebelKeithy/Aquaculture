@@ -113,6 +113,7 @@ public class FishReadFromJson {
     public static void addFishSpawns() {
         if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
             read();
+            //Biome debug
             for (EntityType fish : FISH_BIOME_MAP.keySet()) {
                 if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
                     List<String> strings = new ArrayList<>();

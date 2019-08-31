@@ -23,7 +23,7 @@ public class ConditionFactory {
         @Nonnull
         public BooleanSupplier parse(@Nonnull JsonObject json) {
             boolean value = JSONUtils.getBoolean(json, "value", true);
-            return () -> AquaConfig.BASIC_OPTIONS.enableNeptuniumItems.get() == value;
+            return () -> AquaConfig.NEPTUNIUM_OPTIONS.enableNeptuniumItems.get() == value;
         }
     }
 
@@ -32,7 +32,7 @@ public class ConditionFactory {
         @Nonnull
         public BooleanSupplier parse(@Nonnull JsonObject json) {
             boolean value = JSONUtils.getBoolean(json, "value", true);
-            return () -> AquaConfig.BASIC_OPTIONS.enableNeptuniumArmor.get() == value;
+            return () -> AquaConfig.NEPTUNIUM_OPTIONS.enableNeptuniumArmor.get() == value;
         }
     }
 }

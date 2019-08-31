@@ -2,8 +2,10 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.block.*;
-import com.teammetallurgy.aquaculture.block.tileentity.FishTrapTileEntity;
+import com.teammetallurgy.aquaculture.block.FarmlandMoistBlock;
+import com.teammetallurgy.aquaculture.block.NeptunesBountyBlock;
+import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
+import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import net.minecraft.block.Block;
@@ -25,7 +27,6 @@ import java.util.List;
 public class AquaBlocks {
     public static List<Block> BLOCKS = Lists.newArrayList();
     public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", new Item.Properties());
-    public static final Block FISH_TRAP = register(new FishTrapBlock(), "fish_trap", new Item.Properties().group(Aquaculture.GROUP));
     public static final Block NEPTUNES_BOUNTY = register(new NeptunesBountyBlock(), "neptunes_bounty");
     public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box");
     public static final Block WORM_FARM = register(new WormFarmBlock(), "worm_farm", new Item.Properties().group(Aquaculture.GROUP));
@@ -60,7 +61,6 @@ public class AquaBlocks {
     @ObjectHolder(Aquaculture.MOD_ID)
     public static class AquaTileEntities {
         public static List<TileEntityType> TILE_ENTITIES = Lists.newArrayList();
-        public static final TileEntityType<FishTrapTileEntity> FISH_TRAP = register("fish_trap", TileEntityType.Builder.create(FishTrapTileEntity::new, AquaBlocks.FISH_TRAP));
         public static final TileEntityType<NeptunesBountyTileEntity> NEPTUNES_BOUNTY = register("neptunes_bounty", TileEntityType.Builder.create(NeptunesBountyTileEntity::new, AquaBlocks.NEPTUNES_BOUNTY));
         public static final TileEntityType<TackleBoxTileEntity> TACKLE_BOX = register("tackle_box", TileEntityType.Builder.create(TackleBoxTileEntity::new, AquaBlocks.TACKLE_BOX));
 

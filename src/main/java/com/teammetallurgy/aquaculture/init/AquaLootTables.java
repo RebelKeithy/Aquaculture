@@ -43,7 +43,7 @@ public class AquaLootTables {
             if (pool != null) {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
-                if (AquaConfig.BASIC_OPTIONS.addNeptunesBountyToLoot.get()) {
+                if (AquaConfig.NEPTUNIUM_OPTIONS.addNeptunesBountyToLoot.get()) {
                     addEntry(pool, getInjectEntry(NEPTUNIUM, 1, 2));
                 }
             }
