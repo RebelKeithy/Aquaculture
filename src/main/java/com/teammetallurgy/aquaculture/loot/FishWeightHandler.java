@@ -160,7 +160,6 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.add(STURGEON, 10, 1800, 16);
         AquacultureAPI.FISH_DATA.add(WALLEYE, 2, 29, 2);
         AquacultureAPI.FISH_DATA.add(ARAPAIMA, 20, 440, 10);
-        AquacultureAPI.FISH_DATA.add(ELECTRIC_EEL, 3, 45, 2);
         AquacultureAPI.FISH_DATA.add(PIRANHA, 0.5, 7.7);
         AquacultureAPI.FISH_DATA.add(TAMBAQUI, 7, 97, 3);
         AquacultureAPI.FISH_DATA.add(BROWN_SHROOMA, 1, 5, 0);
@@ -169,7 +168,6 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.add(ANGLERFISH, 4, 70, 3);
         AquacultureAPI.FISH_DATA.add(BONITO, 0.8, 13, 2);
         AquacultureAPI.FISH_DATA.add(COELACANTH, 11, 200, 6);
-        AquacultureAPI.FISH_DATA.add(EEL, 1.5, 55, 3);
         AquacultureAPI.FISH_DATA.add(EUROPEAN_FLOUNDER, 3, 31, 2);
         AquacultureAPI.FISH_DATA.add(BLACK_GROUPER, 15, 220, 6);
         AquacultureAPI.FISH_DATA.add(JELLYFISH, 5, 400, 0);

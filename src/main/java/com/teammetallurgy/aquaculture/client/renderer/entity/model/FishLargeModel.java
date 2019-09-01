@@ -34,7 +34,7 @@ public class FishLargeModel<T extends Entity> extends EntityModel<T> { //Based o
         this.rightFin = new RendererModel(this, 26, 4);
         this.rightFin.setRotationPoint(-1.0F, 24.0F, 0.0F);
         this.rightFin.addBox(-2.0F, 0.0F, -1.0F, 2, 0, 2, 0.0F);
-        this.leftFin.rotateAngleZ = -0.7853981633974483F;
+        this.rightFin.rotateAngleZ = -0.7853981633974483F;
         this.topFin = new RendererModel(this, 18, -7);
         this.topFin.setRotationPoint(0.0F, 19.0F, 0.0F);
         this.topFin.addBox(0.0F, -1.0F, -1.0F, 0, 2, 7, 0.0F);

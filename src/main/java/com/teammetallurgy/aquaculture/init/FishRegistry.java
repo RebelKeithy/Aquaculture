@@ -53,7 +53,7 @@ public class FishRegistry {
     public static void registerFish(RegistryEvent.Register<EntityType<?>> event) {
         for (EntityType entityType : fishEntities) {
             event.getRegistry().register(entityType);
-            EntitySpawnPlacementRegistry.register(entityType, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::func_223363_b);
+            EntitySpawnPlacementRegistry.register(entityType, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
         }
     }
 }

@@ -99,7 +99,6 @@ public class AquaItems {
     public static final Item STURGEON = FishRegistry.register(new SimpleItem(), "sturgeon");
     public static final Item WALLEYE = FishRegistry.register(new SimpleItem(), "walleye");
     public static final Item ARAPAIMA = FishRegistry.register(new SimpleItem(), "arapaima");
-    public static final Item ELECTRIC_EEL = FishRegistry.register(new SimpleItem(), "electric_eel");
     public static final Item PIRANHA = FishRegistry.register(new SimpleItem(), "piranha");
     public static final Item TAMBAQUI = FishRegistry.register(new SimpleItem(), "tambaqui");
     public static final Item BROWN_SHROOMA = FishRegistry.register(new SimpleItem(), "brown_shrooma");
@@ -108,7 +107,6 @@ public class AquaItems {
     public static final Item ANGLERFISH = FishRegistry.register(new SimpleItem(), "anglerfish");
     public static final Item BONITO = FishRegistry.register(new SimpleItem(), "bonito");
     public static final Item COELACANTH = FishRegistry.register(new SimpleItem(), "coelacanth");
-    public static final Item EEL = FishRegistry.register(new SimpleItem(), "eel");
     public static final Item EUROPEAN_FLOUNDER = FishRegistry.register(new SimpleItem(), "european_flounder");
     public static final Item BLACK_GROUPER = FishRegistry.register(new SimpleItem(), "black_grouper");
     public static final Item JELLYFISH = register(new SimpleItem(), "jellyfish");

@@ -240,19 +240,6 @@
               }
             }
           ],
-          "weight": 25,
-          "name": "aquaculture:electric_eel"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_tag_check",
-              "predicate": {
-                "include": ["JUNGLE"]
-              }
-            }
-          ],
           "weight": 60,
           "name": "aquaculture:piranha"
         },
