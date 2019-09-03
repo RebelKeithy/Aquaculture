@@ -5,6 +5,7 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.client.renderer.AquatemRenderer;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
+import com.teammetallurgy.aquaculture.entity.FishType;
 import com.teammetallurgy.aquaculture.item.*;
 import com.teammetallurgy.aquaculture.item.neptunium.*;
 import net.minecraft.entity.EntityType;
@@ -75,53 +76,49 @@ public class AquaItems {
     // Fish
     public static final Item ATLANTIC_COD = FishRegistry.register(new SimpleItem(), "atlantic_cod");
     public static final Item BLACKFISH = FishRegistry.register(new SimpleItem(), "blackfish");
-    public static final Item PACIFIC_HALIBUT = FishRegistry.register(new SimpleItem(), "pacific_halibut");
-    public static final Item ATLANTIC_HALIBUT = FishRegistry.register(new SimpleItem(), "atlantic_halibut");
-    public static final Item ATLANTIC_HERRING = FishRegistry.register(new SimpleItem(), "atlantic_herring");
+    public static final Item PACIFIC_HALIBUT = FishRegistry.register(new SimpleItem(), "pacific_halibut", FishType.TROPICAL);
+    public static final Item ATLANTIC_HALIBUT = FishRegistry.register(new SimpleItem(), "atlantic_halibut", FishType.TROPICAL);
+    public static final Item ATLANTIC_HERRING = FishRegistry.register(new SimpleItem(), "atlantic_herring", FishType.SMALL);
     public static final Item PINK_SALMON = FishRegistry.register(new SimpleItem(), "pink_salmon");
     public static final Item POLLOCK = FishRegistry.register(new SimpleItem(), "pollock");
     public static final Item RAINBOW_TROUT = FishRegistry.register(new SimpleItem(), "rainbow_trout");
-    public static final Item BAYAD = FishRegistry.register(new SimpleItem(), "bayad");
-    public static final Item BOULTI = FishRegistry.register(new SimpleItem(), "boulti");
+    public static final Item BAYAD = FishRegistry.register(new SimpleItem(), "bayad", FishType.CATFISH);
+    public static final Item BOULTI = FishRegistry.register(new SimpleItem(), "boulti", FishType.SMALL);
     public static final Item CAPITAINE = FishRegistry.register(new SimpleItem(), "capitaine");
-    public static final Item SYNODONTIS = FishRegistry.register(new SimpleItem(), "synodontis");
+    public static final Item SYNODONTIS = FishRegistry.register(new SimpleItem(), "synodontis", FishType.SMALL);
     public static final Item SMALLMOUTH_BASS = FishRegistry.register(new SimpleItem(), "smallmouth_bass");
-    public static final Item LARGEMOUTH_BASS = FishRegistry.register(new SimpleItem(), "largemouth_bass");
-    public static final Item BLUEGILL = FishRegistry.register(new SimpleItem(), "bluegill");
+    public static final Item LARGEMOUTH_BASS = FishRegistry.register(new SimpleItem(), "largemouth_bass"); //TODO
+    public static final Item BLUEGILL = FishRegistry.register(new SimpleItem(), "bluegill", FishType.SMALL);
     public static final Item BROWN_TROUT = FishRegistry.register(new SimpleItem(), "brown_trout");
-    public static final Item CARP = FishRegistry.register(new SimpleItem(), "carp");
-    public static final Item CATFISH = FishRegistry.register(new SimpleItem(), "catfish");
-    public static final Item GAR = FishRegistry.register(new SimpleItem(), "gar");
-    public static final Item MINNOW = FishRegistry.register(new SimpleItem(), "minnow");
-    public static final Item MUSKELLUNGE = FishRegistry.register(new SimpleItem(), "muskellunge");
-    public static final Item PERCH = FishRegistry.register(new SimpleItem(), "perch");
-    public static final Item PIKE = FishRegistry.register(new SimpleItem(), "pike");
-    public static final Item STURGEON = FishRegistry.register(new SimpleItem(), "sturgeon");
-    public static final Item WALLEYE = FishRegistry.register(new SimpleItem(), "walleye");
-    public static final Item ARAPAIMA = FishRegistry.register(new SimpleItem(), "arapaima");
-    public static final Item PIRANHA = FishRegistry.register(new SimpleItem(), "piranha");
-    public static final Item TAMBAQUI = FishRegistry.register(new SimpleItem(), "tambaqui");
-    public static final Item BROWN_SHROOMA = FishRegistry.register(new SimpleItem(), "brown_shrooma");
-    public static final Item RED_SHROOMA = FishRegistry.register(new SimpleItem(), "red_shrooma");
-    public static final Item ANCHOVY = FishRegistry.register(new SimpleItem(), "anchovy");
-    public static final Item ANGLERFISH = FishRegistry.register(new SimpleItem(), "anglerfish");
-    public static final Item BONITO = FishRegistry.register(new SimpleItem(), "bonito");
-    public static final Item COELACANTH = FishRegistry.register(new SimpleItem(), "coelacanth");
-    public static final Item EUROPEAN_FLOUNDER = FishRegistry.register(new SimpleItem(), "european_flounder");
-    public static final Item BLACK_GROUPER = FishRegistry.register(new SimpleItem(), "black_grouper");
-    public static final Item JELLYFISH = register(new SimpleItem(), "jellyfish");
-    public static final Item LUNG_FISH = FishRegistry.register(new SimpleItem(), "lung_fish");
-    public static final Item MACKEREL = FishRegistry.register(new SimpleItem(), "mackerel");
-    public static final Item RABBITFISH = FishRegistry.register(new SimpleItem(), "rabbitfish");
+    public static final Item CARP = FishRegistry.register(new SimpleItem(), "carp", FishType.LARGE);
+    public static final Item CATFISH = FishRegistry.register(new SimpleItem(), "catfish", FishType.CATFISH);
+    public static final Item GAR = FishRegistry.register(new SimpleItem(), "gar", FishType.LONGNOSE);
+    public static final Item MINNOW = FishRegistry.register(new SimpleItem(), "minnow", FishType.SMALL);
+    public static final Item MUSKELLUNGE = FishRegistry.register(new SimpleItem(), "muskellunge", FishType.LONGNOSE);
+    public static final Item PERCH = FishRegistry.register(new SimpleItem(), "perch", FishType.SMALL);
+    public static final Item PIKE = FishRegistry.register(new SimpleItem(), "pike"); //TODO
+    public static final Item STURGEON = FishRegistry.register(new SimpleItem(), "sturgeon"); //TODO
+    public static final Item WALLEYE = FishRegistry.register(new SimpleItem(), "walleye"); //TODO
+    public static final Item ARAPAIMA = FishRegistry.register(new SimpleItem(), "arapaima", FishType.LONGNOSE);
+    public static final Item PIRANHA = FishRegistry.register(new SimpleItem(), "piranha", FishType.SMALL);
+    public static final Item TAMBAQUI = FishRegistry.register(new SimpleItem(), "tambaqui", FishType.LARGE);
+    public static final Item BROWN_SHROOMA = FishRegistry.register(new SimpleItem(), "brown_shrooma", FishType.SMALL);
+    public static final Item RED_SHROOMA = FishRegistry.register(new SimpleItem(), "red_shrooma", FishType.SMALL);
+    public static final Item ANCHOVY = FishRegistry.register(new SimpleItem(), "anchovy"); //TODO
+    public static final Item BONITO = FishRegistry.register(new SimpleItem(), "bonito"); //TODO
+    public static final Item COELACANTH = FishRegistry.register(new SimpleItem(), "coelacanth"); //TODO
+    public static final Item EUROPEAN_FLOUNDER = FishRegistry.register(new SimpleItem(), "european_flounder"); //TODO
+    public static final Item BLACK_GROUPER = FishRegistry.register(new SimpleItem(), "black_grouper"); //TODO
+    public static final Item JELLYFISH = FishRegistry.register(new SimpleItem(), "jellyfish", FishType.JELLYFISH);
+    public static final Item MACKEREL = FishRegistry.register(new SimpleItem(), "mackerel"); //TODO
     public static final Item RED_GROUPER = FishRegistry.register(new SimpleItem(), "red_grouper");
-    public static final Item YELLOWEYE_ROCKFISH = FishRegistry.register(new SimpleItem(), "yelloweye_rockfish");
-    public static final Item SARDINE = FishRegistry.register(new SimpleItem(), "sardine");
-    public static final Item SQUID = register(new SimpleItem(), "squid");
-    public static final Item SWORDFISH = register(new SimpleItem(), "swordfish");
+    public static final Item YELLOWEYE_ROCKFISH = FishRegistry.register(new SimpleItem(), "yelloweye_rockfish"); //TODO
+    public static final Item SARDINE = FishRegistry.register(new SimpleItem(), "sardine"); //TODO
+    public static final Item SQUID = register(new SimpleItem(), "squid"); //TODO We keeping this?
     public static final Item TARPON = FishRegistry.register(new SimpleItem(), "tarpon");
-    public static final Item TUNA = FishRegistry.register(new SimpleItem(), "tuna");
-    public static final Item FROG = register(new SimpleItem(), "frog");
-    public static final Item LEECH = register(new SimpleItem(), "leech");
+    public static final Item TUNA = FishRegistry.register(new SimpleItem(), "tuna", FishType.LARGE);
+    public static final Item FROG = register(new SimpleItem(), "frog"); //TODO
+    public static final Item LEECH = register(new SimpleItem(), "leech"); //TODO
     public static final Item GOLDFISH = register(new SimpleItem(), "goldfish");
     public static final Item BOX_TURTLE = register(new SimpleItem(), "box_turtle");
     public static final Item ARRAU_TURTLE = register(new SimpleItem(), "arrau_turtle");

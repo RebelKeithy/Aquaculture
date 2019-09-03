@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.init;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
+import com.teammetallurgy.aquaculture.entity.FishType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -22,10 +23,10 @@ public class FishRegistry {
     public static List<EntityType> fishEntities = Lists.newArrayList();
 
     /**
-     * Same as {@link #register(Item, String, float, float)}, but with default size
+     * Same as {@link #register(Item, String, FishType)}, but with default size
      */
     public static Item register(@Nonnull Item fishItem, @Nonnull String name) {
-        return register(fishItem, name, 0.5F, 0.3F);
+        return register(fishItem, name, FishType.MEDIUM);
     }
 
     /**
@@ -35,10 +36,11 @@ public class FishRegistry {
      * @param name     The fish name
      * @return The fish Item that was registered
      */
-    public static Item register(@Nonnull Item fishItem, @Nonnull String name, float width, float height) {
+    public static Item register(@Nonnull Item fishItem, @Nonnull String name, FishType fishSize) {
         AquaItems.register(fishItem, name);
-        EntityType<AquaFishEntity> entity = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(width, height).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
-        registerEntity(name, entity);
+        EntityType<AquaFishEntity> fish = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(fishSize.getWidth(), fishSize.getHeight()).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
+        registerEntity(name, fish);
+        AquaFishEntity.SIZES.put(fish, fishSize);
         return fishItem;
     }
 

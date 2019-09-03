@@ -4,9 +4,11 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.*;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
+import com.teammetallurgy.aquaculture.entity.FishType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.*;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.model.TropicalFishBModel;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
@@ -14,71 +16,44 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<AquaFishEntity>> {
-    private static final TropicalFishAModel<AquaFishEntity> TROPICAL_FISH_A_MODEL = new TropicalFishAModel<>();
     private static final TropicalFishBModel<AquaFishEntity> TROPICAL_FISH_B_MODEL = new TropicalFishBModel<>();
-    private static final CodModel<AquaFishEntity> COD_MODEL = new CodModel<>();
-    private static final SalmonModel<AquaFishEntity> SALMON_MODEL = new SalmonModel<>();
     private static final FishSmallModel<AquaFishEntity> SMALL_MODEL = new FishSmallModel<>();
     private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
     private static final FishLargeModel<AquaFishEntity> LARGE_MODEL = new FishLargeModel<>();
     private static final FishLongnoseModel<AquaFishEntity> LONGNOSE_MODEL = new FishLongnoseModel<>();
     private static final FishCatchfishModel<AquaFishEntity> CATFISH_MODEL = new FishCatchfishModel<>();
+    private static final JellyfishModel<AquaFishEntity> JELLYFISH_MODEL = new JellyfishModel<>();
 
     public AquaFishRenderer(EntityRendererManager manager) {
-        super(manager, COD_MODEL, 0.3F);
-        this.shadowSize = this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL || this.entityModel == LARGE_MODEL || this.entityModel == CATFISH_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_A_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
+        super(manager, MEDIUM_MODEL, 0.3F);
+        this.shadowSize = this.entityModel == LONGNOSE_MODEL || this.entityModel == LARGE_MODEL || this.entityModel == CATFISH_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_B_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
     }
 
     @Override
     public void doRender(@Nonnull AquaFishEntity fishEntity, double x, double y, double z, float entityYaw, float partialTicks) {
-        ResourceLocation location = fishEntity.getType().getRegistryName();
-        if (location != null) {
-            switch (location.getPath()) {
-                case "pacific_halibut":
-                case "atlantic_halibut":
-                    this.entityModel = TROPICAL_FISH_B_MODEL;
-                    break;
-                case "gar":
-                case "muskellunge":
-                case "arapaima":
-                    this.entityModel = LONGNOSE_MODEL;
-                    break;
-                case "atlantic_herring":
-                case "boulti":
-                case "synodontis":
-                case "bluegill":
-                case "minnow":
-                case "perch":
-                case "piranha":
-                case "brown_shrooma":
-                case "red_shrooma":
-                    this.entityModel = SMALL_MODEL;
-                    break;
-                case "atlantic_cod":
-                case "blackfish":
-                case "pink_salmon":
-                case "pollock":
-                case "rainbow_trout":
-                case "capitaine":
-                case "smallmouth_bass":
-                case "largemouth_bass":
-                case "brown_trout":
-                case "red_grouper":
-                    this.entityModel = MEDIUM_MODEL;
-                    break;
-                case "carp":
-                case "tambaqui":
-                case "tuna":
-                    this.entityModel = LARGE_MODEL;
-                    break;
-                case "bayad":
-                case "catfish":
-                    this.entityModel = CATFISH_MODEL;
-                    break;
-                default:
-                    this.entityModel = COD_MODEL;
-                    break;
-            }
+        switch (AquaFishEntity.SIZES.get(fishEntity.getType())) {
+            case SMALL:
+                this.entityModel = SMALL_MODEL;
+                break;
+            case LARGE:
+                this.entityModel = LARGE_MODEL;
+                break;
+            case LONGNOSE:
+                this.entityModel = LONGNOSE_MODEL;
+                break;
+            case CATFISH:
+                this.entityModel = CATFISH_MODEL;
+                break;
+            case JELLYFISH:
+                this.entityModel = JELLYFISH_MODEL;
+                break;
+            case TROPICAL:
+                this.entityModel = TROPICAL_FISH_B_MODEL;
+                break;
+            case MEDIUM:
+            default:
+                this.entityModel = MEDIUM_MODEL;
+                break;
         }
         super.doRender(fishEntity, x, y, z, entityYaw, partialTicks);
     }
@@ -96,27 +71,30 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     @Override
     protected void applyRotations(AquaFishEntity fishEntity, float ageInTicks, float rotationYaw, float partialTicks) {
         super.applyRotations(fishEntity, ageInTicks, rotationYaw, partialTicks);
-        float salmonRotation = 1.0F;
-        float salmonMultiplier = 1.0F;
-        if (this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL) {
-            if (!fishEntity.isInWater()) {
-                salmonRotation = 1.3F;
-                salmonMultiplier = 1.7F;
+        FishType fishType = AquaFishEntity.SIZES.get(fishEntity.getType());
+        if (fishType != FishType.JELLYFISH) {
+            float salmonRotation = 1.0F;
+            float salmonMultiplier = 1.0F;
+            if (fishType == FishType.LONGNOSE) {
+                if (!fishEntity.isInWater()) {
+                    salmonRotation = 1.3F;
+                    salmonMultiplier = 1.7F;
+                }
             }
-        }
-        float fishRotation = this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
+            float fishRotation = fishType == FishType.LONGNOSE ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
 
-        GlStateManager.rotatef(fishRotation, 0.0F, 1.0F, 0.0F);
-        if (this.entityModel == SALMON_MODEL || this.entityModel == LONGNOSE_MODEL) {
-            GlStateManager.translatef(0.0F, 0.0F, -0.4F);
-        }
-        if (!fishEntity.isInWater()) {
-            if (this.entityModel == COD_MODEL || this.entityModel == MEDIUM_MODEL || this.entityModel == LARGE_MODEL || this.entityModel == CATFISH_MODEL) {
-                GlStateManager.translatef(0.1F, 0.1F, -0.1F);
-            } else {
-                GlStateManager.translatef(0.2F, 0.1F, 0.0F);
+            GlStateManager.rotatef(fishRotation, 0.0F, 1.0F, 0.0F);
+            if (fishType == FishType.LONGNOSE) {
+                GlStateManager.translatef(0.0F, 0.0F, -0.4F);
             }
-            GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
+            if (!fishEntity.isInWater()) {
+                if (fishType == FishType.MEDIUM || fishType == FishType.LARGE || fishType == FishType.CATFISH) {
+                    GlStateManager.translatef(0.1F, 0.1F, -0.1F);
+                } else {
+                    GlStateManager.translatef(0.2F, 0.1F, 0.0F);
+                }
+                GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
+            }
         }
     }
 

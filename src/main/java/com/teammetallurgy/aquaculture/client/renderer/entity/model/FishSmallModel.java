@@ -51,10 +51,10 @@ public class FishSmallModel<T extends Entity> extends EntityModel<T> { //Based o
 
     @Override
     public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
-        float f = 1.0F;
+        float movement = 1.0F;
         if (!entity.isInWater()) {
-            f = 1.5F;
+            movement = 1.5F;
         }
-        this.tail.rotateAngleY = -f * 0.45F * MathHelper.sin(0.6F * ageInTicks);
+        this.tail.rotateAngleY = -movement * 0.45F * MathHelper.sin(0.6F * ageInTicks);
     }
 }

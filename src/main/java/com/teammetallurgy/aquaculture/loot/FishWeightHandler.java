@@ -165,20 +165,16 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.add(BROWN_SHROOMA, 1, 5, 0);
         AquacultureAPI.FISH_DATA.add(RED_SHROOMA, 1, 5, 0);
         AquacultureAPI.FISH_DATA.add(ANCHOVY, 0.005, 0.2, 0);
-        AquacultureAPI.FISH_DATA.add(ANGLERFISH, 4, 70, 3);
         AquacultureAPI.FISH_DATA.add(BONITO, 0.8, 13, 2);
         AquacultureAPI.FISH_DATA.add(COELACANTH, 11, 200, 6);
         AquacultureAPI.FISH_DATA.add(EUROPEAN_FLOUNDER, 3, 31, 2);
         AquacultureAPI.FISH_DATA.add(BLACK_GROUPER, 15, 220, 6);
         AquacultureAPI.FISH_DATA.add(JELLYFISH, 5, 400, 0);
-        AquacultureAPI.FISH_DATA.add(LUNG_FISH, 2, 45, 2);
         AquacultureAPI.FISH_DATA.add(MACKEREL, 0.6, 8);
-        AquacultureAPI.FISH_DATA.add(RABBITFISH, 0.8, 5.5);
         AquacultureAPI.FISH_DATA.add(RED_GROUPER, 4, 50, 3);
         AquacultureAPI.FISH_DATA.add(YELLOWEYE_ROCKFISH, 2, 22, 2);
         AquacultureAPI.FISH_DATA.add(SARDINE, 0.003, 0.25, 0);
         AquacultureAPI.FISH_DATA.add(SQUID, 10, 1000, 0); //TODO. Figured out what species the vanilla squid is
-        AquacultureAPI.FISH_DATA.add(SWORDFISH, 115, 1430, 16);
         AquacultureAPI.FISH_DATA.add(TARPON, 13, 280, 8);
         AquacultureAPI.FISH_DATA.add(TUNA, 30, 1508, 10);
         AquacultureAPI.FISH_DATA.add(GOLDFISH, 0.05, 5, 0);

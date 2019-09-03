@@ -1,8 +1,10 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity.model;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 public class JellyfishModel<T extends Entity> extends EntityModel<T> {
     private final RendererModel head;
@@ -39,9 +41,28 @@ public class JellyfishModel<T extends Entity> extends EntityModel<T> {
 
     @Override
     public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        this.tentaclesLeft.render(scale);
-        this.tentaclesRight.render(scale);
-        this.head.render(scale);
-        this.tentaclesMain.render(scale);
+        if (!entity.isInvisible()) {
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.enableNormalize();
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            this.tentaclesLeft.render(scale);
+            this.tentaclesRight.render(scale);
+            this.head.render(scale);
+            this.tentaclesMain.render(scale);
+            GlStateManager.disableBlend();
+            GlStateManager.disableNormalize();
+        }
+    }
+
+    @Override
+    public void setRotationAngles(T jellyfish, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+        float stillMovement = 0.1F;
+        if (!jellyfish.isInWater()) {
+            stillMovement = 0.05F;
+        }
+        this.tentaclesLeft.rotateAngleY = -stillMovement * 0.25F * MathHelper.sin(0.3F * ageInTicks) + MathHelper.cos(limbSwing * 0.4662F) * 0.5F * limbSwingAmount;
+        this.tentaclesMain.rotateAngleY = -stillMovement * 0.25F * MathHelper.sin(0.3F * ageInTicks) + MathHelper.cos(limbSwing * 0.4662F) * 0.5F * limbSwingAmount;
+        this.tentaclesRight.rotateAngleY = -stillMovement * 0.25F * MathHelper.sin(0.3F * ageInTicks) + MathHelper.cos(limbSwing * 0.4662F) * 0.5F * limbSwingAmount;
     }
 }

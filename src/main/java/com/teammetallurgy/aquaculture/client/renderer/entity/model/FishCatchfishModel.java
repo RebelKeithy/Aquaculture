@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.client.renderer.entity.model;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
 
 public class FishCatchfishModel<T extends Entity> extends EntityModel<T> { //Based on Cod
     private final RendererModel head;
@@ -65,6 +66,15 @@ public class FishCatchfishModel<T extends Entity> extends EntityModel<T> { //Bas
         this.bottomFin.render(scale);
         this.head.render(scale);
         this.body.render(scale);
+    }
+
+    @Override
+    public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+        float movement = 1.0F;
+        if (!entity.isInWater()) {
+            movement = 1.5F;
+        }
+        this.tail.rotateAngleY = -movement * 0.45F * MathHelper.sin(0.6F * ageInTicks);
     }
 
     public void setRotateAngle(RendererModel RendererModel, float x, float y, float z) {
