@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "  I",
-    " IS",
+    "  N",
+    " NS",
     "T S"
   ],
   "key": {
@@ -12,11 +12,11 @@
     "T": {
       "tag": "forge:rods/wooden"
     },
-    "I": {
-      "tag": "forge:gems/diamond"
+    "N": {
+      "tag": "forge:ingots/neptunium"
     }	
   },
   "result": {
-    "item": "aquaculture:diamond_fishing_rod"
+    "item": "aquaculture:neptunium_fishing_rod"
   }
 }

@@ -7,7 +7,7 @@
   ],
   "key": {
     "F": {
-      "item": "minecraft:feather"
+      "tag": "forge:feathers"
     },
     "H": {
       "item": "aquaculture:iron_hook"

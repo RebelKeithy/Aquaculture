@@ -16,7 +16,7 @@
       "tag": "forge:ingots/neptunium"
     },
     "S": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     }
   },
   "result": {

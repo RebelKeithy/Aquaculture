@@ -25,8 +25,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     private static final JellyfishModel<AquaFishEntity> JELLYFISH_MODEL = new JellyfishModel<>();
 
     public AquaFishRenderer(EntityRendererManager manager) {
-        super(manager, MEDIUM_MODEL, 0.3F);
-        this.shadowSize = this.entityModel == LONGNOSE_MODEL || this.entityModel == LARGE_MODEL || this.entityModel == CATFISH_MODEL ? 0.4F : this.entityModel == TROPICAL_FISH_B_MODEL || this.entityModel == SMALL_MODEL ? 0.15F : 0.3F;
+        super(manager, MEDIUM_MODEL, 0.35F);
     }
 
     @Override
