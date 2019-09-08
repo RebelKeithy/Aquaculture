@@ -21,12 +21,18 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TackleBoxContainer extends Container {
-    public TackleBoxTileEntity tackleBox;
-    public int rows = 4;
-    public int collumns = 4;
+    private TackleBoxTileEntity tackleBox;
+    private int rows = 4;
+    private int collumns = 4;
+    private List<Slot> fishingRodSlots = new ArrayList<>();
+    public Slot slotHook;
+    public Slot slotBait;
+    public Slot slotLine;
 
     public TackleBoxContainer(int windowID, BlockPos pos, PlayerInventory playerInventory) {
         super(AquaGuis.TACKLE_BOX, windowID);
@@ -46,55 +52,12 @@ public class TackleBoxContainer extends Container {
                     @Override
                     public void onSlotChanged() {
                         super.onSlotChanged();
+                        TackleBoxContainer.this.updateFishingRodSlots(TackleBoxContainer.this.inventorySlots.get(0).getStack());
                     }
                 });
 
                 //Fishing Rod slots
-                ItemStack fishingRod = handler.getStackInSlot(0);
-                fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(rodHandler -> {
-                    //Hook
-                    this.addSlot(new SlotItemHandler(rodHandler, 0, 96, 44) {
-                        @Override
-                        public boolean isItemValid(@Nonnull ItemStack stack) {
-                            return stack.getItem() instanceof HookItem;
-                        }
-
-                        @Override
-                        public boolean isEnabled() {
-                            return !handler.getStackInSlot(0).isEmpty();
-                        }
-                    });
-                    //Bait
-                    this.addSlot(new SlotItemHandler(rodHandler, 1, 117, 44) {
-                        @Override
-                        public boolean isItemValid(@Nonnull ItemStack stack) {
-                            return stack.getItem() instanceof BaitItem;
-                        }
-
-                        @Override
-                        public boolean canTakeStack(PlayerEntity player) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean isEnabled() {
-                            return !handler.getStackInSlot(0).isEmpty();
-                        }
-                    });
-                    //Fishing Line
-                    this.addSlot(new SlotItemHandler(rodHandler, 2, 138, 44) {
-                        @Override
-                        public boolean isItemValid(@Nonnull ItemStack stack) {
-                            Item item = stack.getItem();
-                            return item.isIn(AquacultureAPI.Tags.FISHING_LINE) && item instanceof IDyeableArmorItem;
-                        }
-
-                        @Override
-                        public boolean isEnabled() {
-                            return !handler.getStackInSlot(0).isEmpty();
-                        }
-                    });
-                });
+                this.updateFishingRodSlots(handler.getStackInSlot(0));
 
                 //Tackle Box
                 for (int column = 0; column < collumns; ++column) {
@@ -121,6 +84,73 @@ public class TackleBoxContainer extends Container {
         //Hotbar
         for (int row = 0; row < 9; ++row) {
             this.addSlot(new Slot(playerInventory, row, 8 + row * 18, 148));
+        }
+    }
+
+    private void updateFishingRodSlots(@Nonnull ItemStack fishingRod) {
+        if (!fishingRod.isEmpty()) {
+            boolean hasFishinRodSlots = false;
+            for (Slot slot : this.fishingRodSlots) {
+                if (this.inventorySlots.contains(slot)) {
+                    hasFishinRodSlots = true;
+                    break;
+                }
+            }
+            if (!hasFishinRodSlots) {
+                fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(rodHandler -> {
+                    //Hook
+                    this.fishingRodSlots.add(new SlotItemHandler(rodHandler, 0, 96, 44) {
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack) {
+                            return stack.getItem() instanceof HookItem;
+                        }
+                    });
+                    this.slotHook = this.fishingRodSlots.get(0);
+                    this.addSlot(this.slotHook);
+
+                    //Bait
+                    this.fishingRodSlots.add(new SlotItemHandler(rodHandler, 1, 117, 44) {
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack) {
+                            return stack.getItem() instanceof BaitItem;
+                        }
+
+                        @Override
+                        public boolean canTakeStack(PlayerEntity player) {
+                            return false;
+                        }
+                    });
+                    this.slotBait = this.fishingRodSlots.get(1);
+                    this.addSlot(this.slotBait);
+
+                    //Fishing Line
+                    this.fishingRodSlots.add(new SlotItemHandler(rodHandler, 2, 138, 44) {
+                        @Override
+                        public boolean isItemValid(@Nonnull ItemStack stack) {
+                            Item item = stack.getItem();
+                            return item.isIn(AquacultureAPI.Tags.FISHING_LINE) && item instanceof IDyeableArmorItem;
+                        }
+                    });
+                    this.slotLine = this.fishingRodSlots.get(2);
+                    this.addSlot(this.slotLine);
+                });
+            }
+        } else {
+            if (this.slotHook != null) {
+                this.inventorySlots.remove(this.slotHook);
+                this.slotHook = null;
+            }
+            if (this.slotBait != null) {
+                this.inventorySlots.remove(this.slotBait);
+                this.slotBait = null;
+            }
+            if (this.slotLine != null) {
+                this.inventorySlots.remove(this.slotLine);
+                this.slotLine = null;
+            }
+        }
+        for (int i = 0; i < this.inventorySlots.size(); i++) {
+            this.inventorySlots.get(i).slotNumber = i;
         }
     }
 
