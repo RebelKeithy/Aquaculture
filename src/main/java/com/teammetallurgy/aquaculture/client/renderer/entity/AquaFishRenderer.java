@@ -46,7 +46,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             case JELLYFISH:
                 this.entityModel = JELLYFISH_MODEL;
                 break;
-            case TROPICAL:
+            case HALIBUT:
                 this.entityModel = TROPICAL_FISH_B_MODEL;
                 break;
             case MEDIUM:
@@ -86,13 +86,18 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             if (fishType == FishType.LONGNOSE) {
                 GlStateManager.translatef(0.0F, 0.0F, -0.4F);
             }
-            if (!fishEntity.isInWater()) {
+            if (!fishEntity.isInWater() && fishType != FishType.HALIBUT) {
                 if (fishType == FishType.MEDIUM || fishType == FishType.LARGE || fishType == FishType.CATFISH) {
                     GlStateManager.translatef(0.1F, 0.1F, -0.1F);
                 } else {
                     GlStateManager.translatef(0.2F, 0.1F, 0.0F);
+
                 }
                 GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
+            }
+            if (fishType == FishType.HALIBUT) {
+                GlStateManager.translatef(-0.4F, 0.1F, 0.0F);
+                GlStateManager.rotatef(-90.0F, 0.0F, 0.0F, 1.0F);
             }
         }
     }

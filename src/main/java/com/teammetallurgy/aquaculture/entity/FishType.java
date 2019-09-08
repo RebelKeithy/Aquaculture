@@ -7,7 +7,7 @@ public enum FishType {
     LONGNOSE(0.8F, 0.4F),
     CATFISH(0.55F, 0.3F),
     JELLYFISH(0.7F, 0.3F),
-    TROPICAL(0.4F, 0.7F);
+    HALIBUT(0.7F, 0.2F);
 
     private final float width;
     private final float height;

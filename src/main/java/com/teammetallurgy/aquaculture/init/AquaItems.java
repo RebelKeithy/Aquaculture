@@ -76,8 +76,8 @@ public class AquaItems {
     // Fish
     public static final Item ATLANTIC_COD = FishRegistry.register(new SimpleItem(), "atlantic_cod");
     public static final Item BLACKFISH = FishRegistry.register(new SimpleItem(), "blackfish");
-    public static final Item PACIFIC_HALIBUT = FishRegistry.register(new SimpleItem(), "pacific_halibut", FishType.TROPICAL);
-    public static final Item ATLANTIC_HALIBUT = FishRegistry.register(new SimpleItem(), "atlantic_halibut", FishType.TROPICAL);
+    public static final Item PACIFIC_HALIBUT = FishRegistry.register(new SimpleItem(), "pacific_halibut", FishType.HALIBUT);
+    public static final Item ATLANTIC_HALIBUT = FishRegistry.register(new SimpleItem(), "atlantic_halibut", FishType.HALIBUT);
     public static final Item ATLANTIC_HERRING = FishRegistry.register(new SimpleItem(), "atlantic_herring", FishType.SMALL);
     public static final Item PINK_SALMON = FishRegistry.register(new SimpleItem(), "pink_salmon");
     public static final Item POLLOCK = FishRegistry.register(new SimpleItem(), "pollock");
