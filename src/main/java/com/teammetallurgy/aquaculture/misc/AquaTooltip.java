@@ -24,7 +24,7 @@ public class AquaTooltip {
                 if (item.getRegistryName() != null) {
                     String itemIdentifier = item.getRegistryName().getPath() + ".tooltip";
                     if (InputMappings.isKeyDown(Minecraft.getInstance().mainWindow.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
-                        event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".line1").applyTextStyle(TextFormatting.AQUA));
+                        event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".desc").applyTextStyle(TextFormatting.AQUA));
                     } else {
                         event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".title").applyTextStyle(TextFormatting.AQUA)
                                 .appendText(" ").appendSibling(new TranslationTextComponent(Aquaculture.MOD_ID + ".shift").applyTextStyle(TextFormatting.DARK_GRAY)));

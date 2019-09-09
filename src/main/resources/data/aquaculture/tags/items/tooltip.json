@@ -12,6 +12,21 @@
     "aquaculture:neptunium_shovel",
     "aquaculture:neptunium_sword",
     "aquaculture:neptunium_bow",
-    "aquaculture:neptunium_fillet_knife"
+    "aquaculture:neptunium_fillet_knife",
+    "aquaculture:iron_hook",
+    "aquaculture:gold_hook",
+    "aquaculture:diamond_hook",
+    "aquaculture:light_hook",
+    "aquaculture:heavy_hook",
+    "aquaculture:double_hook",
+    "aquaculture:redstone_hook",
+    "aquaculture:note_hook",
+    "aquaculture:nether_star_hook",
+    "aquaculture:obsidian_hook",
+    "aquaculture:double_obsidian_hook",
+    "aquaculture:glowstone_hook",
+    "aquaculture:quartz_hook",
+    "aquaculture:soul_sand_hook",
+    "aquaculture:obsidian_note_hook"
   ]
 }
