@@ -35,6 +35,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class FishMountEntity extends HangingEntity {
@@ -56,9 +57,8 @@ public class FishMountEntity extends HangingEntity {
         this(AquaEntities.FISH_MOUNT, world);
     }
 
-
     @Override
-    protected float getEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getEyeHeight(Pose pose, EntitySize size) {
         return 0.0F;
     }
 
@@ -68,17 +68,16 @@ public class FishMountEntity extends HangingEntity {
     }
 
     @Override
-    protected void updateFacingWithBoundingBox(Direction facingDirectionIn) {
-        Validate.notNull(facingDirectionIn);
-        this.facingDirection = facingDirectionIn;
-        if (facingDirectionIn.getAxis().isHorizontal()) {
+    protected void updateFacingWithBoundingBox(Direction direction) {
+        Validate.notNull(direction);
+        this.facingDirection = direction;
+        if (direction.getAxis().isHorizontal()) {
             this.rotationPitch = 0.0F;
             this.rotationYaw = (float) (this.facingDirection.getHorizontalIndex() * 90);
         } else {
-            this.rotationPitch = (float) (-90 * facingDirectionIn.getAxisDirection().getOffset());
+            this.rotationPitch = (float) (-90 * direction.getAxisDirection().getOffset());
             this.rotationYaw = 0.0F;
         }
-
         this.prevRotationPitch = this.rotationPitch;
         this.prevRotationYaw = this.rotationYaw;
         this.updateBoundingBox();
@@ -89,8 +88,8 @@ public class FishMountEntity extends HangingEntity {
         if (!this.world.areCollisionShapesEmpty(this)) {
             return false;
         } else {
-            BlockState blockstate = this.world.getBlockState(this.hangingPosition.offset(this.facingDirection.getOpposite()));
-            return blockstate.getMaterial().isSolid() || this.facingDirection.getAxis().isHorizontal() && RedstoneDiodeBlock.isDiode(blockstate) ? this.world.getEntitiesInAABBexcluding(this, this.getBoundingBox(), IS_HANGING_ENTITY).isEmpty() : false;
+            BlockState state = this.world.getBlockState(this.hangingPosition.offset(this.facingDirection.getOpposite()));
+            return (state.getMaterial().isSolid() || this.facingDirection.getAxis().isHorizontal() && RedstoneDiodeBlock.isDiode(state)) && this.world.getEntitiesInAABBexcluding(this, this.getBoundingBox(), IS_HANGING_ENTITY).isEmpty();
         }
     }
 
@@ -122,25 +121,18 @@ public class FishMountEntity extends HangingEntity {
                     z1 = (this.facingDirection.getZOffset() < 0 ? 3.0D : 1.0D) / 32.0D;
                     z2 = (this.facingDirection.getZOffset() > 0 ? 3.0D : 1.0D) / 32.0D;
             }
-
             this.setBoundingBox(new AxisAlignedBB(this.posX - x1, this.posY - y1, this.posZ - z1, this.posX + x2, this.posY + y2, this.posZ + z2));
         }
     }
 
-    /**
-     * Called by the /kill command.
-     */
     @Override
     public void onKillCommand() {
-        this.removeItem(this.getDisplayedItem());
+        this.setDisplayedItem(ItemStack.EMPTY);
         super.onKillCommand();
     }
 
-    /**
-     * Called when the entity is attacked.
-     */
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount) {
+    public boolean attackEntityFrom(@Nonnull DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {
             return false;
         } else if (!source.isExplosion() && !this.getDisplayedItem().isEmpty()) {
@@ -148,7 +140,6 @@ public class FishMountEntity extends HangingEntity {
                 this.dropItemOrSelf(source.getTrueSource(), false);
                 this.playSound(SoundEvents.ENTITY_ITEM_FRAME_REMOVE_ITEM, 1.0F, 1.0F);
             }
-
             return true;
         } else {
             return super.attackEntityFrom(source, amount);
@@ -165,9 +156,6 @@ public class FishMountEntity extends HangingEntity {
         return 8;
     }
 
-    /**
-     * Checks if the entity is in range to render.
-     */
     @Override
     @OnlyIn(Dist.CLIENT)
     public boolean isInRangeToRenderDist(double distance) {
@@ -176,9 +164,6 @@ public class FishMountEntity extends HangingEntity {
         return distance < d0 * d0;
     }
 
-    /**
-     * Called when this entity is broken. Entity parameter may be null.
-     */
     @Override
     public void onBroken(@Nullable Entity brokenEntity) {
         this.playSound(SoundEvents.ENTITY_ITEM_FRAME_BREAK, 1.0F, 1.0F);
@@ -190,58 +175,49 @@ public class FishMountEntity extends HangingEntity {
         this.playSound(SoundEvents.ENTITY_ITEM_FRAME_PLACE, 1.0F, 1.0F);
     }
 
-    private void dropItemOrSelf(@Nullable Entity entityIn, boolean p_146065_2_) {
+    private void dropItemOrSelf(@Nullable Entity entity, boolean shouldDropSelf) {
         if (!this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-            if (entityIn == null) {
-                this.removeItem(this.getDisplayedItem());
+            if (entity == null) {
+                this.setDisplayedItem(ItemStack.EMPTY);
             }
 
         } else {
-            ItemStack itemstack = this.getDisplayedItem();
+            ItemStack displayStack = this.getDisplayedItem();
             this.setDisplayedItem(ItemStack.EMPTY);
-            if (entityIn instanceof PlayerEntity) {
-                PlayerEntity playerentity = (PlayerEntity) entityIn;
+            if (entity instanceof PlayerEntity) {
+                PlayerEntity playerentity = (PlayerEntity) entity;
                 if (playerentity.abilities.isCreativeMode) {
-                    this.removeItem(itemstack);
+                    this.setDisplayedItem(ItemStack.EMPTY);
                     return;
                 }
             }
 
-            if (p_146065_2_) {
+            if (shouldDropSelf) {
                 this.entityDropItem(AquaItems.FISH_MOUNT);
             }
 
-            if (!itemstack.isEmpty()) {
-                itemstack = itemstack.copy();
-                this.removeItem(itemstack);
+            if (!displayStack.isEmpty()) {
+                displayStack = displayStack.copy();
                 if (this.rand.nextFloat() < this.itemDropChance) {
-                    this.entityDropItem(itemstack);
+                    this.entityDropItem(displayStack);
                 }
             }
-
         }
     }
 
-    /**
-     * Removes the dot representing this frame's position from the map when the item frame is broken.
-     */
-    private void removeItem(ItemStack stack) {
-//        stack.setItemFrame((ItemFrameEntity) null);
-    }
-
+    @Nonnull
     public ItemStack getDisplayedItem() {
         return this.getDataManager().get(ITEM);
     }
 
-    public void setDisplayedItem(ItemStack stack) {
+    public void setDisplayedItem(@Nonnull ItemStack stack) {
         this.setDisplayedItemWithUpdate(stack, true);
     }
 
-    public void setDisplayedItemWithUpdate(ItemStack stack, boolean p_174864_2_) {
+    public void setDisplayedItemWithUpdate(@Nonnull ItemStack stack, boolean shouldUpdate) {
         if (!stack.isEmpty()) {
             stack = stack.copy();
             stack.setCount(1);
-//            stack.setItemFrame(this);
         }
 
         this.getDataManager().set(ITEM, stack);
@@ -249,16 +225,15 @@ public class FishMountEntity extends HangingEntity {
             this.playSound(SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, 1.0F, 1.0F);
         }
 
-        if (p_174864_2_ && this.hangingPosition != null) {
+        if (shouldUpdate && this.hangingPosition != null) {
             this.world.updateComparatorOutputLevel(this.hangingPosition, Blocks.AIR);
         }
-
     }
 
     @Override
-    public boolean replaceItemInInventory(int inventorySlot, ItemStack itemStackIn) {
+    public boolean replaceItemInInventory(int inventorySlot, @Nonnull ItemStack stack) {
         if (inventorySlot == 0) {
-            this.setDisplayedItem(itemStackIn);
+            this.setDisplayedItem(stack);
             return true;
         } else {
             return false;
@@ -268,9 +243,9 @@ public class FishMountEntity extends HangingEntity {
     @Override
     public void notifyDataManagerChange(DataParameter<?> key) {
         if (key.equals(ITEM)) {
-            ItemStack itemstack = this.getDisplayedItem();
-            if(itemstack != null && !itemstack.isEmpty()) {
-                EntityType entityType = ForgeRegistries.ENTITIES.getValue(itemstack.getItem().getRegistryName());
+            ItemStack displayStack = this.getDisplayedItem();
+            if (displayStack != null && !displayStack.isEmpty()) {
+                EntityType entityType = ForgeRegistries.ENTITIES.getValue(displayStack.getItem().getRegistryName());
                 if (entityType != null) {
                     this.entity = entityType.create(this.world);
                 }
@@ -292,52 +267,50 @@ public class FishMountEntity extends HangingEntity {
             compound.put("Item", this.getDisplayedItem().write(new CompoundNBT()));
             compound.putFloat("ItemDropChance", this.itemDropChance);
         }
-
         compound.putByte("Facing", (byte) this.facingDirection.getIndex());
     }
 
     @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
-        CompoundNBT compoundnbt = compound.getCompound("Item");
-        if (compoundnbt != null && !compoundnbt.isEmpty()) {
-            ItemStack itemstack = ItemStack.read(compoundnbt);
-            if (itemstack.isEmpty()) {
-                PRIVATE_LOGGER.warn("Unable to load item from: {}", (Object) compoundnbt);
+        CompoundNBT nbt = compound.getCompound("Item");
+        if (nbt != null && !nbt.isEmpty()) {
+            ItemStack nbtStack = ItemStack.read(nbt);
+            if (nbtStack.isEmpty()) {
+                PRIVATE_LOGGER.warn("Unable to load item from: {}", nbt);
             }
 
-            ItemStack itemstack1 = this.getDisplayedItem();
-            if (!itemstack1.isEmpty() && !ItemStack.areItemStacksEqual(itemstack, itemstack1)) {
-                this.removeItem(itemstack1);
+            ItemStack displayStack = this.getDisplayedItem();
+            if (!displayStack.isEmpty() && !ItemStack.areItemStacksEqual(nbtStack, displayStack)) {
+                this.setDisplayedItem(ItemStack.EMPTY);
             }
 
-            this.setDisplayedItemWithUpdate(itemstack, false);
+            this.setDisplayedItemWithUpdate(nbtStack, false);
             if (compound.contains("ItemDropChance", 99)) {
                 this.itemDropChance = compound.getFloat("ItemDropChance");
             }
         }
-
         this.updateFacingWithBoundingBox(Direction.byIndex(compound.getByte("Facing")));
     }
 
     @Override
     public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-        ItemStack itemstack = player.getHeldItem(hand);
+        ItemStack heldStack = player.getHeldItem(hand);
         if (!this.world.isRemote) {
             if (this.getDisplayedItem().isEmpty()) {
-                if (!itemstack.isEmpty() && AquacultureAPI.FISH_DATA.getFish().contains(itemstack.getItem())) {
-                    this.setDisplayedItem(itemstack);
+                if (!heldStack.isEmpty() && AquacultureAPI.FISH_DATA.getFish().contains(heldStack.getItem())) {
+                    this.setDisplayedItem(heldStack);
                     if (!player.abilities.isCreativeMode) {
-                        itemstack.shrink(1);
+                        heldStack.shrink(1);
                     }
                 }
             }
         }
-
         return true;
     }
 
     @Override
+    @Nonnull
     public IPacket<?> createSpawnPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }

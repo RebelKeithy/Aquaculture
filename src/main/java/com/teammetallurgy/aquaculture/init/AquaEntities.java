@@ -2,7 +2,10 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.entity.*;
+import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
+import com.teammetallurgy.aquaculture.entity.FishMountEntity;
+import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
+import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.Entity;

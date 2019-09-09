@@ -12,12 +12,11 @@ import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -34,16 +33,16 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
     @Override
     public void doRender(FishMountEntity entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GlStateManager.pushMatrix();
-        BlockPos blockpos = entity.getHangingPosition();
-        double d0 = (double) blockpos.getX() - entity.posX + x;
-        double d1 = (double) blockpos.getY() - entity.posY + y;
-        double d2 = (double) blockpos.getZ() - entity.posZ + z;
-        GlStateManager.translated(d0 + 0.5D, d1 + 0.5D, d2 + 0.5D);
+        BlockPos pos = entity.getHangingPosition();
+        double translateX = (double) pos.getX() - entity.posX + x;
+        double translateY = (double) pos.getY() - entity.posY + y;
+        double translateZ = (double) pos.getZ() - entity.posZ + z;
+        GlStateManager.translated(translateX + 0.5D, translateY + 0.5D, translateZ + 0.5D);
         GlStateManager.rotatef(entity.rotationPitch, 1.0F, 0.0F, 0.0F);
         GlStateManager.rotatef(180.0F - entity.rotationYaw, 0.0F, 1.0F, 0.0F);
         this.renderManager.textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-        BlockRendererDispatcher blockrendererdispatcher = this.mc.getBlockRendererDispatcher();
-        ModelManager modelmanager = blockrendererdispatcher.getBlockModelShapes().getModelManager();
+        BlockRendererDispatcher rendererDispatcher = this.mc.getBlockRendererDispatcher();
+        ModelManager modelmanager = rendererDispatcher.getBlockModelShapes().getModelManager();
         GlStateManager.pushMatrix();
         GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
         if (this.renderOutlines) {
@@ -51,7 +50,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
             GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(entity));
         }
 
-        blockrendererdispatcher.getBlockModelRenderer().renderModelBrightnessColor(modelmanager.getModel(LOCATION_MODEL), 1.0F, 1.0F, 1.0F, 1.0F);
+        rendererDispatcher.getBlockModelRenderer().renderModelBrightnessColor(modelmanager.getModel(LOCATION_MODEL), 1.0F, 1.0F, 1.0F, 1.0F);
         if (this.renderOutlines) {
             GlStateManager.tearDownSolidRenderingTextureCombine();
             GlStateManager.disableColorMaterial();
@@ -63,12 +62,14 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         this.renderFish(entity, x, y, z);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
-        this.renderName(entity, x + (double) ((float) entity.getHorizontalFacing().getXOffset() * 0.3F), y - 0.25D, z + (double) ((float) entity.getHorizontalFacing().getZOffset() * 0.3F));
+        if (entity.getDistanceSq(mc.objectMouseOver.getHitVec()) < 0.24D) {
+            this.renderName(entity, x + (double) ((float) entity.getHorizontalFacing().getXOffset() * 0.3F), y - 0.25D, z + (double) ((float) entity.getHorizontalFacing().getZOffset() * 0.3F));
+        }
     }
 
     @Override
     @Nullable
-    protected ResourceLocation getEntityTexture(FishMountEntity entity) {
+    protected ResourceLocation getEntityTexture(@Nonnull FishMountEntity entity) {
         return null;
     }
 
@@ -76,7 +77,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         Entity entityFish = fishMount.entity;
         if (entityFish != null) {
             GlStateManager.pushMatrix();
-            GlStateManager.translatef(0, 0, -2.5f / 32f);
+            GlStateManager.translatef(0, 0, -0.8F / 32F);
             GlStateManager.rotatef(-90.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.rotatef(-90.0F, 0.0F, 1.0F, 0.0F);
             entityFish.setLocationAndAngles(x, y, z, 0.0F, 0.0F);
@@ -88,11 +89,11 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
     protected void renderName(FishMountEntity entity, double x, double y, double z) {
         ItemStack stack = entity.getDisplayedItem();
         if (!stack.isEmpty()) {
-            double d0 = entity.getDistanceSq(this.renderManager.info.getProjectedView());
-            float f = entity.shouldRenderSneaking() ? 32.0F : 64.0F;
-            if (!(d0 >= (double) (f * f))) {
-                String s = entity.getDisplayedItem().getDisplayName().getFormattedText();
-                this.renderLivingLabel(entity, s, x, y, z, 64);
+            double distanceSq = entity.getDistanceSq(this.renderManager.info.getProjectedView());
+            float sneaking = entity.shouldRenderSneaking() ? 32.0F : 64.0F;
+            if (!(distanceSq >= (double) (sneaking * sneaking))) {
+                String name = entity.entity.getDisplayName().getFormattedText();
+                this.renderLivingLabel(entity, name, x, y, z, 64);
 
                 if (stack.hasTag() && stack.getTag().contains("fishWeight")) {
                     double weight = stack.getTag().getDouble("fishWeight");

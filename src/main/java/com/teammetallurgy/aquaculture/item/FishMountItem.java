@@ -13,25 +13,29 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class FishMountItem extends HangingEntityItem {
+
     public FishMountItem(Properties properties) {
         super(AquaEntities.FISH_MOUNT, properties);
     }
 
     @Override
+    @Nonnull
     public ActionResultType onItemUse(ItemUseContext context) {
-        BlockPos blockPos = context.getPos();
+        BlockPos pos = context.getPos();
         Direction direction = context.getFace();
-        BlockPos offset = blockPos.offset(direction);
+        BlockPos offset = pos.offset(direction);
         PlayerEntity player = context.getPlayer();
-        ItemStack itemStack = context.getItem();
-        if (player != null && !this.canPlace(player, direction, itemStack, offset)) {
+        ItemStack useStack = context.getItem();
+        if (player != null && !this.canPlace(player, direction, useStack, offset)) {
             return ActionResultType.FAIL;
         } else {
             World world = context.getWorld();
             FishMountEntity fishMountEntity = new FishMountEntity(world, offset, direction);
 
-            CompoundNBT tag = itemStack.getTag();
+            CompoundNBT tag = useStack.getTag();
             if (tag != null) {
                 EntityType.applyItemNBT(world, player, fishMountEntity, tag);
             }
@@ -41,15 +45,14 @@ public class FishMountItem extends HangingEntityItem {
                     fishMountEntity.playPlaceSound();
                     world.addEntity(fishMountEntity);
                 }
-
-                itemStack.shrink(1);
+                useStack.shrink(1);
             }
-
             return ActionResultType.SUCCESS;
         }
     }
 
-    protected boolean canPlace(PlayerEntity entity, Direction direction, ItemStack itemStack, BlockPos blockPos) {
-        return !World.isOutsideBuildHeight(blockPos) && entity.canPlayerEdit(blockPos, direction, itemStack);
+    @Override
+    protected boolean canPlace(@Nonnull PlayerEntity entity, Direction direction, @Nonnull ItemStack stack, @Nonnull BlockPos pos) {
+        return !World.isOutsideBuildHeight(pos) && entity.canPlayerEdit(pos, direction, stack);
     }
 }
