@@ -1,0 +1,28 @@
+{
+    "parent": "minecraft:block/block",
+    "ambientocclusion": false,
+    "textures": {
+        "wood": "minecraft:block/birch_planks"
+    },
+    "elements": [
+        {
+            "from": [ 2, 4, 14 ],
+            "to": [ 14, 12, 16 ],
+            "rotation": {
+                "origin": [ 2, 0, 16 ],
+                "axis": "z",
+                "angle": 0.0,
+                "rescale": false
+            },
+            "shade": true,
+            "faces": {
+                "down":  { "uv": [ 6.5, 0.0, 3.5, 1.0 ], "texture": "#wood" },
+                "up":  { "uv": [ 3.5, 1.0, 0.5, 0.0 ], "texture": "#wood" },
+                "north":  { "uv": [ 0.5, 1.0, 3.5, 5.0 ], "texture": "#wood" },
+                "south":  { "uv": [ 4.0, 1.0, 7.0, 5.0 ], "texture": "#wood" },
+                "west":  { "uv": [ 3.5, 1.0, 4.0, 5.0 ], "texture": "#wood" },
+                "east":  { "uv": [ 0.0, 1.0, 0.5, 5.0 ], "texture": "#wood" }
+            }
+        }
+    ]
+}

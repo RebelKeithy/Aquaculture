@@ -53,6 +53,7 @@
   "item.aquaculture.box": "Box",
   "item.aquaculture.lockbox": "Lockbox",
   "item.aquaculture.treasure_chest": "Treasure Chest",
+  "item.aquaculture.fish_mount": "Fish Mount",
 
   "_comment": "Neptunium",
   "block.aquaculture.neptunes_bounty": "Neptune's Bounty",
@@ -216,6 +217,7 @@
   "entity.aquaculture.arrau_turtle": "Arrau Turtle",
   "entity.aquaculture.starshell_turtle": "Starshell Turtle",
   "entity.aquaculture.bobber": "Aquaculture Bobber",
+  "entity.aquaculture.fish_mount": "Fish Mount",
 
   "_comment": "Message in a bottle",
   "aquaculture.message": "ERROR! Fish Escaping!",

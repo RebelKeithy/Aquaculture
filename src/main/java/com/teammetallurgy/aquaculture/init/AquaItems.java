@@ -26,6 +26,9 @@ import java.util.List;
 public class AquaItems {
     public static List<Item> ITEMS = Lists.newArrayList();
 
+    //Fish Mounting
+    public static final Item FISH_MOUNT = register(new FishMountItem(new Item.Properties().group(Aquaculture.GROUP)), "fish_mount");
+
     //Fishing
     public static final Item IRON_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.IRON, new Item.Properties().defaultMaxDamage(125).group(Aquaculture.GROUP)), "iron_fishing_rod");
     public static final Item GOLD_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(55).group(Aquaculture.GROUP)), "gold_fishing_rod");

@@ -2,9 +2,7 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
-import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
-import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
+import com.teammetallurgy.aquaculture.entity.*;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.Entity;
@@ -41,6 +39,9 @@ public class AquaEntities {
             .setTrackingRange(4)
             .setUpdateInterval(5)
             .setCustomClientFactory(AquaFishingBobberEntity::new));
+    public static final EntityType<FishMountEntity> FISH_MOUNT = register("fish_mount", EntityType.Builder.<FishMountEntity>create(FishMountEntity::new, EntityClassification.MISC)
+            .size(0.5F, 0.5F)
+            .setCustomClientFactory(FishMountEntity::new));
     public static final EntityType<WaterArrowEntity> WATER_ARROW = register("water_arrow", EntityType.Builder.<WaterArrowEntity>create(WaterArrowEntity::new, EntityClassification.MISC)
             .size(0.5F, 0.5F)
             .setCustomClientFactory(WaterArrowEntity::new));
