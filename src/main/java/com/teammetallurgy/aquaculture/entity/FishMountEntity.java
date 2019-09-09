@@ -24,6 +24,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -256,11 +257,6 @@ public class FishMountEntity extends HangingEntity {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
-    }
-
-    @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         if (!this.getDisplayedItem().isEmpty()) {
@@ -313,6 +309,11 @@ public class FishMountEntity extends HangingEntity {
     @Nonnull
     public IPacket<?> createSpawnPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    @Override
+    public ItemStack getPickedResult(RayTraceResult target) {
+        return !this.getDisplayedItem().isEmpty() ? this.getDisplayedItem() : new ItemStack(AquaItems.FISH_MOUNT);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.ClientHandler;
+import com.teammetallurgy.aquaculture.network.PacketHandler;
 import cpw.mods.modlauncher.Environment;
 import cpw.mods.modlauncher.Launcher;
 import net.minecraft.item.ItemGroup;
@@ -48,6 +49,7 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
+        PacketHandler.registerPackets();
         LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
         FishWeightHandler.registerFishData();
         AquaEntities.setSpawnPlacement();

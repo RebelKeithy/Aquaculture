@@ -131,7 +131,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     @Override
     @Nullable
     public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt) {
-        return new FishingRodEquipementHandler();
+        return new FishingRodEquipmentHandler();
     }
 
     @Override
@@ -147,7 +147,7 @@ public class AquaFishingRodItem extends FishingRodItem {
         super.addInformation(stack, world, tooltips, tooltipFlag);
     }
 
-    public static class FishingRodEquipementHandler implements ICapabilitySerializable<INBT> {
+    public static class FishingRodEquipmentHandler implements ICapabilitySerializable<INBT> {
         private final IItemHandler items = new ItemStackHandler(3) {
             @Override
             public int getSlotLimit(int slot) {

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BHB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "tag": "minecraft:wooden_buttons"
+    },
+    "H": {
+      "item": "aquaculture:iron_hook"
+    }
+  },
+  "result": {
+    "item": "aquaculture:fish_mount"
+  }
+}

@@ -88,7 +88,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
 
     protected void renderName(FishMountEntity entity, double x, double y, double z) {
         ItemStack stack = entity.getDisplayedItem();
-        if (!stack.isEmpty()) {
+        if (!stack.isEmpty() && entity.entity != null) {
             double distanceSq = entity.getDistanceSq(this.renderManager.info.getProjectedView());
             float sneaking = entity.shouldRenderSneaking() ? 32.0F : 64.0F;
             if (!(distanceSq >= (double) (sneaking * sneaking))) {
