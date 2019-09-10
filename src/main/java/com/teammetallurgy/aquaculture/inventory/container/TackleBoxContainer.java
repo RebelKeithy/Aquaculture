@@ -116,12 +116,10 @@ public class TackleBoxContainer extends Container {
         //Bait replacing
         if (slotId >= 0 && clickType == ClickType.PICKUP) {
             Slot slot = this.inventorySlots.get(slotId);
-            if (slot instanceof SlotItemHandler) {
+            if (slot == this.slotBait) {
                 SlotItemHandler slotHandler = (SlotItemHandler) slot;
-                if (slotHandler.getItemHandler().getSlotLimit(1) == 1 && slotHandler.slotNumber == 2) {
-                    if (slotHandler.isItemValid(player.inventory.getItemStack())) {
-                        slotHandler.putStack(ItemStack.EMPTY); //Set to empty, to allow new bait to get put in
-                    }
+                if (slotHandler.isItemValid(player.inventory.getItemStack())) {
+                    slotHandler.putStack(ItemStack.EMPTY); //Set to empty, to allow new bait to get put in
                 }
             }
         }
