@@ -31,6 +31,9 @@ public class TackleBoxContainer extends Container {
     private int rows = 4;
     private int collumns = 4;
     private List<Slot> fishingRodSlots = new ArrayList<>();
+    public Slot slotHook;
+    public Slot slotBait;
+    public Slot slotLine;
 
     public TackleBoxContainer(int windowID, BlockPos pos, PlayerInventory playerInventory) {
         super(AquaGuis.TACKLE_BOX, windowID);
@@ -108,7 +111,8 @@ public class TackleBoxContainer extends Container {
                             return !tackleBoxHandler.getStackInSlot(0).isEmpty();
                         }
                     });
-                    this.addSlot(this.fishingRodSlots.get(0));
+                    this.slotHook = this.fishingRodSlots.get(0);
+                    this.addSlot(this.slotHook);
 
                     //Bait
                     this.fishingRodSlots.add(new SlotItemHandler(rodHandler, 1, 117, 44) {
@@ -127,7 +131,8 @@ public class TackleBoxContainer extends Container {
                             return !tackleBoxHandler.getStackInSlot(0).isEmpty();
                         }
                     });
-                    this.addSlot(this.fishingRodSlots.get(1));
+                    this.slotBait = this.fishingRodSlots.get(1);
+                    this.addSlot(this.slotBait);
 
                     //Fishing Line
                     this.fishingRodSlots.add(new SlotItemHandler(rodHandler, 2, 138, 44) {
@@ -142,9 +147,14 @@ public class TackleBoxContainer extends Container {
                             return !tackleBoxHandler.getStackInSlot(0).isEmpty();
                         }
                     });
-                    this.addSlot(this.fishingRodSlots.get(2));
+                    this.slotLine = this.fishingRodSlots.get(2);
+                    this.addSlot(this.slotLine);
                 });
             }
+        } else {
+            this.slotHook = null;
+            this.slotBait = null;
+            this.slotLine = null;
         }
     }
 

@@ -5,11 +5,8 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.inventory.container.TackleBoxContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TackleBoxScreen extends ContainerScreen<TackleBoxContainer> {
     private static final ResourceLocation TACKLE_BOX_GUI = new ResourceLocation(Aquaculture.MOD_ID, "textures/gui/container/tackle_box.png");
@@ -42,24 +39,27 @@ public class TackleBoxScreen extends ContainerScreen<TackleBoxContainer> {
         int y = (this.height - this.ySize) / 2;
         this.blit(x, y, 0, 0, this.xSize, this.ySize);
 
-        LazyOptional<ItemStack> fishingRod = this.container.tackleBox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(c -> c.getStackInSlot(0));
-        fishingRod.orElse(ItemStack.EMPTY).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(rodHandler -> {
-            if (rodHandler.getStackInSlot(0).isEmpty()) {
+        if (this.container.slotHook != null) {
+            if (this.container.slotHook.getStack().isEmpty()) {
                 this.blit(x + 95, y + 43, 176, 0, 18, 18);
             } else {
                 this.renderEmptySlot(x + 95, y + 43);
             }
-            if (rodHandler.getStackInSlot(1).isEmpty()) {
+        }
+        if (this.container.slotBait != null) {
+            if (this.container.slotBait.getStack().isEmpty()) {
                 this.blit(x + 116, y + 43, 176, 18, 18, 18);
             } else {
                 this.renderEmptySlot(x + 116, y + 43);
             }
-            if (rodHandler.getStackInSlot(2).isEmpty()) {
+        }
+        if (this.container.slotLine != null) {
+            if (this.container.slotLine.getStack().isEmpty()) {
                 this.blit(x + 137, y + 43, 176, 36, 18, 18);
             } else {
                 this.renderEmptySlot(x + 137, y + 43);
             }
-        });
+        }
     }
 
     private void renderEmptySlot(int x, int y) {
