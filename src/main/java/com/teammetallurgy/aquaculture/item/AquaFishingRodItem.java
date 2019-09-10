@@ -8,12 +8,8 @@ import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTier;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
@@ -25,7 +21,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -108,8 +103,12 @@ public class AquaFishingRodItem extends FishingRodItem {
     @Nonnull
     public static Hook getHookType(@Nonnull ItemStack fishingRod) {
         Hook hook = Hooks.EMPTY;
-        LazyOptional<ItemStack> slotStack = fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(c -> c.getStackInSlot(0));
-        ItemStack hookStack = slotStack.orElse(ItemStack.EMPTY);
+        ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(AquaFishingRodItem.FishingRodEquipmentHandler.EMPTY.getItems());
+        if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag().contains("Inventory")) {
+            rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
+        }
+
+        ItemStack hookStack = rodHandler.getStackInSlot(0);
         if (hookStack.getItem() instanceof HookItem) {
             hook = ((HookItem) hookStack.getItem()).getHookType();
         }
@@ -140,42 +139,47 @@ public class AquaFishingRodItem extends FishingRodItem {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
             tooltips.add(new TranslationTextComponent("aquaculture.fishing_rod.broken").setStyle(new Style().setItalic(true).setColor(TextFormatting.GRAY)));
         }
-        Hook hook = getHookType(stack); //TODO Is null when on a server
+
+        Hook hook = getHookType(stack);
         if (hook != Hooks.EMPTY) {
             tooltips.add(new TranslationTextComponent(hook.getItem().getTranslationKey()).setStyle(new Style().setColor(hook.getColor())));
         }
         super.addInformation(stack, world, tooltips, tooltipFlag);
     }
 
-    public static class FishingRodEquipmentHandler implements ICapabilitySerializable<INBT> {
-        private final IItemHandler items = new ItemStackHandler(3) {
+    public static class FishingRodEquipmentHandler implements ICapabilityProvider {
+        public static final FishingRodEquipmentHandler EMPTY = new FishingRodEquipmentHandler();
+        private final LazyOptional<IItemHandler> holder = LazyOptional.of(this::getItems);
+        private final ItemStackHandler items = new ItemStackHandler(3) {
             @Override
             public int getSlotLimit(int slot) {
                 return 1;
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                switch (slot) {
+                    case 0:
+                        return stack.getItem() instanceof HookItem;
+                    case 1:
+                        return stack.getItem() instanceof BaitItem;
+                    case 2:
+                        return stack.getItem().isIn(AquacultureAPI.Tags.FISHING_LINE) && stack.getItem() instanceof IDyeableArmorItem;
+                    default:
+                        return false;
+
+                }
             }
         };
 
         @Override
         @Nonnull
         public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction direction) {
-            if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-                return LazyOptional.of(this::getItems).cast();
-            }
-            return LazyOptional.empty();
-        }
-
-        @Override
-        public INBT serializeNBT() {
-            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(this.getItems(), null);
-        }
-
-        @Override
-        public void deserializeNBT(INBT nbt) {
-            CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(this.getItems(), null, nbt);
+            return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? holder.cast() : LazyOptional.empty();
         }
 
         @Nonnull
-        public IItemHandler getItems() {
+        public ItemStackHandler getItems() {
             return items;
         }
     }
