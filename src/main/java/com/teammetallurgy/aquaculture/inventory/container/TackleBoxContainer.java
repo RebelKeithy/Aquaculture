@@ -38,6 +38,15 @@ public class TackleBoxContainer extends Container {
             this.tackleBox.openInventory(playerInventory.player);
             this.tackleBox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
                 SlotFishingRod fishingRod = (SlotFishingRod) addSlot(new SlotFishingRod(handler, 0, 117, 21));
+                this.slotHook = this.addSlot(new SlotHidable(fishingRod, 0, 96, 44));
+                this.slotBait = this.addSlot(new SlotHidable(fishingRod, 1, 117, 44) {
+                    @Override
+                    public boolean canTakeStack(PlayerEntity player) {
+                        return false;
+                    }
+                });
+                this.slotLine = this.addSlot(new SlotHidable(fishingRod, 2, 138, 44));
+
                 //Tackle Box
                 for (int column = 0; column < collumns; ++column) {
                     for (int row = 0; row < rows; ++row) {
@@ -51,14 +60,6 @@ public class TackleBoxContainer extends Container {
                     }
                 }
 
-                this.slotHook = this.addSlot(new SlotHidable(fishingRod, 0, 96, 44));
-                this.slotBait = this.addSlot(new SlotHidable(fishingRod, 1, 117, 44) {
-                    @Override
-                    public boolean canTakeStack(PlayerEntity player) {
-                        return false;
-                    }
-                });
-                this.slotLine = this.addSlot(new SlotHidable(fishingRod, 2, 138, 44));
             });
 
             for (int column = 0; column < 3; ++column) {
@@ -80,7 +81,7 @@ public class TackleBoxContainer extends Container {
 
     @Override
     @Nonnull
-    public ItemStack transferStackInSlot(PlayerEntity player, int index) { //TODO Fix shift-clicking
+    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
         ItemStack transferStack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {

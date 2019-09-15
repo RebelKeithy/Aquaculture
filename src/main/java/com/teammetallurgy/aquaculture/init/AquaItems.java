@@ -96,7 +96,7 @@ public class AquaItems {
     public static final Item CARP = FishRegistry.register(new SimpleItem(), "carp", FishType.LARGE);
     public static final Item CATFISH = FishRegistry.register(new SimpleItem(), "catfish", FishType.CATFISH);
     public static final Item GAR = FishRegistry.register(new SimpleItem(), "gar", FishType.LONGNOSE);
-    public static final Item MINNOW = FishRegistry.register(new SimpleItem(), "minnow", FishType.SMALL);
+    public static final Item MINNOW = FishRegistry.register(AquacultureAPI.createBait(50, 1, Aquaculture.GROUP), "minnow", FishType.SMALL);
     public static final Item MUSKELLUNGE = FishRegistry.register(new SimpleItem(), "muskellunge", FishType.LONGNOSE);
     public static final Item PERCH = FishRegistry.register(new SimpleItem(), "perch", FishType.SMALL);
     public static final Item PIKE = FishRegistry.register(new SimpleItem(), "pike"); //TODO
@@ -121,7 +121,7 @@ public class AquaItems {
     public static final Item TARPON = FishRegistry.register(new SimpleItem(), "tarpon");
     public static final Item TUNA = FishRegistry.register(new SimpleItem(), "tuna", FishType.LARGE);
     public static final Item FROG = register(new SimpleItem(), "frog"); //TODO
-    public static final Item LEECH = register(new SimpleItem(), "leech"); //TODO
+    public static final Item LEECH = register(AquacultureAPI.createBait(40, 1, Aquaculture.GROUP), "leech"); //TODO
     public static final Item GOLDFISH = register(new SimpleItem(), "goldfish");
     public static final Item BOX_TURTLE = register(new SimpleItem(), "box_turtle");
     public static final Item ARRAU_TURTLE = register(new SimpleItem(), "arrau_turtle");
