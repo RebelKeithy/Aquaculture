@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: false
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -13,16 +13,16 @@ apply plugin: 'maven-publish'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
-version = "${minecraft_version}-${mod_version}" + getBuildNumber()
-group = "com.teammetallurgy.aquaculture"
-archivesBaseName = "Aquaculture"
-
 repositories {
   maven {
     name = "JEI maven"
     url = "https://dvs1.progwml6.com/files/maven/"
   }
 }
+
+version = "${minecraft_version}-${mod_version}" + getBuildNumber()
+group = "com.teammetallurgy.aquaculture"
+archivesBaseName = "Aquaculture"
 
 minecraft {
     mappings channel: 'snapshot', version: project.mappings + "-" + "1.14.3"
@@ -32,7 +32,7 @@ minecraft {
         client {
             workingDirectory project.file('run')
             mods {
-                waddles {
+                aquaculture {
                     source sourceSets.main
                 }
             }
@@ -40,7 +40,7 @@ minecraft {
         server {
             workingDirectory project.file('run')
             mods {
-                waddles {
+                aquaculture {
                     source sourceSets.main
                 }
             }

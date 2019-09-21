@@ -264,7 +264,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
             BlockPos bobberPos = new BlockPos(this);
             IFluidState fluidState = this.world.getFluidState(bobberPos);
             if (fluidState.isTagged(FluidTags.LAVA)) {
-                f = fluidState.func_215679_a(this.world, bobberPos);
+                f = fluidState.getActualHeight(this.world, bobberPos);
             }
 
             if (this.currentState == State.FLYING) {
