@@ -147,7 +147,6 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.add(CAPITAINE, 20, 440, 10);
         AquacultureAPI.FISH_DATA.add(SYNODONTIS, 0.5, 2.5);
         AquacultureAPI.FISH_DATA.add(SMALLMOUTH_BASS, 1, 12, 2);
-        AquacultureAPI.FISH_DATA.add(LARGEMOUTH_BASS, 3, 25, 2);
         AquacultureAPI.FISH_DATA.add(BLUEGILL, 0.8, 4.5);
         AquacultureAPI.FISH_DATA.add(BROWN_TROUT, 1.5, 44, 2);
         AquacultureAPI.FISH_DATA.add(CARP, 2, 40, 2);
@@ -156,26 +155,13 @@ public class FishWeightHandler {
         AquacultureAPI.FISH_DATA.add(MINNOW, 0.2, 1.5, 0);
         AquacultureAPI.FISH_DATA.add(MUSKELLUNGE, 5, 70, 3);
         AquacultureAPI.FISH_DATA.add(PERCH, 0.5, 6);
-        AquacultureAPI.FISH_DATA.add(PIKE, 3, 63, 2);
-        AquacultureAPI.FISH_DATA.add(STURGEON, 10, 1800, 16);
-        AquacultureAPI.FISH_DATA.add(WALLEYE, 2, 29, 2);
         AquacultureAPI.FISH_DATA.add(ARAPAIMA, 20, 440, 10);
         AquacultureAPI.FISH_DATA.add(PIRANHA, 0.5, 7.7);
         AquacultureAPI.FISH_DATA.add(TAMBAQUI, 7, 97, 3);
         AquacultureAPI.FISH_DATA.add(BROWN_SHROOMA, 1, 5, 0);
         AquacultureAPI.FISH_DATA.add(RED_SHROOMA, 1, 5, 0);
-        AquacultureAPI.FISH_DATA.add(ANCHOVY, 0.005, 0.2, 0);
-        AquacultureAPI.FISH_DATA.add(BONITO, 0.8, 13, 2);
-        AquacultureAPI.FISH_DATA.add(COELACANTH, 11, 200, 6);
-        AquacultureAPI.FISH_DATA.add(EUROPEAN_FLOUNDER, 3, 31, 2);
-        AquacultureAPI.FISH_DATA.add(BLACK_GROUPER, 15, 220, 6);
         AquacultureAPI.FISH_DATA.add(JELLYFISH, 5, 400, 0);
-        AquacultureAPI.FISH_DATA.add(MACKEREL, 0.6, 8);
         AquacultureAPI.FISH_DATA.add(RED_GROUPER, 4, 50, 3);
-        AquacultureAPI.FISH_DATA.add(YELLOWEYE_ROCKFISH, 2, 22, 2);
-        AquacultureAPI.FISH_DATA.add(SARDINE, 0.003, 0.25, 0);
-        AquacultureAPI.FISH_DATA.add(SQUID, 10, 1000, 0); //TODO. Figured out what species the vanilla squid is
-        AquacultureAPI.FISH_DATA.add(TARPON, 13, 280, 8);
         AquacultureAPI.FISH_DATA.add(TUNA, 30, 1508, 10);
         AquacultureAPI.FISH_DATA.add(GOLDFISH, 0.05, 5, 0);
 

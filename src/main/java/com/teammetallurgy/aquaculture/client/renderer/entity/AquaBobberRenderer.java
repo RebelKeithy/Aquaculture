@@ -48,11 +48,11 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(bobber));
             }
 
-            builder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-            builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
+            builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).color(255, 255, 0, 0).endVertex();
+            builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).color(255, 255, 0, 0).endVertex();
+            builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).color(255, 255, 0, 0).endVertex();
+            builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).color(255, 255, 0, 0).endVertex();
             tessellator.draw();
             if (this.renderOutlines) {
                 GlStateManager.tearDownSolidRenderingTextureCombine();
@@ -98,11 +98,11 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             }
 
             fov = MathHelper.lerp(partialTicks, bobber.prevPosX, bobber.posX);
-            double d14 = MathHelper.lerp(partialTicks, bobber.prevPosY, bobber.posY) + 0.25D;
-            double d9 = MathHelper.lerp(partialTicks, bobber.prevPosZ, bobber.posZ);
+            double bobberY = MathHelper.lerp(partialTicks, bobber.prevPosY, bobber.posY) + 0.25D;
+            double bobberZ = MathHelper.lerp(partialTicks, bobber.prevPosZ, bobber.posZ);
             double startX = (float) (anglerX - fov);
-            double startY = (double) ((float) (anglerY - d14)) + anglerEye;
-            double startZ = (float) (anglerZ - d9);
+            double startY = (double) ((float) (anglerY - bobberY)) + anglerEye;
+            double startZ = (float) (anglerZ - bobberZ);
             GlStateManager.disableTexture();
             GlStateManager.disableLighting();
             builder.begin(3, DefaultVertexFormats.POSITION_COLOR);
