@@ -6,13 +6,13 @@
   ],
   "key": {
     "B": {
-      "item": "minecraft:oak_button"
+      "item": "minecraft:acacia_button"
     },
     "H": {
       "item": "aquaculture:iron_hook"
     }
   },
   "result": {
-    "item": "aquaculture:oak_fish_mount"
+    "item": "aquaculture:acacia_fish_mount"
   }
 }
