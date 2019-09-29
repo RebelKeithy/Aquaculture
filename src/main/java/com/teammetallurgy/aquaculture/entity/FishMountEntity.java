@@ -19,6 +19,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -301,7 +302,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         ItemStack heldStack = player.getHeldItem(hand);
         if (!this.world.isRemote) {
             if (this.getDisplayedItem().isEmpty()) {
-                if (!heldStack.isEmpty() && AquacultureAPI.FISH_DATA.getFish().contains(heldStack.getItem())) {
+                if (!heldStack.isEmpty() && heldStack.getItem().isIn(ItemTags.FISHES) && AquacultureAPI.FISH_DATA.getFish().contains(heldStack.getItem())) {
                     this.setDisplayedItem(heldStack);
                     if (!player.abilities.isCreativeMode) {
                         heldStack.shrink(1);

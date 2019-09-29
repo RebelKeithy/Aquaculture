@@ -30,7 +30,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
 
     @Override
     public void doRender(@Nonnull AquaFishEntity fishEntity, double x, double y, double z, float entityYaw, float partialTicks) {
-        switch (AquaFishEntity.SIZES.get(fishEntity.getType())) {
+        switch (AquaFishEntity.TYPES.get(fishEntity.getType())) {
             case SMALL:
                 this.entityModel = SMALL_MODEL;
                 break;
@@ -70,7 +70,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     @Override
     protected void applyRotations(AquaFishEntity fishEntity, float ageInTicks, float rotationYaw, float partialTicks) {
         super.applyRotations(fishEntity, ageInTicks, rotationYaw, partialTicks);
-        FishType fishType = AquaFishEntity.SIZES.get(fishEntity.getType());
+        FishType fishType = AquaFishEntity.TYPES.get(fishEntity.getType());
         if (fishType != FishType.JELLYFISH) {
             float salmonRotation = 1.0F;
             float salmonMultiplier = 1.0F;

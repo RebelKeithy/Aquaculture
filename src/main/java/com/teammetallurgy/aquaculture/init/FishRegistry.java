@@ -52,7 +52,7 @@ public class FishRegistry {
         AquaItems.register(fishItem, name);
         EntityType<AquaFishEntity> fish = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(fishSize.getWidth(), fishSize.getHeight()).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
         registerEntity(name, fish);
-        AquaFishEntity.SIZES.put(fish, fishSize);
+        AquaFishEntity.TYPES.put(fish, fishSize);
         return fishItem;
     }
 

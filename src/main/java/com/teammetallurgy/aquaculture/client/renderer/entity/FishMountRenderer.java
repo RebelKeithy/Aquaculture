@@ -2,7 +2,9 @@ package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
+import com.teammetallurgy.aquaculture.entity.FishType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -12,6 +14,7 @@ import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.fish.PufferfishEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -85,7 +88,13 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         Entity entityFish = fishMount.entity;
         if (entityFish != null) {
             GlStateManager.pushMatrix();
-            GlStateManager.translatef(0, 0, -0.8F / 32F);
+            float depth = entityFish.getCollisionBorderSize();
+            if (entityFish instanceof PufferfishEntity) {
+                depth += 0.09F;
+            } else if (entityFish instanceof AquaFishEntity && AquaFishEntity.TYPES.get(entityFish.getType()).equals(FishType.LONGNOSE)) {
+                GlStateManager.translatef(-0.1F, -0.18F, 0);
+            }
+            GlStateManager.translatef(0, 0, depth);
             GlStateManager.rotatef(-90.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.rotatef(-90.0F, 0.0F, 1.0F, 0.0F);
             entityFish.setLocationAndAngles(x, y, z, 0.0F, 0.0F);

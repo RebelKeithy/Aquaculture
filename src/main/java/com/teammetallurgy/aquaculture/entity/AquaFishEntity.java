@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class AquaFishEntity extends AbstractGroupFishEntity {
     public static HashMap<EntityType, Item> BUCKETS = new HashMap<>();
-    public static HashMap<EntityType, FishType> SIZES = new HashMap<>();
+    public static HashMap<EntityType, FishType> TYPES = new HashMap<>();
 
     public AquaFishEntity(EntityType<? extends AbstractGroupFishEntity> entityType, World world) {
         super(entityType, world);
@@ -38,7 +38,7 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.goals.forEach(prioritizedGoal -> { //Remove vanilla schooling goal
+        this.goalSelector.goals.forEach(prioritizedGoal -> { //Removes vanilla schooling goal
             if (prioritizedGoal.getGoal().getClass() == FollowSchoolLeaderGoal.class)
                 this.goalSelector.removeGoal(prioritizedGoal.getGoal());
         });
