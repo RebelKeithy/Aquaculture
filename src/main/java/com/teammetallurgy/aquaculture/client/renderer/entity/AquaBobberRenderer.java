@@ -60,9 +60,8 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 float g = 0;
                 float b = 0;
                 if (!bobberStack.isEmpty()) {
-                    IDyeableArmorItem dyeableItem = (IDyeableArmorItem) bobberStack.getItem();
-                    if (dyeableItem.hasColor(bobberStack)) {
-                        int colorInt = dyeableItem.getColor(bobberStack);
+                    if (bobberStack.getItem() instanceof IDyeableArmorItem) {
+                        int colorInt = ((IDyeableArmorItem) bobberStack.getItem()).getColor(bobberStack);
                         r = (float) (colorInt >> 16 & 255) / 255.0F;
                         g = (float) (colorInt >> 8 & 255) / 255.0F;
                         b = (float) (colorInt & 255) / 255.0F;
@@ -153,7 +152,6 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 float length = (float) size / 16.0F;
                 builder.pos(x + startX * (double) length, y + startY * (double) (length * length + length) * 0.5D + 0.25D, z + startZ * (double) length).color(r, g, b, 1.0F).endVertex();
             }
-
             tessellator.draw();
             GlStateManager.enableLighting();
             GlStateManager.enableTexture();
@@ -198,7 +196,6 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 GlStateManager.tearDownSolidRenderingTextureCombine();
                 GlStateManager.disableColorMaterial();
             }
-
             GlStateManager.disableRescaleNormal();
             GlStateManager.popMatrix();
             super.renderMultipass(bobber, x, y, z, entityYaw, partialTicks);
@@ -207,35 +204,36 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
 
     @Override
     protected void renderName(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z) { //Render bobber background
-        PlayerEntity angler = bobber.getAngler();
-        if (angler != null && !this.renderOutlines) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translatef((float) x, (float) y, (float) z);
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
-            this.bindTexture(BOBBER);
-            Tessellator tessellator = Tessellator.getInstance();
-            BufferBuilder builder = tessellator.getBuffer();
-            GlStateManager.rotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotatef((float) (this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-            if (this.renderOutlines) {
-                GlStateManager.enableColorMaterial();
-                GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(bobber));
-            }
+        if (bobber.hasBobber()) {
+            PlayerEntity angler = bobber.getAngler();
+            if (angler != null && !this.renderOutlines) {
+                GlStateManager.pushMatrix();
+                GlStateManager.translatef((float) x, (float) y, (float) z);
+                GlStateManager.enableRescaleNormal();
+                GlStateManager.scalef(0.5F, 0.5F, 0.5F);
+                this.bindTexture(BOBBER);
+                Tessellator tessellator = Tessellator.getInstance();
+                BufferBuilder builder = tessellator.getBuffer();
+                GlStateManager.rotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+                GlStateManager.rotatef((float) (this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+                if (this.renderOutlines) {
+                    GlStateManager.enableColorMaterial();
+                    GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(bobber));
+                }
 
-            builder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-            builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-            tessellator.draw();
-            if (this.renderOutlines) {
-                GlStateManager.tearDownSolidRenderingTextureCombine();
-                GlStateManager.disableColorMaterial();
+                builder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+                builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+                tessellator.draw();
+                if (this.renderOutlines) {
+                    GlStateManager.tearDownSolidRenderingTextureCombine();
+                    GlStateManager.disableColorMaterial();
+                }
+                GlStateManager.disableRescaleNormal();
+                GlStateManager.popMatrix();
             }
-
-            GlStateManager.disableRescaleNormal();
-            GlStateManager.popMatrix();
         }
     }
 

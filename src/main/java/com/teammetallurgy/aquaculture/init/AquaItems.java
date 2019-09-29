@@ -109,7 +109,7 @@ public class AquaItems {
     public static final Item RED_GROUPER = FishRegistry.register(new SimpleItem(), "red_grouper");
     public static final Item TUNA = FishRegistry.register(new SimpleItem(), "tuna", FishType.LARGE);
     public static final Item FROG = register(new SimpleItem(), "frog");
-    public static final Item LEECH = register(AquacultureAPI.createBait(40, 1, Aquaculture.GROUP), "leech");
+    public static final Item LEECH = register(AquacultureAPI.createBait(35, 1, Aquaculture.GROUP), "leech");
     public static final Item GOLDFISH = register(new SimpleItem(), "goldfish");
     public static final Item BOX_TURTLE = register(new SimpleItem(), "box_turtle");
     public static final Item ARRAU_TURTLE = register(new SimpleItem(), "arrau_turtle");
