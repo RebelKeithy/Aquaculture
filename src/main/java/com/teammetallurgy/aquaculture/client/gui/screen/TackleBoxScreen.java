@@ -41,19 +41,24 @@ public class TackleBoxScreen extends ContainerScreen<TackleBoxContainer> {
 
         if (this.container.slotHook.isEnabled()) { //Only checking one slot, since they're all disabled at the same time
             if (this.container.slotHook.getHasStack()) {
-                this.renderEmptySlot(x + 95, y + 43);
+                this.renderEmptySlot(x + 105, y + 43);
             } else {
-                this.blit(x + 95, y + 43, 176, 0, 18, 18);
+                this.blit(x + 105, y + 43, 176, 0, 18, 18);
             }
             if (this.container.slotBait.getHasStack()) {
-                this.renderEmptySlot(x + 116, y + 43);
+                this.renderEmptySlot(x + 128, y + 43);
             } else {
-                this.blit(x + 116, y + 43, 176, 18, 18, 18);
+                this.blit(x + 128, y + 43, 176, 18, 18, 18);
             }
             if (this.container.slotLine.getHasStack()) {
-                this.renderEmptySlot(x + 137, y + 43);
+                this.renderEmptySlot(x + 105, y + 66);
             } else {
-                this.blit(x + 137, y + 43, 176, 36, 18, 18);
+                this.blit(x + 105, y + 66, 176, 36, 18, 18);
+            }
+            if (this.container.slotBobber.getHasStack()) {
+                this.renderEmptySlot(x + 128, y + 66);
+            } else {
+                this.blit(x + 128, y + 66, 176, 54, 18, 18);
             }
         }
     }

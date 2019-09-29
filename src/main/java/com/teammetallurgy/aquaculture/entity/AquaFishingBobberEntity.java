@@ -49,6 +49,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
     private final Hook hook;
     private final ItemStack bait;
     private final ItemStack fishingLine;
+    private final ItemStack bobber;
     private final int luck;
 
     public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
@@ -63,15 +64,17 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
         }
         this.bait = buf.readItemStack();
         this.fishingLine = buf.readItemStack();
+        this.bobber = buf.readItemStack();
     }
 
-    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack bait, @Nonnull ItemStack fishingLine) {
+    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack bait, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber) {
         super(player, world, luck, lureSpeed);
         this.luck = luck;
         this.angler.fishingBobber = this;
         this.hook = hook;
         this.bait = bait;
         this.fishingLine = fishingLine;
+        this.bobber = bobber;
         if (this.hasHook() && hook.getWeight() != null) {
             this.setMotion(this.getMotion().mul(hook.getWeight()));
         }
@@ -91,8 +94,13 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
         return this.bait;
     }
 
-    public boolean hasBait() {
-        return !this.bait.isEmpty();
+    @Nonnull
+    public ItemStack getBobber() {
+        return this.bobber;
+    }
+
+    public boolean hasBobber() {
+        return !this.getBobber().isEmpty();
     }
 
     @Nonnull
@@ -235,16 +243,16 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
 
     @Override
     public void tick() {
-        if (this.hasHook() && this.hook.getFluids().contains(FluidTags.LAVA)) {
+        super.tick();
+        /*if (this.hasHook() && this.hook.getFluids().contains(FluidTags.LAVA)) { //Lava fishing commented out for now
             if (this.hook.getFluids().contains(FluidTags.WATER) && world.getFluidState(new BlockPos(this)).isTagged(FluidTags.WATER)) {
                 super.tick();
-                ;
             } else {
                 this.lavaFishingTick();
             }
         } else {
             super.tick();
-        }
+        }*/
     }
 
     private void lavaFishingTick() {
@@ -462,6 +470,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
         buffer.writeString(this.hook.getName() == null ? "" : this.hook.getName());
         buffer.writeItemStack(this.bait);
         buffer.writeItemStack(this.fishingLine);
+        buffer.writeItemStack(this.bobber);
     }
 
     @Override

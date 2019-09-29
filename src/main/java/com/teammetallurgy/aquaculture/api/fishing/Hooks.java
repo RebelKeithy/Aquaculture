@@ -19,12 +19,12 @@ public class Hooks {
     public static final Hook DOUBLE = new Hook.HookBuilder("double").setColor(TextFormatting.DARK_GRAY).setDoubleCatchChance(0.10).build();
     public static final Hook REDSTONE = new Hook.HookBuilder("redstone").setColor(TextFormatting.RED).setCatchableWindow(35, 70).build();
     public static final Hook NOTE = new Hook.HookBuilder("note").setColor(TextFormatting.DARK_RED).setCatchSound(SoundEvents.ENTITY_PLAYER_LEVELUP).build();
-    public static final Hook NETHER_STAR = new Hook.HookBuilder("nether_star").setColor(TextFormatting.BLACK).setFluid(FluidTags.LAVA).setFluid(FluidTags.WATER).setDurabilityChance(0.50).setLuckModifier(1).build();
+    public static final Hook NETHER_STAR = new Hook.HookBuilder("nether_star").setColor(TextFormatting.BLACK)/*.setFluid(FluidTags.LAVA)*/.setFluid(FluidTags.WATER).setDurabilityChance(0.50).setLuckModifier(1).build();
     //Lava
-    public static final Hook OBSIDIAN = new Hook.HookBuilder("obsidian").setColor(TextFormatting.DARK_PURPLE).setFluid(FluidTags.LAVA).build();
-    public static final Hook DOUBLE_OBSIDIAN = new Hook.HookBuilder("double_obsidian").setFluid(FluidTags.LAVA).setDoubleCatchChance(0.15).build();
-    public static final Hook GLOWSTONE = new Hook.HookBuilder("glowstone").setColor(TextFormatting.YELLOW).setFluid(FluidTags.LAVA).setLuckModifier(1).build();
-    public static final Hook QUARTZ = new Hook.HookBuilder("quartz").setFluid(FluidTags.LAVA).setDurabilityChance(0.30).build();
-    public static final Hook SOUL_SAND = new Hook.HookBuilder("soul_sand").setColor(TextFormatting.DARK_GRAY).setFluid(FluidTags.LAVA).setCatchableWindow(40, 70).build();
-    public static final Hook OBSIDIAN_NOTE = new Hook.HookBuilder("obsidian_note").setColor(TextFormatting.LIGHT_PURPLE).setFluid(FluidTags.LAVA).setCatchSound(SoundEvents.BLOCK_LAVA_EXTINGUISH).build();
+    //public static final Hook OBSIDIAN = new Hook.HookBuilder("obsidian").setColor(TextFormatting.DARK_PURPLE).setFluid(FluidTags.LAVA).build();
+    //public static final Hook DOUBLE_OBSIDIAN = new Hook.HookBuilder("double_obsidian").setFluid(FluidTags.LAVA).setDoubleCatchChance(0.15).build();
+    //public static final Hook GLOWSTONE = new Hook.HookBuilder("glowstone").setColor(TextFormatting.YELLOW).setFluid(FluidTags.LAVA).setLuckModifier(1).build();
+    //public static final Hook QUARTZ = new Hook.HookBuilder("quartz").setFluid(FluidTags.LAVA).setDurabilityChance(0.30).build();
+    //public static final Hook SOUL_SAND = new Hook.HookBuilder("soul_sand").setColor(TextFormatting.DARK_GRAY).setFluid(FluidTags.LAVA).setCatchableWindow(40, 70).build();
+    //public static final Hook OBSIDIAN_NOTE = new Hook.HookBuilder("obsidian_note").setColor(TextFormatting.LIGHT_PURPLE).setFluid(FluidTags.LAVA).setCatchSound(SoundEvents.BLOCK_LAVA_EXTINGUISH).build();
 }

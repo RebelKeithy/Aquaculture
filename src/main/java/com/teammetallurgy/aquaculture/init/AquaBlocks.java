@@ -9,6 +9,9 @@ import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
@@ -20,16 +23,25 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaBlocks {
     public static List<Block> BLOCKS = Lists.newArrayList();
-    public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", new Item.Properties());
-    public static final Block NEPTUNES_BOUNTY = register(new NeptunesBountyBlock(), "neptunes_bounty");
-    public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box");
-    public static final Block WORM_FARM = register(new WormFarmBlock(), "worm_farm", new Item.Properties().group(Aquaculture.GROUP));
+    public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", null);
+    public static final Block NEPTUNIUM_BLOCK = register(new Block(Block.Properties.create(Material.IRON, MaterialColor.CYAN).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL)), "neptunium_block");
+    public static final Block NEPTUNES_BOUNTY = registerBaseBlock(new NeptunesBountyBlock(), "neptunes_bounty");
+    public static final Block TACKLE_BOX = registerBaseBlock(new TackleBoxBlock(), "tackle_box");
+    public static final Block WORM_FARM = register(new WormFarmBlock(), "worm_farm");
+
+    /**
+     * Same as {@link AquaBlocks#register(Block, String, Item.Properties)}, but have group set by default
+     */
+    public static Block register(@Nonnull Block block, @Nonnull String name) {
+        return register(block, name, new Item.Properties());
+    }
 
     /**
      * Registers an block with a basic BlockItem
@@ -38,13 +50,13 @@ public class AquaBlocks {
      * @param name  The name to register the block with
      * @return The Block that was registered
      */
-    public static Block register(@Nonnull Block block, @Nonnull String name, Item.Properties properties) {
-        register(block, name);
-        AquaItems.register(new BlockItem(block, properties), name);
+    public static Block register(@Nonnull Block block, @Nonnull String name, @Nullable Item.Properties properties) {
+        registerBaseBlock(block, name);
+        AquaItems.register(new BlockItem(block, properties == null ? new Item.Properties() : properties.group(Aquaculture.GROUP)), name);
         return block;
     }
 
-    public static Block register(@Nonnull Block block, @Nonnull String name) {
+    public static Block registerBaseBlock(@Nonnull Block block, @Nonnull String name) {
         block.setRegistryName(new ResourceLocation(Aquaculture.MOD_ID, name));
         BLOCKS.add(block);
         return block;

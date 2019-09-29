@@ -23,7 +23,9 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> {
-    private static final ResourceLocation BOBBER = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber.png");
+    private static final ResourceLocation BOBBER = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber.png");
+    private static final ResourceLocation BOBBER_OVERLAY = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_overlay.png");
+    private static final ResourceLocation BOBBER_VANILLA = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_vanilla.png");
     private static final ResourceLocation HOOK = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/hook/hook.png");
 
     public AquaBobberRenderer(EntityRendererManager manager) {
@@ -31,14 +33,18 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
     }
 
     @Override
-    public void doRender(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) { //Render bobber and line
+    public void doRender(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z, float entityYaw, float partialTicks) { //Render bobber overlay and line
         PlayerEntity angler = bobber.getAngler();
         if (angler != null && !this.renderOutlines) {
             GlStateManager.pushMatrix();
             GlStateManager.translatef((float) x, (float) y, (float) z);
             GlStateManager.enableRescaleNormal();
             GlStateManager.scalef(0.5F, 0.5F, 0.5F);
-            this.bindEntityTexture(bobber);
+            if (bobber.hasBobber()) {
+                this.bindTexture(BOBBER_OVERLAY);
+            } else {
+                this.bindEntityTexture(bobber);
+            }
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder builder = tessellator.getBuffer();
             GlStateManager.rotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
@@ -48,11 +54,33 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(bobber));
             }
 
-            builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
-            builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).color(255, 255, 0, 0).endVertex();
-            builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).color(255, 255, 0, 0).endVertex();
-            builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).color(255, 255, 0, 0).endVertex();
-            builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).color(255, 255, 0, 0).endVertex();
+            if (bobber.hasBobber()) {
+                ItemStack bobberStack = bobber.getBobber();
+                float r = 0;
+                float g = 0;
+                float b = 0;
+                if (!bobberStack.isEmpty()) {
+                    IDyeableArmorItem dyeableItem = (IDyeableArmorItem) bobberStack.getItem();
+                    if (dyeableItem.hasColor(bobberStack)) {
+                        int colorInt = dyeableItem.getColor(bobberStack);
+                        r = (float) (colorInt >> 16 & 255) / 255.0F;
+                        g = (float) (colorInt >> 8 & 255) / 255.0F;
+                        b = (float) (colorInt & 255) / 255.0F;
+                    }
+                }
+
+                builder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
+                builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).color(r, g, b, 1.0F).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).color(r, g, b, 1.0F).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).color(r, g, b, 1.0F).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).color(r, g, b, 1.0F).normal(0.0F, 1.0F, 0.0F).endVertex();
+            } else {
+                builder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+                builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+                builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            }
             tessellator.draw();
             if (this.renderOutlines) {
                 GlStateManager.tearDownSolidRenderingTextureCombine();
@@ -177,9 +205,43 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
         }
     }
 
+    @Override
+    protected void renderName(@Nonnull AquaFishingBobberEntity bobber, double x, double y, double z) { //Render bobber background
+        PlayerEntity angler = bobber.getAngler();
+        if (angler != null && !this.renderOutlines) {
+            GlStateManager.pushMatrix();
+            GlStateManager.translatef((float) x, (float) y, (float) z);
+            GlStateManager.enableRescaleNormal();
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
+            this.bindTexture(BOBBER);
+            Tessellator tessellator = Tessellator.getInstance();
+            BufferBuilder builder = tessellator.getBuffer();
+            GlStateManager.rotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotatef((float) (this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * -this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+            if (this.renderOutlines) {
+                GlStateManager.enableColorMaterial();
+                GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(bobber));
+            }
+
+            builder.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+            builder.pos(-0.5D, -0.5D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            builder.pos(0.5D, -0.5D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            builder.pos(0.5D, 0.5D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            builder.pos(-0.5D, 0.5D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
+            tessellator.draw();
+            if (this.renderOutlines) {
+                GlStateManager.tearDownSolidRenderingTextureCombine();
+                GlStateManager.disableColorMaterial();
+            }
+
+            GlStateManager.disableRescaleNormal();
+            GlStateManager.popMatrix();
+        }
+    }
+
     @Nullable
     @Override
     protected ResourceLocation getEntityTexture(@Nonnull AquaFishingBobberEntity fishHook) {
-        return BOBBER;
+        return BOBBER_VANILLA;
     }
 }

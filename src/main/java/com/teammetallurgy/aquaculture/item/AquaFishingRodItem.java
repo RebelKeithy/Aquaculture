@@ -92,7 +92,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
                 if (hook != Hooks.EMPTY && hook.getLuckModifier() > 0) luck += hook.getLuckModifier();
 
-                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, bait, getFishingLine(heldStack)));
+                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, bait, getFishingLine(heldStack), getBobber(heldStack)));
             }
             player.swingArm(hand);
             player.addStat(Stats.ITEM_USED.get(this));
@@ -127,6 +127,12 @@ public class AquaFishingRodItem extends FishingRodItem {
         return slotStack.orElse(ItemStack.EMPTY);
     }
 
+    @Nonnull
+    public static ItemStack getBobber(@Nonnull ItemStack fishingRod) {
+        LazyOptional<ItemStack> slotStack = fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(c -> c.getStackInSlot(3));
+        return slotStack.orElse(ItemStack.EMPTY);
+    }
+
     @Override
     @Nullable
     public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt) {
@@ -150,7 +156,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     public static class FishingRodEquipmentHandler implements ICapabilityProvider {
         public static final FishingRodEquipmentHandler EMPTY = new FishingRodEquipmentHandler();
         private final LazyOptional<IItemHandler> holder = LazyOptional.of(this::getItems);
-        private final ItemStackHandler items = new ItemStackHandler(3) {
+        private final ItemStackHandler items = new ItemStackHandler(4) {
             @Override
             public int getSlotLimit(int slot) {
                 return 1;
@@ -165,6 +171,8 @@ public class AquaFishingRodItem extends FishingRodItem {
                         return stack.getItem() instanceof BaitItem;
                     case 2:
                         return stack.getItem().isIn(AquacultureAPI.Tags.FISHING_LINE) && stack.getItem() instanceof IDyeableArmorItem;
+                    case 3:
+                        return stack.getItem().isIn(AquacultureAPI.Tags.BOBBER) && stack.getItem() instanceof IDyeableArmorItem;
                     default:
                         return false;
 

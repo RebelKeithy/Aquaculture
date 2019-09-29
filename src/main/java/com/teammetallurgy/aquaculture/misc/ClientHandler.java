@@ -13,7 +13,7 @@ import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRender
 import com.teammetallurgy.aquaculture.entity.*;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import com.teammetallurgy.aquaculture.item.FishingLineItem;
+import com.teammetallurgy.aquaculture.item.DyeableItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -40,7 +40,7 @@ public class ClientHandler {
         RenderingRegistry.registerEntityRenderingHandler(FishMountEntity.class, FishMountRenderer::new);
         //Item Colors
         ItemColors itemColor = Minecraft.getInstance().getItemColors();
-        itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((FishingLineItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE);
+        itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE, AquaItems.BOBBER);
     }
 
     @SubscribeEvent

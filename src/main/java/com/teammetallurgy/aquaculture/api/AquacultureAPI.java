@@ -27,6 +27,7 @@ public class AquacultureAPI {
     public static class Tags {
         public static final Tag<Item> FILLET_KNIFE = tag("forge", "fillet_knife");
         public static final Tag<Item> FISHING_LINE = tag(Aquaculture.MOD_ID, "fishing_line");
+        public static final Tag<Item> BOBBER = tag(Aquaculture.MOD_ID, "bobber");
         public static final Tag<Item> TACKLE_BOX = tag(Aquaculture.MOD_ID, "tackle_box");
         public static final Tag<Item> TURTLE_EDIBLE = tag(Aquaculture.MOD_ID, "turtle_edible");
         public static final Tag<Item> TOOLTIP = tag(Aquaculture.MOD_ID, "tooltip");

@@ -30,6 +30,7 @@ public class TackleBoxContainer extends Container {
     public Slot slotHook;
     public Slot slotBait;
     public Slot slotLine;
+    public Slot slotBobber;
 
     public TackleBoxContainer(int windowID, BlockPos pos, PlayerInventory playerInventory) {
         super(AquaGuis.TACKLE_BOX, windowID);
@@ -38,14 +39,15 @@ public class TackleBoxContainer extends Container {
             this.tackleBox.openInventory(playerInventory.player);
             this.tackleBox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
                 SlotFishingRod fishingRod = (SlotFishingRod) addSlot(new SlotFishingRod(handler, 0, 117, 21));
-                this.slotHook = this.addSlot(new SlotHidable(fishingRod, 0, 96, 44));
-                this.slotBait = this.addSlot(new SlotHidable(fishingRod, 1, 117, 44) {
+                this.slotHook = this.addSlot(new SlotHidable(fishingRod, 0, 106, 44));
+                this.slotBait = this.addSlot(new SlotHidable(fishingRod, 1, 129, 44) {
                     @Override
                     public boolean canTakeStack(PlayerEntity player) {
                         return false;
                     }
                 });
-                this.slotLine = this.addSlot(new SlotHidable(fishingRod, 2, 138, 44));
+                this.slotLine = this.addSlot(new SlotHidable(fishingRod, 2, 106, 67));
+                this.slotBobber = this.addSlot(new SlotHidable(fishingRod, 3, 129, 67));
 
                 //Tackle Box
                 for (int column = 0; column < collumns; ++column) {
@@ -59,7 +61,6 @@ public class TackleBoxContainer extends Container {
                         });
                     }
                 }
-
             });
 
             for (int column = 0; column < 3; ++column) {

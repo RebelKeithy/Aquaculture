@@ -12,7 +12,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
-import net.minecraft.tileentity.BrewingStandTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,9 +35,11 @@ public class AquaItems {
     public static final Item DIAMOND_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.DIAMOND, new Item.Properties().defaultMaxDamage(450).group(Aquaculture.GROUP)), "diamond_fishing_rod");
     public static final Item NEPTUNIUM_FISHING_ROD = register(new AquaFishingRodItem(AquacultureAPI.MATS.NEPTUNIUM, new Item.Properties().defaultMaxDamage(1000).group(Aquaculture.GROUP)), "neptunium_fishing_rod");
     public static final Item WORM = register(AquacultureAPI.createBait(20, 1, Aquaculture.GROUP), "worm");
-    public static final Item FISHING_LINE = register(new FishingLineItem(), "fishing_line");
+    public static final Item FISHING_LINE = register(new DyeableItem(0), "fishing_line");
+    public static final Item BOBBER = register(new DyeableItem(13838890), "bobber");
 
     // Neptunium
+    public static final Item NEPTUNIUM_NUGGET = register(new SimpleItem(), "neptunium_nugget");
     public static final Item NEPTUNIUM_INGOT = register(new SimpleItem(), "neptunium_ingot");
     public static final Item NEPTUNIUM_PICKAXE = register(new NeptuniumPickaxe(AquacultureAPI.MATS.NEPTUNIUM, 1, -2.8F), "neptunium_pickaxe");
     public static final Item NEPTUNIUM_SHOVEL = register(new NeptuniumShovel(AquacultureAPI.MATS.NEPTUNIUM, 1.5F, -3.0F), "neptunium_shovel");

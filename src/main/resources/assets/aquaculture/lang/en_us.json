@@ -3,6 +3,8 @@
 
   "_comment": "Blocks",
   "block.aquaculture.fish_trap": "Fish Trap",
+  "block.aquaculture.neptunium_block": "Neptunium Block",
+  "block.aquaculture.neptunes_bounty": "Neptune's Bounty",
   "block.aquaculture.tackle_box": "Tackle Box",
   "block.aquaculture.worm_farm": "Worm Farm",
   "block.aquaculture.farmland": "Farmland",
@@ -29,6 +31,7 @@
   "item.aquaculture.soul_sand_hook": "Soul Sand Hook",
   "item.aquaculture.worm": "Worm",
   "item.aquaculture.fishing_line": "Fishing Line",
+  "item.aquaculture.bobber": "Bobber",
 
   "_comment": "Food",
   "item.aquaculture.fish_fillet_raw": "Raw Fish Fillet",
@@ -56,7 +59,7 @@
   "item.aquaculture.fish_mount": "Fish Mount",
 
   "_comment": "Neptunium",
-  "block.aquaculture.neptunes_bounty": "Neptune's Bounty",
+  "item.aquaculture.neptunium_nugget": "Neptunium Nugget",
   "item.aquaculture.neptunium_ingot": "Neptunium Ingot",
   "item.aquaculture.neptunium_pickaxe": "Neptunium Pickaxe",
   "item.aquaculture.neptunium_shovel": "Neptunium Shovel",
