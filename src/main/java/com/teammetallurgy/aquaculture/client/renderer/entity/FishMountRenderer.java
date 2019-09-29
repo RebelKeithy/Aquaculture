@@ -23,7 +23,12 @@ import java.math.MathContext;
 import java.text.DecimalFormat;
 
 public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
-    public static final ModelResourceLocation LOCATION_MODEL = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "fish_mount"), "");
+    public static final ModelResourceLocation OAK = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "oak_fish_mount"), "");
+    public static final ModelResourceLocation SPRUCE = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "spruce_fish_mount"), "");
+    public static final ModelResourceLocation BIRCH = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "birch_fish_mount"), "");
+    public static final ModelResourceLocation JUNGLE = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "jungle_fish_mount"), "");
+    public static final ModelResourceLocation ACACIA = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "acacia_fish_mount"), "");
+    public static final ModelResourceLocation DARK_OAK = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, "dark_oak_fish_mount"), "");
     private final Minecraft mc = Minecraft.getInstance();
 
     public FishMountRenderer(EntityRendererManager renderManager) {
@@ -50,7 +55,10 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
             GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(entity));
         }
 
-        rendererDispatcher.getBlockModelRenderer().renderModelBrightnessColor(modelmanager.getModel(LOCATION_MODEL), 1.0F, 1.0F, 1.0F, 1.0F);
+        if (entity.getType().getRegistryName() != null) {
+            ModelResourceLocation location = new ModelResourceLocation(entity.getType().getRegistryName(), ""); //Calling this instead of the fields for mod support
+            rendererDispatcher.getBlockModelRenderer().renderModelBrightnessColor(modelmanager.getModel(location), 1.0F, 1.0F, 1.0F, 1.0F);
+        }
         if (this.renderOutlines) {
             GlStateManager.tearDownSolidRenderingTextureCombine();
             GlStateManager.disableColorMaterial();
@@ -95,7 +103,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
                 String name = entity.entity.getDisplayName().getFormattedText();
                 this.renderLivingLabel(entity, name, x, y, z, 64);
 
-                if (stack.hasTag() && stack.getTag().contains("fishWeight")) {
+                if (stack.hasTag() && stack.getTag() != null && stack.getTag().contains("fishWeight")) {
                     double weight = stack.getTag().getDouble("fishWeight");
                     String lb = weight == 1.0D ? " lb" : " lbs";
 

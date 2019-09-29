@@ -1,8 +1,6 @@
 package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
-import com.teammetallurgy.aquaculture.init.AquaEntities;
-import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RedstoneDiodeBlock;
@@ -12,16 +10,16 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.item.HangingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -29,6 +27,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,7 +38,7 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class FishMountEntity extends HangingEntity {
+public class FishMountEntity extends HangingEntity implements IEntityAdditionalSpawnData {
     private static final Logger PRIVATE_LOGGER = LogManager.getLogger();
     private static final DataParameter<ItemStack> ITEM = EntityDataManager.createKey(FishMountEntity.class, DataSerializers.ITEMSTACK);
     private float itemDropChance = 1.0F;
@@ -49,13 +48,13 @@ public class FishMountEntity extends HangingEntity {
         super(type, world);
     }
 
-    public FishMountEntity(World worldIn, BlockPos blockPos, Direction direction) {
-        super(AquaEntities.FISH_MOUNT, worldIn, blockPos);
+    public FishMountEntity(EntityType<? extends FishMountEntity> type, World world, BlockPos blockPos, Direction direction) {
+        super(type, world, blockPos);
         this.updateFacingWithBoundingBox(direction);
     }
 
-    public FishMountEntity(FMLPlayMessages.SpawnEntity spawnEntity, World world) {
-        this(AquaEntities.FISH_MOUNT, world);
+    public FishMountEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
+        this((EntityType<? extends FishMountEntity>) ForgeRegistries.ENTITIES.getValue(spawnPacket.getAdditionalData().readResourceLocation()), world);
     }
 
     @Override
@@ -194,7 +193,7 @@ public class FishMountEntity extends HangingEntity {
             }
 
             if (shouldDropSelf) {
-                this.entityDropItem(AquaItems.FISH_MOUNT);
+                this.entityDropItem(this.getItem());
             }
 
             if (!displayStack.isEmpty()) {
@@ -204,6 +203,14 @@ public class FishMountEntity extends HangingEntity {
                 }
             }
         }
+    }
+
+    private Item getItem() {
+        ResourceLocation location = this.getType().getRegistryName();
+        if (ForgeRegistries.ITEMS.containsKey(location) && location != null) {
+            return ForgeRegistries.ITEMS.getValue(location);
+        }
+        return Items.AIR;
     }
 
     @Nonnull
@@ -313,7 +320,7 @@ public class FishMountEntity extends HangingEntity {
 
     @Override
     public ItemStack getPickedResult(RayTraceResult target) {
-        return !this.getDisplayedItem().isEmpty() ? this.getDisplayedItem() : new ItemStack(AquaItems.FISH_MOUNT);
+        return !this.getDisplayedItem().isEmpty() ? this.getDisplayedItem() : new ItemStack(this.getItem());
     }
 
     @Override
@@ -324,5 +331,14 @@ public class FishMountEntity extends HangingEntity {
         } else {
             this.updateFacingWithBoundingBox(pitch < 0 ? Direction.UP : Direction.DOWN);
         }
+    }
+
+    @Override
+    public void writeSpawnData(PacketBuffer buffer) {
+        buffer.writeResourceLocation(this.getType().getRegistryName());
+    }
+
+    @Override
+    public void readSpawnData(PacketBuffer additionalData) {
     }
 }

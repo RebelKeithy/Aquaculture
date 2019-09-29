@@ -2,12 +2,15 @@ package com.teammetallurgy.aquaculture.api;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
+import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.item.BaitItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nonnull;
 
 public class AquacultureAPI {
     /**
@@ -22,6 +25,10 @@ public class AquacultureAPI {
 
     public static BaitItem createBait(int durability, int lureSpeedModifier, ItemGroup group) {
         return new BaitItem(durability, lureSpeedModifier, group);
+    }
+
+    public static Item registerFishMount(@Nonnull String name) {
+        return FishRegistry.registerFishMount(name);
     }
 
     public static class Tags {

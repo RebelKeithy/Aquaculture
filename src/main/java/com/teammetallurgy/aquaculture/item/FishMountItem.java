@@ -1,10 +1,11 @@
 package com.teammetallurgy.aquaculture.item;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
-import com.teammetallurgy.aquaculture.init.AquaEntities;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.HangingEntityItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,9 +17,11 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 
 public class FishMountItem extends HangingEntityItem {
+    private final EntityType<? extends FishMountEntity> fishMount;
 
-    public FishMountItem(Properties properties) {
-        super(AquaEntities.FISH_MOUNT, properties);
+    public FishMountItem(EntityType<? extends FishMountEntity> entityType) {
+        super(entityType, new Item.Properties().group(Aquaculture.GROUP));
+        this.fishMount = entityType;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class FishMountItem extends HangingEntityItem {
             return ActionResultType.FAIL;
         } else {
             World world = context.getWorld();
-            FishMountEntity fishMountEntity = new FishMountEntity(world, offset, direction);
+            FishMountEntity fishMountEntity = new FishMountEntity(this.fishMount, world, offset, direction);
 
             CompoundNBT tag = useStack.getTag();
             if (tag != null) {

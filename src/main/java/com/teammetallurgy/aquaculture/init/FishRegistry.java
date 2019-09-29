@@ -3,7 +3,9 @@ package com.teammetallurgy.aquaculture.init;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
+import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
+import com.teammetallurgy.aquaculture.item.FishMountItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -21,6 +23,16 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FishRegistry {
     public static List<EntityType> fishEntities = Lists.newArrayList();
+
+    public static Item registerFishMount(@Nonnull String name) {
+        EntityType.Builder<FishMountEntity> fishMountBuilder = EntityType.Builder.<FishMountEntity>create(FishMountEntity::new, EntityClassification.MISC)
+                .size(0.5F, 0.5F)
+                .setCustomClientFactory(FishMountEntity::new);
+        EntityType<FishMountEntity> fishMount = AquaEntities.register(name, fishMountBuilder);
+        FishMountItem fishMountItem = new FishMountItem(fishMount);
+        AquaItems.register(fishMountItem, name);
+        return fishMountItem;
+    }
 
     /**
      * Same as {@link #register(Item, String, FishType)}, but with default size

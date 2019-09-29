@@ -27,7 +27,12 @@ public class AquaItems {
     public static List<Item> ITEMS = Lists.newArrayList();
 
     //Fish Mounting
-    public static final Item FISH_MOUNT = register(new FishMountItem(new Item.Properties().group(Aquaculture.GROUP)), "fish_mount");
+    public static final Item OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("oak_fish_mount");
+    public static final Item SPRUCE_FISH_MOUNT = AquacultureAPI.registerFishMount("spruce_fish_mount");
+    public static final Item BIRCH_FISH_MOUNT = AquacultureAPI.registerFishMount("birch_fish_mount");
+    public static final Item JUNGLE_FISH_MOUNT = AquacultureAPI.registerFishMount("jungle_fish_mount");
+    public static final Item ACACIA_FISH_MOUNT = AquacultureAPI.registerFishMount("acacia_fish_mount");
+    public static final Item DARK_OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("dark_oak_fish_mount");
 
     //Fishing
     public static final Item IRON_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.IRON, new Item.Properties().defaultMaxDamage(125).group(Aquaculture.GROUP)), "iron_fishing_rod");

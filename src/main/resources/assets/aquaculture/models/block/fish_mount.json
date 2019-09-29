@@ -1,9 +1,6 @@
 {
     "parent": "minecraft:block/block",
     "ambientocclusion": false,
-    "textures": {
-        "wood": "minecraft:block/birch_planks"
-    },
     "elements": [
         {
             "from": [ 2, 4, 14 ],

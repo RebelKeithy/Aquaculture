@@ -21,11 +21,6 @@
     "aquaculture:double_hook",
     "aquaculture:redstone_hook",
     "aquaculture:note_hook",
-    "aquaculture:nether_star_hook",
-    "aquaculture:double_obsidian_hook",
-    "aquaculture:glowstone_hook",
-    "aquaculture:quartz_hook",
-    "aquaculture:soul_sand_hook",
-    "aquaculture:obsidian_note_hook"
+    "aquaculture:nether_star_hook"
   ]
 }

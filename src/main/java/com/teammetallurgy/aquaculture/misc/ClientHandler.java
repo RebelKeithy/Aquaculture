@@ -45,6 +45,11 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        ModelLoader.addSpecialModel(FishMountRenderer.LOCATION_MODEL);
+        ModelLoader.addSpecialModel(FishMountRenderer.OAK);
+        ModelLoader.addSpecialModel(FishMountRenderer.SPRUCE);
+        ModelLoader.addSpecialModel(FishMountRenderer.BIRCH);
+        ModelLoader.addSpecialModel(FishMountRenderer.JUNGLE);
+        ModelLoader.addSpecialModel(FishMountRenderer.ACACIA);
+        ModelLoader.addSpecialModel(FishMountRenderer.DARK_OAK);
     }
 }

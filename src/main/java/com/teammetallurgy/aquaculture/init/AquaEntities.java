@@ -3,7 +3,6 @@ package com.teammetallurgy.aquaculture.init;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
-import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
 import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
@@ -42,9 +41,6 @@ public class AquaEntities {
             .setTrackingRange(4)
             .setUpdateInterval(5)
             .setCustomClientFactory(AquaFishingBobberEntity::new));
-    public static final EntityType<FishMountEntity> FISH_MOUNT = register("fish_mount", EntityType.Builder.<FishMountEntity>create(FishMountEntity::new, EntityClassification.MISC)
-            .size(0.5F, 0.5F)
-            .setCustomClientFactory(FishMountEntity::new));
     public static final EntityType<WaterArrowEntity> WATER_ARROW = register("water_arrow", EntityType.Builder.<WaterArrowEntity>create(WaterArrowEntity::new, EntityClassification.MISC)
             .size(0.5F, 0.5F)
             .setCustomClientFactory(WaterArrowEntity::new));
@@ -78,7 +74,7 @@ public class AquaEntities {
         return entityType;
     }
 
-    private static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {
+    public static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {
         ResourceLocation location = new ResourceLocation(Aquaculture.MOD_ID, name);
         EntityType<T> entityType = builder.build(location.toString());
         entityType.setRegistryName(location);

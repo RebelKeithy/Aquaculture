@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "aquaculture:item/fish_mount"
+        "layer0": "aquaculture:item/spruce_fish_mount"
     }
 }
