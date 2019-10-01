@@ -19,7 +19,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -255,7 +254,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
             ItemStack displayStack = this.getDisplayedItem();
             if (displayStack != null && !displayStack.isEmpty()) {
                 EntityType entityType = ForgeRegistries.ENTITIES.getValue(displayStack.getItem().getRegistryName());
-                if (entityType != null) {
+                if (entityType != null && entityType != EntityType.PIG) {
                     this.entity = entityType.create(this.world);
                 }
             } else {
@@ -302,7 +301,9 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         ItemStack heldStack = player.getHeldItem(hand);
         if (!this.world.isRemote) {
             if (this.getDisplayedItem().isEmpty()) {
-                if (!heldStack.isEmpty() && heldStack.getItem().isIn(ItemTags.FISHES) && AquacultureAPI.FISH_DATA.getFish().contains(heldStack.getItem())) {
+                Item heldItem = heldStack.getItem();
+                EntityType entityType = ForgeRegistries.ENTITIES.getValue(heldItem.getRegistryName());
+                if (entityType != EntityType.PIG && AquacultureAPI.FISH_DATA.getFish().contains(heldItem)) {
                     this.setDisplayedItem(heldStack);
                     if (!player.abilities.isCreativeMode) {
                         heldStack.shrink(1);

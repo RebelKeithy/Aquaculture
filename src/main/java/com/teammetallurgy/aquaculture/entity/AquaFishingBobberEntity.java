@@ -137,9 +137,9 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
                 builder.withParameter(LootParameters.KILLER_ENTITY, this.angler).withParameter(LootParameters.THIS_ENTITY, this);
 
                 List<ItemStack> lootEntries = getLoot(builder, serverWorld);
-                if (lootEntries.isEmpty()) { //TODO for debug purposes
+                if (lootEntries.isEmpty()) {
                     if (!this.world.isAirBlock(new BlockPos(this))) {
-                        Aquaculture.LOG.error("Loot was empty in Biome: " + this.world.getBiome(new BlockPos(this)) + ". This is an issue, please tell Girafi how you managed to do it");
+                        Aquaculture.LOG.error("Loot was empty in Biome: " + this.world.getBiome(new BlockPos(this)) + ". Please report on Github");
                     }
                 }
                 if (!lootEntries.isEmpty()) {
