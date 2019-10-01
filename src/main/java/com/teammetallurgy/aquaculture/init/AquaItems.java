@@ -26,14 +26,6 @@ import java.util.List;
 public class AquaItems {
     public static List<Item> ITEMS = Lists.newArrayList();
 
-    //Fish Mounting
-    public static final Item OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("oak_fish_mount");
-    public static final Item SPRUCE_FISH_MOUNT = AquacultureAPI.registerFishMount("spruce_fish_mount");
-    public static final Item BIRCH_FISH_MOUNT = AquacultureAPI.registerFishMount("birch_fish_mount");
-    public static final Item JUNGLE_FISH_MOUNT = AquacultureAPI.registerFishMount("jungle_fish_mount");
-    public static final Item ACACIA_FISH_MOUNT = AquacultureAPI.registerFishMount("acacia_fish_mount");
-    public static final Item DARK_OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("dark_oak_fish_mount");
-
     //Fishing
     public static final Item IRON_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.IRON, new Item.Properties().defaultMaxDamage(125).group(Aquaculture.GROUP)), "iron_fishing_rod");
     public static final Item GOLD_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.GOLD, new Item.Properties().defaultMaxDamage(55).group(Aquaculture.GROUP)), "gold_fishing_rod");
@@ -58,7 +50,7 @@ public class AquaItems {
     public static final Item NEPTUNIUM_BOOTS = register(new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlotType.FEET).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
 
     // Fillet Knifes
-    public static final Item WOOD_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.WOOD), "wood_fillet_knife");
+    public static final Item WOODEN_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.WOOD), "wooden_fillet_knife");
     public static final Item STONE_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.STONE), "stone_fillet_knife");
     public static final Item IRON_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.IRON), "iron_fillet_knife");
     public static final Item GOLD_FILLET_KNIFE = register(new ItemFilletKnife(ItemTier.GOLD), "gold_fillet_knife");
@@ -123,6 +115,14 @@ public class AquaItems {
     //Block Items - Have to be specified here, when using a TEISR
     public static final Item NEPTUNES_BOUNTY = register(new BlockItem(AquaBlocks.NEPTUNES_BOUNTY, new Item.Properties().group(Aquaculture.GROUP).setTEISR(() -> AquatemRenderer::new)), "neptunes_bounty");
     public static final Item TACKLE_BOX = register(new BlockItem(AquaBlocks.TACKLE_BOX, new Item.Properties().maxStackSize(1).group(Aquaculture.GROUP).setTEISR(() -> AquatemRenderer::new)), "tackle_box");
+
+    //Fish Mounting
+    public static final Item OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("oak_fish_mount");
+    public static final Item SPRUCE_FISH_MOUNT = AquacultureAPI.registerFishMount("spruce_fish_mount");
+    public static final Item BIRCH_FISH_MOUNT = AquacultureAPI.registerFishMount("birch_fish_mount");
+    public static final Item JUNGLE_FISH_MOUNT = AquacultureAPI.registerFishMount("jungle_fish_mount");
+    public static final Item ACACIA_FISH_MOUNT = AquacultureAPI.registerFishMount("acacia_fish_mount");
+    public static final Item DARK_OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("dark_oak_fish_mount");
 
     /**
      * Registers an item
