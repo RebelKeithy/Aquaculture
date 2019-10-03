@@ -32,8 +32,8 @@ import static com.teammetallurgy.aquaculture.misc.AquaConfig.Helper;
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaEntities {
-    public static List<EntityType> entities = Lists.newArrayList();
-    public static List<EntityType> mobs = Lists.newArrayList();
+    private static List<EntityType> entities = Lists.newArrayList();
+    private static List<EntityType> mobs = Lists.newArrayList();
     public static final EntityType<AquaFishingBobberEntity> BOBBER = register("bobber", EntityType.Builder.<AquaFishingBobberEntity>create(EntityClassification.MISC)
             .disableSerialization()
             .disableSummoning()

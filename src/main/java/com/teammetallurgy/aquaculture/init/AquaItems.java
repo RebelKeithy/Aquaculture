@@ -24,7 +24,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaItems {
-    public static List<Item> ITEMS = Lists.newArrayList();
+    private static List<Item> ITEMS = Lists.newArrayList();
 
     //Fishing
     public static final Item IRON_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.IRON, new Item.Properties().defaultMaxDamage(125).group(Aquaculture.GROUP)), "iron_fishing_rod");

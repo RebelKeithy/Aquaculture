@@ -131,6 +131,6 @@ public class FishFilletRecipe extends SpecialRecipe {
 
     @SubscribeEvent
     public static void registerRecipe(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        //event.getRegistry().register(FISH_FILLET_SERIALIZER);
+        event.getRegistry().register(FISH_FILLET_SERIALIZER);
     }
 }

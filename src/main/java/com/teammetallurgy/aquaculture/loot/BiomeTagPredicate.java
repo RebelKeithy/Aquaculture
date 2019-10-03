@@ -26,8 +26,8 @@ public class BiomeTagPredicate {
     private final MinMaxBounds.FloatBound x;
     private final MinMaxBounds.FloatBound y;
     private final MinMaxBounds.FloatBound z;
-    public final List<BiomeDictionary.Type> include;
-    public final List<BiomeDictionary.Type> exclude;
+    private final List<BiomeDictionary.Type> include;
+    private final List<BiomeDictionary.Type> exclude;
     public final boolean and;
 
     public BiomeTagPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
@@ -47,7 +47,7 @@ public class BiomeTagPredicate {
         } else if (!this.z.test(z)) {
             return false;
         } else {
-            BlockPos pos = new BlockPos((double) x, (double) y, (double) z);
+            BlockPos pos = new BlockPos(x, y, z);
             return getValidBiomes(this.include, this.exclude, this.and).contains(world.getBiome(pos));
         }
     }

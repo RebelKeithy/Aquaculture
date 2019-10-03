@@ -14,12 +14,12 @@ public class AquaConfig {
     public static final NeptuniumOptions NEPTUNIUM_OPTIONS = new NeptuniumOptions(BUILDER);
 
     public static class BasicOptions {
-        public static final String BASIC_OPTIONS = "basic options";
+        static final String BASIC_OPTIONS = "basic options";
         public ForgeConfigSpec.BooleanValue enableFishSpawning;
         public ForgeConfigSpec.BooleanValue randomWeight;
         public ForgeConfigSpec.BooleanValue debugMode;
 
-        public BasicOptions(ForgeConfigSpec.Builder builder) {
+        BasicOptions(ForgeConfigSpec.Builder builder) {
             builder.push(BASIC_OPTIONS);
             enableFishSpawning = builder.comment("Enable fish mob spawning? Weight & biomes can be modified in the Aquaculture fish loot table").define("Enable fish spawning?", true);
             randomWeight = builder.define("Enable weight for fish? Useful for fishing competitions", false);
@@ -29,12 +29,12 @@ public class AquaConfig {
     }
 
     public static class NeptuniumOptions {
-        public static final String NEPTUNIUM_OPTIONS = "neptunium options";
+        static final String NEPTUNIUM_OPTIONS = "neptunium options";
         public ForgeConfigSpec.BooleanValue enableNeptuniumItems;
         public ForgeConfigSpec.BooleanValue enableNeptuniumArmor;
         public ForgeConfigSpec.BooleanValue addNeptunesBountyToLoot;
 
-        public NeptuniumOptions(ForgeConfigSpec.Builder builder) {
+        NeptuniumOptions(ForgeConfigSpec.Builder builder) {
             builder.push(NEPTUNIUM_OPTIONS);
             enableNeptuniumItems = builder.define("Enable recipes for Neptunium items?", true);
             enableNeptuniumArmor = builder.define("Enable recipes for Neptunium armor?", true);
@@ -66,7 +66,7 @@ public class AquaConfig {
     public static ForgeConfigSpec spec = BUILDER.build();
 
     public static class Helper {
-        public static final FileConfig CONFIG_FILE = FileConfig.of(new File(FMLPaths.CONFIGDIR.get().toFile(), "aquaculture-common.toml"));
+        private static final FileConfig CONFIG_FILE = FileConfig.of(new File(FMLPaths.CONFIGDIR.get().toFile(), "aquaculture-common.toml"));
 
         public static <T> T get(String category, String subCategory, String value) {
             return get(category + "." + subCategory, value);

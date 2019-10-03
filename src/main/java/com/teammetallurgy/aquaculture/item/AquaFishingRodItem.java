@@ -104,7 +104,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     public static Hook getHookType(@Nonnull ItemStack fishingRod) {
         Hook hook = Hooks.EMPTY;
         ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(AquaFishingRodItem.FishingRodEquipmentHandler.EMPTY.getItems());
-        if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag().contains("Inventory")) {
+        if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
             rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
         }
 
