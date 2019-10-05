@@ -54,7 +54,7 @@ public class ItemFilletKnife extends SwordItem {
         Multimap<String, AttributeModifier> map = HashMultimap.create();
         if (slotType == EquipmentSlotType.MAINHAND) {
             map.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
-            map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) -2.2F, AttributeModifier.Operation.ADDITION));
+            map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.2F, AttributeModifier.Operation.ADDITION));
         }
         return map;
     }
