@@ -73,7 +73,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         this.renderFish(entity, x, y, z);
         GlStateManager.enableLighting();
         GlStateManager.popMatrix();
-        if (entity.getDistanceSq(mc.objectMouseOver.getHitVec()) < 0.24D) {
+        if (!this.mc.gameSettings.hideGUI && entity.getDistanceSq(mc.objectMouseOver.getHitVec()) < 0.24D) {
             this.renderName(entity, x + (double) ((float) entity.getHorizontalFacing().getXOffset() * 0.3F), y - 0.25D, z + (double) ((float) entity.getHorizontalFacing().getZOffset() * 0.3F));
         }
     }
