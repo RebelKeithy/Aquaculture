@@ -25,7 +25,7 @@ import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(value = Aquaculture.MOD_ID)
-public class FishFilletRecipe extends SpecialRecipe { //Statically loaded by Bus Subscriber
+public class FishFilletRecipe extends SpecialRecipe { //Statically loaded by EventBusSubscriber
     private static final SpecialRecipeSerializer<FishFilletRecipe> FISH_FILLET_SERIALIZER = IRecipeSerializer.register(Aquaculture.MOD_ID + ":crafting_special_fish_fillet", new SpecialRecipeSerializer<>(FishFilletRecipe::new));
 
     private FishFilletRecipe(ResourceLocation location) {
