@@ -16,16 +16,16 @@ import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ObjectHolder;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class FishFilletRecipe extends SpecialRecipe {
+@ObjectHolder(value = Aquaculture.MOD_ID)
+public class FishFilletRecipe extends SpecialRecipe { //Statically loaded by Bus Subscriber
     private static final SpecialRecipeSerializer<FishFilletRecipe> FISH_FILLET_SERIALIZER = IRecipeSerializer.register(Aquaculture.MOD_ID + ":crafting_special_fish_fillet", new SpecialRecipeSerializer<>(FishFilletRecipe::new));
 
     private FishFilletRecipe(ResourceLocation location) {
@@ -127,10 +127,5 @@ public class FishFilletRecipe extends SpecialRecipe {
     @Override
     public boolean canFit(int width, int height) {
         return width * height >= 2;
-    }
-
-    @SubscribeEvent
-    public static void registerRecipe(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        event.getRegistry().register(FISH_FILLET_SERIALIZER);
     }
 }

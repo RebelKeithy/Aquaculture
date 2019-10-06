@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[27,)"
+loaderVersion="[28,)"
 
 [[mods]]
     modId="aquaculture"
@@ -16,6 +16,6 @@ loaderVersion="[27,)"
 [[dependencies.aquaculture]]
     modId="forge"
     mandatory=true
-    versionRange="[28.0.90,)"
+    versionRange="[28.1,)"
     ordering="AFTER"
     side="BOTH"
