@@ -21,6 +21,11 @@ public class BaitItem extends Item {
     }
 
     @Override
+    public boolean isDamageable() {
+        return this.durability > 0;
+    }
+
+    @Override
     public int getMaxDamage(ItemStack stack) {
         return this.durability;
     }

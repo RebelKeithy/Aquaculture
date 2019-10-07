@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.AquaLootTables;
+import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import com.teammetallurgy.aquaculture.item.HookItem;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -39,6 +40,7 @@ import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
     private final ItemStack bait;
     private final ItemStack fishingLine;
     private final ItemStack bobber;
+    private final ItemStack fishingRod;
     private final int luck;
 
     public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
@@ -65,9 +68,10 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
         this.bait = buf.readItemStack();
         this.fishingLine = buf.readItemStack();
         this.bobber = buf.readItemStack();
+        this.fishingRod = buf.readItemStack();
     }
 
-    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack bait, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber) {
+    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack bait, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod) {
         super(player, world, luck, lureSpeed);
         this.luck = luck;
         this.angler.fishingBobber = this;
@@ -75,6 +79,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
         this.bait = bait;
         this.fishingLine = fishingLine;
         this.bobber = bobber;
+        this.fishingRod = rod;
         if (this.hasHook() && hook.getWeight() != null) {
             this.setMotion(this.getMotion().mul(hook.getWeight()));
         }
@@ -165,12 +170,14 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
 
                     //Bait
                     if (!this.angler.isCreative()) {
-                        ItemStack bait = this.getBait();
+                        ItemStackHandler rodHandler = AquaFishingRodItem.getHandler(this.fishingRod);
+                        ItemStack bait = rodHandler.getStackInSlot(1);
                         if (!bait.isEmpty()) {
-                            if (bait.attemptDamageItem(1, world.rand, null)) {
+                            if (bait.attemptDamageItem(1, this.world.rand, null)) {
                                 bait.shrink(1);
                                 this.playSound(SoundEvents.ITEM_TRIDENT_HIT_GROUND, 0.7F, 0.2F);
                             }
+                            rodHandler.setStackInSlot(1, bait);
                         }
                     }
                     rodDamage = 1;
@@ -471,6 +478,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
         buffer.writeItemStack(this.bait);
         buffer.writeItemStack(this.fishingLine);
         buffer.writeItemStack(this.bobber);
+        buffer.writeItemStack(this.fishingRod);
     }
 
     @Override
