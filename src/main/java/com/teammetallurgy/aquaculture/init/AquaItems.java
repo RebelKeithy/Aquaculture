@@ -72,8 +72,8 @@ public class AquaItems {
     public static final Item COOKED_FILLET = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.FISH_FILLET)), "fish_fillet_cooked");
     public static final Item FROG_LEGS = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.FISH_RAW)), "frog_legs_raw");
     public static final Item COOKED_FROG_LEGS = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.FROG_LEGS)), "frog_legs_cooked");
-    public static final Item TURTLE_SOUP = register(new SoupItem(new Item.Properties().group(Aquaculture.GROUP).food(Foods.MUSHROOM_STEW)), "turtle_soup");
-    public static final Item SUSHI = register(new SoupItem(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.SUSHI)), "sushi");
+    public static final Item TURTLE_SOUP = register(new SoupItem(new Item.Properties().maxStackSize(1).group(Aquaculture.GROUP).food(Foods.MUSHROOM_STEW)), "turtle_soup");
+    public static final Item SUSHI = register(new Item(new Item.Properties().group(Aquaculture.GROUP).food(AquaFoods.SUSHI)), "sushi");
 
     // Fish
     public static final Item ATLANTIC_COD = FishRegistry.register(new SimpleItem(), "atlantic_cod");
