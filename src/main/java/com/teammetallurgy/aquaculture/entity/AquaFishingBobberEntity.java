@@ -49,7 +49,6 @@ import java.util.List;
 
 public class AquaFishingBobberEntity extends FishingBobberEntity implements IEntityAdditionalSpawnData {
     private final Hook hook;
-    private final ItemStack bait;
     private final ItemStack fishingLine;
     private final ItemStack bobber;
     private final ItemStack fishingRod;
@@ -65,18 +64,16 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
         } else {
             this.hook = Hooks.EMPTY;
         }
-        this.bait = buf.readItemStack();
         this.fishingLine = buf.readItemStack();
         this.bobber = buf.readItemStack();
         this.fishingRod = buf.readItemStack();
     }
 
-    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack bait, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod) {
+    public AquaFishingBobberEntity(PlayerEntity player, World world, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod) {
         super(player, world, luck, lureSpeed);
         this.luck = luck;
         this.angler.fishingBobber = this;
         this.hook = hook;
-        this.bait = bait;
         this.fishingLine = fishingLine;
         this.bobber = bobber;
         this.fishingRod = rod;
@@ -92,11 +89,6 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
 
     public boolean hasHook() {
         return this.hook != Hooks.EMPTY;
-    }
-
-    @Nonnull
-    public ItemStack getBait() {
-        return this.bait;
     }
 
     @Nonnull
@@ -475,7 +467,6 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
         buffer.writeUniqueId(this.getAngler().getUniqueID());
         buffer.writeInt(this.luck);
         buffer.writeString(this.hook.getName() == null ? "" : this.hook.getName());
-        buffer.writeItemStack(this.bait);
         buffer.writeItemStack(this.fishingLine);
         buffer.writeItemStack(this.bobber);
         buffer.writeItemStack(this.fishingRod);

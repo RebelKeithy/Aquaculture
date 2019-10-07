@@ -95,7 +95,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
                 if (hook != Hooks.EMPTY && hook.getLuckModifier() > 0) luck += hook.getLuckModifier();
 
-                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, bait, getFishingLine(heldStack), getBobber(heldStack), heldStack));
+                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack));
             }
             player.swingArm(hand);
             player.addStat(Stats.ITEM_USED.get(this));
