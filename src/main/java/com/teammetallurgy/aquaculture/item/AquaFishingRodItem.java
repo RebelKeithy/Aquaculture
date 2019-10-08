@@ -8,10 +8,7 @@ import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTier;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
@@ -173,7 +170,18 @@ public class AquaFishingRodItem extends FishingRodItem {
 
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return true;
+                switch (slot) {
+                    case 0:
+                        return stack.getItem() instanceof HookItem;
+                    case 1:
+                        return stack.getItem() instanceof BaitItem;
+                    case 2:
+                        return stack.getItem().isIn(AquacultureAPI.Tags.FISHING_LINE) && stack.getItem() instanceof IDyeableArmorItem;
+                    case 3:
+                        return stack.getItem().isIn(AquacultureAPI.Tags.BOBBER) && stack.getItem() instanceof IDyeableArmorItem;
+                    default:
+                        return false;
+                }
             }
 
             @Override

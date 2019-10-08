@@ -29,6 +29,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -89,9 +90,9 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
                 if (player.isSneaking()) {
                     TileEntity tileEntity = world.getTileEntity(pos);
                     if (tileEntity != null) {
-                        StackHelper.giveItem(serverPlayer, hand, StackHelper.storeTEInStack(new ItemStack(this), tileEntity));
+                        StackHelper.giveItem(serverPlayer, StackHelper.storeTEInStack(new ItemStack(this), tileEntity));
                         world.removeBlock(pos, false);
-                        world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                        world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 0.6F, 0.8F);
                     }
                 } else {
                     NetworkHooks.openGui(serverPlayer, container, pos);
@@ -122,7 +123,6 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
     @Override
     public void onReplaced(BlockState state, @Nonnull World world, @Nonnull BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
-            this.dropInventory(world, pos);
             world.updateComparatorOutputLevel(pos, this);
             super.onReplaced(state, world, pos, newState, isMoving);
         }
@@ -150,7 +150,12 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
 
     @Override
     public int getComparatorInputOverride(BlockState state, World world, BlockPos pos) {
-        return ItemHandlerHelper.calcRedstoneFromInventory(world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElse(null));
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof TackleBoxTileEntity) {
+            LazyOptional<Integer> redstone = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
+            return redstone.orElse(0);
+        }
+        return 0;
     }
 
     @Override

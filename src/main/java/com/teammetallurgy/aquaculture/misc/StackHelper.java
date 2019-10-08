@@ -19,7 +19,7 @@ public class StackHelper {
     /*
      * Gives the specified ItemStack to the player
      */
-    public static void giveItem(PlayerEntity player, Hand hand, @Nonnull ItemStack stack) {
+    public static void giveItem(PlayerEntity player, @Nonnull ItemStack stack) {
         if (!player.inventory.addItemStackToInventory(stack)) {
             player.dropItem(stack, false);
         } else if (player instanceof ServerPlayerEntity) {
