@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.IDyeableArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
@@ -56,7 +57,9 @@ public class TackleBoxContainer extends Container {
                             @Override
                             public boolean isItemValid(@Nonnull ItemStack stack) {
                                 Item item = stack.getItem();
-                                return item.isIn(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem || item.isIn(AquacultureAPI.Tags.FISHING_LINE);
+                                boolean isDyeable = stack.getItem() instanceof IDyeableArmorItem;
+                                return item.isIn(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem ||
+                                        item.isIn(AquacultureAPI.Tags.FISHING_LINE) && isDyeable || item.isIn(AquacultureAPI.Tags.BOBBER) && isDyeable;
                             }
                         });
                     }
