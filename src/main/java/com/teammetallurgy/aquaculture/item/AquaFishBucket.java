@@ -46,16 +46,11 @@ public class AquaFishBucket extends FishBucketItem {
                     return super.onItemRightClick(world, player, hand);
                 } else if (world.isBlockModifiable(player, pos) && player.canPlayerEdit(pos, blockRaytrace.getFace(), heldStack)) {
                     Entity fishEntity = this.fishType.spawn(world, heldStack, null, pos, SpawnReason.BUCKET, true, false);
-                    if (fishEntity instanceof AbstractFishEntity) {
-                        if (!player.abilities.isCreativeMode) {
-                            heldStack.shrink(1);
-                        }
+                    if (fishEntity != null) {
                         ((AbstractFishEntity) fishEntity).setFromBucket(true);
-                        player.addStat(Stats.ITEM_USED.get(this));
-                        return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
-                    } else {
-                        return new ActionResult<>(ActionResultType.PASS, heldStack);
                     }
+                    player.addStat(Stats.ITEM_USED.get(this));
+                    return new ActionResult<>(ActionResultType.SUCCESS, this.emptyBucket(heldStack, player));
                 } else {
                     return new ActionResult<>(ActionResultType.FAIL, heldStack);
                 }
