@@ -6,18 +6,27 @@ import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
 import com.teammetallurgy.aquaculture.item.FishMountItem;
+import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -69,5 +78,30 @@ public class FishRegistry {
             event.getRegistry().register(entityType);
             EntitySpawnPlacementRegistry.register(entityType, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
         }
+    }
+
+    public static void addCatBreeding() {
+        try {
+            Field catItems = ObfuscationReflectionHelper.findField(CatEntity.class, "field_213426_bE");
+            Field ocelotItems = ObfuscationReflectionHelper.findField(OcelotEntity.class, "field_195402_bB");
+            List<ItemStack> aquaFish = new ArrayList<>();
+            fishEntities.forEach(f -> aquaFish.add(new ItemStack(ForgeRegistries.ITEMS.getValue(f.getRegistryName()))));
+            aquaFish.removeIf(p -> p.getItem().equals(AquaItems.JELLYFISH));
+
+            setFinalStatic(catItems, StackHelper.mergeIngredient(CatEntity.BREEDING_ITEMS, StackHelper.ingredientFromStackList(aquaFish)));
+            setFinalStatic(ocelotItems, StackHelper.mergeIngredient(OcelotEntity.BREEDING_ITEMS, StackHelper.ingredientFromStackList(aquaFish)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void setFinalStatic(Field field, Object newValue) throws Exception {
+        field.setAccessible(true);
+
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+        field.set(null, newValue);
     }
 }

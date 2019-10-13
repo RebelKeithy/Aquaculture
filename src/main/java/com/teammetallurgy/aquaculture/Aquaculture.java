@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture;
 
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
@@ -53,6 +54,7 @@ public class Aquaculture {
         AquaEntities.setSpawnPlacement();
         DeferredWorkQueue.runLater(AquaEntities::addEntitySpawns);
         DeferredWorkQueue.runLater(FishReadFromJson::addFishSpawns);
+        FishRegistry.addCatBreeding();
     }
 
     private void setupClient(FMLClientSetupEvent event) {
