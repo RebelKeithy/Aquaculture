@@ -101,6 +101,11 @@ public class AquaFishingRodItem extends FishingRodItem {
         return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
     }
 
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+        return this.material.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+    }
+
     @Nonnull
     public static Hook getHookType(@Nonnull ItemStack fishingRod) {
         Hook hook = Hooks.EMPTY;

@@ -85,6 +85,8 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
     }
 
     public static boolean canSpawnHere(EntityType<? extends AbstractFishEntity> fish, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return world.getBlockState(pos).getBlock() == Blocks.WATER;
+        boolean isNeighborWater = world.getBlockState(pos.north()).getBlock() == Blocks.WATER || world.getBlockState(pos.south()).getBlock() == Blocks.WATER  ||
+                world.getBlockState(pos.west()).getBlock() == Blocks.WATER  || world.getBlockState(pos.east()).getBlock() == Blocks.WATER;
+        return world.getBlockState(pos).getBlock() == Blocks.WATER && isNeighborWater;
     }
 }
