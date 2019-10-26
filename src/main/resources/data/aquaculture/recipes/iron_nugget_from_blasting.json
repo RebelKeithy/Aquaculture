@@ -2,46 +2,10 @@
   "type": "minecraft:blasting",
   "ingredient": [
     {
-      "item": "minecraft:iron_pickaxe"
+      "item": "aquaculture:iron_fishing_rod"
     },
     {
-      "item": "minecraft:iron_shovel"
-    },
-    {
-      "item": "minecraft:iron_axe"
-    },
-    {
-      "item": "minecraft:iron_hoe"
-    },
-    {
-      "item": "minecraft:iron_sword"
-    },
-    {
-      "item": "minecraft:iron_helmet"
-    },
-    {
-      "item": "minecraft:iron_chestplate"
-    },
-    {
-      "item": "minecraft:iron_leggings"
-    },
-    {
-      "item": "minecraft:iron_boots"
-    },
-    {
-      "item": "minecraft:iron_horse_armor"
-    },
-    {
-      "item": "minecraft:chainmail_helmet"
-    },
-    {
-      "item": "minecraft:chainmail_chestplate"
-    },
-    {
-      "item": "minecraft:chainmail_leggings"
-    },
-    {
-      "item": "minecraft:chainmail_boots"
+      "item": "aquaculture:iron_fillet_knife"
     }
   ],
   "result": "minecraft:iron_nugget",
