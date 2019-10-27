@@ -7,7 +7,7 @@ import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import com.teammetallurgy.aquaculture.misc.ClientHandler;
+import com.teammetallurgy.aquaculture.client.ClientHandler;
 import cpw.mods.modlauncher.Environment;
 import cpw.mods.modlauncher.Launcher;
 import net.minecraft.item.ItemGroup;
