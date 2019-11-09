@@ -393,7 +393,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
                         serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, -xOffset, 0.01D, zOffset, 1.0D);
                     }
                     if (this.hasHook() && this.hook.getCatchSound() != null) {
-                        this.world.playSound(null, this.posX, this.posY, this.posZ, this.hook.getCatchSound(), this.getSoundCategory(), 0.20F, 0.1F);
+                        this.world.playSound(null, this.getAngler() != null ? this.getAngler().getPosition() : this.getPosition(), this.hook.getCatchSound(), this.getSoundCategory(), 0.1F, 0.1F);
                     }
                 } else {
                     Vec3d motion = this.getMotion();
