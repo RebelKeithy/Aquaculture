@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.misc;
+package com.teammetallurgy.aquaculture.client;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
