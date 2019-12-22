@@ -52,8 +52,8 @@ public class Aquaculture {
         LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
         FishWeightHandler.registerFishData();
         AquaEntities.setSpawnPlacement();
-        DeferredWorkQueue.runLater(AquaEntities::addEntitySpawns);
-        DeferredWorkQueue.runLater(FishReadFromJson::addFishSpawns);
+        //DeferredWorkQueue.runLater(AquaEntities::addEntitySpawns);
+        //DeferredWorkQueue.runLater(FishReadFromJson::addFishSpawns); //TODO Readd when movement bug is fixed
         FishRegistry.addCatBreeding();
     }
 

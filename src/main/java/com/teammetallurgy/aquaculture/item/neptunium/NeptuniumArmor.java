@@ -31,7 +31,7 @@ public class NeptuniumArmor extends ArmorItem {
             } else if (this.slot == EquipmentSlotType.CHEST) {
                 player.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, 1, 0, false, false, false));
             } else if (this.slot == EquipmentSlotType.LEGS) {
-                if (!player.isSneaking()) {
+                if (!player.isCrouching()) {
                     player.setMotion(player.getMotion().add(0, player.fallDistance, 0));
                 }
             } else if (this.slot == EquipmentSlotType.FEET) {
