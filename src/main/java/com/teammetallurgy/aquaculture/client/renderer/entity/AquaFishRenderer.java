@@ -88,6 +88,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             }
             float fishRotation = fishType == FishType.LONGNOSE ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
 
+            /*RenderSystem.pushMatrix();
             RenderSystem.rotatef(fishRotation, 0.0F, 1.0F, 0.0F);
             if (fishType == FishType.LONGNOSE) {
                 RenderSystem.translatef(0.0F, 0.0F, -0.4F);
@@ -105,6 +106,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 RenderSystem.translatef(-0.4F, 0.1F, 0.0F);
                 RenderSystem.rotatef(-90.0F, 0.0F, 0.0F, 1.0F);
             }
+            RenderSystem.popMatrix();*/
         }
     }
 
@@ -145,7 +147,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             }
         }
         if (scale > 0) {
+            /*RenderSystem.pushMatrix();
             RenderSystem.scalef(scale, scale, scale);
+            RenderSystem.popMatrix();*/
         }
     }
 }

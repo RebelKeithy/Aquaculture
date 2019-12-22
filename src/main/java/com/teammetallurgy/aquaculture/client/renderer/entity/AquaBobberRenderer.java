@@ -40,42 +40,47 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
         PlayerEntity angler = bobber.getAngler();
         if (angler != null) {
             matrixStack.func_227860_a_();
-            //Bobber + Bobber Overlay
-            matrixStack.func_227860_a_();
+            matrixStack.func_227860_a_(); //Start Hook/Bobber rendering
             matrixStack.func_227862_a_(0.5F, 0.5F, 0.5F);
             matrixStack.func_227863_a_(this.renderManager.func_229098_b_());
             matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(180.0F));
             MatrixStack.Entry bobberMatrix = matrixStack.func_227866_c_();
-            Matrix4f bobber4f = bobberMatrix.func_227870_a_();
-            Matrix3f bobber3f = bobberMatrix.func_227872_b_();
+            Matrix4f matrix4f = bobberMatrix.func_227870_a_();
+            Matrix3f matrix3f = bobberMatrix.func_227872_b_();
+            //Bobber + Bobber Overlay
             IVertexBuilder bobberOverlayVertex = bobber.hasBobber() ? buffer.getBuffer(BOBBER_OVERLAY_RENDER) : buffer.getBuffer(BOBBER_VANILLA_RENDER);
-            renderPosTexture(bobberOverlayVertex, bobber4f, bobber3f, i, 0.0F, 0, 0, 1);
-            renderPosTexture(bobberOverlayVertex, bobber4f, bobber3f, i, 1.0F, 0, 1, 1);
-            renderPosTexture(bobberOverlayVertex, bobber4f, bobber3f, i, 1.0F, 1, 1, 0);
-            renderPosTexture(bobberOverlayVertex, bobber4f, bobber3f, i, 0.0F, 1, 0, 0);
+            //Bobber Overlay
+            ItemStack bobberStack = bobber.getBobber();
+            float bobberR = 1.0F;
+            float bobberG = 1.0F;
+            float bobberB = 1.0F;
+            if (!bobberStack.isEmpty()) {
+                if (bobberStack.getItem() instanceof IDyeableArmorItem) {
+                    int colorInt = ((IDyeableArmorItem) bobberStack.getItem()).getColor(bobberStack);
+                    bobberR = (float) (colorInt >> 16 & 255) / 255.0F;
+                    bobberG = (float) (colorInt >> 8 & 255) / 255.0F;
+                    bobberB = (float) (colorInt & 255) / 255.0F;
+                }
+            }
+            renderPosTextureColor(bobberOverlayVertex, matrix4f, matrix3f, i, 0.0F, 0, 0, 1, bobberR, bobberG, bobberB);
+            renderPosTextureColor(bobberOverlayVertex, matrix4f, matrix3f, i, 1.0F, 0, 1, 1, bobberR, bobberG, bobberB);
+            renderPosTextureColor(bobberOverlayVertex, matrix4f, matrix3f, i, 1.0F, 1, 1, 0, bobberR, bobberG, bobberB);
+            renderPosTextureColor(bobberOverlayVertex, matrix4f, matrix3f, i, 0.0F, 1, 0, 0, bobberR, bobberG, bobberB);
+            //Bobber Background
             if (bobber.hasBobber()) {
                 IVertexBuilder bobberVertex = buffer.getBuffer(BOBBER_RENDER);
-                renderPosTexture(bobberVertex, bobber4f, bobber3f, i, 0.0F, 0, 0, 1);
-                renderPosTexture(bobberVertex, bobber4f, bobber3f, i, 1.0F, 0, 1, 1);
-                renderPosTexture(bobberVertex, bobber4f, bobber3f, i, 1.0F, 1, 1, 0);
-                renderPosTexture(bobberVertex, bobber4f, bobber3f, i, 0.0F, 1, 0, 0);
+                renderPosTexture(bobberVertex, matrix4f, matrix3f, i, 0.0F, 0, 0, 1);
+                renderPosTexture(bobberVertex, matrix4f, matrix3f, i, 1.0F, 0, 1, 1);
+                renderPosTexture(bobberVertex, matrix4f, matrix3f, i, 1.0F, 1, 1, 0);
+                renderPosTexture(bobberVertex, matrix4f, matrix3f, i, 0.0F, 1, 0, 0);
             }
-            matrixStack.func_227865_b_();
-
             //Hook
-            matrixStack.func_227860_a_();
-            matrixStack.func_227862_a_(0.5F, 0.5F, 0.5F);
-            matrixStack.func_227863_a_(this.renderManager.func_229098_b_());
-            matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(180.0F));
-            MatrixStack.Entry matrixEntryHook = matrixStack.func_227866_c_();
-            Matrix4f hook4f = matrixEntryHook.func_227870_a_();
-            Matrix3f hook3f = matrixEntryHook.func_227872_b_();
             IVertexBuilder hookVertex = bobber.hasHook() ? buffer.getBuffer(RenderType.func_228638_b_(bobber.getHook().getTexture())) : buffer.getBuffer(HOOK_RENDER);
-            renderPosTexture(hookVertex, hook4f, hook3f, i, 0.0F, 0, 0, 1);
-            renderPosTexture(hookVertex, hook4f, hook3f, i, 1.0F, 0, 1, 1);
-            renderPosTexture(hookVertex, hook4f, hook3f, i, 1.0F, 1, 1, 0);
-            renderPosTexture(hookVertex, hook4f, hook3f, i, 0.0F, 1, 0, 0);
-            matrixStack.func_227865_b_();
+            renderPosTexture(hookVertex, matrix4f, matrix3f, i, 0.0F, 0, 0, 1);
+            renderPosTexture(hookVertex, matrix4f, matrix3f, i, 1.0F, 0, 1, 1);
+            renderPosTexture(hookVertex, matrix4f, matrix3f, i, 1.0F, 1, 1, 0);
+            renderPosTexture(hookVertex, matrix4f, matrix3f, i, 0.0F, 1, 0, 0);
+            matrixStack.func_227865_b_(); //End Hook/Bobber rendering
 
             int hand = angler.getPrimaryHand() == HandSide.RIGHT ? 1 : -1;
             ItemStack heldMain = angler.getHeldItemMainhand();
@@ -152,6 +157,10 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
 
     private static void renderPosTexture(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float f, int x, int y, int z) {
         builder.func_227888_a_(matrix4f, f - 0.5F, (float) x - 0.5F, 0.0F).func_225586_a_(255, 255, 255, 255).func_225583_a_((float) y, (float) z).func_227891_b_(OverlayTexture.field_229196_a_).func_227886_a_(i).func_227887_a_(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+    }
+
+    private static void renderPosTextureColor(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float f, int x, int y, int z, float r, float g, float b) {
+        builder.func_227888_a_(matrix4f, f - 0.5F, (float) x - 0.5F, 0.0F).func_227885_a_(r, g, b, 1.0F).func_225583_a_((float) y, (float) z).func_227891_b_(OverlayTexture.field_229196_a_).func_227886_a_(i).func_227887_a_(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     private static void renderPosColor(float x, float y, float z, IVertexBuilder builder, Matrix4f matrix4f, float f, float r, float g, float b) {
