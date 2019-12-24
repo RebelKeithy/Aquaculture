@@ -30,7 +30,6 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     public AquaFishRenderer(EntityRendererManager manager, boolean isJellyfish) {
         super(manager, MEDIUM_MODEL, 0.35F);
         if (isJellyfish) {
-            System.out.println("JELLYFISH LAYEr");
             this.addLayer(new JellyfishLayer(this));
         }
     }
