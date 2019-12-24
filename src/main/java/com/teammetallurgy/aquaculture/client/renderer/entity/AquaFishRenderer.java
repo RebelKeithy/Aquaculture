@@ -1,13 +1,13 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.client.renderer.entity.layers.JellyfishLayer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.*;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -27,9 +27,10 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     private static final FishCatchfishModel<AquaFishEntity> CATFISH_MODEL = new FishCatchfishModel<>();
     private static final JellyfishModel<AquaFishEntity> JELLYFISH_MODEL = new JellyfishModel<>();
 
-    public AquaFishRenderer(EntityRendererManager manager) {
+    public AquaFishRenderer(EntityRendererManager manager, boolean isJellyfish) {
         super(manager, MEDIUM_MODEL, 0.35F);
-        if (this.getEntityModel() == JELLYFISH_MODEL) {
+        if (isJellyfish) {
+            System.out.println("JELLYFISH LAYEr");
             this.addLayer(new JellyfishLayer(this));
         }
     }
@@ -88,25 +89,22 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             }
             float fishRotation = fishType == FishType.LONGNOSE ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
 
-            /*RenderSystem.pushMatrix();
-            RenderSystem.rotatef(fishRotation, 0.0F, 1.0F, 0.0F);
+            matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(fishRotation));
             if (fishType == FishType.LONGNOSE) {
-                RenderSystem.translatef(0.0F, 0.0F, -0.4F);
+                matrixStack.func_227861_a_(0.0F, 0.0F, -0.4F);
             }
             if (!fishEntity.isInWater() && fishType != FishType.HALIBUT) {
                 if (fishType == FishType.MEDIUM || fishType == FishType.LARGE || fishType == FishType.CATFISH) {
-                    RenderSystem.translatef(0.1F, 0.1F, -0.1F);
+                    matrixStack.func_227861_a_(0.1F, 0.1F, -0.1F);
                 } else {
-                    RenderSystem.translatef(0.2F, 0.1F, 0.0F);
-
+                    matrixStack.func_227861_a_(0.2F, 0.1F, 0.0F);
                 }
-                RenderSystem.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
+                matrixStack.func_227863_a_(Vector3f.field_229183_f_.func_229187_a_(90));
             }
             if (fishType == FishType.HALIBUT) {
-                RenderSystem.translatef(-0.4F, 0.1F, 0.0F);
-                RenderSystem.rotatef(-90.0F, 0.0F, 0.0F, 1.0F);
+                matrixStack.func_227861_a_(-0.4F, 0.1F, 0.0F);
+                matrixStack.func_227863_a_(Vector3f.field_229183_f_.func_229187_a_(-90));
             }
-            RenderSystem.popMatrix();*/
         }
     }
 
@@ -147,9 +145,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             }
         }
         if (scale > 0) {
-            /*RenderSystem.pushMatrix();
-            RenderSystem.scalef(scale, scale, scale);
-            RenderSystem.popMatrix();*/
+            matrixStack.func_227860_a_();
+            matrixStack.func_227862_a_(scale, scale, scale);
+            matrixStack.func_227865_b_();
         }
     }
 }

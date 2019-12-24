@@ -14,7 +14,7 @@ public class TurtleLandModel<T extends TurtleLandEntity> extends QuadrupedModel<
     private final ModelRenderer belly;
 
     public TurtleLandModel() {
-        super(0, 0.0F, false, 10.0F, 4.0F, 2.0F, 2.0F, 24); //TODO Check all values, starting from "false". Values copied from Cow
+        super(0, 0.0F, false, 1.1F, 1.5F, 2.0F, 2.0F, 24);
         this.textureWidth = 64;
         this.textureHeight = 32;
         this.headModel = new ModelRenderer(this, 24, 0);
@@ -57,36 +57,6 @@ public class TurtleLandModel<T extends TurtleLandEntity> extends QuadrupedModel<
     protected Iterable<ModelRenderer> func_225600_b_() {
         return ImmutableList.of(this.body, this.legBackRight, this.legBackLeft, this.legFrontRight, this.legFrontLeft, this.tail);
     }
-
-    /*@Override
-    public void render(@Nonnull T turtle, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) { // TODO, Looks in AgeableModel
-        this.setRotationAngles(turtle, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-        if (this.isChild) {
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(0.75F, 0.75F, 0.75F);
-            GlStateManager.translatef(0.0F, 8.65F * scale, 0.065F);
-            this.headModel.render(scale);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
-            GlStateManager.translatef(0.0F, 24.0F * scale, 0.0F);
-            this.body.render(scale);
-            this.legBackRight.render(scale);
-            this.legBackLeft.render(scale);
-            this.legFrontRight.render(scale);
-            this.legFrontLeft.render(scale);
-            this.tail.render(scale);
-            GlStateManager.popMatrix();
-        } else {
-            this.headModel.render(scale);
-            this.body.render(scale);
-            this.legBackRight.render(scale);
-            this.legBackLeft.render(scale);
-            this.legFrontRight.render(scale);
-            this.legFrontLeft.render(scale);
-            this.tail.render(scale);
-        }
-    }*/
 
     @Override
     public void func_225597_a_(@Nonnull T turtle, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {

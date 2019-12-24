@@ -1,7 +1,6 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity.model;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.renderer.entity.model.CodModel;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;

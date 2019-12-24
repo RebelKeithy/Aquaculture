@@ -1,6 +1,8 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity.model;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -48,7 +50,12 @@ public class JellyfishModel<T extends Entity> extends SegmentedModel<T> {
     }
 
     @Override
-    public void func_225597_a_(T jellyfish, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void func_225598_a_(@Nonnull MatrixStack matrixStack, @Nonnull IVertexBuilder builder, int p_225598_3_, int p_225598_4_, float p_225598_5_, float p_225598_6_, float p_225598_7_, float p_225598_8_) {
+        //Actual rendering done in the layer. Only way I could figure out to keep the transparency
+    }
+
+    @Override
+    public void func_225597_a_(@Nonnull T jellyfish, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float stillMovement = 0.1F;
         if (!jellyfish.isInWater()) {
             stillMovement = 0.05F;

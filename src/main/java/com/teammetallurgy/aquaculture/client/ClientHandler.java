@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.FishMountRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.TurtleLandRenderer;
+import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.init.*;
@@ -17,6 +18,7 @@ import net.minecraft.client.renderer.entity.TippedArrowRenderer;
 import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -31,10 +33,10 @@ public class ClientHandler {
     public static void setupClient() {
         ScreenManager.registerFactory(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
         ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, new ChestTileEntityRenderer<>(TileEntityRendererDispatcher.instance));
-        //ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.TACKLE_BOX, new TackleBoxRenderer<>());
+        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.TACKLE_BOX, new TackleBoxRenderer<>(TileEntityRendererDispatcher.instance));
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.BOBBER, AquaBobberRenderer::new);
         for (EntityType<AquaFishEntity> fish : FishRegistry.fishEntities) {
-            RenderingRegistry.registerEntityRenderingHandler(fish, AquaFishRenderer::new);
+            RenderingRegistry.registerEntityRenderingHandler(fish, (manager) -> new AquaFishRenderer(manager, fish.getRegistryName() != null && fish.getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
         }
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.WATER_ARROW, TippedArrowRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.BOX_TURTLE, TurtleLandRenderer::new);
