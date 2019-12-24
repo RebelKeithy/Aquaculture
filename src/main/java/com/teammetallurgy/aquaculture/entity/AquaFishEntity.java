@@ -27,8 +27,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class AquaFishEntity extends AbstractGroupFishEntity {
-    public static HashMap<EntityType, Item> BUCKETS = new HashMap<>();
-    public static HashMap<EntityType, FishType> TYPES = new HashMap<>();
+    public static HashMap<EntityType<AquaFishEntity>, Item> BUCKETS = new HashMap<>();
+    public static HashMap<EntityType<AquaFishEntity>, FishType> TYPES = new HashMap<>();
 
     public AquaFishEntity(EntityType<? extends AbstractGroupFishEntity> entityType, World world) {
         super(entityType, world);

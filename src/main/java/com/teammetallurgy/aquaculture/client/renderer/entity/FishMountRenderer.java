@@ -1,26 +1,31 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.passive.fish.PufferfishEntity;
+import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
@@ -39,93 +44,95 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
     }
 
     @Override
-    public void doRender(FishMountEntity entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        GlStateManager.pushMatrix();
-        BlockPos pos = entity.getHangingPosition();
-        double translateX = (double) pos.getX() - entity.posX + x;
-        double translateY = (double) pos.getY() - entity.posY + y;
-        double translateZ = (double) pos.getZ() - entity.posZ + z;
-        GlStateManager.translated(translateX + 0.5D, translateY + 0.5D, translateZ + 0.5D);
-        GlStateManager.rotatef(entity.rotationPitch, 1.0F, 0.0F, 0.0F);
-        GlStateManager.rotatef(180.0F - entity.rotationYaw, 0.0F, 1.0F, 0.0F);
-        this.renderManager.textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+    public void func_225623_a_(@Nonnull FishMountEntity fishMount, float entityYaw, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
+        super.func_225623_a_(fishMount, entityYaw, partialTicks, matrixStack, buffer, i);
+        matrixStack.func_227860_a_();
+        Direction direction = fishMount.getHorizontalFacing();
+        Vec3d pos = this.func_225627_b_(fishMount, partialTicks);
+        matrixStack.func_227861_a_(-pos.getX(), -pos.getY(), -pos.getZ());
+        double multiplier = 0.46875D;
+        matrixStack.func_227861_a_((double) direction.getXOffset() * multiplier, (double) direction.getYOffset() * multiplier, (double) direction.getZOffset() * multiplier);
+        matrixStack.func_227863_a_(Vector3f.field_229179_b_.func_229187_a_(fishMount.rotationPitch));
+        matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(180.0F - fishMount.rotationYaw));
         BlockRendererDispatcher rendererDispatcher = this.mc.getBlockRendererDispatcher();
-        ModelManager modelmanager = rendererDispatcher.getBlockModelShapes().getModelManager();
-        GlStateManager.pushMatrix();
-        GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
-        if (this.renderOutlines) {
-            GlStateManager.enableColorMaterial();
-            GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(entity));
-        }
+        ModelManager manager = rendererDispatcher.getBlockModelShapes().getModelManager();
 
-        if (entity.getType().getRegistryName() != null) {
-            ModelResourceLocation location = new ModelResourceLocation(entity.getType().getRegistryName(), ""); //Calling this instead of the fields for mod support
-            rendererDispatcher.getBlockModelRenderer().renderModelBrightnessColor(modelmanager.getModel(location), 1.0F, 1.0F, 1.0F, 1.0F);
+        matrixStack.func_227860_a_();
+        matrixStack.func_227861_a_(-0.5D, -0.5D, -0.5D);
+        if (fishMount.getType().getRegistryName() != null) {
+            ModelResourceLocation location = new ModelResourceLocation(fishMount.getType().getRegistryName(), ""); //Calling this instead of the fields for mod support'
+            rendererDispatcher.getBlockModelRenderer().func_228804_a_(matrixStack.func_227866_c_(), buffer.getBuffer(Atlases.func_228782_g_()), null, manager.getModel(location), 1.0F, 1.0F, 1.0F, i, OverlayTexture.field_229196_a_);
         }
-        if (this.renderOutlines) {
-            GlStateManager.tearDownSolidRenderingTextureCombine();
-            GlStateManager.disableColorMaterial();
-        }
+        matrixStack.func_227865_b_();
+        this.renderFish(fishMount, pos, partialTicks, matrixStack, buffer, i);
+        matrixStack.func_227865_b_();
+    }
 
-        GlStateManager.popMatrix();
-        GlStateManager.enableLighting();
-        GlStateManager.translatef(0.0F, 0.0F, 0.4375F);
-        this.renderFish(entity, x, y, z);
-        GlStateManager.enableLighting();
-        GlStateManager.popMatrix();
-        if (!this.mc.gameSettings.hideGUI && entity.getDistanceSq(mc.objectMouseOver.getHitVec()) < 0.24D) {
-            this.renderName(entity, x + (double) ((float) entity.getHorizontalFacing().getXOffset() * 0.3F), y - 0.25D, z + (double) ((float) entity.getHorizontalFacing().getZOffset() * 0.3F));
+    private void renderFish(FishMountEntity fishMount, Vec3d pos, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int i) {
+        Entity entity = fishMount.entity;
+        if (entity instanceof MobEntity) {
+            MobEntity fish = (MobEntity) entity;
+            double x = 0.0D;
+            double y = 0.0D;
+            double depth = 0.42D;
+            if (fish instanceof PufferfishEntity) {
+                depth += 0.09D;
+            } else if (fish instanceof AquaFishEntity && AquaFishEntity.TYPES.get(fish.getType()).equals(FishType.LONGNOSE)) {
+                x = -0.1F;
+                y = -0.18D;
+            }
+            fish.setNoAI(true);
+            matrixStack.func_227861_a_(x, y, depth);
+            matrixStack.func_227863_a_(Vector3f.field_229179_b_.func_229187_a_(-90.0F));
+            matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(-90.0F));
+            this.mc.getRenderManager().func_229084_a_(fish, 0.0F, 0.0F, 0.0F, 0.0F, 0, matrixStack, buffer, i);
         }
     }
 
     @Override
-    @Nullable
-    protected ResourceLocation getEntityTexture(@Nonnull FishMountEntity entity) {
-        return null;
+    @Nonnull
+    public ResourceLocation getEntityTexture(@Nonnull FishMountEntity fishMount) {
+        return PlayerContainer.field_226615_c_;
     }
 
-    private void renderFish(FishMountEntity fishMount, double x, double y, double z) {
-        Entity entityFish = fishMount.entity;
-        if (entityFish != null) {
-            GlStateManager.pushMatrix();
-            float depth = entityFish.getCollisionBorderSize();
-            if (entityFish instanceof PufferfishEntity) {
-                depth += 0.09F;
-            } else if (entityFish instanceof AquaFishEntity && AquaFishEntity.TYPES.get(entityFish.getType()).equals(FishType.LONGNOSE)) {
-                GlStateManager.translatef(-0.1F, -0.18F, 0);
-            }
-            GlStateManager.translatef(0, 0, depth);
-            GlStateManager.rotatef(-90.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-            entityFish.setLocationAndAngles(x, y, z, 0.0F, 0.0F);
-            this.mc.getRenderManager().renderEntity(entityFish, 0, 0, 0, 0, 0, false);
-            GlStateManager.popMatrix();
+    @Override
+    @Nonnull
+    public Vec3d func_225627_b_(FishMountEntity fishMount, float partialTicks) {
+        return new Vec3d((float) fishMount.getHorizontalFacing().getXOffset() * 0.3F, -0.25D, (float) fishMount.getHorizontalFacing().getZOffset() * 0.3F);
+    }
+
+    @Override
+    protected boolean canRenderName(@Nonnull FishMountEntity fishMount) {
+        if (Minecraft.isGuiEnabled() && fishMount.entity != null && (this.mc.objectMouseOver != null && fishMount.getDistanceSq(this.mc.objectMouseOver.getHitVec()) < 0.24D)) {
+            double d0 = this.renderManager.func_229099_b_(fishMount);
+            float sneaking = fishMount.func_226273_bm_() ? 32.0F : 64.0F;
+            return d0 < (double) (sneaking * sneaking);
+        } else {
+            return false;
         }
     }
 
-    protected void renderName(FishMountEntity entity, double x, double y, double z) {
-        ItemStack stack = entity.getDisplayedItem();
-        if (!stack.isEmpty() && entity.entity != null) {
-            double distanceSq = entity.getDistanceSq(this.renderManager.info.getProjectedView());
-            float sneaking = entity.shouldRenderSneaking() ? 32.0F : 64.0F;
-            if (!(distanceSq >= (double) (sneaking * sneaking))) {
-                String name = entity.entity.getDisplayName().getFormattedText();
-                this.renderLivingLabel(entity, name, x, y, z, 64);
+    @Override
+    protected void func_225629_a_(@Nonnull FishMountEntity fishMount, @Nonnull String name, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
+        super.func_225629_a_(fishMount, fishMount.entity.getDisplayName().getFormattedText(), matrixStack, buffer, i);
 
-                if (stack.hasTag() && stack.getTag() != null && stack.getTag().contains("fishWeight")) {
-                    double weight = stack.getTag().getDouble("fishWeight");
-                    String lb = weight == 1.0D ? " lb" : " lbs";
+        ItemStack stack = fishMount.getDisplayedItem();
+        if (stack.hasTag() && stack.getTag() != null && stack.getTag().contains("fishWeight")) {
+            double weight = stack.getTag().getDouble("fishWeight");
+            String lb = weight == 1.0D ? " lb" : " lbs";
 
-                    DecimalFormat df = new DecimalFormat("#,###.##");
-                    BigDecimal bd = new BigDecimal(weight);
-                    bd = bd.round(new MathContext(3));
-                    if (bd.doubleValue() > 999) {
-                        this.renderLivingLabel(entity, I18n.format("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), x, y - 0.25f, z, 64);
-                    } else {
-                        this.renderLivingLabel(entity, I18n.format("aquaculture.fishWeight.weight", bd + lb), x, y - 0.25f, z, 64);
-                    }
-                }
+            DecimalFormat df = new DecimalFormat("#,###.##");
+            BigDecimal bd = new BigDecimal(weight);
+            bd = bd.round(new MathContext(3));
+
+            matrixStack.func_227860_a_();
+            matrixStack.func_227861_a_(0.0D, -0.25D, 0.0D); //Adjust weight label height
+            if (bd.doubleValue() > 999) {
+                super.func_225629_a_(fishMount, I18n.format("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), matrixStack, buffer, i - 100);
+            } else {
+                super.func_225629_a_(fishMount, I18n.format("aquaculture.fishWeight.weight", bd + lb), matrixStack, buffer, i);
             }
+            matrixStack.func_227865_b_();
         }
     }
 }

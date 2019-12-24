@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.block;
 
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
+import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -31,7 +32,7 @@ import java.util.List;
 public class NeptunesBountyBlock extends ChestBlock {
 
     public NeptunesBountyBlock() {
-        super(Block.Properties.create(Material.IRON, MaterialColor.IRON).hardnessAndResistance(3.5F, 8.0F).sound(SoundType.METAL));
+        super(Block.Properties.create(Material.IRON, MaterialColor.IRON).hardnessAndResistance(3.5F, 8.0F).sound(SoundType.METAL), () -> AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY);
     }
 
     @Override

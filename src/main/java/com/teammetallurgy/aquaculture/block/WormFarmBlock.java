@@ -11,14 +11,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +30,8 @@ public class WormFarmBlock extends ComposterBlock {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, @Nonnull World world, @Nonnull BlockPos pos, PlayerEntity player, @Nonnull Hand hand, BlockRayTraceResult raytrace) {
+    @Nonnull
+    public ActionResultType func_225533_a_(BlockState state, @Nonnull World world, @Nonnull BlockPos pos, PlayerEntity player, @Nonnull Hand hand, BlockRayTraceResult raytrace) {
         int level = state.get(LEVEL);
         ItemStack heldStack = player.getHeldItem(hand);
 
@@ -44,7 +43,7 @@ public class WormFarmBlock extends ComposterBlock {
                     heldStack.shrink(1);
                 }
             }
-            return true;
+            return ActionResultType.SUCCESS;
         } else if (level > 0) {
             if (!world.isRemote) {
                 double x = (double) (world.rand.nextFloat() * 0.7F) + 0.15000000596046448D;
@@ -56,14 +55,14 @@ public class WormFarmBlock extends ComposterBlock {
             }
             world.setBlockState(pos, state.with(LEVEL, state.get(LEVEL) - 1), 3);
             world.playSound(null, pos, SoundEvents.BLOCK_COMPOSTER_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            return true;
+            return ActionResultType.SUCCESS;
         } else {
-            return false;
+            return ActionResultType.FAIL;
         }
     }
 
     @Override
-    public void tick(BlockState state, @Nonnull World world, @Nonnull BlockPos pos, Random random) {
+    public void func_225534_a_(BlockState state, @Nonnull ServerWorld world, @Nonnull BlockPos pos, Random random) {
     }
     
     private static boolean addItem(BlockState state, IWorld world, BlockPos pos, @Nonnull ItemStack stack) {
