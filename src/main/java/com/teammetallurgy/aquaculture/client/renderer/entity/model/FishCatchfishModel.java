@@ -10,13 +10,13 @@ import javax.annotation.Nonnull;
 
 public class FishCatchfishModel<T extends Entity> extends SegmentedModel<T> { //Based on Cod
     private final ModelRenderer head;
-    private final ModelRenderer topFin;
-    private final ModelRenderer tail;
-    private final ModelRenderer leftFin;
-    private final ModelRenderer body;
-    private final ModelRenderer rightFin;
     private final ModelRenderer headFront;
+    private final ModelRenderer body;
+    private final ModelRenderer topFin;
+    private final ModelRenderer leftFin;
+    private final ModelRenderer rightFin;
     private final ModelRenderer bottomFin;
+    private final ModelRenderer tail;
     private final ModelRenderer leftWhisker;
     private final ModelRenderer rightWhisker;
 
@@ -62,7 +62,7 @@ public class FishCatchfishModel<T extends Entity> extends SegmentedModel<T> { //
     @Override
     @Nonnull
     public Iterable<ModelRenderer> func_225601_a_() {
-        return ImmutableList.of(this.body, this.topFin, this.tail, this.leftFin, this.body, this.rightFin, this.headFront, this.bottomFin);
+        return ImmutableList.of(this.head, this.headFront, this.body, this.topFin, this.leftFin, this.rightFin, this.bottomFin, this.tail);
     }
 
     @Override
