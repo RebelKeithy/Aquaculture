@@ -32,8 +32,8 @@ public class ClientHandler {
 
     public static void setupClient() {
         ScreenManager.registerFactory(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
-        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, new ChestTileEntityRenderer<>(TileEntityRendererDispatcher.instance));
-        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.TACKLE_BOX, new TackleBoxRenderer<>(TileEntityRendererDispatcher.instance));
+        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, ChestTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.TACKLE_BOX,  TackleBoxRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.BOBBER, AquaBobberRenderer::new);
         for (EntityType<AquaFishEntity> fish : FishRegistry.fishEntities) {
             RenderingRegistry.registerEntityRenderingHandler(fish, (manager) -> new AquaFishRenderer(manager, fish.getRegistryName() != null && fish.getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
