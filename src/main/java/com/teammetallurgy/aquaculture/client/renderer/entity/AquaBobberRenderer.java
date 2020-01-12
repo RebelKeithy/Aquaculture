@@ -155,12 +155,12 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
         return BOBBER_VANILLA;
     }
 
-    private static void renderPosTexture(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float f, int x, int y, int z) {
-        builder.func_227888_a_(matrix4f, f - 0.5F, (float) x - 0.5F, 0.0F).func_225586_a_(255, 255, 255, 255).func_225583_a_((float) y, (float) z).func_227891_b_(OverlayTexture.field_229196_a_).func_227886_a_(i).func_227887_a_(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+    private static void renderPosTexture(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v) {
+        builder.func_227888_a_(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).func_225586_a_(255, 255, 255, 255).func_225583_a_((float) u, (float) v).func_227891_b_(OverlayTexture.field_229196_a_).func_227886_a_(i).func_227887_a_(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    private static void renderPosTextureColor(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float f, int x, int y, int z, float r, float g, float b) {
-        builder.func_227888_a_(matrix4f, f - 0.5F, (float) x - 0.5F, 0.0F).func_227885_a_(r, g, b, 1.0F).func_225583_a_((float) y, (float) z).func_227891_b_(OverlayTexture.field_229196_a_).func_227886_a_(i).func_227887_a_(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+    private static void renderPosTextureColor(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v, float r, float g, float b) {
+        builder.func_227888_a_(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).func_227885_a_(r, g, b, 1.0F).func_225583_a_((float) u, (float) v).func_227891_b_(OverlayTexture.field_229196_a_).func_227886_a_(i).func_227887_a_(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     private static void renderPosColor(float x, float y, float z, IVertexBuilder builder, Matrix4f matrix4f, float f, float r, float g, float b) {
