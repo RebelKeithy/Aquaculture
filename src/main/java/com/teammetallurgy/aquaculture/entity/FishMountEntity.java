@@ -100,7 +100,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
             double posX = (double) this.hangingPosition.getX() + 0.5D - (double) this.facingDirection.getXOffset() * d0;
             double posY = (double) this.hangingPosition.getY() + 0.5D - (double) this.facingDirection.getYOffset() * d0;
             double posZ = (double) this.hangingPosition.getZ() + 0.5D - (double) this.facingDirection.getZOffset() * d0;
-            this.func_226288_n_(posX, posY, posZ);
+            this.setRawPosition(posX, posY, posZ);
             double x1 = this.getWidthPixels() / 32.0D;
             double x2 = this.getWidthPixels() / 32.0D;
             double y1 = this.getHeightPixels() / 32.0D;

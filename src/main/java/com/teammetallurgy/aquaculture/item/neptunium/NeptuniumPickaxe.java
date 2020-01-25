@@ -20,7 +20,7 @@ public class NeptuniumPickaxe extends PickaxeItem {
     }
 
     @Override
-    public void inventoryTick(@Nonnull ItemStack stack, World world, Entity entity, int i, boolean b) {
+    public void inventoryTick(@Nonnull ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
         if (entity instanceof PlayerEntity && stack.getItem() == this) {
             PlayerEntity player = (PlayerEntity) entity;
             stack.getOrCreateTag().putBoolean("inWater", player.areEyesInFluid(FluidTags.WATER));

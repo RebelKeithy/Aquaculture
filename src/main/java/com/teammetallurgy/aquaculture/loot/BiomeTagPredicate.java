@@ -48,7 +48,7 @@ public class BiomeTagPredicate {
             return false;
         } else {
             BlockPos pos = new BlockPos(x, y, z);
-            return getValidBiomes(this.include, this.exclude, this.and).contains(world.func_226691_t_(pos));
+            return getValidBiomes(this.include, this.exclude, this.and).contains(world.getBiome(pos));
         }
     }
 

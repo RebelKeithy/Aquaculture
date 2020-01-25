@@ -31,7 +31,7 @@ public class WormFarmBlock extends ComposterBlock {
 
     @Override
     @Nonnull
-    public ActionResultType func_225533_a_(BlockState state, @Nonnull World world, @Nonnull BlockPos pos, PlayerEntity player, @Nonnull Hand hand, BlockRayTraceResult raytrace) {
+    public ActionResultType onBlockActivated(BlockState state, @Nonnull World world, @Nonnull BlockPos pos, PlayerEntity player, @Nonnull Hand hand, BlockRayTraceResult raytrace) {
         int level = state.get(LEVEL);
         ItemStack heldStack = player.getHeldItem(hand);
 
@@ -62,7 +62,7 @@ public class WormFarmBlock extends ComposterBlock {
     }
 
     @Override
-    public void func_225534_a_(BlockState state, @Nonnull ServerWorld world, @Nonnull BlockPos pos, Random random) {
+    public void tick(BlockState state, @Nonnull ServerWorld world, @Nonnull BlockPos pos, Random random) {
     }
     
     private static boolean addItem(BlockState state, IWorld world, BlockPos pos, @Nonnull ItemStack stack) {

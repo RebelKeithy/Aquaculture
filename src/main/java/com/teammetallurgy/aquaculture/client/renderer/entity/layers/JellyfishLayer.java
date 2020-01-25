@@ -20,14 +20,14 @@ public class JellyfishLayer<T extends LivingEntity> extends LayerRenderer<T, Jel
     }
 
     @Override
-    public void func_225628_a_(@Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, T jellyfish, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
+    public void render(@Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, T jellyfish, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
         if (!jellyfish.isInvisible()) {
             this.getEntityModel().setModelAttributes(this.jellyfishModel);
             this.jellyfishModel.setLivingAnimations(jellyfish, p_225628_5_, p_225628_6_, p_225628_7_);
-            this.jellyfishModel.func_225597_a_(jellyfish, p_225628_5_, p_225628_6_, p_225628_8_, p_225628_9_, p_225628_10_);
-            IVertexBuilder lvt_11_1_ = buffer.getBuffer(RenderType.func_228644_e_(this.func_229139_a_(jellyfish)));
-            this.jellyfishModel.func_225601_a_().forEach((p_228272_8_) -> {
-                p_228272_8_.func_228309_a_(matrixStack, lvt_11_1_, i, LivingRenderer.func_229117_c_(jellyfish, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+            this.jellyfishModel.render(jellyfish, p_225628_5_, p_225628_6_, p_225628_8_, p_225628_9_, p_225628_10_);
+            IVertexBuilder lvt_11_1_ = buffer.getBuffer(RenderType.entityTranslucent(this.getEntityTexture(jellyfish)));
+            this.jellyfishModel.getParts().forEach((p_228272_8_) -> {
+                p_228272_8_.render(matrixStack, lvt_11_1_, i, LivingRenderer.getPackedOverlay(jellyfish, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
             });
         }
     }

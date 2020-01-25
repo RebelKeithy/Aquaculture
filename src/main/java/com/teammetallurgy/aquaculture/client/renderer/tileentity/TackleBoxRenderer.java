@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 
 public class TackleBoxRenderer <T extends TackleBoxTileEntity & IChestLid> extends TileEntityRenderer<T> {
     private static final ResourceLocation TACKLE_BOX_TEXTURE = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/tileentity/tackle_box.png");
-    private static final RenderType TACKLE_BOX_RENDER = RenderType.func_228638_b_(TACKLE_BOX_TEXTURE);
+    private static final RenderType TACKLE_BOX_RENDER = RenderType.entityCutout(TACKLE_BOX_TEXTURE);
     private ModelRenderer base;
     private ModelRenderer lid;
     private ModelRenderer handle;
@@ -36,30 +36,30 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity & IChestLid> exten
         super(dispatcher);
         this.lid = new ModelRenderer(64, 32, 0, 0);
         this.lid.setRotationPoint(7.0F, 12.0F, 4.0F);
-        this.lid.func_228301_a_(-7.0F, -3.0F, -8.0F, 14, 3, 8, 0.0F);
+        this.lid.addBox(-7.0F, -3.0F, -8.0F, 14, 3, 8, 0.0F);
         this.base = new ModelRenderer(64, 32, 0, 11);
         this.base.setRotationPoint(0.0F, 18.0F, 4.0F);
-        this.base.func_228301_a_(0.0F, -6.0F, -8.0F, 14, 6, 8, 0.0F);
+        this.base.addBox(0.0F, -6.0F, -8.0F, 14, 6, 8, 0.0F);
         this.handle = new ModelRenderer(64, 32, 36, 0);
         this.handle.setRotationPoint(0.0F, 0.0F, 0.0F);
-        this.handle.func_228301_a_(-2.0F, -4.0F, -5.0F, 4, 1, 2, 0.0F);
+        this.handle.addBox(-2.0F, -4.0F, -5.0F, 4, 1, 2, 0.0F);
         this.lid.addChild(this.handle);
     }
 
     @Override
-    public void func_225616_a_(@Nonnull T tackleBox, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
+    public void render(@Nonnull T tackleBox, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
         World world = tackleBox.getWorld();
         boolean hasWorld = world != null;
         BlockState state = hasWorld ? tackleBox.getBlockState() : AquaBlocks.TACKLE_BOX.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
         Block block = state.getBlock();
         if (block instanceof TackleBoxBlock) {
-            matrixStack.func_227860_a_();
+            matrixStack.push();
             float lvt_14_1_ = state.get(TackleBoxBlock.FACING).getHorizontalAngle();
-            matrixStack.func_227861_a_(0.5D, 0.5D, 0.5D);
-            matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(-lvt_14_1_));
-            matrixStack.func_227861_a_(-0.5D, -0.5D, -0.5D);
-            matrixStack.func_227861_a_(0.0625F, 1.125F, 0.5F); //Translate
-            matrixStack.func_227863_a_(Vector3f.field_229178_a_.func_229187_a_(-180)); //Flip
+            matrixStack.translate(0.5D, 0.5D, 0.5D);
+            matrixStack.rotate(Vector3f.YP.rotationDegrees(-lvt_14_1_));
+            matrixStack.translate(-0.5D, -0.5D, -0.5D);
+            matrixStack.translate(0.0625F, 1.125F, 0.5F); //Translate
+            matrixStack.rotate(Vector3f.XN.rotationDegrees(-180)); //Flip
             TileEntityMerger.ICallbackWrapper<?> lvt_15_2_ = TileEntityMerger.ICallback::func_225537_b_;
             float angle = tackleBox.getLidAngle(partialTicks);
             angle = 1.0F - angle;
@@ -67,13 +67,13 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity & IChestLid> exten
             int lvt_17_1_ = ((Int2IntFunction) lvt_15_2_.apply(new DualBrightnessCallback())).applyAsInt(i);
             IVertexBuilder tackleBoxBuilder = buffer.getBuffer(TACKLE_BOX_RENDER);
             this.func_228871_a_(matrixStack, tackleBoxBuilder, this.base, this.lid, angle, lvt_17_1_, i1);
-            matrixStack.func_227865_b_();
+            matrixStack.pop();
         }
     }
 
     private void func_228871_a_(MatrixStack p_228871_1_, IVertexBuilder p_228871_2_, ModelRenderer base, ModelRenderer lid, float p_228871_6_, int p_228871_7_, int p_228871_8_) {
         lid.rotateAngleX = -(p_228871_6_ * 1.5707964F);
-        base.func_228308_a_(p_228871_1_, p_228871_2_, p_228871_7_, p_228871_8_);
-        lid.func_228308_a_(p_228871_1_, p_228871_2_, p_228871_7_, p_228871_8_);
+        base.render(p_228871_1_, p_228871_2_, p_228871_7_, p_228871_8_);
+        lid.render(p_228871_1_, p_228871_2_, p_228871_7_, p_228871_8_);
     }
 }

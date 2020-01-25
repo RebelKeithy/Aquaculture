@@ -25,36 +25,36 @@ public class FishLongnoseModel <T extends Entity> extends SegmentedModel<T> { //
         this.textureHeight = 32;
         this.bodyRear = new ModelRenderer(this, 0, 13);
         this.bodyRear.setRotationPoint(0.0F, 20.0F, 8.0F);
-        this.bodyRear.func_228301_a_(-1.5F, -2.5F, 0.0F, 3, 4, 8, 0.0F);
+        this.bodyRear.addBox(-1.5F, -2.5F, 0.0F, 3, 4, 8, 0.0F);
         this.finRight = new ModelRenderer(this, -4, 0);
         this.finRight.setRotationPoint(-1.5F, 21.5F, 4.0F);
-        this.finRight.func_228301_a_(-2.0F, 0.0F, 0.0F, 2, 0, 2, 0.0F);
+        this.finRight.addBox(-2.0F, 0.0F, 0.0F, 2, 0, 2, 0.0F);
         this.finRight.rotateAngleZ = -0.7853981633974483F;
         this.nose = new ModelRenderer(this, 22, 0);
         this.nose.setRotationPoint(0.0F, 20.5F, 0.0F);
-        this.nose.func_228301_a_(-1.0F, -2.0F, -3.0F, 2, 2, 3, 0.0F);
+        this.nose.addBox(-1.0F, -2.0F, -3.0F, 2, 2, 3, 0.0F);
         this.finTopFront = new ModelRenderer(this, 2, 1);
         this.finTopFront.setRotationPoint(0.0F, -4.5F, 5.0F);
-        this.finTopFront.func_228301_a_(0.0F, 0.0F, 0.0F, 0, 2, 3, 0.0F);
+        this.finTopFront.addBox(0.0F, 0.0F, 0.0F, 0, 2, 3, 0.0F);
         this.finTopRear = new ModelRenderer(this, 0, 2);
         this.finTopRear.setRotationPoint(0.0F, -4.5F, -1.0F);
-        this.finTopRear.func_228301_a_(0.0F, 0.0F, 1.0F, 0, 2, 4, 0.0F);
+        this.finTopRear.addBox(0.0F, 0.0F, 1.0F, 0, 2, 4, 0.0F);
         this.finLeft = new ModelRenderer(this, 0, 0);
         this.finLeft.setRotationPoint(1.5F, 21.5F, 4.0F);
-        this.finLeft.func_228301_a_(0.0F, 0.0F, 0.0F, 2, 0, 2, 0.0F);
+        this.finLeft.addBox(0.0F, 0.0F, 0.0F, 2, 0, 2, 0.0F);
         this.finLeft.rotateAngleZ = 0.7853981633974483F;
         this.finFrontBottom = new ModelRenderer(this, 0, 25);
         this.finFrontBottom.setRotationPoint(0.0F, 1.5F, 5.0F);
-        this.finFrontBottom.func_228301_a_(0.0F, 0.0F, 0.0F, 0, 2, 3, 0.0F);
+        this.finFrontBottom.addBox(0.0F, 0.0F, 0.0F, 0, 2, 3, 0.0F);
         this.tail = new ModelRenderer(this, 20, 10);
         this.tail.setRotationPoint(0.0F, 0.0F, 8.0F);
-        this.tail.func_228301_a_(0.0F, -2.5F, 0.0F, 0, 4, 6, 0.0F);
+        this.tail.addBox(0.0F, -2.5F, 0.0F, 0, 4, 6, 0.0F);
         this.bodyFront = new ModelRenderer(this, 0, 0);
         this.bodyFront.setRotationPoint(0.0F, 20.0F, 0.0F);
-        this.bodyFront.func_228301_a_(-1.5F, -2.5F, 0.0F, 3, 4, 8, 0.0F);
+        this.bodyFront.addBox(-1.5F, -2.5F, 0.0F, 3, 4, 8, 0.0F);
         this.finRearBottom = new ModelRenderer(this, 0, 22);
         this.finRearBottom.setRotationPoint(0.0F, 1.5F, -1.0F);
-        this.finRearBottom.func_228301_a_(0.0F, 0.0F, 1.0F, 0, 2, 4, 0.0F);
+        this.finRearBottom.addBox(0.0F, 0.0F, 1.0F, 0, 2, 4, 0.0F);
         this.bodyFront.addChild(this.finTopFront);
         this.bodyFront.addChild(this.finFrontBottom);
         this.bodyRear.addChild(this.finTopRear);
@@ -64,12 +64,12 @@ public class FishLongnoseModel <T extends Entity> extends SegmentedModel<T> { //
 
     @Override
     @Nonnull
-    public Iterable<ModelRenderer> func_225601_a_() {
+    public Iterable<ModelRenderer> getParts() {
         return ImmutableList.of(this.bodyFront, this.bodyRear, this.nose, this.finRight, this.finLeft);
     }
 
     @Override
-    public void func_225597_a_(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float f = 1.0F;
         float f1 = 1.0F;
         if (!entity.isInWater()) {
