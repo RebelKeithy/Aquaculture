@@ -22,13 +22,13 @@ public class AquatemRenderer extends ItemStackTileEntityRenderer {
     private static final TackleBoxTileEntity TACKLE_BOX = new TackleBoxTileEntity();
 
     @Override
-    public void func_228364_a_(@Nonnull ItemStack stack, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
+    public void render(@Nonnull ItemStack stack, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
         Item item = stack.getItem();
         boolean isBlockItem = item instanceof BlockItem;
         if (isBlockItem && ((BlockItem) item).getBlock() instanceof TackleBoxBlock) {
-            TileEntityRendererDispatcher.instance.func_228852_a_(TACKLE_BOX, matrixStack, buffer, i, i1);
+            TileEntityRendererDispatcher.instance.renderNullable(TACKLE_BOX, matrixStack, buffer, i, i1);
         } else if (isBlockItem && ((BlockItem) item).getBlock() instanceof NeptunesBountyBlock) {
-            TileEntityRendererDispatcher.instance.func_228852_a_(NEPTUNES_BOUNTY, matrixStack, buffer, i, i1);
+            TileEntityRendererDispatcher.instance.renderNullable(NEPTUNES_BOUNTY, matrixStack, buffer, i, i1);
         }
     }
 }

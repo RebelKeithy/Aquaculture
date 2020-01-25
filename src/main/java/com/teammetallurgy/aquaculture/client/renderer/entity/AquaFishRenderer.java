@@ -35,7 +35,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     }
 
     @Override
-    public void func_225623_a_(@Nonnull AquaFishEntity fishEntity, float entityYaw, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
+    public void render(@Nonnull AquaFishEntity fishEntity, float entityYaw, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
         switch (AquaFishEntity.TYPES.get(fishEntity.getType())) {
             case SMALL:
                 this.entityModel = SMALL_MODEL;
@@ -60,7 +60,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 this.entityModel = MEDIUM_MODEL;
                 break;
         }
-        super.func_225623_a_(fishEntity, entityYaw, partialTicks, matrixStack, buffer, i);
+        super.render(fishEntity, entityYaw, partialTicks, matrixStack, buffer, i);
     }
 
     @Override
@@ -74,8 +74,8 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     }
 
     @Override
-    protected void func_225621_a_(AquaFishEntity fishEntity, @Nonnull MatrixStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
-        super.func_225621_a_(fishEntity, matrixStack, ageInTicks, rotationYaw, partialTicks);
+    protected void applyRotations(AquaFishEntity fishEntity, @Nonnull MatrixStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
+        super.applyRotations(fishEntity, matrixStack, ageInTicks, rotationYaw, partialTicks);
         FishType fishType = AquaFishEntity.TYPES.get(fishEntity.getType());
         if (fishType != FishType.JELLYFISH) {
             float salmonRotation = 1.0F;
@@ -88,27 +88,27 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             }
             float fishRotation = fishType == FishType.LONGNOSE ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
 
-            matrixStack.func_227863_a_(Vector3f.field_229181_d_.func_229187_a_(fishRotation));
+            matrixStack.rotate(Vector3f.YP.rotationDegrees(fishRotation));
             if (fishType == FishType.LONGNOSE) {
-                matrixStack.func_227861_a_(0.0F, 0.0F, -0.4F);
+                matrixStack.translate(0.0F, 0.0F, -0.4F);
             }
             if (!fishEntity.isInWater() && fishType != FishType.HALIBUT) {
                 if (fishType == FishType.MEDIUM || fishType == FishType.LARGE || fishType == FishType.CATFISH) {
-                    matrixStack.func_227861_a_(0.1F, 0.1F, -0.1F);
+                    matrixStack.translate(0.1F, 0.1F, -0.1F);
                 } else {
-                    matrixStack.func_227861_a_(0.2F, 0.1F, 0.0F);
+                    matrixStack.translate(0.2F, 0.1F, 0.0F);
                 }
-                matrixStack.func_227863_a_(Vector3f.field_229183_f_.func_229187_a_(90));
+                matrixStack.rotate(Vector3f.ZP.rotationDegrees(90));
             }
             if (fishType == FishType.HALIBUT) {
-                matrixStack.func_227861_a_(-0.4F, 0.1F, 0.0F);
-                matrixStack.func_227863_a_(Vector3f.field_229183_f_.func_229187_a_(-90));
+                matrixStack.translate(-0.4F, 0.1F, 0.0F);
+                matrixStack.rotate(Vector3f.ZP.rotationDegrees(-90));
             }
         }
     }
 
     @Override
-    protected void func_225620_a_(AquaFishEntity fishEntity, MatrixStack matrixStack, float partialTickTime) {
+    protected void preRenderCallback(AquaFishEntity fishEntity, MatrixStack matrixStack, float partialTickTime) {
         ResourceLocation location = fishEntity.getType().getRegistryName();
         float scale = 0.0F;
         if (location != null) {
@@ -144,9 +144,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             }
         }
         if (scale > 0) {
-            matrixStack.func_227860_a_();
-            matrixStack.func_227862_a_(scale, scale, scale);
-            matrixStack.func_227865_b_();
+            matrixStack.push();
+            matrixStack.scale(scale, scale, scale);
+            matrixStack.pop();
         }
     }
 }
