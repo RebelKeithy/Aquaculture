@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.FishMountRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.TurtleLandRenderer;
+import com.teammetallurgy.aquaculture.client.renderer.tileentity.NeptunesBountyRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
@@ -15,7 +16,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.TippedArrowRenderer;
-import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -31,7 +31,7 @@ public class ClientHandler {
 
     public static void setupClient() {
         ScreenManager.registerFactory(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
-        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, ChestTileEntityRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, NeptunesBountyRenderer::new);
         ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.TACKLE_BOX,  TackleBoxRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.BOBBER, AquaBobberRenderer::new);
         for (EntityType<AquaFishEntity> fish : FishRegistry.fishEntities) {
