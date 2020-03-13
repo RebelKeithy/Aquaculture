@@ -34,7 +34,7 @@ public class WormFarmBlock extends ComposterBlock {
     }
 
     public static void addCompostables() {
-        CHANCES.put(AquaItems.ALGAE.asItem(), 0.3F);
+        registerCompostable(AquaItems.ALGAE.asItem(), 0.3F);
         if (AquaConfig.BASIC_OPTIONS.compostableFish.get()) {
             for (Item fish : AquacultureAPI.FISH_DATA.getFish()) {
                 double weight = AquacultureAPI.FISH_DATA.getMinWeight(fish);
@@ -43,10 +43,14 @@ public class WormFarmBlock extends ComposterBlock {
                     weight = fishStack.getTag().getDouble("fishWeight");
                 }
                 float chance = MathHelper.clamp((FishWeightHandler.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
-                if (!CHANCES.containsKey(fish)) {
-                    CHANCES.put(fish, chance);
-                }
+                registerCompostable(fish, chance);
             }
+        }
+    }
+
+    public static void registerCompostable(Item item, float chance) {
+        if (!CHANCES.containsKey(item) && CHANCES.size() < 256) {
+            CHANCES.put(item, chance);
         }
     }
 
