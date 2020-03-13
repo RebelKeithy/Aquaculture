@@ -47,33 +47,34 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity & IChestLid> exten
     }
 
     @Override
-    public void render(@Nonnull T tackleBox, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
+    public void render(@Nonnull T tackleBox, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         World world = tackleBox.getWorld();
         boolean hasWorld = world != null;
         BlockState state = hasWorld ? tackleBox.getBlockState() : AquaBlocks.TACKLE_BOX.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
         Block block = state.getBlock();
         if (block instanceof TackleBoxBlock) {
             matrixStack.push();
-            float lvt_14_1_ = state.get(TackleBoxBlock.FACING).getHorizontalAngle();
             matrixStack.translate(0.5D, 0.5D, 0.5D);
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(-lvt_14_1_));
+            float facing = state.get(TackleBoxBlock.FACING).getHorizontalAngle();
+            matrixStack.rotate(Vector3f.YP.rotationDegrees(-facing));
             matrixStack.translate(-0.5D, -0.5D, -0.5D);
             matrixStack.translate(0.0625F, 1.125F, 0.5F); //Translate
             matrixStack.rotate(Vector3f.XN.rotationDegrees(-180)); //Flip
-            TileEntityMerger.ICallbackWrapper<?> lvt_15_2_ = TileEntityMerger.ICallback::func_225537_b_;
+
+            TileEntityMerger.ICallbackWrapper<?> callbackWrapper = TileEntityMerger.ICallback::func_225537_b_;
             float angle = tackleBox.getLidAngle(partialTicks);
             angle = 1.0F - angle;
             angle = 1.0F - angle * angle * angle;
-            int lvt_17_1_ = ((Int2IntFunction) lvt_15_2_.apply(new DualBrightnessCallback())).applyAsInt(i);
+            int brightness = ((Int2IntFunction) callbackWrapper.apply(new DualBrightnessCallback())).applyAsInt(combinedLight);
             IVertexBuilder tackleBoxBuilder = buffer.getBuffer(TACKLE_BOX_RENDER);
-            this.func_228871_a_(matrixStack, tackleBoxBuilder, this.base, this.lid, angle, lvt_17_1_, i1);
+            this.render(matrixStack, tackleBoxBuilder, this.base, this.lid, angle, brightness, combinedOverlay);
             matrixStack.pop();
         }
     }
 
-    private void func_228871_a_(MatrixStack p_228871_1_, IVertexBuilder p_228871_2_, ModelRenderer base, ModelRenderer lid, float p_228871_6_, int p_228871_7_, int p_228871_8_) {
-        lid.rotateAngleX = -(p_228871_6_ * 1.5707964F);
-        base.render(p_228871_1_, p_228871_2_, p_228871_7_, p_228871_8_);
-        lid.render(p_228871_1_, p_228871_2_, p_228871_7_, p_228871_8_);
+    private void render(MatrixStack matrixStack, IVertexBuilder builder, ModelRenderer base, ModelRenderer lid, float angle, int brightness, int combinedOverlay) {
+        lid.rotateAngleX = -(angle * 1.5707964F);
+        base.render(matrixStack, builder, brightness, combinedOverlay);
+        lid.render(matrixStack, builder, brightness, combinedOverlay);
     }
 }

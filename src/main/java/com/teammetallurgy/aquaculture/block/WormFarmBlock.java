@@ -1,6 +1,9 @@
 package com.teammetallurgy.aquaculture.block;
 
+import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.init.AquaItems;
+import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
+import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ComposterBlock;
@@ -10,10 +13,12 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -26,7 +31,21 @@ public class WormFarmBlock extends ComposterBlock {
 
     public WormFarmBlock() {
         super(Block.Properties.create(Material.WOOD).hardnessAndResistance(0.6F).sound(SoundType.WOOD));
+    }
+
+    public static void addCompostables() {
         CHANCES.put(AquaItems.ALGAE.asItem(), 0.3F);
+        if (AquaConfig.BASIC_OPTIONS.compostableFish.get()) {
+            for (Item fish : AquacultureAPI.FISH_DATA.getFish()) {
+                double weight = AquacultureAPI.FISH_DATA.getMinWeight(fish);
+                ItemStack fishStack = new ItemStack(fish);
+                if (fishStack.getTag() != null && fishStack.getTag().contains("fishWeight")) {
+                    weight = fishStack.getTag().getDouble("fishWeight");
+                }
+                float chance = MathHelper.clamp((FishWeightHandler.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
+                CHANCES.put(fish, chance);
+            }
+        }
     }
 
     @Override
