@@ -43,7 +43,9 @@ public class WormFarmBlock extends ComposterBlock {
                     weight = fishStack.getTag().getDouble("fishWeight");
                 }
                 float chance = MathHelper.clamp((FishWeightHandler.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
-                CHANCES.put(fish, chance);
+                if (!CHANCES.containsKey(fish)) {
+                    CHANCES.put(fish, chance);
+                }
             }
         }
     }
