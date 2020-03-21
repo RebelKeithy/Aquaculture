@@ -221,8 +221,8 @@
   "aquaculture.message26": "나는 매일 아침 내 다이아몬드 갑옷을 갈아먹는다. 언젠가는 빨라지겠지. - mDiyo",
   "aquaculture.message27": "-메세지가 마술처럼 당신의 손에서 사라졌다.-",
   "aquaculture.message28": "날 봐, 이제 인벤토리를 열어봐. 그 후에 날 다시 봐봐. 이 메세지는 이제 다이아몬드야! ...당연히 농담이지. 아직 종이야.",
-  "aquaculture.message29": "재활용 하세요."
-  
+  "aquaculture.message29": "재활용 하세요.",
+
   "_comment": "사용법",
   "aquaculture.fishWeight.weight": "무게: %s",
   "aquaculture.fishWeight.juvenile": "어림",
