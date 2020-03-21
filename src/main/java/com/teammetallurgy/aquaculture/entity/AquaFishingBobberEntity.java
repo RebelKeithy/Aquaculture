@@ -43,7 +43,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -186,24 +185,18 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
     }
 
     private List<ItemStack> getLoot(LootContext.Builder builder, ServerWorld serverWorld) {
-        IFluidState fluidState = this.world.getFluidState(new BlockPos(this));
-        ResourceLocation lootTableLocation = null;
-        if (fluidState.isTagged(FluidTags.WATER)) {
-            lootTableLocation = LootTables.GAMEPLAY_FISHING;
-        }
+        ResourceLocation lootTableLocation;
         if (this.isLavaHookInLava(this, this.world, new BlockPos(this))) {
             if (serverWorld.getWorld().getDimension().isNether()) {
                 lootTableLocation = AquaLootTables.NETHER_FISHING;
             } else {
                 lootTableLocation = AquaLootTables.LAVA_FISHING;
             }
-        }
-        if (lootTableLocation == null) {
-            return new ArrayList<>();
         } else {
-            LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootTableLocation);
-            return lootTable.generate(builder.build(LootParameterSets.FISHING));
+            lootTableLocation = LootTables.GAMEPLAY_FISHING;
         }
+        LootTable lootTable = serverWorld.getServer().getLootTableManager().getLootTableFromLocation(lootTableLocation);
+        return lootTable.generate(builder.build(LootParameterSets.FISHING));
     }
 
     private void spawnLoot(List<ItemStack> lootEntries) {
