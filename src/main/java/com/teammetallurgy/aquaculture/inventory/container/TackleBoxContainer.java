@@ -85,26 +85,33 @@ public class TackleBoxContainer extends Container {
 
     @Override
     @Nonnull
-    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
-        ItemStack transferStack = ItemStack.EMPTY;
+    public ItemStack transferStackInSlot(PlayerEntity player, int index) { //TODO Temporarily disabled
+        /*ItemStack transferStack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
             ItemStack slotStack = slot.getStack();
+            System.out.println("INDEX: " + index + " SLOT: " + slot.slotNumber + " STACK: " + slotStack);
             transferStack = slotStack.copy();
             if (index < this.rows * this.collumns) {
+                System.out.println("FIRST IF");
                 if (!this.mergeItemStack(slotStack, this.rows * this.collumns, this.inventorySlots.size(), true)) {
+                    System.out.println("IF NOT MERGE");
                     return ItemStack.EMPTY;
                 }
             } else if (!this.mergeItemStack(slotStack, 0, this.rows * this.collumns, false)) {
+                System.out.println("ELSE IF NOT MERGE");
                 return ItemStack.EMPTY;
             }
             if (slotStack.isEmpty()) {
+                System.out.println("EMPTY SLOT STACK");
                 slot.putStack(ItemStack.EMPTY);
             } else {
+                System.out.println("ELSE. CHANGE SLOT");
                 slot.onSlotChanged();
             }
         }
-        return transferStack;
+        System.out.println("TRANSFERSTACK: " + transferStack);*/
+        return ItemStack.EMPTY;
     }
 
     @Override
