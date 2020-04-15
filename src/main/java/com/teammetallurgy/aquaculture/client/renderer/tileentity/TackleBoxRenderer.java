@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 
 public class TackleBoxRenderer <T extends TackleBoxTileEntity & IChestLid> extends TileEntityRenderer<T> {
     private static final ResourceLocation TACKLE_BOX_TEXTURE = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/tileentity/tackle_box.png");
-    private static final RenderType TACKLE_BOX_RENDER = RenderType.entityCutout(TACKLE_BOX_TEXTURE);
+    private static final RenderType TACKLE_BOX_RENDER = RenderType.getEntityCutout(TACKLE_BOX_TEXTURE);
     private ModelRenderer base;
     private ModelRenderer lid;
     private ModelRenderer handle;

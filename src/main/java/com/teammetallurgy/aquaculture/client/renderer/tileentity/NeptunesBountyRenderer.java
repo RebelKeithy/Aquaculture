@@ -25,13 +25,13 @@ public class NeptunesBountyRenderer extends ChestTileEntityRenderer<NeptunesBoun
 
     @Override
     @Nonnull
-    protected Material getMaterial(NeptunesBountyTileEntity tileEntity, @Nonnull ChestType chestType) {
+    protected Material getMaterial(@Nonnull NeptunesBountyTileEntity tileEntity, @Nonnull ChestType chestType) {
         return new Material(Atlases.CHEST_ATLAS, NEPTUNES_BOUNTY);
     }
 
     @SubscribeEvent
     public static void onTextureStitch(TextureStitchEvent.Pre event) {
-        if (event.getMap().getBasePath().equals(Atlases.CHEST_ATLAS)) {
+        if (event.getMap().getTextureLocation().equals(Atlases.CHEST_ATLAS)) {
             event.addSprite(NEPTUNES_BOUNTY);
         }
     }

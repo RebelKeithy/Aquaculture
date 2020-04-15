@@ -48,7 +48,7 @@ public class FishSmallModel<T extends Entity> extends AbstractTropicalFishModel<
     }
 
     @Override
-    public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float movement = 1.0F;
         if (!entity.isInWater()) {
             movement = 1.5F;

@@ -59,7 +59,7 @@ public class TurtleLandModel<T extends TurtleLandEntity> extends QuadrupedModel<
     }
 
     @Override
-    public void render(@Nonnull T turtle, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(@Nonnull T turtle, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.headModel.rotateAngleX = headPitch * 0.017453292F;
         this.headModel.rotateAngleY = netHeadYaw * 0.017453292F;
         this.legBackRight.rotateAngleX = 0.5235987755982988F + (MathHelper.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);

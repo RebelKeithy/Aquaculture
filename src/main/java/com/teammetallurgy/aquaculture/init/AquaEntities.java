@@ -83,9 +83,9 @@ public class AquaEntities {
     }
 
     public static void setSpawnPlacement() {
-        EntitySpawnPlacementRegistry.register(BOX_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::func_223316_b);
-        EntitySpawnPlacementRegistry.register(ARRAU_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::func_223316_b);
-        EntitySpawnPlacementRegistry.register(STARSHELL_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::func_223316_b);
+        EntitySpawnPlacementRegistry.register(BOX_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
+        EntitySpawnPlacementRegistry.register(ARRAU_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
+        EntitySpawnPlacementRegistry.register(STARSHELL_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
     }
 
     public static void addEntitySpawns() {

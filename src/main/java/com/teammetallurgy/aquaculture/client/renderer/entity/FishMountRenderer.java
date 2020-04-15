@@ -61,14 +61,14 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         matrixStack.translate(-0.5D, -0.5D, -0.5D);
         if (fishMount.getType().getRegistryName() != null) {
             ModelResourceLocation location = new ModelResourceLocation(fishMount.getType().getRegistryName(), ""); //Calling this instead of the fields for mod support'
-            rendererDispatcher.getBlockModelRenderer().renderModelBrightnessColor(matrixStack.getLast(), buffer.getBuffer(Atlases.getSolidBlockType()), null, manager.getModel(location), 1.0F, 1.0F, 1.0F, i, OverlayTexture.DEFAULT_LIGHT);
+            rendererDispatcher.getBlockModelRenderer().renderModelBrightnessColor(matrixStack.getLast(), buffer.getBuffer(Atlases.getSolidBlockType()), null, manager.getModel(location), 1.0F, 1.0F, 1.0F, i, OverlayTexture.NO_OVERLAY);
         }
         matrixStack.pop();
-        this.renderFish(fishMount, pos, partialTicks, matrixStack, buffer, i);
+        this.renderFish(fishMount, matrixStack, buffer, i);
         matrixStack.pop();
     }
 
-    private void renderFish(FishMountEntity fishMount, Vec3d pos, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int i) {
+    private void renderFish(FishMountEntity fishMount, MatrixStack matrixStack, IRenderTypeBuffer buffer, int i) {
         Entity entity = fishMount.entity;
         if (entity instanceof MobEntity) {
             MobEntity fish = (MobEntity) entity;

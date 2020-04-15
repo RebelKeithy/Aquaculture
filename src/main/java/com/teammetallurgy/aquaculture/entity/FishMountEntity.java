@@ -85,7 +85,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
     @Override
     public boolean onValidSurface() {
-        if (!this.world.func_226669_j_(this)) {
+        if (!this.world.hasNoCollisions(this)) {
             return false;
         } else {
             BlockState state = this.world.getBlockState(this.hangingPosition.offset(this.facingDirection.getOpposite()));

@@ -26,9 +26,9 @@ public class AquatemRenderer extends ItemStackTileEntityRenderer {
         Item item = stack.getItem();
         boolean isBlockItem = item instanceof BlockItem;
         if (isBlockItem && ((BlockItem) item).getBlock() instanceof TackleBoxBlock) {
-            TileEntityRendererDispatcher.instance.renderNullable(TACKLE_BOX, matrixStack, buffer, i, i1);
+            TileEntityRendererDispatcher.instance.renderItem(TACKLE_BOX, matrixStack, buffer, i, i1);
         } else if (isBlockItem && ((BlockItem) item).getBlock() instanceof NeptunesBountyBlock) {
-            TileEntityRendererDispatcher.instance.renderNullable(NEPTUNES_BOUNTY, matrixStack, buffer, i, i1);
+            TileEntityRendererDispatcher.instance.renderItem(NEPTUNES_BOUNTY, matrixStack, buffer, i, i1);
         }
     }
 }
