@@ -70,12 +70,12 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
 
     @Override
     @Nonnull
-    public EntitySize getSize(Pose pose) {
+    public EntitySize getSize(@Nonnull Pose pose) {
         return super.getSize(pose);
     }
 
     @Override
-    public void onCollideWithPlayer(PlayerEntity player) {
+    public void onCollideWithPlayer(@Nonnull PlayerEntity player) {
         super.onCollideWithPlayer(player);
         if (Objects.equals(this.getType().getRegistryName(), AquaItems.JELLYFISH.getRegistryName())) {
             if (this.isAlive()) {
@@ -88,8 +88,9 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
     }
 
     public static boolean canSpawnHere(EntityType<? extends AbstractFishEntity> fish, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        boolean isNeighborWater = isSourceBlock(world, pos.north()) || isSourceBlock(world, pos.south()) || isSourceBlock(world, pos.west()) || isSourceBlock(world, pos.east());
-        return isSourceBlock(world, pos) && isNeighborWater;
+        boolean isAllNeighborsSource = isSourceBlock(world, pos.north()) && isSourceBlock(world, pos.south()) && isSourceBlock(world, pos.west()) && isSourceBlock(world, pos.east());
+        System.out.println(isSourceBlock(world, pos) && isAllNeighborsSource);
+        return isSourceBlock(world, pos) && isAllNeighborsSource;
     }
 
     private static boolean isSourceBlock(IWorld world, BlockPos pos) {
