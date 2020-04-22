@@ -2,7 +2,8 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.entity.ai.goal.FollowTypeSchoolLeaderGoal;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
@@ -13,6 +14,7 @@ import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -86,8 +88,12 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
     }
 
     public static boolean canSpawnHere(EntityType<? extends AbstractFishEntity> fish, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        boolean isNeighborWater = world.getBlockState(pos.north()).getBlock() == Blocks.WATER || world.getBlockState(pos.south()).getBlock() == Blocks.WATER  ||
-                world.getBlockState(pos.west()).getBlock() == Blocks.WATER  || world.getBlockState(pos.east()).getBlock() == Blocks.WATER;
-        return world.getBlockState(pos).getBlock() == Blocks.WATER && isNeighborWater;
+        boolean isNeighborWater = isSourceBlock(world, pos.north()) || isSourceBlock(world, pos.south()) || isSourceBlock(world, pos.west()) || isSourceBlock(world, pos.east());
+        return isSourceBlock(world, pos) && isNeighborWater;
+    }
+
+    private static boolean isSourceBlock(IWorld world, BlockPos pos) {
+        BlockState state = world.getBlockState(pos);
+        return state.getBlock() instanceof FlowingFluidBlock && world.getFluidState(pos).isTagged(FluidTags.WATER) && state.get(FlowingFluidBlock.LEVEL) == 0;
     }
 }
