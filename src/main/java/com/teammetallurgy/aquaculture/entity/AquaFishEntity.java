@@ -89,7 +89,6 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
 
     public static boolean canSpawnHere(EntityType<? extends AbstractFishEntity> fish, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
         boolean isAllNeighborsSource = isSourceBlock(world, pos.north()) && isSourceBlock(world, pos.south()) && isSourceBlock(world, pos.west()) && isSourceBlock(world, pos.east());
-        System.out.println(isSourceBlock(world, pos) && isAllNeighborsSource);
         return isSourceBlock(world, pos) && isAllNeighborsSource;
     }
 
