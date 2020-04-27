@@ -62,10 +62,25 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
     @Override
     @Nonnull
     protected SoundEvent getFlopSound() {
-        if (Objects.equals(this.getType().getRegistryName(), AquaItems.JELLYFISH.getRegistryName())) {
+        if (AquaFishEntity.TYPES.get(this.getType()) == FishType.JELLYFISH) {
             return SoundEvents.BLOCK_SLIME_BLOCK_STEP;
         }
         return SoundEvents.ENTITY_COD_FLOP;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_COD_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_COD_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
+        return SoundEvents.ENTITY_COD_HURT;
     }
 
     @Override
