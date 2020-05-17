@@ -26,10 +26,10 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
     private static final ResourceLocation BOBBER_OVERLAY = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_overlay.png");
     private static final ResourceLocation BOBBER_VANILLA = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_vanilla.png");
     private static final ResourceLocation HOOK = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/hook/hook.png");
-    private static final RenderType BOBBER_RENDER = RenderType.entityCutout(BOBBER);
-    private static final RenderType BOBBER_OVERLAY_RENDER = RenderType.entityCutout(BOBBER_OVERLAY);
-    private static final RenderType BOBBER_VANILLA_RENDER = RenderType.entityCutout(BOBBER_VANILLA);
-    private static final RenderType HOOK_RENDER = RenderType.entityCutout(HOOK);
+    private static final RenderType BOBBER_RENDER = RenderType.getEntityCutout(BOBBER);
+    private static final RenderType BOBBER_OVERLAY_RENDER = RenderType.getEntityCutout(BOBBER_OVERLAY);
+    private static final RenderType BOBBER_VANILLA_RENDER = RenderType.getEntityCutout(BOBBER_VANILLA);
+    private static final RenderType HOOK_RENDER = RenderType.getEntityCutout(HOOK);
 
     public AquaBobberRenderer(EntityRendererManager manager) {
         super(manager);
@@ -45,8 +45,8 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             matrixStack.rotate(this.renderManager.getCameraOrientation());
             matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F));
             MatrixStack.Entry bobberMatrix = matrixStack.getLast();
-            Matrix4f posMatrix = bobberMatrix.getPositionMatrix();
-            Matrix3f matrix3f = bobberMatrix.getNormalMatrix();
+            Matrix4f posMatrix = bobberMatrix.getMatrix();
+            Matrix3f matrix3f = bobberMatrix.getNormal();
             //Bobber + Bobber Overlay
             IVertexBuilder bobberOverlayVertex = bobber.hasBobber() ? buffer.getBuffer(BOBBER_OVERLAY_RENDER) : buffer.getBuffer(BOBBER_VANILLA_RENDER);
             //Bobber Overlay
@@ -75,7 +75,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 renderPosTexture(bobberVertex, posMatrix, matrix3f, i, 0.0F, 1, 0, 0);
             }
             //Hook
-            IVertexBuilder hookVertex = bobber.hasHook() ? buffer.getBuffer(RenderType.entityCutout(bobber.getHook().getTexture())) : buffer.getBuffer(HOOK_RENDER);
+            IVertexBuilder hookVertex = bobber.hasHook() ? buffer.getBuffer(RenderType.getEntityCutout(bobber.getHook().getTexture())) : buffer.getBuffer(HOOK_RENDER);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 0.0F, 0, 0, 1);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 1.0F, 0, 1, 1);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 1.0F, 1, 1, 0);
@@ -123,8 +123,8 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             float startX = (float) (anglerX - bobberX);
             float startY = (float) (anglerY - bobberY) + anglerEye;
             float startZ = (float) (anglerZ - bobberZ);
-            IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.lines());
-            Matrix4f matrix4f1 = matrixStack.getLast().getPositionMatrix();
+            IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.getLines());
+            Matrix4f matrix4f1 = matrixStack.getLast().getMatrix();
 
             //Line color
             ItemStack line = bobber.getFishingLine();
@@ -156,11 +156,11 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
     }
 
     private static void renderPosTexture(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v) {
-        builder.pos(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(255, 255, 255, 255).tex((float) u, (float) v).overlay(OverlayTexture.DEFAULT_LIGHT).lightmap(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+        builder.pos(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(255, 255, 255, 255).tex((float) u, (float) v).overlay(OverlayTexture.NO_OVERLAY).lightmap(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     private static void renderPosTextureColor(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v, float r, float g, float b) {
-        builder.pos(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(r, g, b, 1.0F).tex((float) u, (float) v).overlay(OverlayTexture.DEFAULT_LIGHT).lightmap(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+        builder.pos(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(r, g, b, 1.0F).tex((float) u, (float) v).overlay(OverlayTexture.NO_OVERLAY).lightmap(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
     private static void renderPosColor(float x, float y, float z, IVertexBuilder builder, Matrix4f matrix4f, float f, float r, float g, float b) {

@@ -55,7 +55,7 @@ public class JellyfishModel<T extends Entity> extends SegmentedModel<T> {
     }
 
     @Override
-    public void render(@Nonnull T jellyfish, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(@Nonnull T jellyfish, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float stillMovement = 0.1F;
         if (!jellyfish.isInWater()) {
             stillMovement = 0.05F;

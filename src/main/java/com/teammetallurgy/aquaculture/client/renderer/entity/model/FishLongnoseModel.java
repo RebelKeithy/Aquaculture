@@ -69,7 +69,7 @@ public class FishLongnoseModel <T extends Entity> extends SegmentedModel<T> { //
     }
 
     @Override
-    public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         float f = 1.0F;
         float f1 = 1.0F;
         if (!entity.isInWater()) {
