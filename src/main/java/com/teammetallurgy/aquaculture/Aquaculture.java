@@ -50,13 +50,14 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
-        LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
-        FishWeightHandler.registerFishData();
-        WormFarmBlock.addCompostables();
-        AquaEntities.setSpawnPlacement();
-        DeferredWorkQueue.runLater(AquaEntities::addEntitySpawns);
-        DeferredWorkQueue.runLater(FishReadFromJson::addFishSpawns);
-        FishRegistry.addCatBreeding();
+        DeferredWorkQueue.runLater(() -> {
+            LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
+            FishWeightHandler.registerFishData();
+            AquaEntities.setSpawnPlacement();
+            AquaEntities.addEntitySpawns();
+            FishReadFromJson.addFishSpawns();
+            FishRegistry.addCatBreeding();
+        });
     }
 
     private void setupClient(FMLClientSetupEvent event) {
