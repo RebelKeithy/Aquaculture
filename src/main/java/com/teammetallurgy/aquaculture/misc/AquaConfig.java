@@ -18,6 +18,7 @@ public class AquaConfig {
         public ForgeConfigSpec.BooleanValue enableFishSpawning;
         public ForgeConfigSpec.BooleanValue randomWeight;
         public ForgeConfigSpec.BooleanValue compostableFish;
+        public ForgeConfigSpec.BooleanValue aqFishToBreedCats;
         public ForgeConfigSpec.BooleanValue debugMode;
 
         BasicOptions(ForgeConfigSpec.Builder builder) {
@@ -25,6 +26,7 @@ public class AquaConfig {
             enableFishSpawning = builder.comment("Enable fish mob spawning? Weight & biomes can be modified in the Aquaculture fish loot table").define("Enable fish spawning?", true);
             randomWeight = builder.define("Enable weight for fish? Useful for fishing competitions", false);
             compostableFish = builder.define("Should fish be added as compostables for the composter/worm farm? (Based on fish, or weight if enabled)", true);
+            aqFishToBreedCats = builder.define("Should Aquaculture fish be able to be used to breed cats & ocelots?", true);
             debugMode = builder.define("Enable debug mode? (Enables additional logging)", false);
             builder.pop();
         }

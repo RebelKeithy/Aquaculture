@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture;
 
-import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
@@ -56,7 +55,9 @@ public class Aquaculture {
             AquaEntities.setSpawnPlacement();
             AquaEntities.addEntitySpawns();
             FishReadFromJson.addFishSpawns();
-            FishRegistry.addCatBreeding();
+            if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
+                FishRegistry.addCatBreeding();
+            }
         });
     }
 
