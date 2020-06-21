@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture;
 
-import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
@@ -50,13 +49,16 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
-        LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
-        FishWeightHandler.registerFishData();
-        WormFarmBlock.addCompostables();
-        AquaEntities.setSpawnPlacement();
-        DeferredWorkQueue.runLater(AquaEntities::addEntitySpawns);
-        DeferredWorkQueue.runLater(FishReadFromJson::addFishSpawns);
-        FishRegistry.addCatBreeding();
+        DeferredWorkQueue.runLater(() -> {
+            LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
+            FishWeightHandler.registerFishData();
+            AquaEntities.setSpawnPlacement();
+            AquaEntities.addEntitySpawns();
+            FishReadFromJson.addFishSpawns();
+            if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
+                FishRegistry.addCatBreeding();
+            }
+        });
     }
 
     private void setupClient(FMLClientSetupEvent event) {
