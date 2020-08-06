@@ -28,8 +28,8 @@ public class TackleBoxScreen extends ContainerScreen<TackleBoxContainer> {
 
     @Override
     protected void func_230451_b_(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY) {
-        this.field_230712_o_.func_238407_a_(matrixStack, this.field_230704_d_, 100.0F, 6.0F, 4210752);
-        this.field_230712_o_.func_238407_a_(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 4), 4210752);
+        this.field_230712_o_.func_238422_b_(matrixStack, this.field_230704_d_, 100.0F, 6.0F, 4210752);
+        this.field_230712_o_.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 4), 4210752);
     }
 
     @Override

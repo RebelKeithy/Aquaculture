@@ -10,8 +10,10 @@ import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
+import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -78,6 +80,7 @@ public class FishRegistry {
         for (EntityType<AquaFishEntity> entityType : fishEntities) {
             event.getRegistry().register(entityType);
             EntitySpawnPlacementRegistry.register(entityType, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
+            GlobalEntityTypeAttributes.put(entityType, AbstractFishEntity.func_234176_m_().func_233813_a_());
         }
     }
 

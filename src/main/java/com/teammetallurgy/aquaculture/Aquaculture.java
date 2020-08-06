@@ -1,5 +1,7 @@
 package com.teammetallurgy.aquaculture;
 
+import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
@@ -49,6 +51,7 @@ public class Aquaculture {
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
+        AquacultureAPI.Tags.init();
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
@@ -57,6 +60,7 @@ public class Aquaculture {
             AquaEntities.setSpawnPlacement();
             AquaEntities.addEntitySpawns();
             FishReadFromJson.addFishSpawns();
+            WormFarmBlock.addCompostables();
             if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
                 FishRegistry.addCatBreeding();
             }

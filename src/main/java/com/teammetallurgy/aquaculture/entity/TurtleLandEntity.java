@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TurtleLandEntity extends AnimalEntity {
-    private static final Ingredient TURTLE_EDIBLE = Ingredient.fromTag(AquacultureAPI.Tags.TURTLE_EDIBLE);
 
     public TurtleLandEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -35,7 +34,7 @@ public class TurtleLandEntity extends AnimalEntity {
         this.goalSelector.addGoal(0, new TurtleLandSwimGoal());
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.2D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.05D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.15D, false, TURTLE_EDIBLE));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.15D, false, this.getTurtleEdible()));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
         this.goalSelector.addGoal(5, new GetOutOfWaterGoal(this));
         this.goalSelector.addGoal(6, new RandomWalkingGoal(this, 1.0D));
@@ -50,7 +49,11 @@ public class TurtleLandEntity extends AnimalEntity {
 
     @Override
     public boolean isBreedingItem(@Nonnull ItemStack stack) {
-        return TURTLE_EDIBLE.test(stack);
+        return this.getTurtleEdible().test(stack);
+    }
+
+    public Ingredient getTurtleEdible() {
+        return Ingredient.fromTag(AquacultureAPI.Tags.TURTLE_EDIBLE);
     }
 
     @Override

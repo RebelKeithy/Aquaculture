@@ -2,10 +2,9 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import net.minecraft.loot.LootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.TableLootEntry;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.EntityHasProperty;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,7 +43,8 @@ public class AquaLootTables {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.NEPTUNIUM_OPTIONS.addNeptunesBountyToLoot.get()) {
-                    addEntry(pool, getInjectEntry(NEPTUNIUM, 1, 2));
+                    LootEntry neptuniumEntry = TableLootEntry.builder(NEPTUNIUM).weight(1).quality(2).acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().func_234580_a_(FishingPredicate.func_234640_a_(true)))).build();
+                    addEntry(pool, neptuniumEntry);
                 }
             }
         }

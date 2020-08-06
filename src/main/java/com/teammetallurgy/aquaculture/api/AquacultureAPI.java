@@ -9,7 +9,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
 
@@ -32,7 +31,6 @@ public class AquacultureAPI {
         return FishRegistry.registerFishMount(name);
     }
 
-    @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID) //Statically load, cause reasons
     public static class Tags {
         public static final ITag.INamedTag<Item> FILLET_KNIFE = tag("forge", "fillet_knife");
         public static final ITag.INamedTag<Item> FISHING_LINE = tag(Aquaculture.MOD_ID, "fishing_line");
@@ -43,6 +41,9 @@ public class AquacultureAPI {
 
         public static ITag.INamedTag<Item> tag(String modID, String name) {
             return ItemTags.makeWrapperTag(new ResourceLocation(modID, name).toString());
+        }
+
+        public static void init() {
         }
     }
 }

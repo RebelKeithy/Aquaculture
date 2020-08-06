@@ -395,7 +395,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
             } else {
                 Vector3d motion = this.getMotion();
                 this.setMotion(motion.x, (-0.4F * MathHelper.nextFloat(this.rand, 0.6F, 1.0F)), motion.z);
-                double boundingBox = this.getBoundingBox().minY + 0.5D; //TODO check, might need to remove bounding box Y
+                double boundingBox = this.getBoundingBox().minY + 0.5D;
                 if (serverworld.getFluidState(this.func_233580_cy_()).isTagged(FluidTags.WATER)) { //Water check added
                     this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                     serverworld.spawnParticle(ParticleTypes.BUBBLE, this.getPosX(), boundingBox, this.getPosZ(), (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.2D);
