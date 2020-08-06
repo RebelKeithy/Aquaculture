@@ -17,6 +17,10 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.renderer.entity.TippedArrowRenderer;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -32,7 +36,7 @@ public class ClientHandler {
     public static void setupClient() {
         ScreenManager.registerFactory(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
         ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, NeptunesBountyRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.TACKLE_BOX,  TackleBoxRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.TACKLE_BOX, TackleBoxRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.BOBBER, AquaBobberRenderer::new);
         for (EntityType<AquaFishEntity> fish : FishRegistry.fishEntities) {
             RenderingRegistry.registerEntityRenderingHandler(fish, (manager) -> new AquaFishRenderer(manager, fish.getRegistryName() != null && fish.getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
@@ -47,6 +51,10 @@ public class ClientHandler {
         //Item Colors
         ItemColors itemColor = Minecraft.getInstance().getItemColors();
         itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE, AquaItems.BOBBER);
+        registerFishingRodModelProperties(AquaItems.IRON_FISHING_ROD);
+        registerFishingRodModelProperties(AquaItems.GOLD_FISHING_ROD);
+        registerFishingRodModelProperties(AquaItems.DIAMOND_FISHING_ROD);
+        registerFishingRodModelProperties(AquaItems.NEPTUNIUM_FISHING_ROD);
     }
 
     @SubscribeEvent
@@ -57,5 +65,20 @@ public class ClientHandler {
         ModelLoader.addSpecialModel(FishMountRenderer.JUNGLE);
         ModelLoader.addSpecialModel(FishMountRenderer.ACACIA);
         ModelLoader.addSpecialModel(FishMountRenderer.DARK_OAK);
+    }
+
+    public static void registerFishingRodModelProperties(Item fishingRod) {
+        ItemModelsProperties.func_239418_a_(fishingRod, new ResourceLocation("cast"), (heldStack, world, livingEntity) -> {
+            if (livingEntity == null) {
+                return 0.0F;
+            } else {
+                boolean isMainhand = livingEntity.getHeldItemMainhand() == heldStack;
+                boolean isOffHand = livingEntity.getHeldItemOffhand() == heldStack;
+                if (livingEntity.getHeldItemMainhand().getItem() instanceof FishingRodItem) {
+                    isOffHand = false;
+                }
+                return (isMainhand || isOffHand) && livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).fishingBobber != null ? 1.0F : 0.0F;
+            }
+        });
     }
 }

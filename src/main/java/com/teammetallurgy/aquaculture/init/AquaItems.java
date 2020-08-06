@@ -24,7 +24,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Aquaculture.MOD_ID)
 public class AquaItems {
-    private static List<Item> ITEMS = Lists.newArrayList();
+    private static final List<Item> ITEMS = Lists.newArrayList();
 
     //Fishing
     public static final Item IRON_FISHING_ROD = register(new AquaFishingRodItem(ItemTier.IRON, new Item.Properties().defaultMaxDamage(125).group(Aquaculture.GROUP)), "iron_fishing_rod");
@@ -111,10 +111,6 @@ public class AquaItems {
     public static final Item BOX_TURTLE = register(new SimpleItem(), "box_turtle");
     public static final Item ARRAU_TURTLE = register(new SimpleItem(), "arrau_turtle");
     public static final Item STARSHELL_TURTLE = register(new SimpleItem(), "starshell_turtle");
-
-    //Block Items - Have to be specified here, when using a TEISR
-    public static final Item NEPTUNES_BOUNTY = register(new BlockItem(AquaBlocks.NEPTUNES_BOUNTY, new Item.Properties().group(Aquaculture.GROUP).setISTER(() -> AquatemRenderer::new)), "neptunes_bounty");
-    public static final Item TACKLE_BOX = register(new BlockItem(AquaBlocks.TACKLE_BOX, new Item.Properties().maxStackSize(1).group(Aquaculture.GROUP).setISTER(() -> AquatemRenderer::new)), "tackle_box");
 
     //Fish Mounting
     public static final Item OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("oak_fish_mount");

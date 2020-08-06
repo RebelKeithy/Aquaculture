@@ -31,8 +31,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AquaFishingRodItem extends FishingRodItem {
-    private IItemTier material;
-    private int enchantability;
+    private final IItemTier material;
+    private final int enchantability;
 
     public AquaFishingRodItem(IItemTier material, Properties properties) {
         super(properties);
@@ -52,7 +52,7 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
         boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && this.material == AquacultureAPI.MATS.NEPTUNIUM;
         int lureSpeed;
@@ -98,11 +98,11 @@ public class AquaFishingRodItem extends FishingRodItem {
             player.swingArm(hand);
             player.addStat(Stats.ITEM_USED.get(this));
         }
-        return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
+        return ActionResult.func_233538_a_(heldStack, world.isRemote());
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    public boolean getIsRepairable(@Nonnull ItemStack toRepair, @Nonnull ItemStack repair) {
         return this.material.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
     }
 

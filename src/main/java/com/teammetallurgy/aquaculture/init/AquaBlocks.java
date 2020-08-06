@@ -8,6 +8,7 @@ import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
+import com.teammetallurgy.aquaculture.client.renderer.AquatemRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -33,8 +34,8 @@ public class AquaBlocks {
     public static List<Block> BLOCKS = Lists.newArrayList();
     public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", null);
     public static final Block NEPTUNIUM_BLOCK = register(new Block(Block.Properties.create(Material.IRON, MaterialColor.CYAN).hardnessAndResistance(5.0F, 6.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.METAL)), "neptunium_block");
-    public static final Block NEPTUNES_BOUNTY = registerBaseBlock(new NeptunesBountyBlock(), "neptunes_bounty");
-    public static final Block TACKLE_BOX = registerBaseBlock(new TackleBoxBlock(), "tackle_box");
+    public static final Block NEPTUNES_BOUNTY = register(new NeptunesBountyBlock(), "neptunes_bounty", new Item.Properties().setISTER(() -> AquatemRenderer::new));
+    public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box", new Item.Properties().setISTER(() -> AquatemRenderer::new));
     public static final Block WORM_FARM = register(new WormFarmBlock(), "worm_farm");
 
     /**
@@ -73,7 +74,7 @@ public class AquaBlocks {
     @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     @ObjectHolder(Aquaculture.MOD_ID)
     public static class AquaTileEntities {
-        public static List<TileEntityType> TILE_ENTITIES = Lists.newArrayList();
+        public static List<TileEntityType<?>> TILE_ENTITIES = Lists.newArrayList();
         public static final TileEntityType<NeptunesBountyTileEntity> NEPTUNES_BOUNTY = register("neptunes_bounty", TileEntityType.Builder.create(NeptunesBountyTileEntity::new, AquaBlocks.NEPTUNES_BOUNTY));
         public static final TileEntityType<TackleBoxTileEntity> TACKLE_BOX = register("tackle_box", TileEntityType.Builder.create(TackleBoxTileEntity::new, AquaBlocks.TACKLE_BOX));
 
@@ -86,7 +87,7 @@ public class AquaBlocks {
 
         @SubscribeEvent
         public static void registerTileEntity(RegistryEvent.Register<TileEntityType<?>> event) {
-            for (TileEntityType tileEntity : TILE_ENTITIES) {
+            for (TileEntityType<?> tileEntity : TILE_ENTITIES) {
                 event.getRegistry().register(tileEntity);
             }
         }
