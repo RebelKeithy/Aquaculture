@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 
 public class NeptuniumHoe extends HoeItem {
 
-    public NeptuniumHoe(IItemTier tier, float speed) {
-        super(tier, speed, new Item.Properties().group(Aquaculture.GROUP));
+    public NeptuniumHoe(IItemTier tier, int damage, float speed) {
+        super(tier, damage, speed, new Item.Properties().group(Aquaculture.GROUP));
     }
 
     @Override

@@ -48,6 +48,15 @@ minecraft {
                 }
             }
         }
+        data {
+            workingDirectory project.file('run')
+            args '--mod', 'aquaculture', '--all', '--output', file("src/generated/resources/"), '--existing', file("src/main/resources/")
+            mods {
+                aquaculture {
+                    source sourceSets.main
+                }
+            }
+        }
     }
 }
 

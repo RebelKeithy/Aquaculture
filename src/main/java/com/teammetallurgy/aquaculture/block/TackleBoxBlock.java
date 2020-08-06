@@ -8,8 +8,8 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -56,13 +56,13 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
 
     @Override
     @Nonnull
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderType(@Nonnull BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
     @Nonnull
-    public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, @Nonnull IBlockReader blockReader, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
         switch (state.get(FACING)) {
             case NORTH:
             case SOUTH:
@@ -76,7 +76,7 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
 
     @Override
     @Nonnull
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(@Nonnull BlockState state, World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockRayTraceResult hit) {
         if (world.isRemote) {
             return ActionResultType.SUCCESS;
         } else {
@@ -102,12 +102,12 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
     @Nullable
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         Direction placerFacing = context.getPlacementHorizontalFacing().getOpposite();
-        IFluidState fluidState = context.getWorld().getFluidState(context.getPos());
+        FluidState fluidState = context.getWorld().getFluidState(context.getPos());
         return this.getDefaultState().with(FACING, placerFacing).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
 
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
+    public void onBlockPlacedBy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = world.getTileEntity(pos);
             if (tileentity instanceof TackleBoxTileEntity) {
@@ -126,7 +126,7 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
 
     @Override
     @Nonnull
-    public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+    public BlockState updatePostPlacement(BlockState state, @Nonnull Direction facing, @Nonnull BlockState facingState, @Nonnull IWorld world, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
         if (state.get(WATERLOGGED)) {
             world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
@@ -135,17 +135,17 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
 
     @Override
     @Nonnull
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
     }
 
     @Override
-    public boolean hasComparatorInputOverride(BlockState state) {
+    public boolean hasComparatorInputOverride(@Nonnull BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(BlockState state, World world, BlockPos pos) {
+    public int getComparatorInputOverride(@Nonnull BlockState state, World world, @Nonnull BlockPos pos) {
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof TackleBoxTileEntity) {
             LazyOptional<Integer> redstone = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
@@ -172,12 +172,12 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
     }
 
     @Override
-    public boolean allowsMovement(@Nonnull BlockState state, @Nonnull IBlockReader blockReader, @Nonnull BlockPos pos, PathType type) {
+    public boolean allowsMovement(@Nonnull BlockState state, @Nonnull IBlockReader blockReader, @Nonnull BlockPos pos, @Nonnull PathType type) {
         return false;
     }
 
     @Override
-    public void harvestBlock(@Nonnull World world, PlayerEntity player, @Nonnull BlockPos pos, BlockState state, @Nullable TileEntity tileEntity, @Nonnull ItemStack stack) {
+    public void harvestBlock(@Nonnull World world, PlayerEntity player, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable TileEntity tileEntity, @Nonnull ItemStack stack) {
         player.addStat(Stats.BLOCK_MINED.get(this));
         player.addExhaustion(0.005F);
         if (tileEntity != null) {

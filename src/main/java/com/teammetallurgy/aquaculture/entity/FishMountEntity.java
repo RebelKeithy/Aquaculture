@@ -298,7 +298,8 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     @Override
-    public boolean processInitialInteract(PlayerEntity player, Hand hand) {
+    @Nonnull
+    public ActionResultType processInitialInteract(PlayerEntity player, @Nonnull Hand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
         if (!this.world.isRemote) {
             if (this.getDisplayedItem().isEmpty()) {
@@ -311,8 +312,9 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
                     }
                 }
             }
+            return ActionResultType.CONSUME;
         }
-        return true;
+        return super.processInitialInteract(player, hand);
     }
 
     @Override

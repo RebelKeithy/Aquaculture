@@ -12,8 +12,8 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -31,8 +31,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AquaFishingRodItem extends FishingRodItem {
-    private IItemTier material;
-    private int enchantability;
+    private final IItemTier material;
+    private final int enchantability;
 
     public AquaFishingRodItem(IItemTier material, Properties properties) {
         super(properties);
@@ -52,7 +52,7 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
         boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && this.material == AquacultureAPI.MATS.NEPTUNIUM;
         int lureSpeed;
@@ -98,11 +98,11 @@ public class AquaFishingRodItem extends FishingRodItem {
             player.swingArm(hand);
             player.addStat(Stats.ITEM_USED.get(this));
         }
-        return new ActionResult<>(ActionResultType.SUCCESS, heldStack);
+        return ActionResult.func_233538_a_(heldStack, world.isRemote());
     }
 
     @Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    public boolean getIsRepairable(@Nonnull ItemStack toRepair, @Nonnull ItemStack repair) {
         return this.material.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
     }
 
@@ -152,14 +152,16 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag tooltipFlag) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltips, @Nonnull ITooltipFlag tooltipFlag) {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
-            tooltips.add(new TranslationTextComponent("aquaculture.fishing_rod.broken").setStyle(new Style().setItalic(true).setColor(TextFormatting.GRAY)));
+            IFormattableTextComponent broken = new TranslationTextComponent("aquaculture.fishing_rod.broken");
+            tooltips.add(broken.func_240703_c_(broken.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.GRAY)));
         }
 
         Hook hook = getHookType(stack);
         if (hook != Hooks.EMPTY) {
-            tooltips.add(new TranslationTextComponent(hook.getItem().getTranslationKey()).setStyle(new Style().setColor(hook.getColor())));
+            IFormattableTextComponent hookColor = new TranslationTextComponent(hook.getItem().getTranslationKey());
+            tooltips.add(hookColor.func_240703_c_(hookColor.getStyle().func_240712_a_(hook.getColor())));
         }
         super.addInformation(stack, world, tooltips, tooltipFlag);
     }

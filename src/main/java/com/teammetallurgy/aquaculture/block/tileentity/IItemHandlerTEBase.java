@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.block.tileentity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -18,7 +19,7 @@ import javax.annotation.Nullable;
 
 public abstract class IItemHandlerTEBase extends TileEntity implements INameable {
     private ITextComponent customName;
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createItemHandler);
+    private final LazyOptional<IItemHandler> handler = LazyOptional.of(this::createItemHandler);
 
     public IItemHandlerTEBase(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
@@ -28,13 +29,13 @@ public abstract class IItemHandlerTEBase extends TileEntity implements INameable
     protected abstract IItemHandler createItemHandler();
 
     @Override
-    public void read(CompoundNBT tag) {
+    public void func_230337_a_(@Nonnull BlockState state, CompoundNBT tag) {
         CompoundNBT invTag = tag.getCompound("inv");
         this.handler.ifPresent(stack -> ((INBTSerializable<CompoundNBT>) stack).deserializeNBT(invTag));
         if (tag.contains("CustomName", 8)) {
-            this.customName = ITextComponent.Serializer.fromJson(tag.getString("CustomName"));
+            this.customName = ITextComponent.Serializer.func_240643_a_(tag.getString("CustomName"));
         }
-        super.read(tag);
+        super.func_230337_a_(state, tag);
     }
 
     @Override

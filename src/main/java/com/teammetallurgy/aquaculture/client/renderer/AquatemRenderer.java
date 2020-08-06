@@ -5,7 +5,9 @@ import com.teammetallurgy.aquaculture.block.NeptunesBountyBlock;
 import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.BlockItem;
@@ -18,17 +20,17 @@ import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
 public class AquatemRenderer extends ItemStackTileEntityRenderer {
-    private static final NeptunesBountyTileEntity NEPTUNES_BOUNTY = new NeptunesBountyTileEntity();
-    private static final TackleBoxTileEntity TACKLE_BOX = new TackleBoxTileEntity();
 
     @Override
-    public void render(@Nonnull ItemStack stack, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
+    public void func_239207_a_(@Nonnull ItemStack stack, @Nonnull ItemCameraTransforms.TransformType transformType, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
         Item item = stack.getItem();
-        boolean isBlockItem = item instanceof BlockItem;
-        if (isBlockItem && ((BlockItem) item).getBlock() instanceof TackleBoxBlock) {
-            TileEntityRendererDispatcher.instance.renderItem(TACKLE_BOX, matrixStack, buffer, i, i1);
-        } else if (isBlockItem && ((BlockItem) item).getBlock() instanceof NeptunesBountyBlock) {
-            TileEntityRendererDispatcher.instance.renderItem(NEPTUNES_BOUNTY, matrixStack, buffer, i, i1);
+        if (item instanceof BlockItem) {
+            Block block = ((BlockItem) item).getBlock();
+            if (block instanceof TackleBoxBlock) {
+                TileEntityRendererDispatcher.instance.renderItem(new TackleBoxTileEntity(), matrixStack, buffer, i, i1);
+            } else if (block instanceof NeptunesBountyBlock) {
+                TileEntityRendererDispatcher.instance.renderItem(new NeptunesBountyTileEntity(), matrixStack, buffer, i, i1);
+            }
         }
     }
 }

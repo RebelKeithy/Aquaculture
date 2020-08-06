@@ -22,7 +22,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TackleBoxTileEntity extends IItemHandlerTEBase implements INamedContainerProvider, ITickableTileEntity, IChestLid {
+public class TackleBoxTileEntity extends IItemHandlerTEBase implements INamedContainerProvider, ITickableTileEntity {
     protected float lidAngle;
     protected float prevLidAngle;
     protected int numPlayersUsing;
@@ -111,7 +111,6 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements INamedCon
         }
     }
 
-    @Override
     public float getLidAngle(float partialTicks) {
         return MathHelper.lerp(partialTicks, this.prevLidAngle, this.lidAngle);
     }

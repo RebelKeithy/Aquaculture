@@ -3,7 +3,7 @@ package com.teammetallurgy.aquaculture.client.renderer.tileentity;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.model.Material;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.tileentity.ChestTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.state.properties.ChestType;
@@ -25,8 +25,8 @@ public class NeptunesBountyRenderer extends ChestTileEntityRenderer<NeptunesBoun
 
     @Override
     @Nonnull
-    protected Material getMaterial(@Nonnull NeptunesBountyTileEntity tileEntity, @Nonnull ChestType chestType) {
-        return new Material(Atlases.CHEST_ATLAS, NEPTUNES_BOUNTY);
+    protected RenderMaterial getMaterial(@Nonnull NeptunesBountyTileEntity tileEntity, @Nonnull ChestType chestType) {
+        return new RenderMaterial(Atlases.CHEST_ATLAS, NEPTUNES_BOUNTY);
     }
 
     @SubscribeEvent

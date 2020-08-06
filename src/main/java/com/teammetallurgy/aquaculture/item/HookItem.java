@@ -8,8 +8,8 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class HookItem extends Item {
-    private Hook hook;
+    private final Hook hook;
 
     public HookItem(Hook hook) {
         super(new Item.Properties().group(Aquaculture.GROUP).maxStackSize(16));
@@ -38,9 +38,11 @@ public class HookItem extends Item {
         Hook hook = getHookType();
         if (hook != Hooks.EMPTY && hook.getFluids().contains(FluidTags.LAVA)) {
             if (hook.getFluids().contains(FluidTags.WATER)) {
-                tooltips.add(new TranslationTextComponent("aquaculture.universal").setStyle(new Style().setColor(TextFormatting.BOLD)));
+                IFormattableTextComponent universal = new TranslationTextComponent("aquaculture.universal");
+                tooltips.add(universal.func_240703_c_(universal.getStyle().func_240712_a_(TextFormatting.BOLD)));
             } else {
-                tooltips.add(new TranslationTextComponent(Blocks.LAVA.getTranslationKey()).setStyle(new Style().setColor(TextFormatting.RED)));
+                IFormattableTextComponent lava = new TranslationTextComponent(Blocks.LAVA.getTranslationKey());
+                tooltips.add(lava.func_240703_c_(lava.getStyle().func_240712_a_(TextFormatting.RED)));
             }
         }
         super.addInformation(stack, world, tooltips, tooltipFlag);

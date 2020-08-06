@@ -24,6 +24,6 @@ public class FarmlandMoistBlock extends FarmlandBlock {
     public boolean canSustainPlant(@Nonnull BlockState state, @Nonnull IBlockReader world, BlockPos pos, @Nonnull Direction facing, IPlantable plantable) {
         PlantType type = plantable.getPlantType(world, pos.offset(facing));
 
-        return type == PlantType.Crop || type == PlantType.Plains;
+        return type == PlantType.CROP || type == PlantType.PLAINS;
     }
 }

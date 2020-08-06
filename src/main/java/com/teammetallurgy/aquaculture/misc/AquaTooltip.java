@@ -24,10 +24,10 @@ public class AquaTooltip {
                 if (item.getRegistryName() != null) {
                     String itemIdentifier = item.getRegistryName().getPath() + ".tooltip";
                     if (InputMappings.isKeyDown(Minecraft.getInstance().getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
-                        event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".desc").applyTextStyle(TextFormatting.AQUA));
+                        event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".desc").func_240699_a_(TextFormatting.AQUA));
                     } else {
-                        event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".title").applyTextStyle(TextFormatting.AQUA)
-                                .appendText(" ").appendSibling(new TranslationTextComponent(Aquaculture.MOD_ID + ".shift").applyTextStyle(TextFormatting.DARK_GRAY)));
+                        event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".title").func_240699_a_(TextFormatting.AQUA)
+                                .func_240702_b_(" ").func_230529_a_(new TranslationTextComponent(Aquaculture.MOD_ID + ".shift").func_240699_a_(TextFormatting.DARK_GRAY)));
                     }
                 }
             }
