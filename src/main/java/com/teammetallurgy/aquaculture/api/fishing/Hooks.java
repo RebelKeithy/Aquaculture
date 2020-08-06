@@ -3,7 +3,7 @@ package com.teammetallurgy.aquaculture.api.fishing;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.Mod;
 
@@ -14,8 +14,8 @@ public class Hooks {
     public static final Hook IRON = new Hook.HookBuilder("iron").setDurabilityChance(0.20).setColor(TextFormatting.GRAY).build();
     public static final Hook GOLD = new Hook.HookBuilder("gold").setColor(TextFormatting.GOLD).setLuckModifier(1).build();
     public static final Hook DIAMOND = new Hook.HookBuilder("diamond").setColor(TextFormatting.AQUA).setDurabilityChance(0.50).build();
-    public static final Hook LIGHT = new Hook.HookBuilder("light").setColor(TextFormatting.ITALIC).setWeight(new Vec3d(1.5D, 1.0D, 1.5D)).build();
-    public static final Hook HEAVY = new Hook.HookBuilder("heavy").setColor(TextFormatting.BOLD).setWeight(new Vec3d(0.6D, 0.15D, 0.6D)).build();
+    public static final Hook LIGHT = new Hook.HookBuilder("light").setColor(TextFormatting.ITALIC).setWeight(new Vector3d(1.5D, 1.0D, 1.5D)).build();
+    public static final Hook HEAVY = new Hook.HookBuilder("heavy").setColor(TextFormatting.BOLD).setWeight(new Vector3d(0.6D, 0.15D, 0.6D)).build();
     public static final Hook DOUBLE = new Hook.HookBuilder("double").setColor(TextFormatting.DARK_GRAY).setDoubleCatchChance(0.10).build();
     public static final Hook REDSTONE = new Hook.HookBuilder("redstone").setColor(TextFormatting.RED).setCatchableWindow(35, 70).build();
     public static final Hook NOTE = new Hook.HookBuilder("note").setColor(TextFormatting.DARK_RED).setCatchSound(SoundEvents.ENTITY_PLAYER_LEVELUP).build();

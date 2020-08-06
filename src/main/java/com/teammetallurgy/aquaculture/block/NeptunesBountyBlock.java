@@ -9,8 +9,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -43,7 +43,7 @@ public class NeptunesBountyBlock extends ChestBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        IFluidState fluidState = context.getWorld().getFluidState(context.getPos());
+        FluidState fluidState = context.getWorld().getFluidState(context.getPos());
         return this.getDefaultState().with(TYPE, ChestType.SINGLE).with(FACING, context.getPlacementHorizontalFacing().getOpposite()).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
     }
 
@@ -63,7 +63,7 @@ public class NeptunesBountyBlock extends ChestBlock {
         CompoundNBT tag = stack.getChildTag("BlockEntityTag");
         if (tag != null) {
             if (tag.contains("Items", 9)) {
-                tooltip.add(new StringTextComponent("???????").applyTextStyle(TextFormatting.ITALIC));
+                tooltip.add(new StringTextComponent("???????").func_240699_a_(TextFormatting.ITALIC));
             }
         }
     }

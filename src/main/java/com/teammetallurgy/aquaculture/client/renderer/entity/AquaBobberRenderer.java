@@ -5,7 +5,8 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -16,7 +17,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Matrix3f;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -37,7 +41,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
 
     @Override
     public void render(@Nonnull AquaFishingBobberEntity bobber, float entityYaw, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
-        PlayerEntity angler = bobber.getAngler();
+        PlayerEntity angler = bobber.func_234606_i_();
         if (angler != null) {
             matrixStack.push();
             matrixStack.push(); //Start Hook/Bobber rendering
@@ -101,7 +105,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             if ((this.renderManager.options == null || this.renderManager.options.thirdPersonView <= 0) && angler == Minecraft.getInstance().player) {
                 double fov = Objects.requireNonNull(this.renderManager.options).fov;
                 fov /= 100.0D;
-                Vec3d rod = new Vec3d((double) hand * -0.36D * fov, -0.045D * fov, 0.4D);
+                Vector3d rod = new Vector3d((double) hand * -0.36D * fov, -0.045D * fov, 0.4D);
                 rod = rod.rotatePitch(-MathHelper.lerp(partialTicks, angler.prevRotationPitch, angler.rotationPitch) * ((float) Math.PI / 180F));
                 rod = rod.rotateYaw(-MathHelper.lerp(partialTicks, angler.prevRotationYaw, angler.rotationYaw) * ((float) Math.PI / 180F));
                 rod = rod.rotateYaw(swingProgressSqrt * 0.5F);

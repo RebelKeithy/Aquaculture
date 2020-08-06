@@ -7,10 +7,10 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
@@ -26,14 +26,14 @@ public class Hook {
     private final TextFormatting color;
     private final int minCatchable;
     private final int maxCatchable;
-    private final Vec3d weight;
+    private final Vector3d weight;
     private final double durabilityChance;
     private final int luckModifier;
     private final double doubleCatchChance;
     private final SoundEvent catchSound;
-    private final List<Tag<Fluid>> fluids;
+    private final List<ITag.INamedTag<Fluid>> fluids;
 
-    private Hook(String name, String modID, TextFormatting color, int minCatchable, int maxCatchable, Vec3d weight, double durabilityChance, int luckModifier, double doubleCatchChance, SoundEvent catchSound, List<Tag<Fluid>> fluids) {
+    private Hook(String name, String modID, TextFormatting color, int minCatchable, int maxCatchable, Vector3d weight, double durabilityChance, int luckModifier, double doubleCatchChance, SoundEvent catchSound, List<ITag.INamedTag<Fluid>> fluids) {
         this.name = name;
         this.modID = modID;
         this.color = color;
@@ -50,60 +50,60 @@ public class Hook {
             this.hookItem = AquaItems.register(new HookItem(this), new ResourceLocation(modID, name + "_hook"));
             HOOKS.put(name, hookItem);
         } else {
-            hookItem = Items.AIR;
+            this.hookItem = Items.AIR;
         }
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getModID() {
-        return modID;
+        return this.modID;
     }
 
     public Item getItem() {
-        return hookItem;
+        return this.hookItem;
     }
 
     public ResourceLocation getTexture() {
-        return texture;
+        return this.texture;
     }
 
     public TextFormatting getColor() {
-        return color;
+        return this.color;
     }
 
     public int getMinCatchable() {
-        return minCatchable;
+        return this.minCatchable;
     }
 
     public int getMaxCatchable() {
-        return maxCatchable;
+        return this.maxCatchable;
     }
 
-    public Vec3d getWeight() {
-        return weight;
+    public Vector3d getWeight() {
+        return this.weight;
     }
 
     public double getDurabilityChance() {
-        return durabilityChance;
+        return this.durabilityChance;
     }
 
     public int getLuckModifier() {
-        return luckModifier;
+        return this.luckModifier;
     }
 
     public double getDoubleCatchChance() {
-        return doubleCatchChance;
+        return this.doubleCatchChance;
     }
 
     public SoundEvent getCatchSound() {
-        return catchSound;
+        return this.catchSound;
     }
 
-    public List<Tag<Fluid>> getFluids() {
-        return fluids;
+    public List<ITag.INamedTag<Fluid>> getFluids() {
+        return this.fluids;
     }
 
     public static class HookBuilder {
@@ -112,12 +112,12 @@ public class Hook {
         private TextFormatting color = TextFormatting.WHITE;
         private int minCatchable;
         private int maxCatchable;
-        private Vec3d weightModifier;
+        private Vector3d weightModifier;
         private double durabilityChance;
         private int luckModifier;
         private double doubleCatchChance;
         private SoundEvent catchSound;
-        private List<Tag<Fluid>> fluids = new ArrayList<>();
+        private final List<ITag.INamedTag<Fluid>> fluids = new ArrayList<>();
 
         HookBuilder() {
         }
@@ -146,7 +146,7 @@ public class Hook {
             return this;
         }
 
-        public HookBuilder setWeight(Vec3d weightModifier) {
+        public HookBuilder setWeight(Vector3d weightModifier) {
             this.weightModifier = weightModifier;
             return this;
         }
@@ -174,7 +174,7 @@ public class Hook {
             return this;
         }
 
-        public HookBuilder setFluid(Tag<Fluid> fluid) {
+        public HookBuilder setFluid(ITag.INamedTag<Fluid> fluid) {
             this.fluids.add(fluid);
             return this;
         }

@@ -12,8 +12,8 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -152,14 +152,16 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag tooltipFlag) {
+    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltips, @Nonnull ITooltipFlag tooltipFlag) {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
-            tooltips.add(new TranslationTextComponent("aquaculture.fishing_rod.broken").setStyle(new Style().setItalic(true).setColor(TextFormatting.GRAY)));
+            IFormattableTextComponent broken = new TranslationTextComponent("aquaculture.fishing_rod.broken");
+            tooltips.add(broken.func_240703_c_(broken.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.GRAY)));
         }
 
         Hook hook = getHookType(stack);
         if (hook != Hooks.EMPTY) {
-            tooltips.add(new TranslationTextComponent(hook.getItem().getTranslationKey()).setStyle(new Style().setColor(hook.getColor())));
+            IFormattableTextComponent hookColor = new TranslationTextComponent(hook.getItem().getTranslationKey());
+            tooltips.add(hookColor.func_240703_c_(hookColor.getStyle().func_240712_a_(hook.getColor())));
         }
         super.addInformation(stack, world, tooltips, tooltipFlag);
     }

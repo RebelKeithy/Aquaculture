@@ -12,7 +12,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.tileentity.DualBrightnessCallback;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -21,6 +20,7 @@ import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntityMerger;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -28,9 +28,9 @@ import javax.annotation.Nonnull;
 public class TackleBoxRenderer <T extends TackleBoxTileEntity & IChestLid> extends TileEntityRenderer<T> {
     private static final ResourceLocation TACKLE_BOX_TEXTURE = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/tileentity/tackle_box.png");
     private static final RenderType TACKLE_BOX_RENDER = RenderType.getEntityCutout(TACKLE_BOX_TEXTURE);
-    private ModelRenderer base;
-    private ModelRenderer lid;
-    private ModelRenderer handle;
+    private final ModelRenderer base;
+    private final ModelRenderer lid;
+    private final ModelRenderer handle;
 
     public TackleBoxRenderer(TileEntityRendererDispatcher dispatcher) {
         super(dispatcher);

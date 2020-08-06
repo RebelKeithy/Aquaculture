@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.text.Style;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,8 +49,8 @@ public class FishWeightHandler {
         ItemStack stack = event.getItemStack();
         if (!stack.isEmpty() && stack != null && stack.hasTag() && stack.getTag() != null) { //Keep stack null check, in case of other mods is doing bad things
             if (stack.getTag().contains("fishSize")) {
-                Style style = new Style().setItalic(true).setColor(TextFormatting.AQUA);
-                event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize"))).setStyle(style));
+                IFormattableTextComponent fishWeightString = new TranslationTextComponent("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize")));
+                event.getToolTip().add(fishWeightString.func_240703_c_(fishWeightString.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.AQUA)));
             }
             if (stack.getTag().contains("fishWeight")) {
                 double weight = stack.getTag().getDouble("fishWeight");
@@ -59,11 +59,12 @@ public class FishWeightHandler {
                 DecimalFormat df = new DecimalFormat("#,###.##");
                 BigDecimal bd = new BigDecimal(weight);
                 bd = bd.round(new MathContext(3));
-                Style style = new Style().setItalic(true).setColor(TextFormatting.GRAY);
                 if (bd.doubleValue() > 999) {
-                    event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb).setStyle(style));
+                    IFormattableTextComponent doubleWeight = new TranslationTextComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb);
+                    event.getToolTip().add(doubleWeight.func_240703_c_(doubleWeight.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.GRAY)));
                 } else {
-                    event.getToolTip().add(new TranslationTextComponent("aquaculture.fishWeight.weight", bd + lb).setStyle(style));
+                    IFormattableTextComponent decimalWeight = new TranslationTextComponent("aquaculture.fishWeight.weight", bd + lb);
+                    event.getToolTip().add(decimalWeight.func_240703_c_(decimalWeight.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.GRAY)));
                 }
             }
         }

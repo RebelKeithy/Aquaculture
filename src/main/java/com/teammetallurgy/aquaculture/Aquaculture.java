@@ -12,7 +12,9 @@ import cpw.mods.modlauncher.Environment;
 import cpw.mods.modlauncher.Launcher;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.storage.loot.conditions.LootConditionManager;
+import net.minecraft.loot.LootConditionType;
+import net.minecraft.loot.conditions.LootConditionManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -39,6 +41,7 @@ public class Aquaculture {
             return new ItemStack(AquaItems.IRON_FISHING_ROD);
         }
     };
+    public static final LootConditionType BIOME_TAG_CHECK = LootConditionManager.func_237475_a_(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.Serializer());
 
     public Aquaculture() {
         instance = this;
@@ -50,7 +53,6 @@ public class Aquaculture {
 
     private void setupCommon(FMLCommonSetupEvent event) {
         DeferredWorkQueue.runLater(() -> {
-            LootConditionManager.registerCondition(new BiomeTagCheck.Serializer());
             FishWeightHandler.registerFishData();
             AquaEntities.setSpawnPlacement();
             AquaEntities.addEntitySpawns();

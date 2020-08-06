@@ -5,6 +5,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -13,8 +15,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -39,7 +39,7 @@ public class LootBoxItem extends Item {
             List<ItemStack> loot = worldServer.getServer().getLootTableManager().getLootTableFromLocation(this.lootTable).generate(builder.build(LootParameterSets.EMPTY));
             if (!loot.isEmpty()) {
                 ItemStack lootStack = loot.get(0);
-                player.sendStatusMessage(new TranslationTextComponent("aquaculture.loot.open", lootStack.getDisplayName()).applyTextStyle(TextFormatting.YELLOW), true);
+                player.sendStatusMessage(new TranslationTextComponent("aquaculture.loot.open", lootStack.getDisplayName()).func_240699_a_(TextFormatting.YELLOW), true);
                 this.giveItem(player, lootStack);
                 heldStack.shrink(1);
                 return new ActionResult<>(ActionResultType.SUCCESS, heldStack);

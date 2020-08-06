@@ -9,13 +9,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.passive.fish.PufferfishEntity;
@@ -23,7 +21,10 @@ import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nonnull;
 import java.math.BigDecimal;
@@ -48,7 +49,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         super.render(fishMount, entityYaw, partialTicks, matrixStack, buffer, i);
         matrixStack.push();
         Direction direction = fishMount.getHorizontalFacing();
-        Vec3d pos = this.getRenderOffset(fishMount, partialTicks);
+        Vector3d pos = this.getRenderOffset(fishMount, partialTicks);
         matrixStack.translate(-pos.getX(), -pos.getY(), -pos.getZ());
         double multiplier = 0.46875D;
         matrixStack.translate((double) direction.getXOffset() * multiplier, (double) direction.getYOffset() * multiplier, (double) direction.getZOffset() * multiplier);
@@ -97,8 +98,8 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
 
     @Override
     @Nonnull
-    public Vec3d getRenderOffset(FishMountEntity fishMount, float partialTicks) {
-        return new Vec3d((float) fishMount.getHorizontalFacing().getXOffset() * 0.3F, -0.25D, (float) fishMount.getHorizontalFacing().getZOffset() * 0.3F);
+    public Vector3d getRenderOffset(FishMountEntity fishMount, float partialTicks) {
+        return new Vector3d((float) fishMount.getHorizontalFacing().getXOffset() * 0.3F, -0.25D, (float) fishMount.getHorizontalFacing().getZOffset() * 0.3F);
     }
 
     @Override
@@ -113,8 +114,8 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
     }
 
     @Override
-    protected void renderName(@Nonnull FishMountEntity fishMount, @Nonnull String name, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
-        super.renderName(fishMount, fishMount.entity.getDisplayName().getFormattedText(), matrixStack, buffer, i);
+    protected void renderName(@Nonnull FishMountEntity fishMount, @Nonnull ITextComponent name, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
+        super.renderName(fishMount, fishMount.entity.getDisplayName(), matrixStack, buffer, i);
 
         ItemStack stack = fishMount.getDisplayedItem();
         if (stack.hasTag() && stack.getTag() != null && stack.getTag().contains("fishWeight")) {
@@ -128,9 +129,9 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
             matrixStack.push();
             matrixStack.translate(0.0D, -0.25D, 0.0D); //Adjust weight label height
             if (bd.doubleValue() > 999) {
-                super.renderName(fishMount, I18n.format("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), matrixStack, buffer, i - 100);
+                super.renderName(fishMount, new TranslationTextComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), matrixStack, buffer, i - 100);
             } else {
-                super.renderName(fishMount, I18n.format("aquaculture.fishWeight.weight", bd + lb), matrixStack, buffer, i);
+                super.renderName(fishMount, new TranslationTextComponent("aquaculture.fishWeight.weight", bd + lb), matrixStack, buffer, i);
             }
             matrixStack.pop();
         }
