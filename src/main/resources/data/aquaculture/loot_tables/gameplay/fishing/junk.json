@@ -11,6 +11,11 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 4,
+          "name": "aquaculture:fish_bones"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 10,
           "name": "aquaculture:tin_can"
         },

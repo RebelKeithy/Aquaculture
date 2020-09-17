@@ -4,9 +4,11 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -15,6 +17,7 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -62,11 +65,21 @@ public class ItemFilletKnife extends SwordItem {
     }
 
     @Override
+    public boolean hitEntity(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
+        return this.getTier() == AquacultureAPI.MATS.NEPTUNIUM || super.hitEntity(stack, target, attacker);
+    }
+
+    @Override
+    public boolean onBlockDestroyed(@Nonnull ItemStack stack, @Nonnull World world, @Nonnull BlockState state, @Nonnull BlockPos pos, @Nonnull LivingEntity entityLiving) {
+        return getTier() == AquacultureAPI.MATS.NEPTUNIUM || super.onBlockDestroyed(stack, world, state, pos, entityLiving);
+    }
+
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag tooltipFlag) {
         if (this.getTier() == AquacultureAPI.MATS.NEPTUNIUM) {
-            IFormattableTextComponent unbrekable = new TranslationTextComponent("aquaculture.unbreakable");
-            tooltip.add(unbrekable.func_240703_c_(unbrekable.getStyle().func_240712_a_(TextFormatting.DARK_GRAY).func_240713_a_(true)));
+            IFormattableTextComponent unbreakable = new TranslationTextComponent("aquaculture.unbreakable");
+            tooltip.add(unbreakable.func_240703_c_(unbreakable.getStyle().func_240712_a_(TextFormatting.DARK_GRAY).func_240713_a_(true)));
         }
         super.addInformation(stack, world, tooltip, tooltipFlag);
     }
