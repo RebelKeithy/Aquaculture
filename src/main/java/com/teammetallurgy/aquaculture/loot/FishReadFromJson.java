@@ -6,14 +6,12 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaLootTables;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModFile;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -86,8 +84,8 @@ public class FishReadFromJson {
 
     private static List<Biome> getSpawnableBiomes(JsonElement predicate) {
         List<Biome> biomes = Lists.newArrayList();
-        List<BiomeDictionary.Type> includeList = Lists.newArrayList();
-        List<BiomeDictionary.Type> excludeList = Lists.newArrayList();
+        List<Biome.Category> includeList = Lists.newArrayList();
+        List<Biome.Category> excludeList = Lists.newArrayList();
         boolean and = false;
 
         if (predicate.getAsJsonObject().has("and")) {
@@ -97,13 +95,13 @@ public class FishReadFromJson {
         if (predicate.getAsJsonObject().has("include")) {
             JsonArray include = predicate.getAsJsonObject().get("include").getAsJsonArray();
             for (int entry = 0; entry < include.size(); entry++) {
-                includeList.add(BiomeDictionaryHelper.getType(include.get(entry).getAsString()));
+                includeList.add(Biome.Category.byName(include.get(entry).getAsString()));
             }
         }
         if (predicate.getAsJsonObject().has("exclude")) {
             JsonArray exclude = predicate.getAsJsonObject().get("exclude").getAsJsonArray();
             for (int entry = 0; entry < exclude.size(); entry++) {
-                excludeList.add(BiomeDictionaryHelper.getType(exclude.get(entry).getAsString()));
+                excludeList.add(Biome.Category.byName(exclude.get(entry).getAsString()));
             }
         }
         biomes.addAll(BiomeTagPredicate.getValidBiomes(includeList, excludeList, and));
@@ -131,9 +129,9 @@ public class FishReadFromJson {
                 if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
                     Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
                 }
-                for (Biome biome : FISH_BIOME_MAP.get(fish)) {
+                /*for (Biome biome : FISH_BIOME_MAP.get(fish)) { //TODO
                     biome.getSpawns(EntityClassification.WATER_CREATURE).add(new Biome.SpawnListEntry(fish, weight, 1, maxGroupSize));
-                }
+                }*/
             }
         }
     }

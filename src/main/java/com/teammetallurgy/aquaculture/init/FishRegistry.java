@@ -80,7 +80,7 @@ public class FishRegistry {
         for (EntityType<AquaFishEntity> entityType : fishEntities) {
             event.getRegistry().register(entityType);
             EntitySpawnPlacementRegistry.register(entityType, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
-            GlobalEntityTypeAttributes.put(entityType, AbstractFishEntity.func_234176_m_().func_233813_a_());
+            GlobalEntityTypeAttributes.put(entityType, AbstractFishEntity.func_234176_m_().create());
         }
     }
 

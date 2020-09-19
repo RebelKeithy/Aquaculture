@@ -9,6 +9,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class AquaLootTables {
@@ -43,7 +46,7 @@ public class AquaLootTables {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.NEPTUNIUM_OPTIONS.addNeptunesBountyToLoot.get()) {
-                    LootEntry neptuniumEntry = TableLootEntry.builder(NEPTUNIUM).weight(1).quality(2).acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().func_234580_a_(FishingPredicate.func_234640_a_(true)))).build();
+                    LootEntry neptuniumEntry = TableLootEntry.builder(NEPTUNIUM).weight(1).quality(2).acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().fishing(FishingPredicate.func_234640_a_(true)))).build();
                     addEntry(pool, neptuniumEntry);
                 }
             }
@@ -55,9 +58,15 @@ public class AquaLootTables {
     }
 
     private static void addEntry(LootPool pool, LootEntry entry) {
-        if (pool.lootEntries.stream().anyMatch(e -> e == entry)) {
-            throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
+        try {
+            List<LootEntry> lootEntries = (List<LootEntry>) ObfuscationReflectionHelper.findField(LootPool.class, "field_186453_a").get(pool); //TODO Test
+            if (lootEntries.stream().anyMatch(e -> e == entry)) {
+                throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
+            }
+            lootEntries.add(entry);
+        } catch (IllegalAccessException e) {
+            Aquaculture.LOG.error("Error occurred when attempting to add a new entry, to the fishing loot table");
+            e.printStackTrace();
         }
-        pool.lootEntries.add(entry);
     }
 }

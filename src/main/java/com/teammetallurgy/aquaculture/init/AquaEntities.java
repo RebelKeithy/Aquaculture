@@ -6,7 +6,6 @@ import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
 import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -16,15 +15,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
-import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,13 +42,13 @@ public class AquaEntities {
     public static final EntityType<WaterArrowEntity> WATER_ARROW = register("water_arrow", EntityType.Builder.<WaterArrowEntity>create(WaterArrowEntity::new, EntityClassification.MISC)
             .size(0.5F, 0.5F)
             .setCustomClientFactory(WaterArrowEntity::new));
-    public static final EntityType<TurtleLandEntity> BOX_TURTLE = registerMob("box_turtle", 1, 2, 7, BiomeDictionary.Type.SWAMP, null, 0x7F8439, 0x5D612A,
+    public static final EntityType<TurtleLandEntity> BOX_TURTLE = registerMob("box_turtle", 1, 2, 7, Biome.Category.SWAMP, 0x7F8439, 0x5D612A,
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
                     .size(0.5F, 0.25F));
-    public static final EntityType<TurtleLandEntity> ARRAU_TURTLE = registerMob("arrau_turtle", 1, 2, 4, BiomeDictionary.Type.JUNGLE, null, 0x71857A, 0x4F6258,
+    public static final EntityType<TurtleLandEntity> ARRAU_TURTLE = registerMob("arrau_turtle", 1, 2, 4, Biome.Category.JUNGLE, 0x71857A, 0x4F6258,
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
                     .size(0.5F, 0.25F));
-    public static final EntityType<TurtleLandEntity> STARSHELL_TURTLE = registerMob("starshell_turtle", 1, 2, 5, BiomeDictionaryHelper.TWILIGHT, null, 0xDCE2E5, 0x464645,
+    public static final EntityType<TurtleLandEntity> STARSHELL_TURTLE = registerMob("starshell_turtle", 1, 2, 5, Biome.Category.NONE, 0xDCE2E5, 0x464645, //TODO
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
                     .size(0.5F, 0.25F));
 
@@ -62,15 +59,15 @@ public class AquaEntities {
         }
     }
 
-    private static <T extends Entity> EntityType<T> registerMob(String name, int min, int max, int weight, BiomeDictionary.Type include, @Nullable BiomeDictionary.Type exclude, int eggPrimary, int eggSecondary, EntityType.Builder<T> builder) {
-        return registerMob(name, min, max, weight, eggPrimary, eggSecondary, Collections.singletonList(String.valueOf(include)), Collections.singletonList(String.valueOf(exclude == null ? "" : exclude)), builder);
+    private static <T extends Entity> EntityType<T> registerMob(String name, int min, int max, int weight, Biome.Category category, int eggPrimary, int eggSecondary, EntityType.Builder<T> builder) {
+        return registerMob(name, min, max, weight, eggPrimary, eggSecondary, category, builder);
     }
 
-    private static <T extends Entity> EntityType<T> registerMob(String name, int min, int max, int weight, int eggPrimary, int eggSecondary, List<? extends String> include, List<? extends String> exclude, EntityType.Builder<T> builder) {
+    private static <T extends Entity> EntityType<T> registerMob(String name, int min, int max, int weight, int eggPrimary, int eggSecondary, Biome.Category category, EntityType.Builder<T> builder) {
         EntityType<T> entityType = register(name, builder);
         Item spawnEgg = new SpawnEggItem(entityType, eggPrimary, eggSecondary, (new Item.Properties()).group(ItemGroup.MISC));
         AquaItems.register(spawnEgg, name + "_spawn_egg");
-        new AquaConfig.Spawn(AquaConfig.BUILDER, name, min, max, weight, include, exclude);
+        new AquaConfig.Spawn(AquaConfig.BUILDER, name, min, max, weight, category);
         MOBS.add(entityType);
         return entityType;
     }
@@ -87,16 +84,17 @@ public class AquaEntities {
         EntitySpawnPlacementRegistry.register(BOX_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
         EntitySpawnPlacementRegistry.register(ARRAU_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
         EntitySpawnPlacementRegistry.register(STARSHELL_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
-        GlobalEntityTypeAttributes.put(BOX_TURTLE, TurtleLandEntity.getAttributes().func_233813_a_());
-        GlobalEntityTypeAttributes.put(ARRAU_TURTLE, TurtleLandEntity.getAttributes().func_233813_a_());
-        GlobalEntityTypeAttributes.put(STARSHELL_TURTLE, TurtleLandEntity.getAttributes().func_233813_a_());
+        GlobalEntityTypeAttributes.put(BOX_TURTLE, TurtleLandEntity.getAttributes().create());
+        GlobalEntityTypeAttributes.put(ARRAU_TURTLE, TurtleLandEntity.getAttributes().create());
+        GlobalEntityTypeAttributes.put(STARSHELL_TURTLE, TurtleLandEntity.getAttributes().create());
     }
 
     public static void addEntitySpawns() {
         for (EntityType<?> entityType : MOBS) {
             String name = Objects.requireNonNull(entityType.getRegistryName()).getPath();
             String subCategory = Helper.getSubConfig(AquaConfig.Spawn.SPAWN_OPTIONS, name);
-            BiomeDictionaryHelper.addSpawn(entityType, Helper.get(subCategory, "min"), Helper.get(subCategory, "max"), Helper.get(subCategory, "weight"), Helper.get(subCategory, "include"), Helper.get(subCategory, "exclude"));
+            //TODO
+            //BiomeDictionaryHelper.addSpawn(entityType, Helper.get(subCategory, "min"), Helper.get(subCategory, "max"), Helper.get(subCategory, "weight"), Helper.get(subCategory, "include"), Helper.get(subCategory, "exclude"));
         }
     }
 }

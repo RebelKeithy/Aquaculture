@@ -29,18 +29,18 @@ public abstract class IItemHandlerTEBase extends TileEntity implements INameable
     protected abstract IItemHandler createItemHandler();
 
     @Override
-    public void func_230337_a_(@Nonnull BlockState state, CompoundNBT tag) {
+    public void read(@Nonnull BlockState state, CompoundNBT tag) {
         CompoundNBT invTag = tag.getCompound("inv");
         this.handler.ifPresent(stack -> ((INBTSerializable<CompoundNBT>) stack).deserializeNBT(invTag));
         if (tag.contains("CustomName", 8)) {
-            this.customName = ITextComponent.Serializer.func_240643_a_(tag.getString("CustomName"));
+            this.customName = ITextComponent.Serializer.getComponentFromJson(tag.getString("CustomName"));
         }
-        super.func_230337_a_(state, tag);
+        super.read(state, tag);
     }
 
     @Override
     @Nonnull
-    public CompoundNBT write(CompoundNBT tag) {
+    public CompoundNBT write(@Nonnull CompoundNBT tag) {
         this.handler.ifPresent(stack -> {
             CompoundNBT compound = ((INBTSerializable<CompoundNBT>) stack).serializeNBT();
             tag.put("inv", compound);

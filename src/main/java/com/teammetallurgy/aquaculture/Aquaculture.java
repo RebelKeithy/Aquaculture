@@ -43,7 +43,7 @@ public class Aquaculture {
             return new ItemStack(AquaItems.IRON_FISHING_ROD);
         }
     };
-    public static final LootConditionType BIOME_TAG_CHECK = LootConditionManager.func_237475_a_(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.Serializer());
+    public static final LootConditionType BIOME_TAG_CHECK = LootConditionManager.register(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.Serializer());
 
     public Aquaculture() {
         instance = this;

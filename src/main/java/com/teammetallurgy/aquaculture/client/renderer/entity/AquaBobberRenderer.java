@@ -102,7 +102,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             double anglerY;
             double anglerZ;
             float anglerEye;
-            if ((this.renderManager.options == null || this.renderManager.options.thirdPersonView <= 0) && angler == Minecraft.getInstance().player) {
+            if ((this.renderManager.options == null || this.renderManager.options.getPointOfView().func_243192_a()) && angler == Minecraft.getInstance().player) {
                 double fov = Objects.requireNonNull(this.renderManager.options).fov;
                 fov /= 100.0D;
                 Vector3d rod = new Vector3d((double) hand * -0.36D * fov, -0.045D * fov, 0.4D);

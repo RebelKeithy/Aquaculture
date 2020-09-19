@@ -23,7 +23,7 @@ public class FilletKnifeRecipeMaker {
         for (Item fish : AquacultureAPI.FISH_DATA.getFish()) {
             ITag.INamedTag<Item> filletKnifeTag = AquacultureAPI.Tags.FILLET_KNIFE;
             Ingredient filletKnifes = Ingredient.fromItems(AquaItems.WOODEN_FILLET_KNIFE, AquaItems.STONE_FILLET_KNIFE, AquaItems.IRON_FILLET_KNIFE, AquaItems.GOLD_FILLET_KNIFE, AquaItems.DIAMOND_FILLET_KNIFE, AquaItems.NEPTINIUM_FILLET_KNIFE);
-            NonNullList<Ingredient> input = NonNullList.from(Ingredient.EMPTY, filletKnifeTag.func_230236_b_().isEmpty() ? filletKnifes : Ingredient.fromTag(filletKnifeTag), Ingredient.fromItems(fish));
+            NonNullList<Ingredient> input = NonNullList.from(Ingredient.EMPTY, filletKnifeTag.getAllElements().isEmpty() ? filletKnifes : Ingredient.fromTag(filletKnifeTag), Ingredient.fromItems(fish));
             if (AquacultureAPI.FISH_DATA.hasFilletAmount(fish)) {
                 ItemStack output = new ItemStack(AquaItems.FISH_FILLET, AquacultureAPI.FISH_DATA.getFilletAmount(fish));
                 if (fish.getRegistryName() != null) {

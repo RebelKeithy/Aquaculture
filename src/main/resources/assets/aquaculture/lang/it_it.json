@@ -209,7 +209,7 @@
   "aquaculture.message14": "Cosa cavolo è la pesciallergia?! Un’allergia al pesce?",
   "aquaculture.message15": "All you can it a solo 10 monete d’oro!",
   "aquaculture.message16": "Da quando sono arrivato in questo luogo… in quel lontano giorno d’inverno, le cose non sono più state. Ho perso il mio ca...",
-  "aquaculture.message17": "Premi Alt+F4 per ricevere diamanti infiniti! Consigliato da 9 gamers su 10", AA
+  "aquaculture.message17": "Premi Alt+F4 per ricevere diamanti infiniti! Consigliato da 9 gamers su 10",
   "aquaculture.message18": "Oh, mi sono cadute le noci di cocco... e si sono pure rotte...",
   "aquaculture.message19": "Mi sono unito ad una tribù di cannibali, cercavano un ospite per la cena",
   "aquaculture.message20": "Così tanto tempo per fatturare...",
@@ -241,7 +241,7 @@
   "aquaculture.neptunium_chestplate.tooltip.title" : "Polmoni di Nettuno",
   "aquaculture.neptunium_chestplate.tooltip.desc" : "Ti permette di respirare sott’acqua",
   "aquaculture.neptunium_leggings.tooltip.title" : "Galleggiamento di Nettuno",
-  "aquaculture.neptunium_leggings.tooltip.desc" : "Rallenta lo sprofondamento”
+  "aquaculture.neptunium_leggings.tooltip.desc" : "Rallenta lo sprofondamento",
   "aquaculture.neptunium_boots.tooltip.title" : "Agilità di Nettuno",
   "aquaculture.neptunium_boots.tooltip.desc" : "Aumenta la velocità di nuoto",
   "aquaculture.neptunium_pickaxe.tooltip.title" : "La grazie di Nettuno",
@@ -286,5 +286,4 @@
   "aquaculture.soul_sand_hook.tooltip.desc" : "I pesci scappano con più difficoltà",
   "aquaculture.obsidian_note_hook.tooltip.title" : "Allarme",
   "aquaculture.obsidian_note_hook.tooltip.desc" : "Ti avverte quando un pesce si avvicina"
-
 }

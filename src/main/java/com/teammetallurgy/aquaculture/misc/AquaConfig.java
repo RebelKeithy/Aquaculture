@@ -1,12 +1,11 @@
 package com.teammetallurgy.aquaculture.misc;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
-import net.minecraftforge.common.BiomeDictionary;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.File;
-import java.util.List;
 
 public class AquaConfig {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -52,17 +51,15 @@ public class AquaConfig {
         public final ForgeConfigSpec.IntValue min;
         public final ForgeConfigSpec.IntValue max;
         public final ForgeConfigSpec.IntValue weight;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> include;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> exclude;
+        public final ForgeConfigSpec.ConfigValue<String> category;
 
-        public Spawn(ForgeConfigSpec.Builder builder, String name, int min, int max, int weight, List<? extends String> include, List<? extends String> exclude) {
+        public Spawn(ForgeConfigSpec.Builder builder, String name, int min, int max, int weight, Biome.Category category) {
             builder.push(SPAWN_OPTIONS);
             builder.push(name);
             this.min = builder.defineInRange("min", min, 0, 64);
             this.max = builder.defineInRange("max", max, 0, 64);
             this.weight = builder.defineInRange("weight", weight, 0, 100);
-            this.include = builder.defineList("include", include, o -> BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(String.valueOf(o))));
-            this.exclude = builder.defineList("exclude", exclude, o -> BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(String.valueOf(o))));
+            this.category = builder.define("biome category", category.getName());
             builder.pop(2);
         }
     }

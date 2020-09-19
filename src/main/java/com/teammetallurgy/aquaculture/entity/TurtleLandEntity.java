@@ -17,6 +17,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,7 +44,7 @@ public class TurtleLandEntity extends AnimalEntity {
     }
 
     public static AttributeModifierMap.MutableAttribute getAttributes() {
-        return MobEntity.func_233666_p_().func_233815_a_(Attributes.field_233818_a_, 10.0D).func_233815_a_(Attributes.field_233821_d_, 0.1D).func_233815_a_(Attributes.field_233826_i_, 1.5D);
+        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 10.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.1D).createMutableAttribute(Attributes.ARMOR, 1.5D);
     }
 
 
@@ -58,7 +59,7 @@ public class TurtleLandEntity extends AnimalEntity {
 
     @Override
     @Nullable
-    public AgeableEntity createChild(@Nonnull AgeableEntity ageableEntity) {
+    public AgeableEntity func_241840_a(ServerWorld world, @Nonnull AgeableEntity ageableEntity) {
         return (AgeableEntity) this.getType().create(this.world);
     }
 

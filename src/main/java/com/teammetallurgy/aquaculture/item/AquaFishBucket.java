@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nonnull;
 
@@ -45,9 +46,11 @@ public class AquaFishBucket extends FishBucketItem {
                 if (!(world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) {
                     return super.onItemRightClick(world, player, hand);
                 } else if (world.isBlockModifiable(player, pos) && player.canPlayerEdit(pos, blockRaytrace.getFace(), heldStack)) {
-                    Entity fishEntity = this.fishType.spawn(world, heldStack, null, pos, SpawnReason.BUCKET, true, false);
-                    if (fishEntity != null) {
-                        ((AbstractFishEntity) fishEntity).setFromBucket(true);
+                    if (world instanceof ServerWorld) {
+                        Entity fishEntity = this.fishType.spawn((ServerWorld) world, heldStack, null, pos, SpawnReason.BUCKET, true, false);
+                        if (fishEntity != null) {
+                            ((AbstractFishEntity) fishEntity).setFromBucket(true);
+                        }
                     }
                     player.addStat(Stats.ITEM_USED.get(this));
                     return new ActionResult<>(ActionResultType.SUCCESS, this.emptyBucket(heldStack, player));

@@ -63,7 +63,7 @@ public class NeptunesBountyBlock extends ChestBlock {
         CompoundNBT tag = stack.getChildTag("BlockEntityTag");
         if (tag != null) {
             if (tag.contains("Items", 9)) {
-                tooltip.add(new StringTextComponent("???????").func_240699_a_(TextFormatting.ITALIC));
+                tooltip.add(new StringTextComponent("???????").mergeStyle(TextFormatting.ITALIC));
             }
         }
     }
