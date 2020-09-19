@@ -6,7 +6,6 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaLootTables;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
@@ -53,7 +52,7 @@ public class FishReadFromJson {
                     EntityType<?> fish = getEntityFromString(entry.getAsJsonObject().get("name").toString());
                     for (JsonElement conditionElement : conditions) {
                         JsonObject condition = conditionElement.getAsJsonObject();
-                        if (condition.get("condition").getAsString().equals("aquaculture:biome_tag_check")) {
+                        if (condition.get("condition").getAsString().equals("aquaculture:biome_properties_check")) {
                             FISH_BIOME_MAP.put(fish, getSpawnableBiomes(condition.get("predicate")));
                         } else if (condition.get("condition").getAsString().equals("minecraft:alternative")) {
                             for (JsonElement term : condition.getAsJsonObject().getAsJsonArray("terms")) {
@@ -104,7 +103,7 @@ public class FishReadFromJson {
                 excludeList.add(Biome.Category.byName(exclude.get(entry).getAsString()));
             }
         }
-        biomes.addAll(BiomeTagPredicate.getValidBiomes(includeList, excludeList, and));
+        biomes.addAll(BiomePropertiesPredicate.getValidBiomes(includeList, excludeList, and));
         return biomes;
     }
 

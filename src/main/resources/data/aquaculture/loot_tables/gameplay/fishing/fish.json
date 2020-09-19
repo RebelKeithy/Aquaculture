@@ -11,17 +11,10 @@
               "condition": "minecraft:alternative",
               "terms": [
                 {
-                  "condition": "aquaculture:biome_tag_check",
+                  "condition": "aquaculture:biome_properties_check",
                   "predicate": {
-                    "include": ["COLD", "OCEAN"],
-                    "and": true
-                  }
-                },
-                {
-                  "condition": "aquaculture:biome_tag_check",
-                  "predicate": {
-                    "include": ["COLD", "BEACH"],
-                    "and": true
+                    "include": ["OCEAN", "BEACH"],
+                    "temperature": ["COLD"]
                   }
                 }
               ]
@@ -37,17 +30,10 @@
               "condition": "minecraft:alternative",
               "terms": [
                 {
-                  "condition": "aquaculture:biome_tag_check",
+                  "condition": "aquaculture:biome_properties_check",
                   "predicate": {
-                    "include": ["COLD", "OCEAN"],
-                    "and": true
-                  }
-                },
-                {
-                  "condition": "aquaculture:biome_tag_check",
-                  "predicate": {
-                    "include": ["COLD", "BEACH"],
-                    "and": true
+                    "include": ["OCEAN", "BEACH"],
+                    "temperature": ["COLD"]
                   }
                 }
               ]
@@ -63,17 +49,17 @@
               "condition": "minecraft:alternative",
               "terms": [
                 {
-                  "condition": "aquaculture:biome_tag_check",
+                  "condition": "aquaculture:biome_properties_check",
                   "predicate": {
-                    "include": ["COLD", "OCEAN"],
-                    "and": true
+                    "include": ["OCEAN"],
+                    "temperature": ["COLD"]
                   }
                 },
                 {
-                  "condition": "aquaculture:biome_tag_check",
+                  "condition": "aquaculture:biome_properties_check",
                   "predicate": {
-                    "include": ["COLD", "BEACH"],
-                    "and": true
+                    "include": ["BEACH"],
+                    "temperature": ["COLD"]
                   }
                 }
               ]
@@ -86,10 +72,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["OCEAN", "BEACH"],
-                "exclude": ["HOT"]
+                "temperature": ["COLD", "TEMPERATE"]
               }
             }
           ],
@@ -100,10 +86,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["OCEAN", "BEACH"],
-                "exclude": ["HOT"]
+                "temperature": ["COLD", "TEMPERATE"]
               }
             }
           ],
@@ -117,17 +103,10 @@
               "condition": "minecraft:alternative",
               "terms": [
                 {
-                  "condition": "aquaculture:biome_tag_check",
+                  "condition": "aquaculture:biome_properties_check",
                   "predicate": {
-                    "include": ["COLD", "BEACH"],
-                    "and": true
-                  }
-                },
-                {
-                  "condition": "aquaculture:biome_tag_check",
-                  "predicate": {
-                    "include": ["COLD", "WATER"],
-                    "and": true
+                    "include": ["OCEAN", "BEACH", "RIVER"],
+                    "temperature": ["COLD"]
                   }
                 }
               ]
@@ -143,17 +122,10 @@
               "condition": "minecraft:alternative",
               "terms": [
                 {
-                  "condition": "aquaculture:biome_tag_check",
+                  "condition": "aquaculture:biome_properties_check",
                   "predicate": {
-                    "include": ["COLD", "OCEAN"],
-                    "and": true
-                  }
-                },
-                {
-                  "condition": "aquaculture:biome_tag_check",
-                  "predicate": {
-                    "include": ["COLD", "BEACH"],
-                    "and": true
+                    "include": ["OCEAN", "BEACH"],
+                    "temperature": ["COLD"]
                   }
                 }
               ]
@@ -169,17 +141,10 @@
               "condition": "minecraft:alternative",
               "terms": [
                 {
-                  "condition": "aquaculture:biome_tag_check",
+                  "condition": "aquaculture:biome_properties_check",
                   "predicate": {
-                    "include": ["COLD", "OCEAN"],
-                    "and": true
-                  }
-                },
-                {
-                  "condition": "aquaculture:biome_tag_check",
-                  "predicate": {
-                    "include": ["COLD", "BEACH"],
-                    "and": true
+                    "include": ["OCEAN", "BEACH"],
+                    "temperature": ["COLD"]
                   }
                 }
               ]
@@ -192,10 +157,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "include": ["DRY"],
-                "exclude": ["COLD"]
+                "rain_type": ["NONE"],
+                "temperature": ["TEMPERATE", "HOT"]
               }
             }
           ],
@@ -206,10 +171,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "include": ["DRY"],
-                "exclude": ["COLD"]
+                "rain_type": ["NONE"],
+                "temperature": ["TEMPERATE", "HOT"]
               }
             }
           ],
@@ -220,10 +185,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "include": ["DRY"],
-                "exclude": ["COLD"]
+                "rain_type": ["NONE"],
+                "temperature": ["TEMPERATE", "HOT"]
               }
             }
           ],
@@ -234,10 +199,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "include": ["DRY"],
-                "exclude": ["COLD"]
+                "rain_type": ["NONE"],
+                "temperature": ["TEMPERATE", "HOT"]
               }
             }
           ],
@@ -248,9 +213,11 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "HOT", "DRY", "SNOWY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "temperature": ["COLD", "TEMPERATE"],
+                "rain_type": ["RAIN"]
               }
             }
           ],
@@ -261,9 +228,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "DRY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "rain_type": ["RAIN", "SNOW"]
               }
             }
           ],
@@ -274,9 +242,11 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "HOT", "DRY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "temperature": ["COLD", "TEMPERATE"],
+                "rain_type": ["RAIN", "SNOW"]
               }
             }
           ],
@@ -287,9 +257,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "DRY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "rain_type": ["RAIN", "SNOW"]
               }
             }
           ],
@@ -300,9 +271,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "DRY", "SNOWY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "rain_type": ["RAIN"]
               }
             }
           ],
@@ -313,9 +285,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "DRY", "SNOWY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "rain_type": ["RAIN"]
               }
             }
           ],
@@ -326,9 +299,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "DRY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "rain_type": ["RAIN", "SNOW"]
               }
             }
           ],
@@ -339,9 +313,11 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "HOT", "DRY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "temperature": ["COLD", "TEMPERATE"],
+                "rain_type": ["RAIN", "SNOW"]
               }
             }
           ],
@@ -352,9 +328,11 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "exclude": ["OCEAN", "BEACH", "HOT", "DRY", "JUNGLE"]
+                "exclude": ["OCEAN", "BEACH", "JUNGLE"],
+                "temperature": ["COLD", "TEMPERATE"],
+                "rain_type": ["RAIN", "SNOW"]
               }
             }
           ],
@@ -365,7 +343,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["JUNGLE"]
               }
@@ -378,7 +356,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["JUNGLE"]
               }
@@ -391,7 +369,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["JUNGLE"]
               }
@@ -404,7 +382,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["JUNGLE"]
               }
@@ -417,7 +395,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["MUSHROOM"]
               }
@@ -430,7 +408,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["MUSHROOM"]
               }
@@ -443,7 +421,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["OCEAN", "BEACH"]
               }
@@ -456,7 +434,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["OCEAN", "BEACH"]
               }
@@ -469,7 +447,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["OCEAN", "BEACH"]
               }
@@ -482,7 +460,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["SWAMP"]
               }
@@ -495,7 +473,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["SWAMP"]
               }
@@ -508,7 +486,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
                 "include": ["SWAMP"]
               }
@@ -521,9 +499,10 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "aquaculture:biome_tag_check",
+              "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "include": ["TWILIGHT"]
+                "include": ["TWILIGHT"],
+                "_COMMENT": "TODO. Maybe move to custom dimension loot condition"
               }
             }
           ],

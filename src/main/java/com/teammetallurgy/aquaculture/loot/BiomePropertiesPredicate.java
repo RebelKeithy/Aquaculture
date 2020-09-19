@@ -15,9 +15,10 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
-public class BiomeTagPredicate {
-    private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList(), false);
+public class BiomePropertiesPredicate {
+    private static final BiomePropertiesPredicate ANY = new BiomePropertiesPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList(), false);
     private static final List<Biome.Category> INVALID_TAGS = Arrays.asList(Biome.Category.NETHER, Biome.Category.THEEND, Biome.Category.NONE);
     private final MinMaxBounds.FloatBound x;
     private final MinMaxBounds.FloatBound y;
@@ -26,7 +27,7 @@ public class BiomeTagPredicate {
     private final List<Biome.Category> exclude;
     public final boolean and;
 
-    public BiomeTagPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<Biome.Category> include, List<Biome.Category> exclude, boolean and) {
+    public BiomePropertiesPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<Biome.Category> include, List<Biome.Category> exclude, boolean and) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -44,28 +45,28 @@ public class BiomeTagPredicate {
             return false;
         } else {
             BlockPos pos = new BlockPos(x, y, z);
-            return getValidBiomes(this.include, this.exclude, this.and).contains(world.getBiome(pos));
+            Biome biome = world.getBiome(pos);
+            return getValidBiomes(this.include, this.exclude, this.and).contains(biome);
         }
     }
 
     public static List<Biome> getValidBiomes(List<Biome.Category> includeList, List<Biome.Category> excludeList, boolean and) {
         List<Biome> biomes = Lists.newArrayList();
 
-        /*if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
-            Set<BiomeDictionary.Type> validTags = new HashSet<>(BiomeDictionary.Type.getAll());
-            includeList.addAll(validTags);
+        if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all Biome Categories, when only excluding biomes
+            includeList.addAll(Arrays.asList(Biome.Category.values()));
             excludeList.addAll(INVALID_TAGS);
         }
 
-        if (!includeList.isEmpty()) {
+        /*if (!includeList.isEmpty()) {
             List<Biome> addBiomes = Lists.newArrayList();
-            for (BiomeDictionary.Type type : includeList) {
-                addBiomes.addAll(BiomeDictionary.getBiomes(type));
+            for (Biome.Category category : includeList) {
+                addBiomes.addAll(BiomeDictionary.getBiomes(category));
             }
 
             if (and) {
-                for (BiomeDictionary.Type type : includeList) {
-                    addBiomes.removeIf(biome -> !BiomeDictionary.hasType(biome, type));
+                for (Biome.Category category : includeList) {
+                    addBiomes.removeIf(biome -> !BiomeDictionary.hasType(biome, category));
                 }
             }
 
@@ -113,7 +114,7 @@ public class BiomeTagPredicate {
         }
     }
 
-    public static BiomeTagPredicate deserialize(@Nullable JsonElement element) {
+    public static BiomePropertiesPredicate deserialize(@Nullable JsonElement element) {
         if (element != null && !element.isJsonNull()) {
             JsonObject location = JSONUtils.getJsonObject(element, "location");
             JsonObject position = JSONUtils.getJsonObject(location, "position", new JsonObject());
@@ -124,9 +125,10 @@ public class BiomeTagPredicate {
             if (location.has("include")) {
                 JsonArray includeArray = JSONUtils.getJsonArray(location, "include");
                 for (int entry = 0; entry < includeArray.size(); entry++) {
-                    Biome.Category category = Biome.Category.byName(includeArray.get(entry).getAsString());
+                    String name = includeArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
+                    Biome.Category category = Biome.Category.byName(name);
                     if (category == null) {
-                        Aquaculture.LOG.error("Failed to include Biome Category. Please check your loot tables");
+                        Aquaculture.LOG.error("Failed to include Biome Category: " + name + ". Please check your loot tables");
                     }
                     include.add(category);
                 }
@@ -136,9 +138,10 @@ public class BiomeTagPredicate {
             if (location.has("exclude")) {
                 JsonArray excludeArray = JSONUtils.getJsonArray(location, "exclude");
                 for (int entry = 0; entry < excludeArray.size(); entry++) {
-                    Biome.Category category = Biome.Category.byName(excludeArray.get(entry).getAsString());
+                    String name = excludeArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
+                    Biome.Category category = Biome.Category.byName(name);
                     if (category == null) {
-                        Aquaculture.LOG.error("Failed to exclude Biome Category. Please check your loot tables");
+                        Aquaculture.LOG.error("Failed to exclude Biome Category: " + name + ". Please check your loot tables");
                     }
                     exclude.add(category);
                 }
@@ -148,7 +151,7 @@ public class BiomeTagPredicate {
             if (location.has("and")) {
                 and = JSONUtils.getBoolean(location, "and");
             }
-            return new BiomeTagPredicate(x, y, z, include, exclude, and);
+            return new BiomePropertiesPredicate(x, y, z, include, exclude, and);
         } else {
             return ANY;
         }
