@@ -85,11 +85,8 @@ public class FishReadFromJson {
         List<Biome> biomes = Lists.newArrayList();
         List<Biome.Category> includeList = Lists.newArrayList();
         List<Biome.Category> excludeList = Lists.newArrayList();
-        boolean and = false;
-
-        if (predicate.getAsJsonObject().has("and")) {
-            and = predicate.getAsJsonObject().get("and").getAsBoolean();
-        }
+        List<BiomePropertiesPredicate.TemperatureTypes> temperatureTypes = Lists.newArrayList();
+        List<Biome.RainType> rainTypes = Lists.newArrayList();
 
         if (predicate.getAsJsonObject().has("include")) {
             JsonArray include = predicate.getAsJsonObject().get("include").getAsJsonArray();
@@ -103,7 +100,19 @@ public class FishReadFromJson {
                 excludeList.add(Biome.Category.byName(exclude.get(entry).getAsString()));
             }
         }
-        biomes.addAll(BiomePropertiesPredicate.getValidBiomes(includeList, excludeList, and));
+        if (predicate.getAsJsonObject().has("temperature")) {
+            JsonArray temperature = predicate.getAsJsonObject().get("temperature").getAsJsonArray();
+            for (int entry = 0; entry < temperature.size(); entry++) {
+                temperatureTypes.add(BiomePropertiesPredicate.TemperatureTypes.getTemperatureType(temperature.get(entry).getAsString()));
+            }
+        }
+        if (predicate.getAsJsonObject().has("rain_type")) {
+            JsonArray rain = predicate.getAsJsonObject().get("rain_type").getAsJsonArray();
+            for (int entry = 0; entry < rain.size(); entry++) {
+                rainTypes.add(Biome.RainType.getRainType(rain.get(entry).getAsString()));
+            }
+        }
+        biomes.addAll(BiomePropertiesPredicate.getValidBiomes(includeList, excludeList, temperatureTypes, rainTypes));
         return biomes;
     }
 
@@ -125,9 +134,9 @@ public class FishReadFromJson {
                 int weight = FISH_WEIGHT_MAP.get(fish) / 3;
                 int maxGroupSize = MathHelper.clamp((FISH_WEIGHT_MAP.get(fish) / 10), 1, 8);
                 if (weight < 1) weight = 1;
-                if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
+                /*if (AquaConfig.BASIC_OPTIONS.debugMode.get()) { //TODO Uncomment
                     Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
-                }
+                }*/
                 /*for (Biome biome : FISH_BIOME_MAP.get(fish)) { //TODO
                     biome.getSpawns(EntityClassification.WATER_CREATURE).add(new Biome.SpawnListEntry(fish, weight, 1, maxGroupSize));
                 }*/

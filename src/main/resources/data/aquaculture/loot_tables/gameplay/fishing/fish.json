@@ -501,8 +501,8 @@
             {
               "condition": "aquaculture:biome_properties_check",
               "predicate": {
-                "include": ["TWILIGHT"],
-                "_COMMENT": "TODO. Maybe move to custom dimension loot condition"
+                "include": ["NONE"],
+                "_COMMENT": "TODO. Maybe move to custom dimension loot condition?"
               }
             }
           ],
