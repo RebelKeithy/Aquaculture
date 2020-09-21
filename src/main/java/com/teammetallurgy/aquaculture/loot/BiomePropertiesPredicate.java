@@ -31,10 +31,10 @@ public class BiomePropertiesPredicate {
     private final MinMaxBounds.FloatBound z;
     private final List<Biome.Category> include;
     private final List<Biome.Category> exclude;
-    private final List<TemperatureTypes> temperatureTypes;
+    private final List<TemperatureType> temperatureTypes;
     private final List<Biome.RainType> rainTypes;
 
-    public BiomePropertiesPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<Biome.Category> include, List<Biome.Category> exclude, List<TemperatureTypes> temperatureTypes, List<Biome.RainType> rainTypes) {
+    public BiomePropertiesPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<Biome.Category> include, List<Biome.Category> exclude, List<TemperatureType> temperatureTypes, List<Biome.RainType> rainTypes) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -59,9 +59,13 @@ public class BiomePropertiesPredicate {
         }
     }
 
-    public static List<Biome> getValidBiomes(List<Biome.Category> includeList, List<Biome.Category> excludeList, List<TemperatureTypes> temperatureTypes, List<Biome.RainType> rainTypes) { //Can't add biome as a parameter, since this called elsewhere where world is not available
+    public static List<Biome> getValidBiomes(List<Biome.Category> includeList, List<Biome.Category> excludeList, List<TemperatureType> temperatureTypes, List<Biome.RainType> rainTypes) { //Can't add biome as a parameter, since this called elsewhere where world is not available
         List<Biome> registryBiomes = Lists.newArrayList(ForgeRegistries.BIOMES.getValues());
         List<Biome> biomes = Lists.newArrayList(registryBiomes);
+
+        if (includeList.isEmpty() && excludeList.isEmpty() && temperatureTypes.isEmpty() && rainTypes.isEmpty()) {
+            biomes.clear(); //Don't add biomes, when nothing is specified
+        }
 
         if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all Biome Categories, when only excluding biomes
             includeList.addAll(Arrays.asList(Biome.Category.values()));
@@ -96,15 +100,15 @@ public class BiomePropertiesPredicate {
         return biomes;
     }
 
-    public static TemperatureTypes getTemperatureType(float temp, String biomeName) {
+    public static TemperatureType getTemperatureType(float temp, String biomeName) {
         if (temp >= 1.0F || biomeName.contains("hot") || (!biomeName.contains("lukewarm") && biomeName.contains("warm"))) {
-            return TemperatureTypes.HOT;
+            return TemperatureType.HOT;
         } else if (temp < 0.15F || biomeName.contains("cold") || biomeName.contains("frozen")) {
-            return TemperatureTypes.COLD;
+            return TemperatureType.COLD;
         } else if (temp >= 0.15F && temp < 1.0F) {
-            return TemperatureTypes.TEMPERATE;
+            return TemperatureType.TEMPERATE;
         } else {
-            return TemperatureTypes.HOT;
+            return TemperatureType.HOT;
         }
     }
 
@@ -131,7 +135,7 @@ public class BiomePropertiesPredicate {
                 }
             }
             if (this.temperatureTypes != null) {
-                for (TemperatureTypes temperatureTypes : this.temperatureTypes) {
+                for (TemperatureType temperatureTypes : this.temperatureTypes) {
                     object.add("temperature", object.getAsJsonArray(temperatureTypes.getName()));
                 }
             }
@@ -179,12 +183,12 @@ public class BiomePropertiesPredicate {
                 }
             }
 
-            List<TemperatureTypes> temperatureTypes = Lists.newArrayList();
+            List<TemperatureType> temperatureTypes = Lists.newArrayList();
             if (location.has("temperature")) {
                 JsonArray temperatureArray = JSONUtils.getJsonArray(location, "temperature");
                 for (int entry = 0; entry < temperatureArray.size(); entry++) {
                     String name = temperatureArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
-                    TemperatureTypes temperatureType = TemperatureTypes.getTemperatureType(name);
+                    TemperatureType temperatureType = TemperatureType.getTemperatureType(name);
                     if (temperatureType == null) {
                         Aquaculture.LOG.error("Could not find Biome Temperature Type: " + name + ". Please check your loot tables");
                     } else {
@@ -216,15 +220,15 @@ public class BiomePropertiesPredicate {
         }
     }
 
-    public enum TemperatureTypes implements IStringSerializable {
+    public enum TemperatureType implements IStringSerializable {
         COLD("cold"),
         TEMPERATE("temperate"),
         HOT("hot");
 
-        private static final Map<String, TemperatureTypes> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(TemperatureTypes::getName, (precipitation) -> precipitation));
+        private static final Map<String, TemperatureType> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(TemperatureType::getName, (precipitation) -> precipitation));
         private final String name;
 
-        private TemperatureTypes(String name) {
+        private TemperatureType(String name) {
             this.name = name;
         }
 
@@ -232,7 +236,7 @@ public class BiomePropertiesPredicate {
             return this.name;
         }
 
-        public static TemperatureTypes getTemperatureType(String name) {
+        public static TemperatureType getTemperatureType(String name) {
             return BY_NAME.get(name);
         }
 

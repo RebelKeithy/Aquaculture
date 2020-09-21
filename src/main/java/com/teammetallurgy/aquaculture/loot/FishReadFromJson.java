@@ -6,17 +6,18 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaLootTables;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -30,6 +31,7 @@ public class FishReadFromJson {
     public static HashMap<EntityType<?>, List<Biome>> FISH_BIOME_MAP = new HashMap<>();
     public static HashMap<EntityType<?>, Integer> FISH_WEIGHT_MAP = new HashMap<>();
     private static final Gson GSON_INSTANCE = new GsonBuilder().setPrettyPrinting().create();
+    public static boolean hasRunFirstTime;
 
     public static void read() {
         try {
@@ -88,7 +90,7 @@ public class FishReadFromJson {
         List<Biome> biomes = Lists.newArrayList();
         List<Biome.Category> includeList = Lists.newArrayList();
         List<Biome.Category> excludeList = Lists.newArrayList();
-        List<BiomePropertiesPredicate.TemperatureTypes> temperatureTypes = Lists.newArrayList();
+        List<BiomePropertiesPredicate.TemperatureType> temperatureTypes = Lists.newArrayList();
         List<Biome.RainType> rainTypes = Lists.newArrayList();
 
         if (predicate.getAsJsonObject().has("include")) {
@@ -106,7 +108,7 @@ public class FishReadFromJson {
         if (predicate.getAsJsonObject().has("temperature")) {
             JsonArray temperature = predicate.getAsJsonObject().get("temperature").getAsJsonArray();
             for (int entry = 0; entry < temperature.size(); entry++) {
-                temperatureTypes.add(BiomePropertiesPredicate.TemperatureTypes.getTemperatureType(temperature.get(entry).getAsString().toLowerCase(Locale.ROOT)));
+                temperatureTypes.add(BiomePropertiesPredicate.TemperatureType.getTemperatureType(temperature.get(entry).getAsString().toLowerCase(Locale.ROOT)));
             }
         }
         if (predicate.getAsJsonObject().has("rain_type")) {
@@ -119,12 +121,12 @@ public class FishReadFromJson {
         return biomes;
     }
 
-    public static void addFishSpawns() {
+    public static void addFishSpawns(BiomeLoadingEvent event) {
         if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
             read();
             //Biome debug
             for (EntityType fish : FISH_BIOME_MAP.keySet()) {
-                if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
+                if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
                     List<String> strings = new ArrayList<>();
                     for (Biome biome : FISH_BIOME_MAP.get(fish)) {
                         if (biome.getRegistryName() != null) {
@@ -140,10 +142,13 @@ public class FishReadFromJson {
                 /*if (AquaConfig.BASIC_OPTIONS.debugMode.get()) { //TODO Uncomment
                     Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
                 }*/
-                /*for (Biome biome : FISH_BIOME_MAP.get(fish)) { //TODO
-                    biome.getSpawns(EntityClassification.WATER_CREATURE).add(new Biome.SpawnListEntry(fish, weight, 1, maxGroupSize));
-                }*/
+                for (Biome biome : FISH_BIOME_MAP.get(fish)) {
+                    if (event.getName().equals(biome.getRegistryName())) {
+                        event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(fish, weight, 1, maxGroupSize));
+                    }
+                }
             }
+            hasRunFirstTime = true;
         }
     }
 }
