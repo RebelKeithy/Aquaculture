@@ -22,6 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,7 +49,7 @@ public class AquaEntities {
     public static final EntityType<TurtleLandEntity> ARRAU_TURTLE = registerMob("arrau_turtle", 1, 2, 4, Biome.Category.JUNGLE, 0x71857A, 0x4F6258,
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
                     .size(0.5F, 0.25F));
-    public static final EntityType<TurtleLandEntity> STARSHELL_TURTLE = registerMob("starshell_turtle", 1, 2, 5, Biome.Category.NONE, 0xDCE2E5, 0x464645, //TODO
+    public static final EntityType<TurtleLandEntity> STARSHELL_TURTLE = registerMob("starshell_turtle", 1, 2, 5, null, 0xDCE2E5, 0x464645,
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
                     .size(0.5F, 0.25F));
 
@@ -59,11 +60,11 @@ public class AquaEntities {
         }
     }
 
-    private static <T extends Entity> EntityType<T> registerMob(String name, int min, int max, int weight, Biome.Category category, int eggPrimary, int eggSecondary, EntityType.Builder<T> builder) {
+    private static <T extends Entity> EntityType<T> registerMob(String name, int min, int max, int weight, @Nullable Biome.Category category, int eggPrimary, int eggSecondary, EntityType.Builder<T> builder) {
         return registerMob(name, min, max, weight, eggPrimary, eggSecondary, category, builder);
     }
 
-    private static <T extends Entity> EntityType<T> registerMob(String name, int min, int max, int weight, int eggPrimary, int eggSecondary, Biome.Category category, EntityType.Builder<T> builder) {
+    private static <T extends Entity> EntityType<T> registerMob(String name, int min, int max, int weight, int eggPrimary, int eggSecondary, @Nullable Biome.Category category, EntityType.Builder<T> builder) {
         EntityType<T> entityType = register(name, builder);
         Item spawnEgg = new SpawnEggItem(entityType, eggPrimary, eggSecondary, (new Item.Properties()).group(ItemGroup.MISC));
         AquaItems.register(spawnEgg, name + "_spawn_egg");

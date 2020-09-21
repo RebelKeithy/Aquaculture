@@ -5,6 +5,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 
+import javax.annotation.Nullable;
 import java.io.File;
 
 public class AquaConfig {
@@ -53,13 +54,13 @@ public class AquaConfig {
         public final ForgeConfigSpec.IntValue weight;
         public final ForgeConfigSpec.ConfigValue<String> category;
 
-        public Spawn(ForgeConfigSpec.Builder builder, String name, int min, int max, int weight, Biome.Category category) {
+        public Spawn(ForgeConfigSpec.Builder builder, String name, int min, int max, int weight, @Nullable Biome.Category category) {
             builder.push(SPAWN_OPTIONS);
             builder.push(name);
             this.min = builder.defineInRange("min", min, 0, 64);
             this.max = builder.defineInRange("max", max, 0, 64);
             this.weight = builder.defineInRange("weight", weight, 0, 100);
-            this.category = builder.define("biome category", category.getName());
+            this.category = builder.define("biome category", category != null ? category.getName() : "null");
             builder.pop(2);
         }
     }

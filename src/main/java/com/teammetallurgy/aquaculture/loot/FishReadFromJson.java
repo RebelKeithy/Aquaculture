@@ -10,11 +10,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -22,6 +24,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class FishReadFromJson {
     public static HashMap<EntityType<?>, List<Biome>> FISH_BIOME_MAP = new HashMap<>();
@@ -91,25 +94,25 @@ public class FishReadFromJson {
         if (predicate.getAsJsonObject().has("include")) {
             JsonArray include = predicate.getAsJsonObject().get("include").getAsJsonArray();
             for (int entry = 0; entry < include.size(); entry++) {
-                includeList.add(Biome.Category.byName(include.get(entry).getAsString()));
+                includeList.add(Biome.Category.byName(include.get(entry).getAsString().toLowerCase(Locale.ROOT)));
             }
         }
         if (predicate.getAsJsonObject().has("exclude")) {
             JsonArray exclude = predicate.getAsJsonObject().get("exclude").getAsJsonArray();
             for (int entry = 0; entry < exclude.size(); entry++) {
-                excludeList.add(Biome.Category.byName(exclude.get(entry).getAsString()));
+                excludeList.add(Biome.Category.byName(exclude.get(entry).getAsString().toLowerCase(Locale.ROOT)));
             }
         }
         if (predicate.getAsJsonObject().has("temperature")) {
             JsonArray temperature = predicate.getAsJsonObject().get("temperature").getAsJsonArray();
             for (int entry = 0; entry < temperature.size(); entry++) {
-                temperatureTypes.add(BiomePropertiesPredicate.TemperatureTypes.getTemperatureType(temperature.get(entry).getAsString()));
+                temperatureTypes.add(BiomePropertiesPredicate.TemperatureTypes.getTemperatureType(temperature.get(entry).getAsString().toLowerCase(Locale.ROOT)));
             }
         }
         if (predicate.getAsJsonObject().has("rain_type")) {
             JsonArray rain = predicate.getAsJsonObject().get("rain_type").getAsJsonArray();
             for (int entry = 0; entry < rain.size(); entry++) {
-                rainTypes.add(Biome.RainType.getRainType(rain.get(entry).getAsString()));
+                rainTypes.add(Biome.RainType.getRainType(rain.get(entry).getAsString().toLowerCase(Locale.ROOT)));
             }
         }
         biomes.addAll(BiomePropertiesPredicate.getValidBiomes(includeList, excludeList, temperatureTypes, rainTypes));

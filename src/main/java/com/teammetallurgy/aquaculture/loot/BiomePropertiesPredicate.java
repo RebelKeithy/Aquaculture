@@ -63,33 +63,30 @@ public class BiomePropertiesPredicate {
         List<Biome> registryBiomes = Lists.newArrayList(ForgeRegistries.BIOMES.getValues());
         List<Biome> biomes = Lists.newArrayList(registryBiomes);
 
-        boolean includeIsEmpty = includeList.isEmpty();
-        boolean excludeIsEmpty = excludeList.isEmpty();
-
-        if (includeIsEmpty && !excludeIsEmpty) { //Add all Biome Categories, when only excluding biomes
+        if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all Biome Categories, when only excluding biomes
             includeList.addAll(Arrays.asList(Biome.Category.values()));
             excludeList.addAll(INVALID_CATEGORIES);
         }
 
-        if (includeIsEmpty && excludeIsEmpty) { //Exclude invalid Biome Categories, when only temperature and/or rain type is specified
+        if (includeList.isEmpty() && excludeList.isEmpty()) { //Exclude invalid Biome Categories, when only temperature and/or rain type is specified
             excludeList.addAll(INVALID_CATEGORIES);
         }
 
-        if (!includeIsEmpty) {
+        if (!includeList.isEmpty()) {
             if (includeList.stream().noneMatch(INVALID_CATEGORIES::contains)) { //Exclude invalid tags, as long as they're not specified in include
                 excludeList.addAll(INVALID_CATEGORIES);
             }
         }
 
-        if (!includeIsEmpty) {
+        if (!includeList.isEmpty()) {
             biomes.removeIf(biome -> !includeList.contains(biome.getCategory()));
         }
-        if (!excludeIsEmpty) {
+        if (!excludeList.isEmpty()) {
             biomes.removeIf(biome -> excludeList.contains(biome.getCategory()));
         }
 
         if (!temperatureTypes.isEmpty()) {
-            biomes.removeIf(biome -> !temperatureTypes.contains(getTemperatureType(biome.getTemperature())));
+            biomes.removeIf(biome -> !temperatureTypes.contains(getTemperatureType(biome.getTemperature(), biome.getRegistryName() != null ? biome.getRegistryName().getPath() : "")));
         }
 
         if (!rainTypes.isEmpty()) {
@@ -99,8 +96,10 @@ public class BiomePropertiesPredicate {
         return biomes;
     }
 
-    public static TemperatureTypes getTemperatureType(float temp) {
-        if (temp < 0.15F) {
+    public static TemperatureTypes getTemperatureType(float temp, String biomeName) {
+        if (temp >= 1.0F || biomeName.contains("hot") || (!biomeName.contains("lukewarm") && biomeName.contains("warm"))) {
+            return TemperatureTypes.HOT;
+        } else if (temp < 0.15F || biomeName.contains("cold") || biomeName.contains("frozen")) {
             return TemperatureTypes.COLD;
         } else if (temp >= 0.15F && temp < 1.0F) {
             return TemperatureTypes.TEMPERATE;
