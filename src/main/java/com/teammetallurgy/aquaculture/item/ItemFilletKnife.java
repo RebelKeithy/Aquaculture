@@ -39,8 +39,8 @@ public class ItemFilletKnife extends SwordItem {
         this.attackDamage = material.getAttackDamage() / 2;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.field_233823_f_, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.field_233825_h_, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.2F, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.2F, AttributeModifier.Operation.ADDITION));
         this.attributes = builder.build();
     }
 
@@ -79,7 +79,7 @@ public class ItemFilletKnife extends SwordItem {
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag tooltipFlag) {
         if (this.getTier() == AquacultureAPI.MATS.NEPTUNIUM) {
             IFormattableTextComponent unbreakable = new TranslationTextComponent("aquaculture.unbreakable");
-            tooltip.add(unbreakable.func_240703_c_(unbreakable.getStyle().func_240712_a_(TextFormatting.DARK_GRAY).func_240713_a_(true)));
+            tooltip.add(unbreakable.mergeStyle(unbreakable.getStyle().setFormatting(TextFormatting.DARK_GRAY).setBold(true)));
         }
         super.addInformation(stack, world, tooltip, tooltipFlag);
     }

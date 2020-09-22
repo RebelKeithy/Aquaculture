@@ -132,13 +132,13 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
                 rodDamage = this.caughtEntity instanceof ItemEntity ? 3 : 5;
             } else if ((this.ticksCatchable > 0 || isAdminRod) && this.world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld) this.world;
-                LootContext.Builder builder = new LootContext.Builder(serverWorld).withParameter(LootParameters.POSITION, this.func_233580_cy_()).withParameter(LootParameters.TOOL, stack).withRandom(this.rand).withLuck((float) this.luck + angler.getLuck());
+                LootContext.Builder builder = new LootContext.Builder(serverWorld).withParameter(LootParameters.field_237457_g_, this.getPositionVec()).withParameter(LootParameters.TOOL, stack).withRandom(this.rand).withLuck((float) this.luck + angler.getLuck());
                 builder.withParameter(LootParameters.KILLER_ENTITY, angler).withParameter(LootParameters.THIS_ENTITY, this);
 
                 List<ItemStack> lootEntries = getLoot(builder, serverWorld);
                 if (lootEntries.isEmpty()) {
-                    if (!this.world.isAirBlock(this.func_233580_cy_())) {
-                        Aquaculture.LOG.error("Loot was empty in Biome: " + this.world.getBiome(this.func_233580_cy_()) + ". Please report on Github");
+                    if (!this.world.isAirBlock(this.getPosition())) {
+                        Aquaculture.LOG.error("Loot was empty in Biome: " + this.world.getBiome(this.getPosition()) + ". Please report on Github");
                     }
                 }
                 if (!lootEntries.isEmpty()) {
@@ -189,8 +189,8 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
 
     private List<ItemStack> getLoot(LootContext.Builder builder, ServerWorld serverWorld) {
         ResourceLocation lootTableLocation;
-        if (this.isLavaHookInLava(this, this.world, this.func_233580_cy_())) {
-            if (serverWorld.getWorld().func_230315_m_().func_236037_d_()) {
+        if (this.isLavaHookInLava(this, this.world, this.getPosition())) {
+            if (serverWorld.getWorld().getDimensionType().getHasCeiling()) {
                 lootTableLocation = AquaLootTables.NETHER_FISHING;
             } else {
                 lootTableLocation = AquaLootTables.LAVA_FISHING;
@@ -239,7 +239,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
     @Override
     public void tick() {
         if (this.hasHook() && this.hook.getFluids().contains(FluidTags.LAVA)) {
-            if (this.hook.getFluids().contains(FluidTags.WATER) && world.getFluidState(this.func_233580_cy_()).isTagged(FluidTags.WATER)) {
+            if (this.hook.getFluids().contains(FluidTags.WATER) && world.getFluidState(this.getPosition()).isTagged(FluidTags.WATER)) {
                 super.tick();
             } else {
                 this.lavaFishingTick();
@@ -265,7 +265,7 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
             }
 
             float f = 0.0F;
-            BlockPos bobberPos = this.func_233580_cy_();
+            BlockPos bobberPos = this.getPosition();
             FluidState fluidState = this.world.getFluidState(bobberPos);
             if (fluidState.isTagged(FluidTags.LAVA)) {
                 f = fluidState.getActualHeight(this.world, bobberPos);
@@ -390,20 +390,20 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
                     serverworld.spawnParticle(ParticleTypes.SMOKE, x, y, z, 0, -xOffset, 0.01D, zOffset, 1.0D);
                 }
                 if (this.hasHook() && this.hook.getCatchSound() != null && this.func_234606_i_() != null) { //Hook catch sound functionality
-                    this.world.playSound(null, this.func_234606_i_() != null ? this.func_234606_i_().func_233580_cy_() : this.func_233580_cy_(), this.hook.getCatchSound(), this.getSoundCategory(), 0.1F, 0.1F);
+                    this.world.playSound(null, this.func_234606_i_() != null ? this.func_234606_i_().getPosition() : this.getPosition(), this.hook.getCatchSound(), this.getSoundCategory(), 0.1F, 0.1F);
                 }
             } else {
                 Vector3d motion = this.getMotion();
                 this.setMotion(motion.x, (-0.4F * MathHelper.nextFloat(this.rand, 0.6F, 1.0F)), motion.z);
                 double boundingBox = this.getBoundingBox().minY + 0.5D;
-                if (serverworld.getFluidState(this.func_233580_cy_()).isTagged(FluidTags.WATER)) { //Water check added
+                if (serverworld.getFluidState(this.getPosition()).isTagged(FluidTags.WATER)) { //Water check added
                     this.playSound(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH, 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                     serverworld.spawnParticle(ParticleTypes.BUBBLE, this.getPosX(), boundingBox, this.getPosZ(), (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.2D);
                     serverworld.spawnParticle(ParticleTypes.FISHING, this.getPosX(), boundingBox, this.getPosZ(), (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.2);
                 }
 
                 //Lava sound added
-                if (serverworld.getFluidState(this.func_233580_cy_()).isTagged(FluidTags.LAVA)) {
+                if (serverworld.getFluidState(this.getPosition()).isTagged(FluidTags.LAVA)) {
                     this.playSound(SoundEvents.BLOCK_LAVA_EXTINGUISH, 1.00F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                     serverworld.spawnParticle(ParticleTypes.LAVA, this.getPosX(), boundingBox, this.getPosZ(), (int) (1.0F + this.getWidth() * 20.0F), this.getWidth(), 0.0D, this.getWidth(), 0.2D);
                 }

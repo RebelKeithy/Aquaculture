@@ -9,20 +9,20 @@ import net.minecraft.loot.LootConditionType;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 
 import javax.annotation.Nonnull;
 
-public class BiomeTagCheck implements ILootCondition {
-    private final BiomeTagPredicate predicate;
+public class BiomePropertiesCheck implements ILootCondition {
+    private final BiomePropertiesPredicate predicate;
 
-    private BiomeTagCheck(BiomeTagPredicate predicate) {
+    private BiomePropertiesCheck(BiomePropertiesPredicate predicate) {
         this.predicate = predicate;
     }
 
     @Override
     public boolean test(LootContext context) {
-        BlockPos pos = context.get(LootParameters.POSITION);
+        Vector3d pos = context.get(LootParameters.field_237457_g_);
         return pos != null && this.predicate.test(context.getWorld(), (float) pos.getX(), (float) pos.getY(), (float) pos.getZ());
     }
 
@@ -32,17 +32,17 @@ public class BiomeTagCheck implements ILootCondition {
         return Aquaculture.BIOME_TAG_CHECK;
     }
 
-    public static class Serializer implements ILootSerializer<BiomeTagCheck> {
+    public static class Serializer implements ILootSerializer<BiomePropertiesCheck> {
 
         @Override
-        public void func_230424_a_(JsonObject json, BiomeTagCheck tagCheck, @Nonnull JsonSerializationContext context) {
+        public void serialize(JsonObject json, BiomePropertiesCheck tagCheck, @Nonnull JsonSerializationContext context) {
             json.add("predicate", tagCheck.predicate.serialize());
         }
 
         @Override
         @Nonnull
-        public BiomeTagCheck func_230423_a_(JsonObject json, @Nonnull JsonDeserializationContext context) {
-            return new BiomeTagCheck(BiomeTagPredicate.deserialize(json.get("predicate")));
+        public BiomePropertiesCheck deserialize(JsonObject json, @Nonnull JsonDeserializationContext context) {
+            return new BiomePropertiesCheck(BiomePropertiesPredicate.deserialize(json.get("predicate")));
         }
     }
 }

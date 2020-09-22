@@ -39,10 +39,10 @@ public class HookItem extends Item {
         if (hook != Hooks.EMPTY && hook.getFluids().contains(FluidTags.LAVA)) {
             if (hook.getFluids().contains(FluidTags.WATER)) {
                 IFormattableTextComponent universal = new TranslationTextComponent("aquaculture.universal");
-                tooltips.add(universal.func_240703_c_(universal.getStyle().func_240712_a_(TextFormatting.BOLD)));
+                tooltips.add(universal.mergeStyle(universal.getStyle().setFormatting(TextFormatting.BOLD)));
             } else {
                 IFormattableTextComponent lava = new TranslationTextComponent(Blocks.LAVA.getTranslationKey());
-                tooltips.add(lava.func_240703_c_(lava.getStyle().func_240712_a_(TextFormatting.RED)));
+                tooltips.add(lava.mergeStyle(lava.getStyle().setFormatting(TextFormatting.RED)));
             }
         }
         super.addInformation(stack, world, tooltips, tooltipFlag);

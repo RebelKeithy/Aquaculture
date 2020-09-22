@@ -155,13 +155,13 @@ public class AquaFishingRodItem extends FishingRodItem {
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltips, @Nonnull ITooltipFlag tooltipFlag) {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
             IFormattableTextComponent broken = new TranslationTextComponent("aquaculture.fishing_rod.broken");
-            tooltips.add(broken.func_240703_c_(broken.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.GRAY)));
+            tooltips.add(broken.mergeStyle(broken.getStyle().setItalic(true).setFormatting(TextFormatting.GRAY)));
         }
 
         Hook hook = getHookType(stack);
         if (hook != Hooks.EMPTY) {
             IFormattableTextComponent hookColor = new TranslationTextComponent(hook.getItem().getTranslationKey());
-            tooltips.add(hookColor.func_240703_c_(hookColor.getStyle().func_240712_a_(hook.getColor())));
+            tooltips.add(hookColor.mergeStyle(hookColor.getStyle().setFormatting(hook.getColor())));
         }
         super.addInformation(stack, world, tooltips, tooltipFlag);
     }

@@ -50,7 +50,7 @@ public class FishWeightHandler {
         if (!stack.isEmpty() && stack != null && stack.hasTag() && stack.getTag() != null) { //Keep stack null check, in case of other mods is doing bad things
             if (stack.getTag().contains("fishSize")) {
                 IFormattableTextComponent fishWeightString = new TranslationTextComponent("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize")));
-                event.getToolTip().add(fishWeightString.func_240703_c_(fishWeightString.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.AQUA)));
+                event.getToolTip().add(fishWeightString.mergeStyle(fishWeightString.getStyle().setItalic(true).setFormatting(TextFormatting.AQUA)));
             }
             if (stack.getTag().contains("fishWeight")) {
                 double weight = stack.getTag().getDouble("fishWeight");
@@ -61,10 +61,10 @@ public class FishWeightHandler {
                 bd = bd.round(new MathContext(3));
                 if (bd.doubleValue() > 999) {
                     IFormattableTextComponent doubleWeight = new TranslationTextComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb);
-                    event.getToolTip().add(doubleWeight.func_240703_c_(doubleWeight.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.GRAY)));
+                    event.getToolTip().add(doubleWeight.mergeStyle(doubleWeight.getStyle().setItalic(true).setFormatting(TextFormatting.GRAY)));
                 } else {
                     IFormattableTextComponent decimalWeight = new TranslationTextComponent("aquaculture.fishWeight.weight", bd + lb);
-                    event.getToolTip().add(decimalWeight.func_240703_c_(decimalWeight.getStyle().func_240722_b_(true).func_240712_a_(TextFormatting.GRAY)));
+                    event.getToolTip().add(decimalWeight.mergeStyle(decimalWeight.getStyle().setItalic(true).setFormatting(TextFormatting.GRAY)));
                 }
             }
         }

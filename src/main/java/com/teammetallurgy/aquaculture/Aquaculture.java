@@ -6,8 +6,7 @@ import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
-import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
-import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
+import com.teammetallurgy.aquaculture.loot.BiomePropertiesCheck;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import cpw.mods.modlauncher.Environment;
@@ -43,7 +42,7 @@ public class Aquaculture {
             return new ItemStack(AquaItems.IRON_FISHING_ROD);
         }
     };
-    public static final LootConditionType BIOME_TAG_CHECK = LootConditionManager.func_237475_a_(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.Serializer());
+    public static final LootConditionType BIOME_TAG_CHECK = LootConditionManager.register(new ResourceLocation(MOD_ID, "biome_properties_check").toString(), new BiomePropertiesCheck.Serializer());
 
     public Aquaculture() {
         instance = this;
@@ -58,8 +57,6 @@ public class Aquaculture {
         DeferredWorkQueue.runLater(() -> {
             FishWeightHandler.registerFishData();
             AquaEntities.setSpawnPlacement();
-            AquaEntities.addEntitySpawns();
-            FishReadFromJson.addFishSpawns();
             WormFarmBlock.addCompostables();
             if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
                 FishRegistry.addCatBreeding();

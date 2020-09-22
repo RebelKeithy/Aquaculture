@@ -1,12 +1,15 @@
 package com.teammetallurgy.aquaculture.misc;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
-import net.minecraftforge.common.BiomeDictionary;
+import com.google.common.collect.Lists;
+import com.teammetallurgy.aquaculture.loot.BiomePropertiesPredicate;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 
 public class AquaConfig {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -54,15 +57,19 @@ public class AquaConfig {
         public final ForgeConfigSpec.IntValue weight;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> include;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> exclude;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> temperatures;
+        public final ForgeConfigSpec.ConfigValue<List<? extends String>> rainTypes;
 
-        public Spawn(ForgeConfigSpec.Builder builder, String name, int min, int max, int weight, List<? extends String> include, List<? extends String> exclude) {
+        public Spawn(ForgeConfigSpec.Builder builder, String name, int min, int max, int weight, List<? extends String> include, List<? extends String> exclude, List<? extends String> temperatureType, List<? extends String> rainType) {
             builder.push(SPAWN_OPTIONS);
             builder.push(name);
             this.min = builder.defineInRange("min", min, 0, 64);
             this.max = builder.defineInRange("max", max, 0, 64);
             this.weight = builder.defineInRange("weight", weight, 0, 100);
-            this.include = builder.defineList("include", include, o -> BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(String.valueOf(o))));
-            this.exclude = builder.defineList("exclude", exclude, o -> BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(String.valueOf(o))));
+            this.include = builder.defineList("include", include, o -> Lists.newArrayList(Biome.Category.values()).contains(Biome.Category.byName(String.valueOf(o).toLowerCase(Locale.ROOT))));
+            this.exclude = builder.defineList("exclude", exclude, o -> Lists.newArrayList(Biome.Category.values()).contains(Biome.Category.byName(String.valueOf(o).toLowerCase(Locale.ROOT))));
+            this.temperatures = builder.defineList("temperatures", temperatureType, o -> Lists.newArrayList(BiomePropertiesPredicate.TemperatureType.values()).contains(BiomePropertiesPredicate.TemperatureType.getTemperatureType(String.valueOf(o).toLowerCase(Locale.ROOT))));
+            this.rainTypes = builder.defineList("rain_types", rainType, o -> Lists.newArrayList(Biome.RainType.values()).contains(Biome.RainType.getRainType(String.valueOf(o).toLowerCase(Locale.ROOT))));
             builder.pop(2);
         }
     }

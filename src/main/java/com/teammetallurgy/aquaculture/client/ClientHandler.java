@@ -68,7 +68,7 @@ public class ClientHandler {
     }
 
     public static void registerFishingRodModelProperties(Item fishingRod) {
-        ItemModelsProperties.func_239418_a_(fishingRod, new ResourceLocation("cast"), (heldStack, world, livingEntity) -> {
+        ItemModelsProperties.registerProperty(fishingRod, new ResourceLocation("cast"), (heldStack, world, livingEntity) -> {
             if (livingEntity == null) {
                 return 0.0F;
             } else {

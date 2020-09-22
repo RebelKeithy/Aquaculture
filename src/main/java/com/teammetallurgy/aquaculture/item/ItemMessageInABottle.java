@@ -36,7 +36,7 @@ public class ItemMessageInABottle extends Item {
 
         if (player instanceof ServerPlayerEntity) {
             TranslationTextComponent chatMessage = new TranslationTextComponent(message);
-            player.sendMessage(chatMessage, Util.field_240973_b_);
+            player.sendMessage(chatMessage, Util.DUMMY_UUID);
         }
 
         heldStack.shrink(1);

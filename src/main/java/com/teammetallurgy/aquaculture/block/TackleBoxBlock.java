@@ -29,13 +29,13 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
@@ -148,7 +148,7 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
     public int getComparatorInputOverride(@Nonnull BlockState state, World world, @Nonnull BlockPos pos) {
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof TackleBoxTileEntity) {
-            LazyOptional<Integer> redstone = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
+            Optional<Integer> redstone = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
             return redstone.orElse(0);
         }
         return 0;
