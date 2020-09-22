@@ -9,6 +9,7 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -83,14 +84,14 @@ public class BiomePropertiesPredicate {
         }
 
         if (!includeList.isEmpty()) {
-            biomes.removeIf(biome -> !includeList.contains(biome.getCategory()));
+            biomes.removeIf(biome -> includeList.stream().noneMatch(withSpecialCases(biome.getRegistryName(), biome.getCategory(), true)::contains));
         }
         if (!excludeList.isEmpty()) {
-            biomes.removeIf(biome -> excludeList.contains(biome.getCategory()));
+            biomes.removeIf(biome -> excludeList.stream().anyMatch(withSpecialCases(biome.getRegistryName(), biome.getCategory(), false)::contains));
         }
 
         if (!temperatureTypes.isEmpty()) {
-            biomes.removeIf(biome -> !temperatureTypes.contains(getTemperatureType(biome.getTemperature(), biome.getRegistryName() != null ? biome.getRegistryName().getPath() : "")));
+            biomes.removeIf(biome -> !temperatureTypes.contains(getTemperatureType(biome.getTemperature(), biome.getRegistryName())));
         }
 
         if (!rainTypes.isEmpty()) {
@@ -100,7 +101,8 @@ public class BiomePropertiesPredicate {
         return biomes;
     }
 
-    public static TemperatureType getTemperatureType(float temp, String biomeName) {
+    public static TemperatureType getTemperatureType(float temp, ResourceLocation id) {
+        String biomeName = id != null ? id.getPath() : "";
         if (temp >= 1.0F || biomeName.contains("hot") || (!biomeName.contains("lukewarm") && biomeName.contains("warm"))) {
             return TemperatureType.HOT;
         } else if (temp < 0.15F || biomeName.contains("cold") || biomeName.contains("frozen")) {
@@ -110,6 +112,18 @@ public class BiomePropertiesPredicate {
         } else {
             return TemperatureType.HOT;
         }
+    }
+
+    public static List<Biome.Category> withSpecialCases(ResourceLocation id, Biome.Category category, boolean isInclude) {
+        String biomeName = id != null ? id.getPath() : "";
+        List<Biome.Category> categories = Lists.newArrayList();
+        if (category != Biome.Category.NONE) { //Ignore NONE completely
+            categories.add(category);
+        }
+        if (biomeName.contains("shore") || biomeName.contains("beach")) {
+            categories.add(Biome.Category.BEACH);
+        }
+        return categories;
     }
 
     public JsonElement serialize() {
@@ -210,10 +224,6 @@ public class BiomePropertiesPredicate {
                     }
                 }
             }
-            /*System.out.println("include: " + include);
-            System.out.println("exclude: " + exclude);
-            System.out.println("temp: " + temperatureTypes);
-            System.out.println("rain: " + rainTypes);*/
             return new BiomePropertiesPredicate(x, y, z, include, exclude, temperatureTypes, rainTypes);
         } else {
             return ANY;
