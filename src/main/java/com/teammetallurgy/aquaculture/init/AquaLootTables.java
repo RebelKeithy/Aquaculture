@@ -57,7 +57,7 @@ public class AquaLootTables {
         return TableLootEntry.builder(location).weight(weight).quality(quality).build();
     }
 
-    private static void addEntry(LootPool pool, LootEntry entry) { //TODO Move to Global Loot Modifier
+    private static void addEntry(LootPool pool, LootEntry entry) {
         try {
             List<LootEntry> lootEntries = (List<LootEntry>) ObfuscationReflectionHelper.findField(LootPool.class, "field_186453_a").get(pool);
             if (lootEntries.stream().anyMatch(e -> e == entry)) {

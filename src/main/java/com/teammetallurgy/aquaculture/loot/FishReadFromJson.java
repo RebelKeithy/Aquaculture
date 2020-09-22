@@ -139,7 +139,7 @@ public class FishReadFromJson {
                 int weight = FISH_WEIGHT_MAP.get(fish) / 3;
                 int maxGroupSize = MathHelper.clamp((FISH_WEIGHT_MAP.get(fish) / 10), 1, 8);
                 if (weight < 1) weight = 1;
-                if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
+                if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
                     Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
                 }
                 for (Biome biome : FISH_BIOME_MAP.get(fish)) {
