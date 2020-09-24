@@ -457,19 +457,6 @@
           ],
           "weight": 5,
           "name": "aquaculture:box_turtle"
-        },
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aquaculture:biome_properties_check",
-              "predicate": {
-
-              }
-            }
-          ],
-          "weight": 5,
-          "name": "aquaculture:starshell_turtle"
         }
       ]
     }
