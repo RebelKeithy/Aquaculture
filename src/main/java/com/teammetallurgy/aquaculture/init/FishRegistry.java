@@ -62,7 +62,7 @@ public class FishRegistry {
      */
     public static Item register(@Nonnull Item fishItem, @Nonnull String name, FishType fishSize) {
         AquaItems.register(fishItem, name);
-        EntityType<AquaFishEntity> fish = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_CREATURE).size(fishSize.getWidth(), fishSize.getHeight()).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
+        EntityType<AquaFishEntity> fish = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_AMBIENT).size(fishSize.getWidth(), fishSize.getHeight()).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
         registerFishEntity(name, fish);
         AquaFishEntity.TYPES.put(fish, fishSize);
         return fishItem;
