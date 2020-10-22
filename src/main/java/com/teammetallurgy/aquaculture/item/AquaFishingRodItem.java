@@ -31,13 +31,17 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AquaFishingRodItem extends FishingRodItem {
-    private final IItemTier material;
+    private final IItemTier tier;
     private final int enchantability;
 
-    public AquaFishingRodItem(IItemTier material, Properties properties) {
+    public AquaFishingRodItem(IItemTier tier, Properties properties) {
         super(properties);
-        this.enchantability = material == ItemTier.WOOD ? 10 : material.getEnchantability();
-        this.material = material;
+        this.enchantability = tier == ItemTier.WOOD ? 10 : tier.getEnchantability();
+        this.tier = tier;
+    }
+
+    public IItemTier getTier() { //Added getter, so other mods can access it
+        return tier;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     @Nonnull
     public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
-        boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && this.material == AquacultureAPI.MATS.NEPTUNIUM;
+        boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && this.tier == AquacultureAPI.MATS.NEPTUNIUM;
         int lureSpeed;
         int damage = this.getDamage(heldStack);
         if (damage >= this.getMaxDamage(heldStack)) return new ActionResult<>(ActionResultType.FAIL, heldStack);
@@ -83,7 +87,7 @@ public class AquaFishingRodItem extends FishingRodItem {
             if (!world.isRemote) {
                 //Lure Speed
                 lureSpeed = EnchantmentHelper.getFishingSpeedBonus(heldStack);
-                if (this.material == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 1;
+                if (this.tier == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 1;
                 ItemStack bait = getBait(heldStack);
                 if (!isAdminRod && !bait.isEmpty()) {
                     lureSpeed += ((BaitItem) bait.getItem()).getLureSpeedModifier();
@@ -103,7 +107,7 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     @Override
     public boolean getIsRepairable(@Nonnull ItemStack toRepair, @Nonnull ItemStack repair) {
-        return this.material.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+        return this.tier.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
     }
 
     @Nonnull
