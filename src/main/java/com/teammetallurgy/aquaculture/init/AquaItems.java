@@ -101,7 +101,7 @@ public class AquaItems {
     public static final Item TAMBAQUI = FishRegistry.register(new FishItem(), "tambaqui", FishType.LARGE);
     public static final Item BROWN_SHROOMA = FishRegistry.register(new FishItem(), "brown_shrooma", FishType.SMALL);
     public static final Item RED_SHROOMA = FishRegistry.register(new FishItem(), "red_shrooma", FishType.SMALL);
-    public static final Item JELLYFISH = FishRegistry.register(new FishItem(), "jellyfish", FishType.JELLYFISH);
+    public static final Item JELLYFISH = FishRegistry.register(new SimpleItem(), "jellyfish", FishType.JELLYFISH);
     public static final Item RED_GROUPER = FishRegistry.register(new FishItem(), "red_grouper");
     public static final Item TUNA = FishRegistry.register(new FishItem(), "tuna", FishType.LARGE);
     public static final Item FROG = register(new SimpleItem(), "frog");
