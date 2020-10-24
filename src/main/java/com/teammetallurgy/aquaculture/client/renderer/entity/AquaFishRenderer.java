@@ -24,7 +24,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
     private static final FishLargeModel<AquaFishEntity> LARGE_MODEL = new FishLargeModel<>();
     private static final FishLongnoseModel<AquaFishEntity> LONGNOSE_MODEL = new FishLongnoseModel<>();
-    private static final FishCatchfishModel<AquaFishEntity> CATFISH_MODEL = new FishCatchfishModel<>();
+    private static final FishCathfishModel<AquaFishEntity> CATFISH_MODEL = new FishCathfishModel<>();
     private static final JellyfishModel<AquaFishEntity> JELLYFISH_MODEL = new JellyfishModel<>();
 
     public AquaFishRenderer(EntityRendererManager manager, boolean isJellyfish) {
