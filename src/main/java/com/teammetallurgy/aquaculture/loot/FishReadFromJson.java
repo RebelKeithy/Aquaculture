@@ -144,7 +144,7 @@ public class FishReadFromJson {
                 }
                 for (Biome biome : FISH_BIOME_MAP.get(fish)) {
                     if (event.getName().equals(biome.getRegistryName())) {
-                        event.getSpawns().getSpawner(EntityClassification.WATER_CREATURE).add(new MobSpawnInfo.Spawners(fish, weight, 1, maxGroupSize));
+                        event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(fish, weight, 1, maxGroupSize));
                     }
                 }
             }
