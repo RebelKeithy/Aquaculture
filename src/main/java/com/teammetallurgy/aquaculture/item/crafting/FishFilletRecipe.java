@@ -16,6 +16,8 @@ import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -25,8 +27,8 @@ import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(value = Aquaculture.MOD_ID)
-public class FishFilletRecipe extends SpecialRecipe { //Statically loaded by EventBusSubscriber
-    private static final SpecialRecipeSerializer<FishFilletRecipe> FISH_FILLET_SERIALIZER = IRecipeSerializer.register(Aquaculture.MOD_ID + ":crafting_special_fish_fillet", new SpecialRecipeSerializer<>(FishFilletRecipe::new));
+public class FishFilletRecipe extends SpecialRecipe {
+    private static final SpecialRecipeSerializer<FishFilletRecipe> FISH_FILLET_SERIALIZER = new SpecialRecipeSerializer<>(FishFilletRecipe::new);
 
     private FishFilletRecipe(ResourceLocation location) {
         super(location);
@@ -127,5 +129,11 @@ public class FishFilletRecipe extends SpecialRecipe { //Statically loaded by Eve
     @Override
     public boolean canFit(int width, int height) {
         return width * height >= 2;
+    }
+
+    @SubscribeEvent
+    public static void registerRecipeSerializer(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+        FISH_FILLET_SERIALIZER.setRegistryName(new ResourceLocation(Aquaculture.MOD_ID, "crafting_special_fish_fillet"));
+        event.getRegistry().register(FISH_FILLET_SERIALIZER);
     }
 }
