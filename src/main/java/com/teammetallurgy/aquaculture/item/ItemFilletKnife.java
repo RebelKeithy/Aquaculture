@@ -35,7 +35,7 @@ public class ItemFilletKnife extends SwordItem {
     private final Multimap<Attribute, AttributeModifier> attributes;
 
     public ItemFilletKnife(IItemTier material) {
-        super(material, 0, 0.0F, new Item.Properties().group(Aquaculture.GROUP).defaultMaxDamage((int) (material.getMaxUses() * 0.75F))); //Setting values to 0, since overriding vanilla behaviour anyways
+        super(material, 0, 0.0F, new Item.Properties().group(Aquaculture.GROUP).defaultMaxDamage(material == AquacultureAPI.MATS.NEPTUNIUM ? -1 : (int) (material.getMaxUses() * 0.75F))); //Setting values to 0, since overriding vanilla behaviour anyways
         this.attackDamage = material.getAttackDamage() / 2;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
@@ -63,17 +63,6 @@ public class ItemFilletKnife extends SwordItem {
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(@Nonnull EquipmentSlotType slotType) {
         return slotType == EquipmentSlotType.MAINHAND ? this.attributes : ImmutableMultimap.of();
     }
-
-    @Override
-    public boolean hitEntity(@Nonnull ItemStack stack, @Nonnull LivingEntity target, @Nonnull LivingEntity attacker) {
-        return this.getTier() == AquacultureAPI.MATS.NEPTUNIUM || super.hitEntity(stack, target, attacker);
-    }
-
-    @Override
-    public boolean onBlockDestroyed(@Nonnull ItemStack stack, @Nonnull World world, @Nonnull BlockState state, @Nonnull BlockPos pos, @Nonnull LivingEntity entityLiving) {
-        return getTier() == AquacultureAPI.MATS.NEPTUNIUM || super.onBlockDestroyed(stack, world, state, pos, entityLiving);
-    }
-
     @Override
     @OnlyIn(Dist.CLIENT)
     public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag tooltipFlag) {
