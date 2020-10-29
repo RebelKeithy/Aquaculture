@@ -9,14 +9,14 @@ import java.util.function.Predicate;
 public class FollowTypeSchoolLeaderGoal extends Goal {
     private final AbstractGroupFishEntity taskOwner;
     private int navigateTimer;
-    private int field_222740_c;
+    private int cooldown;
 
     public FollowTypeSchoolLeaderGoal(AbstractGroupFishEntity fishEntity) {
         this.taskOwner = fishEntity;
-        this.field_222740_c = this.func_212825_a(fishEntity);
+        this.cooldown = this.getNewCooldown(fishEntity);
     }
 
-    private int func_212825_a(AbstractGroupFishEntity fishEntity) {
+    private int getNewCooldown(AbstractGroupFishEntity fishEntity) {
         return 200 + fishEntity.getRNG().nextInt(200) % 20;
     }
 
@@ -26,11 +26,11 @@ public class FollowTypeSchoolLeaderGoal extends Goal {
             return false;
         } else if (this.taskOwner.hasGroupLeader()) {
             return true;
-        } else if (this.field_222740_c > 0) {
-            --this.field_222740_c;
+        } else if (this.cooldown > 0) {
+            --this.cooldown;
             return false;
         } else {
-            this.field_222740_c = this.func_212825_a(this.taskOwner);
+            this.cooldown = this.getNewCooldown(this.taskOwner);
             Predicate<AbstractGroupFishEntity> predicate = (fishEntity) -> fishEntity.getType() == this.taskOwner.getType() && (fishEntity.canGroupGrow() || !fishEntity.hasGroupLeader());
             List<AbstractGroupFishEntity> schoolList = this.taskOwner.world.getEntitiesWithinAABB(this.taskOwner.getClass(), this.taskOwner.getBoundingBox().grow(8.0D, 8.0D, 8.0D), predicate);
             AbstractGroupFishEntity fishEntity = schoolList.stream().filter(AbstractGroupFishEntity::canGroupGrow).findAny().orElse(this.taskOwner);
@@ -51,7 +51,9 @@ public class FollowTypeSchoolLeaderGoal extends Goal {
 
     @Override
     public void resetTask() {
-        this.taskOwner.leaveGroup();
+        if (this.taskOwner != null) {
+            this.taskOwner.leaveGroup();
+        }
     }
 
     @Override

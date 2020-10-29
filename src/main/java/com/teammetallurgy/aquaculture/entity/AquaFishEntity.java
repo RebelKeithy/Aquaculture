@@ -102,6 +102,13 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
         }
     }
 
+    @Override
+    public void leaveGroup() {
+        if (this.groupLeader != null) {
+            super.leaveGroup();
+        }
+    }
+
     public static boolean canSpawnHere(EntityType<? extends AbstractFishEntity> fish, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
         boolean isAllNeighborsSource = isSourceBlock(world, pos.north()) && isSourceBlock(world, pos.south()) && isSourceBlock(world, pos.west()) && isSourceBlock(world, pos.east());
         return isSourceBlock(world, pos) && isAllNeighborsSource;

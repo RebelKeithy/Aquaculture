@@ -55,6 +55,7 @@ public class ClientHandler {
         registerFishingRodModelProperties(AquaItems.GOLD_FISHING_ROD);
         registerFishingRodModelProperties(AquaItems.DIAMOND_FISHING_ROD);
         registerFishingRodModelProperties(AquaItems.NEPTUNIUM_FISHING_ROD);
+        registerBowModelProperties(AquaItems.NEPTUNIUM_BOW);
     }
 
     @SubscribeEvent
@@ -80,5 +81,16 @@ public class ClientHandler {
                 return (isMainhand || isOffHand) && livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).fishingBobber != null ? 1.0F : 0.0F;
             }
         });
+    }
+
+    public static void registerBowModelProperties(Item bow) {
+        ItemModelsProperties.registerProperty(bow, new ResourceLocation("pull"), (stack, world, entity) -> {
+            if (entity == null) {
+                return 0.0F;
+            } else {
+                return entity.getActiveItemStack() != stack ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F;
+            }
+        });
+        ItemModelsProperties.registerProperty(bow, new ResourceLocation("pulling"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
     }
 }
