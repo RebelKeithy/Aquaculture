@@ -26,7 +26,7 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class NeptuniumArmor extends ArmorItem {
-    private static final AttributeModifier INCREASED_SWIM_SPEED = new AttributeModifier(UUID.fromString("d820cadc-2d19-421c-b19f-4c1f5b84a418"), "Neptunium Boots swim speed boost", 1.5D, AttributeModifier.Operation.ADDITION);
+    private static final AttributeModifier INCREASED_SWIM_SPEED = new AttributeModifier(UUID.fromString("d820cadc-2d19-421c-b19f-4c1f5b84a418"), "Neptunium Boots swim speed boost", 0.5D, AttributeModifier.Operation.ADDITION);
     private String texture;
 
     public NeptuniumArmor(IArmorMaterial armorMaterial, EquipmentSlotType equipmentSlot) {
