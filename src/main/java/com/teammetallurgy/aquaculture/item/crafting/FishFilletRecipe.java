@@ -54,7 +54,7 @@ public class FishFilletRecipe extends SpecialRecipe {
                     }
                     stack = slotStack;
                 } else {
-                    if (!(slotStack.getItem().isIn(AquacultureAPI.Tags.FILLET_KNIFE) && slotStack.isDamageable() && slotStack.getItem() instanceof TieredItem)) {
+                    if (!(slotStack.getItem().isIn(AquacultureAPI.Tags.FILLET_KNIFE) && (slotStack.isDamageable() || isKnifeNeptunium(slotStack.getItem())) && slotStack.getItem() instanceof TieredItem)) {
                         return false;
                     }
                     list.add(slotStack);
@@ -92,7 +92,7 @@ public class FishFilletRecipe extends SpecialRecipe {
             if (AquaConfig.BASIC_OPTIONS.randomWeight.get() && fish.getTag() != null && fish.getTag().contains("fishWeight")) {
                 filletAmount = FishWeightHandler.getFilletAmountFromWeight(fish.getTag().getDouble("fishWeight"));
             }
-            if (knife instanceof TieredItem && ((TieredItem) knife).getTier() == AquacultureAPI.MATS.NEPTUNIUM) {
+            if (isKnifeNeptunium(knife)) {
                 filletAmount += filletAmount * (25.0F / 100.0F);
             }
             return new ItemStack(AquaItems.FISH_FILLET, filletAmount);
@@ -109,7 +109,7 @@ public class FishFilletRecipe extends SpecialRecipe {
             ItemStack stack = craftingInventory.getStackInSlot(i);
             if (stack.getItem().isIn(AquacultureAPI.Tags.FILLET_KNIFE)) {
                 ItemStack knife = stack.copy();
-                if (!(knife.getItem() instanceof TieredItem && ((TieredItem) knife.getItem()).getTier() == AquacultureAPI.MATS.NEPTUNIUM)) {
+                if (!isKnifeNeptunium(knife.getItem())) {
                     if (knife.attemptDamageItem(1, new Random(), null)) {
                         knife.shrink(1);
                     }
@@ -118,6 +118,10 @@ public class FishFilletRecipe extends SpecialRecipe {
             }
         }
         return list;
+    }
+
+    public static boolean isKnifeNeptunium(@Nonnull Item knife) {
+        return knife instanceof TieredItem && ((TieredItem) knife).getTier() == AquacultureAPI.MATS.NEPTUNIUM;
     }
 
     @Override
