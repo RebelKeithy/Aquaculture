@@ -59,12 +59,10 @@ public class NeptuniumArmor extends ArmorItem {
     public static void onLivingTick(LivingEvent.LivingUpdateEvent event) {
         LivingEntity livingEntity = event.getEntityLiving();
         ModifiableAttributeInstance swimSpeed = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
-        if (livingEntity instanceof PlayerEntity) {
+        if (!livingEntity.world.isRemote) {
             if (livingEntity.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() != AquaItems.NEPTUNIUM_BOOTS) {
-                if (!livingEntity.world.isRemote) {
-                    if (swimSpeed != null && swimSpeed.hasModifier(INCREASED_SWIM_SPEED)) {
-                        swimSpeed.removeModifier(INCREASED_SWIM_SPEED);
-                    }
+                if (swimSpeed != null && swimSpeed.hasModifier(INCREASED_SWIM_SPEED)) {
+                    swimSpeed.removeModifier(INCREASED_SWIM_SPEED);
                 }
             }
             if (!livingEntity.areEyesInFluid(FluidTags.WATER)) {
