@@ -285,9 +285,9 @@
   "aquaculture.soul_sand_hook.tooltip.title" : "誘惑",
   "aquaculture.soul_sand_hook.tooltip.desc" : "魚を巻き取る時間が長くなります",
   "aquaculture.obsidian_note_hook.tooltip.title" : "アラート",
-  "aquaculture.obsidian_note_hook.tooltip.desc" : "魚が近づくとアラートを鳴らします"
+  "aquaculture.obsidian_note_hook.tooltip.desc" : "魚が近づくとアラートを鳴らします",
   
-  "_comment": "Tooltip",
+  "_comment": "Subtitle",
   "aquaculture.subtitles.tackle_box_open": "タックルボックスが開く",
   "aquaculture.subtitles.tackle_box_close": "タックルボックスが閉じる",
   "aquaculture.subtitles.worm_farm_empty": "ワームファームを空にする",
