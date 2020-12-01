@@ -63,4 +63,42 @@ public class FishData {
     public int getFilletAmount(Item fish) {
         return FILLET_AMOUNT.get(fish);
     }
+
+    public static int getFilletAmountFromWeight(double weight) {
+        if (weight >= 2 && weight < 10D) {
+            return 1;
+        } else if (weight >= 10 && weight < 50) {
+            return 2;
+        } else if (weight >= 50 && weight < 100) {
+            return 3;
+        } else if (weight >= 100 && weight < 150) {
+            return 4;
+        } else if (weight >= 150 && weight < 200) {
+            return 5;
+        } else if (weight >= 200 && weight < 250) {
+            return 6;
+        } else if (weight >= 250 && weight < 300) {
+            return 7;
+        } else if (weight >= 300 && weight < 350) {
+            return 8;
+        } else if (weight >= 350 && weight < 400) {
+            return 9;
+        } else if (weight >= 400 && weight < 450) {
+            return 10;
+        } else if (weight >= 450 && weight < 500) {
+            return 11;
+        } else if (weight >= 500 && weight < 600) {
+            return 12;
+        } else if (weight >= 600 && weight < 700) {
+            return 13;
+        } else if (weight >= 700 && weight < 800) {
+            return 14;
+        } else if (weight >= 800 && weight < 1000) {
+            return 15;
+        } else if (weight >= 1000) {
+            return 16;
+        } else {
+            return 0;
+        }
+    }
 }

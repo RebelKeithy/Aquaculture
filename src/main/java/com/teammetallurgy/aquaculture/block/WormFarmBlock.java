@@ -1,8 +1,8 @@
 package com.teammetallurgy.aquaculture.block;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
 import net.minecraft.block.Block;
@@ -43,7 +43,7 @@ public class WormFarmBlock extends ComposterBlock {
                 if (fishStack.getTag() != null && fishStack.getTag().contains("fishWeight")) {
                     weight = fishStack.getTag().getDouble("fishWeight");
                 }
-                float chance = MathHelper.clamp((FishWeightHandler.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
+                float chance = MathHelper.clamp((FishData.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
                 registerCompostable(fish, chance);
             }
         }

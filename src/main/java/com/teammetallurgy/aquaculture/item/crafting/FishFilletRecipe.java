@@ -3,8 +3,8 @@ package com.teammetallurgy.aquaculture.item.crafting;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
@@ -90,7 +90,7 @@ public class FishFilletRecipe extends SpecialRecipe {
         if (!fish.isEmpty() && knife != null) {
             int filletAmount = AquacultureAPI.FISH_DATA.getFilletAmount(fish.getItem());
             if (AquaConfig.BASIC_OPTIONS.randomWeight.get() && fish.getTag() != null && fish.getTag().contains("fishWeight")) {
-                filletAmount = FishWeightHandler.getFilletAmountFromWeight(fish.getTag().getDouble("fishWeight"));
+                filletAmount = FishData.getFilletAmountFromWeight(fish.getTag().getDouble("fishWeight"));
             }
             if (isKnifeNeptunium(knife)) {
                 filletAmount += filletAmount * (25.0F / 100.0F);
