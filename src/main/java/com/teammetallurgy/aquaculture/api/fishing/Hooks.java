@@ -3,7 +3,6 @@ package com.teammetallurgy.aquaculture.api.fishing;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.Mod;

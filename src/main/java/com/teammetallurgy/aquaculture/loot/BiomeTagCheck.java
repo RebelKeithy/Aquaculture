@@ -13,10 +13,10 @@ import net.minecraft.util.math.vector.Vector3d;
 
 import javax.annotation.Nonnull;
 
-public class BiomePropertiesCheck implements ILootCondition {
-    private final BiomePropertiesPredicate predicate;
+public class BiomeTagCheck implements ILootCondition {
+    private final BiomeTagPredicate predicate;
 
-    private BiomePropertiesCheck(BiomePropertiesPredicate predicate) {
+    private BiomeTagCheck(BiomeTagPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -32,17 +32,17 @@ public class BiomePropertiesCheck implements ILootCondition {
         return Aquaculture.BIOME_TAG_CHECK;
     }
 
-    public static class Serializer implements ILootSerializer<BiomePropertiesCheck> {
+    public static class Serializer implements ILootSerializer<BiomeTagCheck> {
 
         @Override
-        public void serialize(JsonObject json, BiomePropertiesCheck tagCheck, @Nonnull JsonSerializationContext context) {
+        public void serialize(JsonObject json, BiomeTagCheck tagCheck, @Nonnull JsonSerializationContext context) {
             json.add("predicate", tagCheck.predicate.serialize());
         }
 
         @Override
         @Nonnull
-        public BiomePropertiesCheck deserialize(JsonObject json, @Nonnull JsonDeserializationContext context) {
-            return new BiomePropertiesCheck(BiomePropertiesPredicate.deserialize(json.get("predicate")));
+        public BiomeTagCheck deserialize(JsonObject json, @Nonnull JsonDeserializationContext context) {
+            return new BiomeTagCheck(BiomeTagPredicate.deserialize(json.get("predicate")));
         }
     }
 }

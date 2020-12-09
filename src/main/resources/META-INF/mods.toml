@@ -17,7 +17,7 @@ license="All Rights Reserved"
 [[dependencies.aquaculture]]
     modId="forge"
     mandatory=true
-    versionRange="[34.1.0,)"
+    versionRange="[34.1.21,)"
     ordering="AFTER"
     side="BOTH"
 

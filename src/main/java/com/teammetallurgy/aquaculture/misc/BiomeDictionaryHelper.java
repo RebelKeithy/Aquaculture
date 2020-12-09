@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.misc;
 
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.biome.Biome;
@@ -9,10 +8,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -48,6 +44,19 @@ public class BiomeDictionaryHelper {
     }
 
     /**
+     * Converts set of RegistryKey<Biome> into a set of Biome
+     */
+    public static Set<Biome> getBiomes(Set<RegistryKey<Biome>> keyBiomeSet) {
+        Set<Biome> biomeSet = new HashSet<>();
+        for (RegistryKey<Biome> biomeKey : keyBiomeSet) {
+            if (biomeKey != null && biomeKey.getLocation() != null) {
+                biomeSet.add(ForgeRegistries.BIOMES.getValue(biomeKey.getLocation()));
+            }
+        }
+        return biomeSet;
+    }
+
+    /**
      * Adds spawns for an entity, based on BiomeDictionary Type
      */
     public static void addSpawn(EntityType<?> entityType, int min, int max, int weight, List<? extends String> include, List<? extends String> exclude, BiomeLoadingEvent event) {
@@ -61,7 +70,7 @@ public class BiomeDictionaryHelper {
                     if (!includeList.isEmpty()) {
                         Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biomeKey);
                         if (biomeTypes.stream().noneMatch(excludeList::contains) && biomeTypes.stream().anyMatch(includeList::contains)) {
-                            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(entityType, weight, min, max));
+                            event.getSpawns().getSpawner(entityType.getClassification()).add(new MobSpawnInfo.Spawners(entityType, weight, min, max));
                         }
                     } else {
                         throw new IllegalArgumentException("Do not leave the BiomeDictionary type inclusion list empty. If you wish to disable spawning of an entity, set the weight to 0 instead.");

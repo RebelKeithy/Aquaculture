@@ -46,10 +46,10 @@ public class AquaEntities {
     public static final EntityType<WaterArrowEntity> WATER_ARROW = register("water_arrow", EntityType.Builder.<WaterArrowEntity>create(WaterArrowEntity::new, EntityClassification.MISC)
             .size(0.5F, 0.5F)
             .setCustomClientFactory(WaterArrowEntity::new));
-    public static final EntityType<TurtleLandEntity> BOX_TURTLE = registerMob("box_turtle", 1, 2, 9, BiomeDictionary.Type.SWAMP, null, 0x7F8439, 0x5D612A,
+    public static final EntityType<TurtleLandEntity> BOX_TURTLE = registerMob("box_turtle", 1, 2, 10, BiomeDictionary.Type.SWAMP, null, 0x7F8439, 0x5D612A,
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
                     .size(0.5F, 0.25F));
-    public static final EntityType<TurtleLandEntity> ARRAU_TURTLE = registerMob("arrau_turtle", 1, 2, 6, BiomeDictionary.Type.JUNGLE, null, 0x71857A, 0x4F6258,
+    public static final EntityType<TurtleLandEntity> ARRAU_TURTLE = registerMob("arrau_turtle", 1, 2, 8, BiomeDictionary.Type.JUNGLE, null, 0x71857A, 0x4F6258,
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
                     .size(0.5F, 0.25F));
     public static final EntityType<TurtleLandEntity> STARSHELL_TURTLE = registerMob("starshell_turtle", 1, 2, 5, BiomeDictionaryHelper.TWILIGHT, null, 0xDCE2E5, 0x464645,

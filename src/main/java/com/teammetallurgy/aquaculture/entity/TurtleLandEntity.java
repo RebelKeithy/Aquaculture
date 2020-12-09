@@ -47,7 +47,6 @@ public class TurtleLandEntity extends AnimalEntity {
         return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 10.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.1D).createMutableAttribute(Attributes.ARMOR, 1.5D);
     }
 
-
     @Override
     public boolean isBreedingItem(@Nonnull ItemStack stack) {
         return this.getTurtleEdible().test(stack);
@@ -59,7 +58,7 @@ public class TurtleLandEntity extends AnimalEntity {
 
     @Override
     @Nullable
-    public AgeableEntity func_241840_a(ServerWorld world, @Nonnull AgeableEntity ageableEntity) {
+    public AgeableEntity func_241840_a(@Nonnull ServerWorld world, @Nonnull AgeableEntity ageableEntity) {
         return (AgeableEntity) this.getType().create(this.world);
     }
 
