@@ -1,9 +1,10 @@
 package com.teammetallurgy.aquaculture.block;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
+import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ComposterBlock;
@@ -15,7 +16,10 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
@@ -42,7 +46,7 @@ public class WormFarmBlock extends ComposterBlock {
                 if (fishStack.getTag() != null && fishStack.getTag().contains("fishWeight")) {
                     weight = fishStack.getTag().getDouble("fishWeight");
                 }
-                float chance = MathHelper.clamp((FishWeightHandler.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
+                float chance = MathHelper.clamp((FishData.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
                 registerCompostable(fish, chance);
             }
         }
@@ -79,7 +83,7 @@ public class WormFarmBlock extends ComposterBlock {
                 world.addEntity(itemEntity);
             }
             world.setBlockState(pos, state.with(LEVEL, state.get(LEVEL) - 1), 3);
-            world.playSound(null, pos, SoundEvents.BLOCK_COMPOSTER_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, pos, AquacultureSounds.WORM_FARM_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
             return ActionResultType.SUCCESS;
         } else {
             return ActionResultType.FAIL;

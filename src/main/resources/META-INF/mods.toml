@@ -17,6 +17,13 @@ license="All Rights Reserved"
 [[dependencies.aquaculture]]
     modId="forge"
     mandatory=true
-    versionRange="[34.1.0,)"
+    versionRange="[34.1.21,)"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.aquaculture]]
+   modId="biomesoplenty"
+   mandatory=false
+   versionRange="[13.0.0.420,)"
+   ordering="AFTER"
+   side="BOTH"
