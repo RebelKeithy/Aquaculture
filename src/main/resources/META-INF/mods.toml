@@ -20,3 +20,10 @@ license="All Rights Reserved"
     versionRange="[34.1.0,)"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.aquaculture]]
+   modId="biomesoplenty"
+   mandatory=false
+   versionRange="[13.0.0.420,)"
+   ordering="AFTER"
+   side="BOTH"
