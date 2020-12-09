@@ -21,6 +21,7 @@ import java.util.*;
 
 public class BiomeTagPredicate {
     private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList(), false);
+    private static final HashMap<Biome, List<Biome>> CACHE = new HashMap<>();
     private static final List<BiomeDictionary.Type> INVALID_TYPES = Arrays.asList(BiomeDictionary.Type.NETHER, BiomeDictionary.Type.END);
     private final MinMaxBounds.FloatBound x;
     private final MinMaxBounds.FloatBound y;
@@ -49,7 +50,13 @@ public class BiomeTagPredicate {
             BlockPos pos = new BlockPos(x, y, z);
             Biome biome = world.getBiome(pos);
             Biome biomeFromRegistry = ForgeRegistries.BIOMES.getValue(world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(biome));
-            return getValidBiomes(this.include, this.exclude, this.and).contains(biomeFromRegistry);
+
+            List<Biome> validBiomes = CACHE.get(biomeFromRegistry);
+            if (validBiomes == null) {
+                validBiomes = getValidBiomes(this.include, this.exclude, this.and);
+                CACHE.put(biome, validBiomes);
+            }
+            return validBiomes.contains(biomeFromRegistry);
         }
     }
 
@@ -88,31 +95,6 @@ public class BiomeTagPredicate {
                 biomes.removeAll(BiomeDictionaryHelper.getBiomes(BiomeDictionary.getBiomes(type)));
             }
         }
-
-        /*List<Biome> registryBiomes = Lists.newArrayList(ForgeRegistries.BIOMES.getValues());
-        List<Biome> biomes = Lists.newArrayList(registryBiomes);
-
-        if (includeList.isEmpty() && excludeList.isEmpty()) {
-            biomes.clear(); //Don't add biomes, when nothing is specified
-        }
-
-        if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary types, when only excluding biomes
-            includeList.addAll(Arrays.asList(Biome.Category.values()));
-            excludeList.addAll(INVALID_TYPES);
-        }
-
-        if (!includeList.isEmpty()) {
-            if (includeList.stream().noneMatch(INVALID_TYPES::contains)) { //Exclude invalid tags, as long as they're not specified in include
-                excludeList.addAll(INVALID_TYPES);
-            }
-        }
-
-        if (!includeList.isEmpty()) {
-            biomes.removeIf(biome -> includeList.stream().noneMatch(withSpecialCases(biome.getRegistryName(), biome.getCategory(), true)::contains));
-        }
-        if (!excludeList.isEmpty()) {
-            biomes.removeIf(biome -> excludeList.stream().anyMatch(withSpecialCases(biome.getRegistryName(), biome.getCategory(), false)::contains));
-        }*/
 
         return biomes;
     }
