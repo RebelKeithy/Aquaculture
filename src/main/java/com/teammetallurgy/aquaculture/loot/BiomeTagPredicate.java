@@ -54,7 +54,7 @@ public class BiomeTagPredicate {
             List<Biome> validBiomes = CACHE.get(biomeFromRegistry);
             if (validBiomes == null) {
                 validBiomes = getValidBiomes(this.include, this.exclude, this.and);
-                CACHE.put(biome, validBiomes);
+                CACHE.put(biomeFromRegistry, validBiomes);
             }
             return validBiomes.contains(biomeFromRegistry);
         }
