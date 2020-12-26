@@ -16,18 +16,15 @@ import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
-import sun.misc.Unsafe;
 
 import javax.annotation.Nonnull;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,34 +84,16 @@ public class FishRegistry {
 
     public static void addCatBreeding() {
         try {
-            Field catItems = ObfuscationReflectionHelper.findField(CatEntity.class, "field_213426_bE");
-            Field ocelotItems = ObfuscationReflectionHelper.findField(OcelotEntity.class, "field_195402_bB");
+            Ingredient catBreedingItems = CatEntity.BREEDING_ITEMS;
+            Ingredient ocelotBreedingItems = OcelotEntity.BREEDING_ITEMS;
             List<ItemStack> aquaFish = new ArrayList<>();
             fishEntities.forEach(f -> aquaFish.add(new ItemStack(ForgeRegistries.ITEMS.getValue(f.getRegistryName()))));
             aquaFish.removeIf(p -> p.getItem().equals(AquaItems.JELLYFISH));
 
-            setFinalStatic(catItems, StackHelper.mergeIngredient(CatEntity.BREEDING_ITEMS, StackHelper.ingredientFromStackList(aquaFish)));
-            setFinalStatic(ocelotItems, StackHelper.mergeIngredient(OcelotEntity.BREEDING_ITEMS, StackHelper.ingredientFromStackList(aquaFish)));
+            CatEntity.BREEDING_ITEMS = StackHelper.mergeIngredient(catBreedingItems, StackHelper.ingredientFromStackList(aquaFish));
+            OcelotEntity.BREEDING_ITEMS = StackHelper.mergeIngredient(ocelotBreedingItems, StackHelper.ingredientFromStackList(aquaFish));
         } catch (Throwable t) {
             t.printStackTrace();
         }
-    }
-
-    static MethodHandles.Lookup implLookup;
-
-    static {
-        try {
-            Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
-            unsafeField.setAccessible(true);
-            Unsafe unsafe = (Unsafe) unsafeField.get(null);
-            Field implLookupField = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
-            implLookup = (MethodHandles.Lookup) unsafe.getObject(unsafe.staticFieldBase(implLookupField), unsafe.staticFieldOffset(implLookupField));
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-    }
-
-    static void setFinalStatic(Field field, Object newValue) throws Throwable {
-        implLookup.findStaticSetter(field.getDeclaringClass(), field.getName(), field.getType()).invoke(newValue);
     }
 }

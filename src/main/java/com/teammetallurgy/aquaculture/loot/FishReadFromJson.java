@@ -118,7 +118,7 @@ public class FishReadFromJson {
         if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
             read();
             //Biome debug
-            for (EntityType fish : FISH_BIOME_MAP.keySet()) {
+            for (EntityType<?> fish : FISH_BIOME_MAP.keySet()) {
                 if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
                     List<String> strings = new ArrayList<>();
                     for (Biome biome : FISH_BIOME_MAP.get(fish)) {
@@ -135,9 +135,11 @@ public class FishReadFromJson {
                 if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
                     Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
                 }
-                for (Biome biome : FISH_BIOME_MAP.get(fish)) {
-                    if (event.getName().equals(biome.getRegistryName())) {
-                        event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(fish, weight, 1, maxGroupSize));
+                if (event.getName() != null) {
+                    for (Biome biome : FISH_BIOME_MAP.get(fish)) {
+                        if (event.getName().equals(biome.getRegistryName())) {
+                            event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(fish, weight, 1, maxGroupSize));
+                        }
                     }
                 }
             }
