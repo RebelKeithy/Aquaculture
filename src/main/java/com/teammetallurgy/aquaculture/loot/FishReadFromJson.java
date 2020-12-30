@@ -110,7 +110,7 @@ public class FishReadFromJson {
             and = predicate.getAsJsonObject().get("and").getAsBoolean();
         }
 
-        biomes.addAll(BiomeTagPredicate.getValidBiomes(BiomeTagPredicate.CheckType.getOrCreate(includeList, excludeList, and)));
+        biomes.addAll(BiomeTagPredicate.getValidBiomes(includeList, excludeList, and));
         return biomes;
     }
 

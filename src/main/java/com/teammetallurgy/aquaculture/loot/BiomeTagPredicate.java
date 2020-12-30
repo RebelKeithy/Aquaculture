@@ -62,11 +62,12 @@ public class BiomeTagPredicate {
         }
     }
 
-    public static List<Biome> getValidBiomes(CheckType checkType) { //Can't add biome as a parameter, since this is called elsewhere where world is not available
+    public static List<Biome> getValidBiomes(CheckType checkType) {
+        return getValidBiomes(checkType.getInclude(), checkType.getExclude(), checkType.isAnd());
+    }
+
+    public static List<Biome> getValidBiomes(List<BiomeDictionary.Type> includeList, List<BiomeDictionary.Type> excludeList, boolean and) { //Can't add biome as a parameter, since this is called elsewhere where world is not available
         List<Biome> biomes = Lists.newArrayList();
-        List<BiomeDictionary.Type> includeList = checkType.getInclude();
-        List<BiomeDictionary.Type> excludeList = checkType.getExclude();
-        boolean and = checkType.isAnd();
 
         if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
             Set<BiomeDictionary.Type> validTypes = new HashSet<>(BiomeDictionary.Type.getAll());
