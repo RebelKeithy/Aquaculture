@@ -21,7 +21,7 @@ import java.util.*;
 
 public class BiomeTagPredicate {
     private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList(), false);
-    private static final HashMap<Biome, List<Biome>> CACHE = new HashMap<>();
+    private static final HashMap<CheckType, List<Biome>> CACHE = new HashMap<>();
     private static final List<BiomeDictionary.Type> INVALID_TYPES = Arrays.asList(BiomeDictionary.Type.NETHER, BiomeDictionary.Type.END);
     private final MinMaxBounds.FloatBound x;
     private final MinMaxBounds.FloatBound y;
@@ -51,17 +51,22 @@ public class BiomeTagPredicate {
             Biome biome = world.getBiome(pos);
             Biome biomeFromRegistry = ForgeRegistries.BIOMES.getValue(world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(biome));
 
-            List<Biome> validBiomes = CACHE.get(biomeFromRegistry);
+            CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
+
+            List<Biome> validBiomes = CACHE.get(checkType);
             if (validBiomes == null) {
-                validBiomes = getValidBiomes(this.include, this.exclude, this.and);
-                CACHE.put(biomeFromRegistry, validBiomes);
+                validBiomes = getValidBiomes(checkType);
+                CACHE.put(checkType, validBiomes);
             }
             return validBiomes.contains(biomeFromRegistry);
         }
     }
 
-    public static List<Biome> getValidBiomes(List<BiomeDictionary.Type> includeList, List<BiomeDictionary.Type> excludeList, boolean and) { //Can't add biome as a parameter, since this is called elsewhere where world is not available
+    public static List<Biome> getValidBiomes(CheckType checkType) { //Can't add biome as a parameter, since this is called elsewhere where world is not available
         List<Biome> biomes = Lists.newArrayList();
+        List<BiomeDictionary.Type> includeList = checkType.getInclude();
+        List<BiomeDictionary.Type> excludeList = checkType.getExclude();
+        boolean and = checkType.isAnd();
 
         if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
             Set<BiomeDictionary.Type> validTypes = new HashSet<>(BiomeDictionary.Type.getAll());
@@ -167,6 +172,45 @@ public class BiomeTagPredicate {
             return new BiomeTagPredicate(x, y, z, include, exclude, and);
         } else {
             return ANY;
+        }
+    }
+
+    public static class CheckType {
+        private static final Map<Integer, CheckType> BY_NAME = new TreeMap<>();
+        private final List<BiomeDictionary.Type> include;
+        private final List<BiomeDictionary.Type> exclude;
+        private final boolean and;
+
+        private CheckType(List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
+            this.include = include;
+            this.exclude = exclude;
+            this.and = and;
+
+            BY_NAME.put(checkTypeHashCode(include, exclude, and), this);
+        }
+
+        public List<BiomeDictionary.Type> getInclude() {
+            return this.include;
+        }
+
+        public List<BiomeDictionary.Type> getExclude() {
+            return this.exclude;
+        }
+
+        public boolean isAnd() {
+            return this.and;
+        }
+
+        public static CheckType getOrCreate(List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
+            CheckType checkType = BY_NAME.get(checkTypeHashCode(include, exclude, and));
+            if (checkType == null) {
+                checkType = new CheckType(include, exclude, and);
+            }
+            return checkType;
+        }
+
+        public static int checkTypeHashCode(List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
+            return include.hashCode() + exclude.hashCode() + (and ? 1 : 0);
         }
     }
 }
