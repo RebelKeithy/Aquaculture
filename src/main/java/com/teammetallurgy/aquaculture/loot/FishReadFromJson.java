@@ -83,7 +83,7 @@ public class FishReadFromJson {
         }
     }
 
-    private static EntityType getEntityFromString(String name) {
+    private static EntityType<?> getEntityFromString(String name) {
         name = name.replace("\"", "");
         return ForgeRegistries.ENTITIES.getValue(new ResourceLocation(name));
     }
@@ -110,7 +110,7 @@ public class FishReadFromJson {
             and = predicate.getAsJsonObject().get("and").getAsBoolean();
         }
 
-        biomes.addAll(BiomeTagPredicate.getValidBiomes(includeList, excludeList, and));
+        biomes.addAll(BiomeTagPredicate.getValidBiomes(BiomeTagPredicate.CheckType.getOrCreate(includeList, excludeList, and)));
         return biomes;
     }
 
