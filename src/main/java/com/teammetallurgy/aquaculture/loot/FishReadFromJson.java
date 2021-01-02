@@ -12,7 +12,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -30,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class FishReadFromJson {
-    public static HashMap<EntityType<?>, List<Biome>> FISH_BIOME_MAP = new HashMap<>();
+    public static HashMap<EntityType<?>, List<ResourceLocation>> FISH_BIOME_MAP = new HashMap<>();
     public static HashMap<EntityType<?>, Integer> FISH_WEIGHT_MAP = new HashMap<>();
     private static final Gson GSON_INSTANCE = new GsonBuilder().setPrettyPrinting().create();
     public static boolean hasRunFirstTime;
@@ -63,7 +62,7 @@ public class FishReadFromJson {
                             FISH_BIOME_MAP.put(fish, getSpawnableBiomes(condition.get("predicate")));
                         } else if (condition.get("condition").getAsString().equals("minecraft:alternative")) {
                             for (JsonElement term : condition.getAsJsonObject().getAsJsonArray("terms")) {
-                                List<Biome> spawnableBiomes = getSpawnableBiomes(term.getAsJsonObject().get("predicate"));
+                                List<ResourceLocation> spawnableBiomes = getSpawnableBiomes(term.getAsJsonObject().get("predicate"));
                                 if (!FISH_BIOME_MAP.containsKey(fish)) {
                                     FISH_BIOME_MAP.put(fish, spawnableBiomes);
                                 } else {
@@ -88,8 +87,8 @@ public class FishReadFromJson {
         return ForgeRegistries.ENTITIES.getValue(new ResourceLocation(name));
     }
 
-    private static List<Biome> getSpawnableBiomes(JsonElement predicate) {
-        List<Biome> biomes = Lists.newArrayList();
+    private static List<ResourceLocation> getSpawnableBiomes(JsonElement predicate) {
+        List<ResourceLocation> biomes = Lists.newArrayList();
         List<BiomeDictionary.Type> includeList = Lists.newArrayList();
         List<BiomeDictionary.Type> excludeList = Lists.newArrayList();
         boolean and = false;
@@ -111,6 +110,7 @@ public class FishReadFromJson {
         }
 
         biomes.addAll(BiomeTagPredicate.getValidBiomes(includeList, excludeList, and));
+
         return biomes;
     }
 
@@ -121,9 +121,9 @@ public class FishReadFromJson {
             for (EntityType<?> fish : FISH_BIOME_MAP.keySet()) {
                 if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
                     List<String> strings = new ArrayList<>();
-                    for (Biome biome : FISH_BIOME_MAP.get(fish)) {
-                        if (biome.getRegistryName() != null) {
-                            strings.add(biome.getRegistryName().getPath());
+                    for (ResourceLocation biome : FISH_BIOME_MAP.get(fish)) {
+                        if (biome != null) {
+                            strings.add(biome.getPath());
                         }
                     }
                     Aquaculture.LOG.info(fish.getRegistryName() + " Biomes: " + strings);
@@ -137,8 +137,8 @@ public class FishReadFromJson {
                 }
                 ResourceLocation name = event.getName();
                 if (name != null) {
-                    for (Biome biome : FISH_BIOME_MAP.get(fish)) {
-                        if (biome != null && biome.getRegistryName() != null && name.equals(biome.getRegistryName())) {
+                    for (ResourceLocation biome : FISH_BIOME_MAP.get(fish)) {
+                        if (name.equals(biome)) {
                             event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(fish, weight, 1, maxGroupSize));
                         }
                     }

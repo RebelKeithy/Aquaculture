@@ -21,6 +21,7 @@ repositories {
     name = "JEI maven"
     url = "https://dvs1.progwml6.com/files/maven/"
   }
+  flatDir { dirs 'deps' }
 }
 
 version = "${minecraft_version}-${mod_version}" + getBuildNumber()

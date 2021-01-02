@@ -36,7 +36,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
@@ -44,7 +43,6 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -142,9 +140,9 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
                 List<ItemStack> lootEntries = getLoot(builder, serverWorld);
                 if (lootEntries.isEmpty()) {
                     if (!this.world.isAirBlock(this.getPosition())) {
-                        Biome biomeFromRegistry = ForgeRegistries.BIOMES.getValue(world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(this.world.getBiome(this.getPosition())));
+                        ResourceLocation biomeFromRegistry = this.world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(this.world.getBiome(this.getPosition()));
                         if (biomeFromRegistry != null) {
-                            Aquaculture.LOG.error("Loot was empty in Biome: " + biomeFromRegistry.getRegistryName() + ". Please report on Github");
+                            Aquaculture.LOG.error("Loot was empty in Biome: " + biomeFromRegistry + ". Please report on Github");
                         }
                     }
                 }

@@ -8,7 +8,10 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -41,19 +44,6 @@ public class BiomeDictionaryHelper {
             types[i] = getType(string);
         }
         return types;
-    }
-
-    /**
-     * Converts set of RegistryKey<Biome> into a set of Biome
-     */
-    public static Set<Biome> getBiomes(Set<RegistryKey<Biome>> keyBiomeSet) {
-        Set<Biome> biomeSet = new HashSet<>();
-        for (RegistryKey<Biome> biomeKey : keyBiomeSet) {
-            if (biomeKey != null && biomeKey.getLocation() != null) {
-                biomeSet.add(ForgeRegistries.BIOMES.getValue(biomeKey.getLocation()));
-            }
-        }
-        return biomeSet;
     }
 
     /**

@@ -9,19 +9,20 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
 public class BiomeTagPredicate {
     private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList(), false);
-    private static final HashMap<CheckType, List<Biome>> CACHE = new HashMap<>();
+    private static final HashMap<CheckType, List<ResourceLocation>> CACHE = new HashMap<>();
     private static final List<BiomeDictionary.Type> INVALID_TYPES = Arrays.asList(BiomeDictionary.Type.NETHER, BiomeDictionary.Type.END);
     private final MinMaxBounds.FloatBound x;
     private final MinMaxBounds.FloatBound y;
@@ -49,11 +50,11 @@ public class BiomeTagPredicate {
         } else {
             BlockPos pos = new BlockPos(x, y, z);
             Biome biome = world.getBiome(pos);
-            Biome biomeFromRegistry = ForgeRegistries.BIOMES.getValue(world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(biome));
+            ResourceLocation biomeFromRegistry = world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(biome);
 
             CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
 
-            List<Biome> validBiomes = CACHE.get(checkType);
+            List<ResourceLocation> validBiomes = CACHE.get(checkType);
             if (validBiomes == null) {
                 validBiomes = getValidBiomes(checkType);
                 CACHE.put(checkType, validBiomes);
@@ -62,12 +63,12 @@ public class BiomeTagPredicate {
         }
     }
 
-    public static List<Biome> getValidBiomes(CheckType checkType) {
+    public static List<ResourceLocation> getValidBiomes(CheckType checkType) {
         return getValidBiomes(checkType.getInclude(), checkType.getExclude(), checkType.isAnd());
     }
 
-    public static List<Biome> getValidBiomes(List<BiomeDictionary.Type> includeList, List<BiomeDictionary.Type> excludeList, boolean and) { //Can't add biome as a parameter, since this is called elsewhere where world is not available
-        List<Biome> biomes = Lists.newArrayList();
+    public static List<ResourceLocation> getValidBiomes(List<BiomeDictionary.Type> includeList, List<BiomeDictionary.Type> excludeList, boolean and) { //Can't add biome as a parameter, since this is called elsewhere where world is not available
+        List<ResourceLocation> biomes = Lists.newArrayList();
 
         if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
             Set<BiomeDictionary.Type> validTypes = new HashSet<>(BiomeDictionary.Type.getAll());
@@ -76,29 +77,31 @@ public class BiomeTagPredicate {
         }
 
         if (!includeList.isEmpty()) {
-            List<Biome> addBiomes = Lists.newArrayList();
+            List<RegistryKey<Biome>> addBiomes = Lists.newArrayList();
             for (BiomeDictionary.Type type : includeList) {
-                addBiomes.addAll(BiomeDictionaryHelper.getBiomes(BiomeDictionary.getBiomes(type)));
+                addBiomes.addAll(BiomeDictionary.getBiomes(type));
             }
 
             if (and) {
                 for (BiomeDictionary.Type type : includeList) {
-                    addBiomes.removeIf(biome -> !BiomeDictionaryHelper.getBiomes(BiomeDictionary.getBiomes(type)).contains(biome));
+                    addBiomes.removeIf(biome -> !BiomeDictionary.getBiomes(type).contains(biome));
                 }
             }
 
             if (includeList.stream().noneMatch(INVALID_TYPES::contains)) { //Exclude invalid tags, as long as they're not specified in include
                 excludeList.addAll(INVALID_TYPES);
             }
-            for (Biome addBiome : addBiomes) {
-                if (!biomes.contains(addBiome)) {
-                    biomes.add(addBiome);
+            for (RegistryKey<Biome> addBiome : addBiomes) {
+                if (!biomes.contains(addBiome.getLocation())) {
+                    biomes.add(addBiome.getLocation());
                 }
             }
         }
         if (!excludeList.isEmpty()) {
             for (BiomeDictionary.Type type : excludeList) {
-                biomes.removeAll(BiomeDictionaryHelper.getBiomes(BiomeDictionary.getBiomes(type)));
+                for (RegistryKey<Biome> biome : BiomeDictionary.getBiomes(type)) {
+                    biomes.remove(biome.getLocation());
+                }
             }
         }
 
@@ -187,7 +190,7 @@ public class BiomeTagPredicate {
             this.exclude = exclude;
             this.and = and;
 
-            BY_NAME.put(checkTypeHashCode(include, exclude, and), this);
+            BY_NAME.put(this.hashCode(), this);
         }
 
         public List<BiomeDictionary.Type> getInclude() {
@@ -203,15 +206,24 @@ public class BiomeTagPredicate {
         }
 
         public static CheckType getOrCreate(List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
-            CheckType checkType = BY_NAME.get(checkTypeHashCode(include, exclude, and));
+            CheckType checkType = BY_NAME.get(Objects.hash(include, exclude, and));
             if (checkType == null) {
                 checkType = new CheckType(include, exclude, and);
             }
             return checkType;
         }
 
-        public static int checkTypeHashCode(List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
-            return include.hashCode() + exclude.hashCode() + (and ? 1 : 0);
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            CheckType checkType = (CheckType) o;
+            return this.and == checkType.and && Objects.equals(this.include, checkType.include) && Objects.equals(this.exclude, checkType.exclude);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.include, this.exclude, this.and);
         }
     }
 }
