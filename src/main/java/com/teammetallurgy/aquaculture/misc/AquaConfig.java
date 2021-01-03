@@ -77,8 +77,13 @@ public class AquaConfig {
         }
 
         public static <T> T get(String category, String value) {
-            CONFIG_FILE.load();
-            return CONFIG_FILE.get(category + "." + value);
+            T configEntry = CONFIG_FILE.get(category + "." + value);
+            if (configEntry == null) {
+                CONFIG_FILE.load();
+                return CONFIG_FILE.get(category + "." + value);
+            } else {
+                return configEntry;
+            }
         }
 
         public static String getSubConfig(String category, String subCategory) {
