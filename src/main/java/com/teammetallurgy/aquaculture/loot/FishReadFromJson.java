@@ -116,7 +116,6 @@ public class FishReadFromJson {
 
     public static void addFishSpawns(BiomeLoadingEvent event) {
         if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
-            read();
             //Biome debug
             if (!FISH_BIOME_MAP.isEmpty()) {
                 for (EntityType<?> fish : FISH_BIOME_MAP.keySet()) {

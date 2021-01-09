@@ -7,6 +7,7 @@ import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
+import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import cpw.mods.modlauncher.Environment;
@@ -61,6 +62,7 @@ public class Aquaculture {
             if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
                 FishRegistry.addCatBreeding();
             }
+            FishReadFromJson.read();
         });
     }
 
