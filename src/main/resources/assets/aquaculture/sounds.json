@@ -6,7 +6,7 @@
 				"name": "minecraft:block.iron_door.open"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.tackle_box_open"
+		"subtitle": "aquaculture.subtitles.tackle_box_open"
 	},
 	"tackle_box_close": {
 		"sounds": [
@@ -15,7 +15,7 @@
 				"name": "minecraft:block.iron_door.close"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.tackle_box_close"
+		"subtitle": "aquaculture.subtitles.tackle_box_close"
 	},
 	"worm_farm_empty": {
 		"sounds": [
@@ -24,7 +24,7 @@
 				"name": "minecraft:block.composter.empty"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.worm_farm_empty"
+		"subtitle": "aquaculture.subtitles.worm_farm_empty"
 	},
 	"fish_mount_removed": {
 		"sounds": [
@@ -33,7 +33,7 @@
 				"name": "minecraft:entity.item_frame.remove_item"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_mount_removed"
+		"subtitle": "aquaculture.subtitles.fish_mount_removed"
 	},
 	"fish_mount_broken": {
 		"sounds": [
@@ -42,7 +42,7 @@
 				"name": "minecraft:entity.item_frame.break"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_mount_broken"
+		"subtitle": "aquaculture.subtitles.fish_mount_broken"
 	},
 	"fish_mount_placed": {
 		"sounds": [
@@ -51,7 +51,7 @@
 				"name": "minecraft:entity.item_frame.place"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_mount_placed"
+		"subtitle": "aquaculture.subtitles.fish_mount_placed"
 	},
 	"fish_mount_add_item": {
 		"sounds": [
@@ -60,7 +60,7 @@
 				"name": "minecraft:entity.item_frame.add_item"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_mount_add_item"
+		"subtitle": "aquaculture.subtitles.fish_mount_add_item"
 	},
 	"bobber_bait": {
 		"sounds": [
@@ -69,7 +69,7 @@
 				"name": "minecraft:item.trident.hit_ground"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.bobber_bait"
+		"subtitle": "aquaculture.subtitles.bobber_bait"
 	},
 	"bobber_note_catch": {
 		"sounds": [
@@ -78,7 +78,7 @@
 				"name": "minecraft:entity.player.levelup"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.bobber_note_catch"
+		"subtitle": "aquaculture.subtitles.bobber_note_catch"
 	},
 	"bobber_land_lava": {
 		"sounds": [
@@ -87,7 +87,7 @@
 				"name": "minecraft:block.lava.extinguish"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.bobber_land_lava"
+		"subtitle": "aquaculture.subtitles.bobber_land_lava"
 	},
 	"jellyfish_flop": {
 		"sounds": [
@@ -96,7 +96,7 @@
 				"name": "minecraft:block.slime_block.step"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.jellyfish_flop"
+		"subtitle": "aquaculture.subtitles.jellyfish_flop"
 	},
 	"fish_flop": {
 		"sounds": [
@@ -105,7 +105,7 @@
 				"name": "minecraft:entity.cod.flop"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_flop"
+		"subtitle": "aquaculture.subtitles.fish_flop"
 	},
 	"fish_ambient": {
 		"sounds": [
@@ -114,7 +114,7 @@
 				"name": "minecraft:entity.cod.ambient"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_ambient"
+		"subtitle": "aquaculture.subtitles.fish_ambient"
 	},
 	"fish_death": {
 		"sounds": [
@@ -123,7 +123,7 @@
 				"name": "minecraft:entity.cod.death"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_death"
+		"subtitle": "aquaculture.subtitles.fish_death"
 	},
 	"fish_hurt": {
 		"sounds": [
@@ -132,7 +132,7 @@
 				"name": "minecraft:entity.cod.hurt"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_hurt"
+		"subtitle": "aquaculture.subtitles.fish_hurt"
 	},
 	"fish_collide": {
 		"sounds": [
@@ -141,7 +141,7 @@
 				"name": "minecraft:entity.slime.attack"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.fish_collide"
+		"subtitle": "aquaculture.subtitles.fish_collide"
 	},
 	"bottle_open": {
 		"sounds": [
@@ -150,6 +150,6 @@
 				"name": "minecraft:block.glass.break"
 			}
 		],
-		"subtitle": "aquaculture.subtitle.bottle_open"
+		"subtitle": "aquaculture.subtitles.bottle_open"
 	}
 }
