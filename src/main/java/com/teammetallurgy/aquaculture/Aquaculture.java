@@ -62,7 +62,9 @@ public class Aquaculture {
             if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
                 FishRegistry.addCatBreeding();
             }
-            FishReadFromJson.read();
+            if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
+                FishReadFromJson.read();
+            }
         });
     }
 
