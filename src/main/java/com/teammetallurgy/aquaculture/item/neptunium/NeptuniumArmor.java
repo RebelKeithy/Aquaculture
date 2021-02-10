@@ -3,7 +3,6 @@ package com.teammetallurgy.aquaculture.item.neptunium;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +16,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -45,29 +44,27 @@ public class NeptuniumArmor extends ArmorItem {
                 if (!player.isCrouching()) {
                     player.setMotion(player.getMotion().add(0, player.fallDistance, 0));
                 }
-            } else if (this.slot == EquipmentSlotType.FEET) {
-                if (!world.isRemote) {
-                    if (swimSpeed != null && !swimSpeed.hasModifier(INCREASED_SWIM_SPEED)) {
-                        swimSpeed.applyNonPersistentModifier(INCREASED_SWIM_SPEED);
-                    }
-                }
             }
         }
     }
 
     @SubscribeEvent
-    public static void onLivingTick(LivingEvent.LivingUpdateEvent event) {
-        LivingEntity livingEntity = event.getEntityLiving();
-        ModifiableAttributeInstance swimSpeed = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
-        if (!livingEntity.world.isRemote) {
-            if (livingEntity.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() != AquaItems.NEPTUNIUM_BOOTS) {
-                if (swimSpeed != null && swimSpeed.hasModifier(INCREASED_SWIM_SPEED)) {
-                    swimSpeed.removeModifier(INCREASED_SWIM_SPEED);
-                }
-            }
-            if (!livingEntity.areEyesInFluid(FluidTags.WATER)) {
-                if (swimSpeed != null && swimSpeed.hasModifier(INCREASED_SWIM_SPEED)) {
-                    swimSpeed.removeModifier(INCREASED_SWIM_SPEED);
+    public static void onLivingTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            PlayerEntity player = event.player;
+
+            if (!player.world.isRemote) {
+                ModifiableAttributeInstance swimSpeed = player.getAttribute(ForgeMod.SWIM_SPEED.get());
+                if (swimSpeed != null) {
+                    if (player.isInWater() && player.getItemStackFromSlot(EquipmentSlotType.FEET).getItem() == AquaItems.NEPTUNIUM_BOOTS) {
+                        if (!swimSpeed.hasModifier(INCREASED_SWIM_SPEED)) {
+                            swimSpeed.applyPersistentModifier(INCREASED_SWIM_SPEED);
+                        }
+                    } else {
+                        if (swimSpeed.hasModifier(INCREASED_SWIM_SPEED)) {
+                            swimSpeed.removeModifier(INCREASED_SWIM_SPEED);
+                        }
+                    }
                 }
             }
         }
