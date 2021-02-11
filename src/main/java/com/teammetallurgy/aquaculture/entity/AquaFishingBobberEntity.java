@@ -138,11 +138,16 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
                 builder.withParameter(LootParameters.KILLER_ENTITY, angler).withParameter(LootParameters.THIS_ENTITY, this);
 
                 List<ItemStack> lootEntries = getLoot(builder, serverWorld);
+                
                 if (lootEntries.isEmpty()) {
-                    if (!this.world.isAirBlock(this.getPosition())) {
-                        ResourceLocation biomeFromRegistry = this.world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(this.world.getBiome(this.getPosition()));
-                        if (biomeFromRegistry != null) {
-                            Aquaculture.LOG.error("Loot was empty in Biome: " + biomeFromRegistry + ". Please report on Github");
+                    if (this.world.getDimensionKey() == World.THE_END) {
+                        lootEntries.add(new ItemStack(AquaItems.FISH_BONES));
+                    } else {
+                        if (!this.world.isAirBlock(this.getPosition()) && (this.world.getFluidState(this.getPosition()).isSource())) {
+                            ResourceLocation biomeFromRegistry = this.world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(this.world.getBiome(this.getPosition()));
+                            if (biomeFromRegistry != null) {
+                                Aquaculture.LOG.error("Loot was empty in Biome: " + biomeFromRegistry + ". Please report on Github");
+                            }
                         }
                     }
                 }
