@@ -29,7 +29,7 @@ public class RemoveFishDataAction implements IUndoableAction {
 
     @Override
     public void undo() {
-        if (AquacultureAPI.FISH_DATA.hasFilletAmount(this.fish)) {
+        if (this.filletAmount > 0) {
             AquacultureAPI.FISH_DATA.add(this.fish, this.min, this.max, this.filletAmount);
         } else {
             AquacultureAPI.FISH_DATA.add(this.fish, this.min, this.max);
