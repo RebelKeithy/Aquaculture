@@ -138,7 +138,6 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
                 builder.withParameter(LootParameters.KILLER_ENTITY, angler).withParameter(LootParameters.THIS_ENTITY, this);
 
                 List<ItemStack> lootEntries = getLoot(builder, serverWorld);
-                
                 if (lootEntries.isEmpty()) {
                     if (this.world.getDimensionKey() == World.THE_END) {
                         lootEntries.add(new ItemStack(AquaItems.FISH_BONES));
