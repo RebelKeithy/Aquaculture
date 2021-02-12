@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.api.fish;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.item.Item;
 
 import java.util.ArrayList;
@@ -55,11 +54,11 @@ public class FishData {
     public void addFilletAmount(Item fish, int filletAmount) {
         FILLET_AMOUNT.put(fish, filletAmount);
     }
-    
-    public void remove(Item fish, boolean fillet){
+
+    public void remove(Item fish) {
         WEIGHT_MIN.remove(fish);
         WEIGHT_MAX.remove(fish);
-        if(fillet){
+        if (hasFilletAmount(fish)) {
             FILLET_AMOUNT.remove(fish);
         }
     }

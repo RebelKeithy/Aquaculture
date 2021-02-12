@@ -1,12 +1,7 @@
 package com.teammetallurgy.aquaculture.integration.crafttweaker;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.actions.IUndoableAction;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.item.IItemStack;
-import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
-import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.integration.crafttweaker.actions.AddFishDataAction;
 import com.teammetallurgy.aquaculture.integration.crafttweaker.actions.RemoveFishDataAction;
 import net.minecraft.item.Item;
@@ -25,5 +20,4 @@ public class CTFishData {
     public static void remove(Item fish) {
         CraftTweakerAPI.apply(new RemoveFishDataAction(fish));
     }
-
 }

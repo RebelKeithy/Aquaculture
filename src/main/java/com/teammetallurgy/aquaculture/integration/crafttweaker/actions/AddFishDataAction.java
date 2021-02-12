@@ -5,13 +5,10 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import net.minecraft.item.Item;
 
 public class AddFishDataAction implements IUndoableAction {
-
     private final Item fish;
-
     private final double min;
     private final double max;
     private final int filletAmount;
-
     private boolean hasOldData;
     private double oldMin;
     private double oldMax;
@@ -26,36 +23,34 @@ public class AddFishDataAction implements IUndoableAction {
 
     @Override
     public void apply() {
-
-        if (AquacultureAPI.FISH_DATA.hasWeight(fish)) {
-            this.oldMin = AquacultureAPI.FISH_DATA.getMinWeight(fish, 0);
-            this.oldMax = AquacultureAPI.FISH_DATA.getMaxWeight(fish, 0);
-            hasOldData = true;
+        if (AquacultureAPI.FISH_DATA.hasWeight(this.fish)) {
+            this.oldMin = AquacultureAPI.FISH_DATA.getMinWeight(this.fish, 0);
+            this.oldMax = AquacultureAPI.FISH_DATA.getMaxWeight(this.fish, 0);
+            this.hasOldData = true;
         }
-        if (AquacultureAPI.FISH_DATA.hasFilletAmount(fish)) {
-            this.oldFilletAmount = AquacultureAPI.FISH_DATA.getFilletAmount(fish, 0);
-            hasOldData = true;
+        if (AquacultureAPI.FISH_DATA.hasFilletAmount(this.fish)) {
+            this.oldFilletAmount = AquacultureAPI.FISH_DATA.getFilletAmount(this.fish, 0);
+            this.hasOldData = true;
         }
-
-        AquacultureAPI.FISH_DATA.add(fish, min, max, filletAmount);
+        AquacultureAPI.FISH_DATA.add(this.fish, this.min, this.max, this.filletAmount);
     }
 
     @Override
     public String describe() {
-        return "Adding FishData for: " + fish.getRegistryName() + " with min: " + min + ", max: " + max + " and fillet amount of: " + filletAmount;
+        return "Adding FishData for: " + this.fish.getRegistryName() + " with min: " + this.min + ", max: " + this.max + " and fillet amount of: " + this.filletAmount;
     }
 
     @Override
     public void undo() {
-        if (hasOldData) {
-            AquacultureAPI.FISH_DATA.add(fish, oldMin, oldMax, oldFilletAmount);
+        if (this.hasOldData) {
+            AquacultureAPI.FISH_DATA.add(this.fish, this.oldMin, this.oldMax, this.oldFilletAmount);
         } else {
-            AquacultureAPI.FISH_DATA.remove(fish, true);
+            AquacultureAPI.FISH_DATA.remove(this.fish);
         }
     }
 
     @Override
     public String describeUndo() {
-        return "Undoing removal of FishData for: " + fish.getRegistryName();
+        return "Undoing removal of FishData for: " + this.fish.getRegistryName();
     }
 }

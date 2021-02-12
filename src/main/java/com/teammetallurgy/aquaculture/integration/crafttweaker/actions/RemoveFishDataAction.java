@@ -5,10 +5,7 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import net.minecraft.item.Item;
 
 public class RemoveFishDataAction implements IUndoableAction {
-
     private final Item fish;
-
-    private boolean fillet;
     private double min;
     private double max;
     private int filletAmount;
@@ -19,29 +16,28 @@ public class RemoveFishDataAction implements IUndoableAction {
 
     @Override
     public void apply() {
-        this.min = AquacultureAPI.FISH_DATA.getMinWeight(fish, 0);
-        this.max = AquacultureAPI.FISH_DATA.getMaxWeight(fish, 0);
-        this.filletAmount = AquacultureAPI.FISH_DATA.getFilletAmount(fish, 1);
-        this.fillet = AquacultureAPI.FISH_DATA.hasFilletAmount(fish);
-        AquacultureAPI.FISH_DATA.remove(fish, this.fillet);
+        this.min = AquacultureAPI.FISH_DATA.getMinWeight(this.fish, 0);
+        this.max = AquacultureAPI.FISH_DATA.getMaxWeight(this.fish, 0);
+        this.filletAmount = AquacultureAPI.FISH_DATA.getFilletAmount(this.fish, 1);
+        AquacultureAPI.FISH_DATA.remove(this.fish);
     }
 
     @Override
     public String describe() {
-        return "Removing FishData for: " + fish.getRegistryName();
+        return "Removing FishData for: " + this.fish.getRegistryName();
     }
 
     @Override
     public void undo() {
-        if (fillet) {
-            AquacultureAPI.FISH_DATA.add(fish, min, max, filletAmount);
+        if (AquacultureAPI.FISH_DATA.hasFilletAmount(this.fish)) {
+            AquacultureAPI.FISH_DATA.add(this.fish, this.min, this.max, this.filletAmount);
         } else {
-            AquacultureAPI.FISH_DATA.add(fish, min, max);
+            AquacultureAPI.FISH_DATA.add(this.fish, this.min, this.max);
         }
     }
 
     @Override
     public String describeUndo() {
-        return "Undoing removal of FishData for: " + fish.getRegistryName();
+        return "Undoing removal of FishData for: " + this.fish.getRegistryName();
     }
 }
