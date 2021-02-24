@@ -470,7 +470,10 @@ public class AquaFishingBobberEntity extends FishingBobberEntity implements IEnt
 
     @Override
     public void writeSpawnData(PacketBuffer buffer) {
-        buffer.writeUniqueId(this.func_234606_i_().getUniqueID());
+        PlayerEntity player = this.func_234606_i_();
+        if (player != null) {
+            buffer.writeUniqueId(player.getUniqueID());
+        }
         buffer.writeInt(this.luck);
         buffer.writeString(this.hook.getName() == null ? "" : this.hook.getName());
         buffer.writeItemStack(this.fishingLine);
