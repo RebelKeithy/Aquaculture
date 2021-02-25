@@ -61,8 +61,8 @@ public class AquaConfig {
             this.min = builder.defineInRange("min", min, 0, 64);
             this.max = builder.defineInRange("max", max, 0, 64);
             this.weight = builder.defineInRange("weight", weight, 0, 100);
-            this.include = builder.defineList("include", include, o -> BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(String.valueOf(o))));
-            this.exclude = builder.defineList("exclude", exclude, o -> BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(String.valueOf(o))));
+            this.include = builder.defineList("include", include, o -> o instanceof String && (o.equals("") || BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(o.toString()))));
+            this.exclude = builder.defineList("exclude", exclude, o -> o instanceof String && (o.equals("") || BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(o.toString()))));
             builder.pop(2);
         }
     }

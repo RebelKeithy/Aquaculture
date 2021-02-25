@@ -20,6 +20,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -78,7 +79,13 @@ public class FishRegistry {
         for (EntityType<AquaFishEntity> entityType : fishEntities) {
             event.getRegistry().register(entityType);
             EntitySpawnPlacementRegistry.register(entityType, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
-            GlobalEntityTypeAttributes.put(entityType, AbstractFishEntity.func_234176_m_().create());
+        }
+    }
+
+    @SubscribeEvent
+    public static void addFishEntity0Attributes(EntityAttributeCreationEvent event) {
+        for (EntityType<AquaFishEntity> entityType : fishEntities) {
+            event.put(entityType, AbstractFishEntity.func_234176_m_().create());
         }
     }
 

@@ -11,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.SpawnEggItem;
@@ -19,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -88,9 +88,13 @@ public class AquaEntities {
         EntitySpawnPlacementRegistry.register(BOX_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
         EntitySpawnPlacementRegistry.register(ARRAU_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
         EntitySpawnPlacementRegistry.register(STARSHELL_TURTLE, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::canAnimalSpawn);
-        GlobalEntityTypeAttributes.put(BOX_TURTLE, TurtleLandEntity.getAttributes().create());
-        GlobalEntityTypeAttributes.put(ARRAU_TURTLE, TurtleLandEntity.getAttributes().create());
-        GlobalEntityTypeAttributes.put(STARSHELL_TURTLE, TurtleLandEntity.getAttributes().create());
+    }
+
+    @SubscribeEvent
+    public static void addEntityAttributes(EntityAttributeCreationEvent event) {
+        event.put(BOX_TURTLE, TurtleLandEntity.getAttributes().create());
+        event.put(ARRAU_TURTLE, TurtleLandEntity.getAttributes().create());
+        event.put(STARSHELL_TURTLE, TurtleLandEntity.getAttributes().create());
     }
 
     public static void addEntitySpawns(BiomeLoadingEvent event) {
