@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
+import com.teammetallurgy.aquaculture.item.crafting.FishFilletRecipe;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
@@ -52,6 +53,7 @@ public class Aquaculture {
         modBus.addListener(this::setupClient);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
         AquacultureAPI.Tags.init();
+        FishFilletRecipe.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {

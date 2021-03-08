@@ -16,19 +16,17 @@ import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
-@Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-@ObjectHolder(value = Aquaculture.MOD_ID)
 public class FishFilletRecipe extends SpecialRecipe {
-    private static final SpecialRecipeSerializer<FishFilletRecipe> FISH_FILLET_SERIALIZER = new SpecialRecipeSerializer<>(FishFilletRecipe::new);
+    public static final DeferredRegister<IRecipeSerializer<?>> IRECIPE_SERIALIZERS_DEFERRED = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Aquaculture.MOD_ID);
+    private static final RegistryObject<IRecipeSerializer<?>> FISH_FILLET_SERIALIZER = registerRecipeSerializer("crafting_special_fish_fillet", new SpecialRecipeSerializer<>(FishFilletRecipe::new));
 
     private FishFilletRecipe(ResourceLocation location) {
         super(location);
@@ -127,7 +125,7 @@ public class FishFilletRecipe extends SpecialRecipe {
     @Override
     @Nonnull
     public IRecipeSerializer<?> getSerializer() {
-        return FISH_FILLET_SERIALIZER;
+        return FISH_FILLET_SERIALIZER.get();
     }
 
     @Override
@@ -135,9 +133,7 @@ public class FishFilletRecipe extends SpecialRecipe {
         return width * height >= 2;
     }
 
-    @SubscribeEvent
-    public static void registerRecipeSerializer(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-        FISH_FILLET_SERIALIZER.setRegistryName(new ResourceLocation(Aquaculture.MOD_ID, "crafting_special_fish_fillet"));
-        event.getRegistry().register(FISH_FILLET_SERIALIZER);
+    public static RegistryObject<IRecipeSerializer<?>> registerRecipeSerializer(String name, IRecipeSerializer<?> serializer) {
+        return IRECIPE_SERIALIZERS_DEFERRED.register(name, () -> serializer);
     }
 }
