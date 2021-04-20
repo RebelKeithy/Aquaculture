@@ -1,0 +1,6 @@
+{
+    "parent": "aquaculture:item/neptunium_bow",
+    "textures": {
+        "layer0": "aquaculture:item/neptunium_bow_pulling_1"
+    }
+}

@@ -16,6 +16,7 @@ local.properties
 .settings/
 .loadpath
 
+
 # External tool builders
 .externalToolBuilders/
 
@@ -28,7 +29,14 @@ local.properties
 # PDT-specific
 .buildpath
 
-
+#################
+## Intellij Idea
+#################
+/out/
+*.iml
+*.ipr
+*.iws
+/.idea/
 #################
 ## Visual Studio
 #################
@@ -129,7 +137,6 @@ publish/
 *.pubxml
 
 # NuGet Packages Directory
-## TODO: If you have NuGet Package Restore enabled, uncomment the next line
 #packages/
 
 # Windows Azure Build Output
@@ -213,3 +220,16 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#############
+## ForgeGradle
+#############
+.gradle/
+build/
+run/
+eclipse/
+CREDITS-fml.txt
+forge-*-*-changelog.txt
+LICENSE-fml.txt
+MinecraftForge-Credits.txt
+MinecraftForge-License.txt
