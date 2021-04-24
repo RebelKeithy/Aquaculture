@@ -24,6 +24,6 @@ license="All Rights Reserved"
 [[dependencies.aquaculture]]
    modId="biomesoplenty"
    mandatory=false
-   versionRange="[13.0.0.420,)"
+   versionRange="[1.16.4-13.0.0.420,)"
    ordering="AFTER"
    side="BOTH"
