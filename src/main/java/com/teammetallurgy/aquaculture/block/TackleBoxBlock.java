@@ -83,7 +83,7 @@ public class TackleBoxBlock extends ContainerBlock implements IWaterLoggable {
             INamedContainerProvider container = this.getContainer(state, world, pos);
             if (container != null && player instanceof ServerPlayerEntity) {
                 ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-                if (player.isCrouching()) {
+                if (player.isSneaking()) {
                     TileEntity tileEntity = world.getTileEntity(pos);
                     if (tileEntity != null) {
                         StackHelper.giveItem(serverPlayer, StackHelper.storeTEInStack(new ItemStack(this), tileEntity));

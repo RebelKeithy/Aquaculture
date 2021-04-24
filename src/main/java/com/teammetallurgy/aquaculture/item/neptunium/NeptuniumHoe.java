@@ -32,7 +32,16 @@ public class NeptuniumHoe extends HoeItem {
         BlockPos pos = useContext.getPos();
         int hook = ForgeEventFactory.onHoeUse(useContext);
         if (hook != 0) {
-            return hook > 0 ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+            if (hook >= 0) {
+                return ActionResultType.FAIL;
+            }
+            BlockState state = world.getBlockState(pos);
+            if (state != null) {
+                if (state == Blocks.FARMLAND.getDefaultState()) {
+                    world.setBlockState(pos, AquaBlocks.FARMLAND.getDefaultState(), 11);
+                }
+            }
+            return ActionResultType.SUCCESS;
         } else {
             if (useContext.getFace() != Direction.DOWN && world.isAirBlock(pos.up())) {
                 BlockState state = HOE_LOOKUP.get(world.getBlockState(pos).getBlock());
@@ -41,7 +50,7 @@ public class NeptuniumHoe extends HoeItem {
                     world.playSound(player, pos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     if (!world.isRemote) {
                         if (state == Blocks.FARMLAND.getDefaultState()) {
-                            world.setBlockState(pos, AquaBlocks.FARMLAND.getDefaultState(), 11); //Inserted. Rest copied from HoeItem
+                            world.setBlockState(pos, AquaBlocks.FARMLAND.getDefaultState(), 11);
                         } else {
                             world.setBlockState(pos, state, 11);
                         }
