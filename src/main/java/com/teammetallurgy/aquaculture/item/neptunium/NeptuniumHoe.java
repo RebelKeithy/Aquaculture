@@ -32,7 +32,7 @@ public class NeptuniumHoe extends HoeItem {
         BlockPos pos = useContext.getPos();
         int hook = ForgeEventFactory.onHoeUse(useContext);
         if (hook != 0) {
-            if (hook >= 0) {
+            if (hook < 0) {
                 return ActionResultType.FAIL;
             }
             BlockState state = world.getBlockState(pos);
