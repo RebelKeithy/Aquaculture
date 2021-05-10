@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.init;
 import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
+import com.teammetallurgy.aquaculture.entity.SpectralWaterArrowEntity;
 import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
 import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
@@ -46,6 +47,9 @@ public class AquaEntities {
     public static final EntityType<WaterArrowEntity> WATER_ARROW = register("water_arrow", EntityType.Builder.<WaterArrowEntity>create(WaterArrowEntity::new, EntityClassification.MISC)
             .size(0.5F, 0.5F)
             .setCustomClientFactory(WaterArrowEntity::new));
+    public static final EntityType<SpectralWaterArrowEntity> SPECTRAL_WATER_ARROW = register("spectral_water_arrow", EntityType.Builder.<SpectralWaterArrowEntity>create(SpectralWaterArrowEntity::new, EntityClassification.MISC)
+            .size(0.5F, 0.5F)
+            .setCustomClientFactory(SpectralWaterArrowEntity::new));
     public static final EntityType<TurtleLandEntity> BOX_TURTLE = registerMob("box_turtle", 1, 2, 10, BiomeDictionary.Type.SWAMP, null, 0x7F8439, 0x5D612A,
             EntityType.Builder.create(TurtleLandEntity::new, EntityClassification.CREATURE)
                     .size(0.5F, 0.25F));

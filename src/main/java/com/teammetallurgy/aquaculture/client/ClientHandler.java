@@ -15,6 +15,7 @@ import com.teammetallurgy.aquaculture.item.DyeableItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.entity.SpectralArrowRenderer;
 import net.minecraft.client.renderer.entity.TippedArrowRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,6 +43,7 @@ public class ClientHandler {
             RenderingRegistry.registerEntityRenderingHandler(fish, (manager) -> new AquaFishRenderer(manager, fish.getRegistryName() != null && fish.getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
         }
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.WATER_ARROW, TippedArrowRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(AquaEntities.SPECTRAL_WATER_ARROW, SpectralArrowRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.BOX_TURTLE, TurtleLandRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.ARRAU_TURTLE, TurtleLandRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(AquaEntities.STARSHELL_TURTLE, TurtleLandRenderer::new);
