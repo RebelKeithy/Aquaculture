@@ -285,7 +285,7 @@
   "aquaculture.soul_sand_hook.tooltip.title": "诱惑",
   "aquaculture.soul_sand_hook.tooltip.desc": "延长钓上鱼所需的时间",
   "aquaculture.obsidian_note_hook.tooltip.title": "警报",
-  "aquaculture.obsidian_note_hook.tooltip.desc": "当鱼接近时发出警报声"
+  "aquaculture.obsidian_note_hook.tooltip.desc": "当鱼接近时发出警报声",
   
   "_comment": "Subtitle",
   "aquaculture.subtitles.tackle_box_open": "钓具盒打开",
