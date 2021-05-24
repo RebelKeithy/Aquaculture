@@ -4,6 +4,7 @@ import com.teammetallurgy.aquaculture.entity.ai.goal.FollowTypeSchoolLeaderGoal;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -15,7 +16,6 @@ import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -116,6 +116,6 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
 
     private static boolean isSourceBlock(IWorld world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        return state.getBlock() instanceof FlowingFluidBlock && world.getFluidState(pos).isTagged(FluidTags.WATER) && state.get(FlowingFluidBlock.LEVEL) == 0;
+        return state.getBlock() instanceof FlowingFluidBlock && world.getBlockState(pos).isIn(Blocks.WATER) && state.get(FlowingFluidBlock.LEVEL) == 0;
     }
 }
