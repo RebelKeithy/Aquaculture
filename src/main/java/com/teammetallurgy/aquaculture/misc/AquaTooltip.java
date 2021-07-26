@@ -1,12 +1,13 @@
 package com.teammetallurgy.aquaculture.misc;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.InputMappings;
-import net.minecraft.item.Item;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,16 +19,17 @@ public class AquaTooltip {
 
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
-        if (!event.getItemStack().isEmpty()) {
-            Item item = event.getItemStack().getItem();
-            if (!item.getTags().isEmpty() && item.isIn(AquacultureAPI.Tags.TOOLTIP)) {
+        ItemStack stack = event.getItemStack();
+        if (!stack.isEmpty()) {
+            Item item = stack.getItem();
+            if (!item.getTags().isEmpty() && stack.is(AquacultureAPI.Tags.TOOLTIP)) {
                 if (item.getRegistryName() != null) {
                     String itemIdentifier = item.getRegistryName().getPath() + ".tooltip";
-                    if (InputMappings.isKeyDown(Minecraft.getInstance().getMainWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
-                        event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".desc").mergeStyle(TextFormatting.AQUA));
+                    if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
+                        event.getToolTip().add(new TranslatableComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".desc").withStyle(ChatFormatting.AQUA));
                     } else {
-                        event.getToolTip().add(new TranslationTextComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".title").mergeStyle(TextFormatting.AQUA)
-                                .appendString(" ").append(new TranslationTextComponent(Aquaculture.MOD_ID + ".shift").mergeStyle(TextFormatting.DARK_GRAY)));
+                        event.getToolTip().add(new TranslatableComponent(Aquaculture.MOD_ID + "." + itemIdentifier + ".title").withStyle(ChatFormatting.AQUA)
+                                .append(" ").append(new TranslatableComponent(Aquaculture.MOD_ID + ".shift").withStyle(ChatFormatting.DARK_GRAY)));
                     }
                 }
             }

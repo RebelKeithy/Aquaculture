@@ -2,27 +2,27 @@ package com.teammetallurgy.aquaculture.block;
 
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.ChestType;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.ChestType;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -33,37 +33,37 @@ import java.util.List;
 public class NeptunesBountyBlock extends ChestBlock {
 
     public NeptunesBountyBlock() {
-        super(Block.Properties.create(Material.IRON, MaterialColor.IRON).hardnessAndResistance(3.5F, 8.0F).sound(SoundType.METAL), () -> AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY);
+        super(Block.Properties.of(Material.METAL, MaterialColor.METAL).strength(3.5F, 8.0F).sound(SoundType.METAL), () -> AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY);
     }
 
     @Override
-    public TileEntity createNewTileEntity(@Nonnull IBlockReader blockReader) {
-        return new NeptunesBountyTileEntity();
+    public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
+        return new NeptunesBountyTileEntity(pos, state);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        FluidState fluidState = context.getWorld().getFluidState(context.getPos());
-        return this.getDefaultState().with(TYPE, ChestType.SINGLE).with(FACING, context.getPlacementHorizontalFacing().getOpposite()).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+        return this.defaultBlockState().setValue(TYPE, ChestType.SINGLE).setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
     }
 
     @Override
     @Nonnull
-    public BlockState updatePostPlacement(BlockState state, @Nonnull Direction direction, @Nonnull BlockState facingState, @Nonnull IWorld world, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
-        if (state.get(WATERLOGGED)) {
-            world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public BlockState updateShape(BlockState state, @Nonnull Direction direction, @Nonnull BlockState facingState, @Nonnull LevelAccessor world, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
+        if (state.getValue(WATERLOGGED)) {
+            world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
         return state;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable IBlockReader world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flag) {
-        super.addInformation(stack, world, tooltip, flag);
-        CompoundNBT tag = stack.getChildTag("BlockEntityTag");
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable BlockGetter world, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flag) {
+        super.appendHoverText(stack, world, tooltip, flag);
+        CompoundTag tag = stack.getTagElement("BlockEntityTag");
         if (tag != null) {
             if (tag.contains("Items", 9)) {
-                tooltip.add(new StringTextComponent("???????").mergeStyle(TextFormatting.ITALIC));
+                tooltip.add(new TextComponent("???????").withStyle(ChatFormatting.ITALIC));
             }
         }
     }

@@ -8,23 +8,23 @@ import com.teammetallurgy.aquaculture.inventory.container.slot.SlotFishingRod;
 import com.teammetallurgy.aquaculture.inventory.container.slot.SlotHidable;
 import com.teammetallurgy.aquaculture.item.BaitItem;
 import com.teammetallurgy.aquaculture.item.HookItem;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.IDyeableArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public class TackleBoxContainer extends Container {
+public class TackleBoxContainer extends AbstractContainerMenu {
     public TackleBoxTileEntity tackleBox;
     private int rows = 4;
     private int collumns = 4;
@@ -33,43 +33,41 @@ public class TackleBoxContainer extends Container {
     public Slot slotLine;
     public Slot slotBobber;
 
-    public TackleBoxContainer(int windowID, BlockPos pos, PlayerInventory playerInventory) {
+    public TackleBoxContainer(int windowID, BlockPos pos, Inventory playerInventory) {
         super(AquaGuis.TACKLE_BOX, windowID);
-        this.tackleBox = (TackleBoxTileEntity) playerInventory.player.world.getTileEntity(pos);
+        this.tackleBox = (TackleBoxTileEntity) playerInventory.player.level.getBlockEntity(pos);
         if (this.tackleBox != null) {
-            this.tackleBox.openInventory(playerInventory.player);
+            this.tackleBox.startOpen(playerInventory.player);
             this.tackleBox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
                 SlotFishingRod fishingRod = (SlotFishingRod) addSlot(new SlotFishingRod(handler, 0, 117, 21));
                 this.slotHook = this.addSlot(new SlotHidable(fishingRod, 0, 106, 44) {
                     @Override
-                    public boolean isItemValid(@Nonnull ItemStack stack) {
-                        return stack.getItem() instanceof HookItem && super.isItemValid(stack);
+                    public boolean mayPlace(@Nonnull ItemStack stack) {
+                        return stack.getItem() instanceof HookItem && super.mayPlace(stack);
                     }
                 });
                 this.slotBait = this.addSlot(new SlotHidable(fishingRod, 1, 129, 44) {
                     @Override
-                    public boolean isItemValid(@Nonnull ItemStack stack) {
-                        return stack.getItem() instanceof BaitItem && super.isItemValid(stack);
+                    public boolean mayPlace(@Nonnull ItemStack stack) {
+                        return stack.getItem() instanceof BaitItem && super.mayPlace(stack);
                     }
                     @Override
-                    public boolean canTakeStack(PlayerEntity player) {
+                    public boolean mayPickup(Player player) {
                         return false;
                     }
                 });
                 this.slotLine = this.addSlot(new SlotHidable(fishingRod, 2, 106, 67) {
                     @Override
-                    public boolean isItemValid(@Nonnull ItemStack stack) {
-                        Item item = stack.getItem();
-                        boolean isDyeable = item instanceof IDyeableArmorItem;
-                        return item.isIn(AquacultureAPI.Tags.FISHING_LINE) && isDyeable && super.isItemValid(stack);
+                    public boolean mayPlace(@Nonnull ItemStack stack) {
+                        boolean isDyeable = stack.getItem() instanceof DyeableLeatherItem;
+                        return stack.is(AquacultureAPI.Tags.FISHING_LINE) && isDyeable && super.mayPlace(stack);
                     }
                 });
                 this.slotBobber = this.addSlot(new SlotHidable(fishingRod, 3, 129, 67) {
                     @Override
-                    public boolean isItemValid(@Nonnull ItemStack stack) {
-                        Item item = stack.getItem();
-                        boolean isDyeable = item instanceof IDyeableArmorItem;
-                        return item.isIn(AquacultureAPI.Tags.BOBBER) && isDyeable && super.isItemValid(stack);
+                    public boolean mayPlace(@Nonnull ItemStack stack) {
+                        boolean isDyeable = stack.getItem() instanceof DyeableLeatherItem;
+                        return stack.is(AquacultureAPI.Tags.BOBBER) && isDyeable && super.mayPlace(stack);
                     }
                 });
 
@@ -78,11 +76,11 @@ public class TackleBoxContainer extends Container {
                     for (int row = 0; row < rows; ++row) {
                         this.addSlot(new SlotItemHandler(handler, 1 + row + column * collumns, 8 + row * 18, 8 + column * 18) {
                             @Override
-                            public boolean isItemValid(@Nonnull ItemStack stack) {
+                            public boolean mayPlace(@Nonnull ItemStack stack) {
                                 Item item = stack.getItem();
-                                boolean isDyeable = item instanceof IDyeableArmorItem;
-                                return item.isIn(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem ||
-                                        item.isIn(AquacultureAPI.Tags.FISHING_LINE) && isDyeable || item.isIn(AquacultureAPI.Tags.BOBBER) && isDyeable;
+                                boolean isDyeable = item instanceof DyeableLeatherItem;
+                                return stack.is(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem ||
+                                        stack.is(AquacultureAPI.Tags.FISHING_LINE) && isDyeable || stack.is(AquacultureAPI.Tags.BOBBER) && isDyeable;
                             }
                         });
                     }
@@ -102,55 +100,54 @@ public class TackleBoxContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(@Nonnull PlayerEntity player) {
-        return isWithinUsableDistance(IWorldPosCallable.of(Objects.requireNonNull(tackleBox.getWorld()), tackleBox.getPos()), player, AquaBlocks.TACKLE_BOX);
+    public boolean stillValid(@Nonnull Player player) {
+        return stillValid(ContainerLevelAccess.create(Objects.requireNonNull(tackleBox.getLevel()), tackleBox.getBlockPos()), player, AquaBlocks.TACKLE_BOX);
     }
 
     @Override
     @Nonnull
-    public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack transferStack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack slotStack = slot.getStack();
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
             transferStack = slotStack.copy();
             if (index < this.rows * this.collumns) {
-                if (!this.mergeItemStack(slotStack, this.rows * this.collumns, this.inventorySlots.size(), true)) {
+                if (!this.moveItemStackTo(slotStack, this.rows * this.collumns, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(slotStack, 0, this.rows * this.collumns, false)) {
+            } else if (!this.moveItemStackTo(slotStack, 0, this.rows * this.collumns, false)) {
                 return ItemStack.EMPTY;
             }
             if (slotStack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
         return transferStack;
     }
 
     @Override
-    public void onContainerClosed(PlayerEntity player) {
-        super.onContainerClosed(player);
+    public void removed(Player player) {
+        super.removed(player);
         if (this.tackleBox != null) {
-            this.tackleBox.closeInventory(player);
+            this.tackleBox.stopOpen(player);
         }
     }
 
     @Override
-    @Nonnull
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickType, PlayerEntity player) {
+    public void clicked(int slotId, int dragType, @Nonnull ClickType clickType, @Nonnull Player player) {
         //Bait replacing
         if (slotId >= 0 && clickType == ClickType.PICKUP) {
-            Slot slot = this.inventorySlots.get(slotId);
+            Slot slot = this.slots.get(slotId);
             if (slot == this.slotBait) {
                 SlotItemHandler slotHandler = (SlotItemHandler) slot;
-                if (slotHandler.isItemValid(player.inventory.getItemStack())) {
-                    slotHandler.putStack(ItemStack.EMPTY); //Set to empty, to allow new bait to get put in
+                if (slotHandler.mayPlace(player.containerMenu.getCarried())) {
+                    slotHandler.set(ItemStack.EMPTY); //Set to empty, to allow new bait to get put in
                 }
             }
         }
-        return super.slotClick(slotId, dragType, clickType, player);
+        super.clicked(slotId, dragType, clickType, player);
     }
 }

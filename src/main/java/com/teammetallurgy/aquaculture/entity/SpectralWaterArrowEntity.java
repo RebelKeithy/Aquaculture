@@ -1,32 +1,32 @@
 package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.init.AquaEntities;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.SpectralArrowEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.SpectralArrow;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
-public class SpectralWaterArrowEntity extends SpectralArrowEntity {
+public class SpectralWaterArrowEntity extends SpectralArrow {
 
-    public SpectralWaterArrowEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
+    public SpectralWaterArrowEntity(FMLPlayMessages.SpawnEntity spawnPacket, Level world) {
         super(world, 0, 0, 0);
     }
 
-    public SpectralWaterArrowEntity(EntityType<? extends SpectralArrowEntity> arrow, World world) {
+    public SpectralWaterArrowEntity(EntityType<? extends SpectralArrow> arrow, Level world) {
         super(arrow, world);
     }
 
-    public SpectralWaterArrowEntity(World world, LivingEntity livingEntity) {
+    public SpectralWaterArrowEntity(Level world, LivingEntity livingEntity) {
         super(world, livingEntity);
     }
 
     @Override
-    protected float getWaterDrag() {
+    protected float getWaterInertia() {
         return 1.0F;
     }
 
@@ -38,7 +38,7 @@ public class SpectralWaterArrowEntity extends SpectralArrowEntity {
 
     @Override
     @Nonnull
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

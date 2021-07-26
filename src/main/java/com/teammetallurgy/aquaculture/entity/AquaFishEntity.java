@@ -3,36 +3,36 @@ package com.teammetallurgy.aquaculture.entity;
 import com.teammetallurgy.aquaculture.entity.ai.goal.FollowTypeSchoolLeaderGoal;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.FollowSchoolLeaderGoal;
-import net.minecraft.entity.passive.fish.AbstractFishEntity;
-import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.FollowFlockLeaderGoal;
+import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
-public class AquaFishEntity extends AbstractGroupFishEntity {
+public class AquaFishEntity extends AbstractSchoolingFish {
     public static HashMap<EntityType<AquaFishEntity>, Item> BUCKETS = new HashMap<>();
     public static HashMap<EntityType<AquaFishEntity>, FishType> TYPES = new HashMap<>();
 
-    public AquaFishEntity(EntityType<? extends AbstractGroupFishEntity> entityType, World world) {
+    public AquaFishEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -40,8 +40,8 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.goals.forEach(prioritizedGoal -> { //Removes vanilla schooling goal
-            if (prioritizedGoal.getGoal().getClass() == FollowSchoolLeaderGoal.class) {
+        this.goalSelector.availableGoals.forEach(prioritizedGoal -> { //Removes vanilla schooling goal
+            if (prioritizedGoal.getGoal().getClass() == FollowFlockLeaderGoal.class) {
                 this.goalSelector.removeGoal(prioritizedGoal.getGoal());
             }
         });
@@ -49,13 +49,13 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
     }
 
     @Override
-    public ItemStack getPickedResult(RayTraceResult target) {
-        return this.getFishBucket();
+    public ItemStack getPickedResult(HitResult target) {
+        return this.getBucketItemStack();
     }
 
     @Override
     @Nonnull
-    protected ItemStack getFishBucket() {
+    public ItemStack getBucketItemStack() {
         return new ItemStack(BUCKETS.get(this.getType()));
     }
 
@@ -85,37 +85,37 @@ public class AquaFishEntity extends AbstractGroupFishEntity {
 
     @Override
     @Nonnull
-    public EntitySize getSize(@Nonnull Pose pose) {
-        return super.getSize(pose);
+    public EntityDimensions getDimensions(@Nonnull Pose pose) {
+        return super.getDimensions(pose);
     }
 
     @Override
-    public void onCollideWithPlayer(@Nonnull PlayerEntity player) {
-        super.onCollideWithPlayer(player);
+    public void playerTouch(@Nonnull Player player) {
+        super.playerTouch(player);
         if (Objects.equals(this.getType().getRegistryName(), AquaItems.JELLYFISH.getRegistryName())) {
             if (this.isAlive()) {
-                if (this.getDistanceSq(player) < 1.0D && player.attackEntityFrom(DamageSource.causeMobDamage(this), 0.5F)) {
-                    this.playSound(AquacultureSounds.FISH_COLLIDE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-                    this.applyEnchantments(this, player);
+                if (this.distanceToSqr(player) < 1.0D && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
+                    this.playSound(AquacultureSounds.FISH_COLLIDE, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    this.doEnchantDamageEffects(this, player);
                 }
             }
         }
     }
 
     @Override
-    public void leaveGroup() {
-        if (this.groupLeader != null) {
-            super.leaveGroup();
+    public void stopFollowing() {
+        if (this.leader != null) {
+            super.stopFollowing();
         }
     }
 
-    public static boolean canSpawnHere(EntityType<? extends AbstractFishEntity> fish, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnHere(EntityType<? extends AbstractFish> fish, LevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
         boolean isAllNeighborsSource = isSourceBlock(world, pos.north()) && isSourceBlock(world, pos.south()) && isSourceBlock(world, pos.west()) && isSourceBlock(world, pos.east());
         return isSourceBlock(world, pos) && isAllNeighborsSource;
     }
 
-    private static boolean isSourceBlock(IWorld world, BlockPos pos) {
+    private static boolean isSourceBlock(LevelAccessor world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        return state.getBlock() instanceof FlowingFluidBlock && world.getBlockState(pos).isIn(Blocks.WATER) && state.get(FlowingFluidBlock.LEVEL) == 0;
+        return state.getBlock() instanceof LiquidBlock && world.getBlockState(pos).is(Blocks.WATER) && state.getValue(LiquidBlock.LEVEL) == 0;
     }
 }

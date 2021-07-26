@@ -5,18 +5,22 @@ import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -31,21 +35,21 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AquaFishingRodItem extends FishingRodItem {
-    private final IItemTier tier;
+    private final Tier tier;
     private final int enchantability;
 
-    public AquaFishingRodItem(IItemTier tier, Properties properties) {
+    public AquaFishingRodItem(Tier tier, Properties properties) {
         super(properties);
-        this.enchantability = tier == ItemTier.WOOD ? 10 : tier.getEnchantability();
+        this.enchantability = tier == Tiers.WOOD ? 10 : tier.getEnchantmentValue();
         this.tier = tier;
     }
 
-    public IItemTier getTier() { //Added getter, so other mods can access it
+    public Tier getTier() { //Added getter, so other mods can access it
         return tier;
     }
 
     @Override
-    public int getItemEnchantability() {
+    public int getEnchantmentValue() {
         return enchantability;
     }
 
@@ -56,35 +60,35 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, PlayerEntity player, @Nonnull Hand hand) {
-        ItemStack heldStack = player.getHeldItem(hand);
+    public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
+        ItemStack heldStack = player.getItemInHand(hand);
         boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && this.tier == AquacultureAPI.MATS.NEPTUNIUM;
         int lureSpeed;
         int damage = this.getDamage(heldStack);
-        if (damage >= this.getMaxDamage(heldStack)) return new ActionResult<>(ActionResultType.FAIL, heldStack);
+        if (damage >= this.getMaxDamage(heldStack)) return new InteractionResultHolder<>(InteractionResult.FAIL, heldStack);
         Hook hook = getHookType(heldStack);
-        if (player.fishingBobber != null) {
-            if (!world.isRemote) {
-                lureSpeed = player.fishingBobber.handleHookRetraction(heldStack);
+        if (player.fishing != null) {
+            if (!level.isClientSide) {
+                lureSpeed = player.fishing.retrieve(heldStack);
                 int currentDamage = this.getMaxDamage(heldStack) - damage;
                 if (lureSpeed >= currentDamage) {
                     lureSpeed = currentDamage;
                 }
                 if (!isAdminRod) {
                     if (hook != Hooks.EMPTY && hook.getDurabilityChance() > 0) {
-                        if (random.nextDouble() >= hook.getDurabilityChance()) {
-                            heldStack.attemptDamageItem(lureSpeed, world.rand, null);
+                        if (level.random.nextDouble() >= hook.getDurabilityChance()) {
+                            heldStack.hurt(lureSpeed, level.random, null);
                         }
                     } else {
-                        heldStack.attemptDamageItem(lureSpeed, world.rand, null);
+                        heldStack.hurt(lureSpeed, level.random, null);
                     }
                 }
             }
-            player.swingArm(hand);
-            world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_FISHING_BOBBER_RETRIEVE, SoundCategory.NEUTRAL, 1.0F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+            player.swing(hand);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.random.nextFloat() * 0.4F + 0.8F));
         } else {
-            world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
-            if (!world.isRemote) {
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.random.nextFloat() * 0.4F + 0.8F));
+            if (!level.isClientSide) {
                 //Lure Speed
                 lureSpeed = EnchantmentHelper.getFishingSpeedBonus(heldStack);
                 if (this.tier == AquacultureAPI.MATS.NEPTUNIUM) lureSpeed += 1;
@@ -97,17 +101,17 @@ public class AquaFishingRodItem extends FishingRodItem {
                 int luck = EnchantmentHelper.getFishingLuckBonus(heldStack);
                 if (hook != Hooks.EMPTY && hook.getLuckModifier() > 0) luck += hook.getLuckModifier();
 
-                world.addEntity(new AquaFishingBobberEntity(player, world, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack));
+                level.addFreshEntity(new AquaFishingBobberEntity(player, level, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack));
             }
-            player.swingArm(hand);
-            player.addStat(Stats.ITEM_USED.get(this));
+            player.swing(hand);
+            player.awardStat(Stats.ITEM_USED.get(this));
         }
-        return ActionResult.func_233538_a_(heldStack, world.isRemote());
+        return InteractionResultHolder.sidedSuccess(heldStack, level.isClientSide());
     }
 
     @Override
-    public boolean getIsRepairable(@Nonnull ItemStack toRepair, @Nonnull ItemStack repair) {
-        return this.tier.getRepairMaterial().test(repair) || super.getIsRepairable(toRepair, repair);
+    public boolean isValidRepairItem(@Nonnull ItemStack toRepair, @Nonnull ItemStack repair) {
+        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
     }
 
     @Nonnull
@@ -150,24 +154,24 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     @Override
     @Nullable
-    public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundNBT nbt) {
+    public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundTag nbt) {
         return new FishingRodEquipmentHandler(stack);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltips, @Nonnull ITooltipFlag tooltipFlag) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level level, @Nonnull List<Component> tooltips, @Nonnull TooltipFlag tooltipFlag) {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
-            IFormattableTextComponent broken = new TranslationTextComponent("aquaculture.fishing_rod.broken");
-            tooltips.add(broken.mergeStyle(broken.getStyle().setItalic(true).setFormatting(TextFormatting.GRAY)));
+            MutableComponent broken = new TranslatableComponent("aquaculture.fishing_rod.broken");
+            tooltips.add(broken.withStyle(broken.getStyle().withItalic(true).withColor(ChatFormatting.GRAY)));
         }
 
         Hook hook = getHookType(stack);
         if (hook != Hooks.EMPTY) {
-            IFormattableTextComponent hookColor = new TranslationTextComponent(hook.getItem().getTranslationKey());
-            tooltips.add(hookColor.mergeStyle(hookColor.getStyle().setFormatting(hook.getColor())));
+            MutableComponent hookColor = new TranslatableComponent(hook.getItem().getDescriptionId());
+            tooltips.add(hookColor.withStyle(hookColor.getStyle().withColor(hook.getColor())));
         }
-        super.addInformation(stack, world, tooltips, tooltipFlag);
+        super.appendHoverText(stack, level, tooltips, tooltipFlag);
     }
 
     public static class FishingRodEquipmentHandler implements ICapabilityProvider {
@@ -188,9 +192,9 @@ public class AquaFishingRodItem extends FishingRodItem {
                     case 1:
                         return stack.getItem() instanceof BaitItem;
                     case 2:
-                        return stack.getItem().isIn(AquacultureAPI.Tags.FISHING_LINE) && stack.getItem() instanceof IDyeableArmorItem;
+                        return stack.is(AquacultureAPI.Tags.FISHING_LINE) && stack.getItem() instanceof DyeableLeatherItem;
                     case 3:
-                        return stack.getItem().isIn(AquacultureAPI.Tags.BOBBER) && stack.getItem() instanceof IDyeableArmorItem;
+                        return stack.is(AquacultureAPI.Tags.BOBBER) && stack.getItem() instanceof DyeableLeatherItem;
                     default:
                         return false;
                 }
@@ -198,7 +202,7 @@ public class AquaFishingRodItem extends FishingRodItem {
 
             @Override
             protected void onContentsChanged(int slot) {
-                CompoundNBT tag = FishingRodEquipmentHandler.this.stack.getOrCreateTag();
+                CompoundTag tag = FishingRodEquipmentHandler.this.stack.getOrCreateTag();
                 tag.put("Inventory", this.serializeNBT());
                 FishingRodEquipmentHandler.this.stack.setTag(tag);
             }

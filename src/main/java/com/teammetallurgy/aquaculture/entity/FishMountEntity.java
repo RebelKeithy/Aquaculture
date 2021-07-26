@@ -2,35 +2,36 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RedstoneDiodeBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.item.HangingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.decoration.HangingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DiodeBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
@@ -41,144 +42,144 @@ import javax.annotation.Nullable;
 
 public class FishMountEntity extends HangingEntity implements IEntityAdditionalSpawnData {
     private static final Logger PRIVATE_LOGGER = LogManager.getLogger();
-    private static final DataParameter<ItemStack> ITEM = EntityDataManager.createKey(FishMountEntity.class, DataSerializers.ITEMSTACK);
+    private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(FishMountEntity.class, EntityDataSerializers.ITEM_STACK);
     private float itemDropChance = 1.0F;
     public Entity entity;
 
-    public FishMountEntity(EntityType<? extends FishMountEntity> type, World world) {
+    public FishMountEntity(EntityType<? extends FishMountEntity> type, Level world) {
         super(type, world);
     }
 
-    public FishMountEntity(EntityType<? extends FishMountEntity> type, World world, BlockPos blockPos, Direction direction) {
+    public FishMountEntity(EntityType<? extends FishMountEntity> type, Level world, BlockPos blockPos, Direction direction) {
         super(type, world, blockPos);
-        this.updateFacingWithBoundingBox(direction);
+        this.setDirection(direction);
     }
 
-    public FishMountEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
+    public FishMountEntity(FMLPlayMessages.SpawnEntity spawnPacket, Level world) {
         this((EntityType<? extends FishMountEntity>) ForgeRegistries.ENTITIES.getValue(spawnPacket.getAdditionalData().readResourceLocation()), world);
     }
 
     @Override
-    protected float getEyeHeight(Pose pose, EntitySize size) {
+    protected float getEyeHeight(Pose pose, EntityDimensions size) {
         return 0.0F;
     }
 
     @Override
-    protected void registerData() {
-        this.getDataManager().register(ITEM, ItemStack.EMPTY);
+    protected void defineSynchedData() {
+        this.getEntityData().define(ITEM, ItemStack.EMPTY);
     }
 
     @Override
-    protected void updateFacingWithBoundingBox(Direction direction) {
+    protected void setDirection(Direction direction) {
         Validate.notNull(direction);
-        this.facingDirection = direction;
+        this.direction = direction;
         if (direction.getAxis().isHorizontal()) {
-            this.rotationPitch = 0.0F;
-            this.rotationYaw = (float) (this.facingDirection.getHorizontalIndex() * 90);
+            this.setXRot(0.0F);
+            this.setYRot((float) (this.direction.get2DDataValue() * 90));
         } else {
-            this.rotationPitch = (float) (-90 * direction.getAxisDirection().getOffset());
-            this.rotationYaw = 0.0F;
+            this.setXRot((float) (-90 * direction.getAxisDirection().getStep()));
+            this.setYRot(0.0F);
         }
-        this.prevRotationPitch = this.rotationPitch;
-        this.prevRotationYaw = this.rotationYaw;
-        this.updateBoundingBox();
+        this.xRotO = this.getXRot();
+        this.yRotO = this.getYRot();
+        this.recalculateBoundingBox();
     }
 
     @Override
-    public boolean onValidSurface() {
-        if (!this.world.hasNoCollisions(this)) {
+    public boolean survives() {
+        if (!this.level.noCollision(this)) {
             return false;
         } else {
-            BlockState state = this.world.getBlockState(this.hangingPosition.offset(this.facingDirection.getOpposite()));
-            return (state.getMaterial().isSolid() || this.facingDirection.getAxis().isHorizontal() && RedstoneDiodeBlock.isDiode(state)) && this.world.getEntitiesInAABBexcluding(this, this.getBoundingBox(), IS_HANGING_ENTITY).isEmpty();
+            BlockState state = this.level.getBlockState(this.pos.relative(this.direction.getOpposite()));
+            return (state.getMaterial().isSolid() || this.direction.getAxis().isHorizontal() && DiodeBlock.isDiode(state)) && this.level.getEntities(this, this.getBoundingBox(), HANGING_ENTITY).isEmpty();
         }
     }
 
     @Override
-    protected void updateBoundingBox() {
-        if (this.facingDirection != null) {
+    protected void recalculateBoundingBox() {
+        if (this.direction != null) {
             double d0 = 0.46875D;
-            double posX = (double) this.hangingPosition.getX() + 0.5D - (double) this.facingDirection.getXOffset() * d0;
-            double posY = (double) this.hangingPosition.getY() + 0.5D - (double) this.facingDirection.getYOffset() * d0;
-            double posZ = (double) this.hangingPosition.getZ() + 0.5D - (double) this.facingDirection.getZOffset() * d0;
-            this.setRawPosition(posX, posY, posZ);
-            double x1 = this.getWidthPixels() / 32.0D;
-            double x2 = this.getWidthPixels() / 32.0D;
-            double y1 = this.getHeightPixels() / 32.0D;
-            double y2 = this.getHeightPixels() / 32.0D;
-            double z1 = this.getWidthPixels() / 32.0D;
-            double z2 = this.getWidthPixels() / 32.0D;
-            switch (this.facingDirection.getAxis()) {
+            double posX = (double) this.pos.getX() + 0.5D - (double) this.direction.getStepX() * d0;
+            double posY = (double) this.pos.getY() + 0.5D - (double) this.direction.getStepY() * d0;
+            double posZ = (double) this.pos.getZ() + 0.5D - (double) this.direction.getStepZ() * d0;
+            this.setPosRaw(posX, posY, posZ);
+            double x1 = this.getWidth() / 32.0D;
+            double x2 = this.getWidth() / 32.0D;
+            double y1 = this.getHeight() / 32.0D;
+            double y2 = this.getHeight() / 32.0D;
+            double z1 = this.getWidth() / 32.0D;
+            double z2 = this.getWidth() / 32.0D;
+            switch (this.direction.getAxis()) {
                 case X:
-                    x1 = (this.facingDirection.getXOffset() < 0 ? 3.0D : 1.0D) / 32.0D;
-                    x2 = (this.facingDirection.getXOffset() > 0 ? 3.0D : 1.0D) / 32.0D;
+                    x1 = (this.direction.getStepX() < 0 ? 3.0D : 1.0D) / 32.0D;
+                    x2 = (this.direction.getStepX() > 0 ? 3.0D : 1.0D) / 32.0D;
                     break;
                 case Y:
-                    y1 = (this.facingDirection.getYOffset() < 0 ? 3.0D : 1.0D) / 32.0D;
-                    y2 = (this.facingDirection.getYOffset() > 0 ? 3.0D : 1.0D) / 32.0D;
+                    y1 = (this.direction.getStepY() < 0 ? 3.0D : 1.0D) / 32.0D;
+                    y2 = (this.direction.getStepY() > 0 ? 3.0D : 1.0D) / 32.0D;
                     z1 = 8.0D / 32.0D;
                     z2 = 8.0D / 32.0D;
                     break;
                 case Z:
-                    z1 = (this.facingDirection.getZOffset() < 0 ? 3.0D : 1.0D) / 32.0D;
-                    z2 = (this.facingDirection.getZOffset() > 0 ? 3.0D : 1.0D) / 32.0D;
+                    z1 = (this.direction.getStepZ() < 0 ? 3.0D : 1.0D) / 32.0D;
+                    z2 = (this.direction.getStepZ() > 0 ? 3.0D : 1.0D) / 32.0D;
             }
-            this.setBoundingBox(new AxisAlignedBB(posX - x1, posY - y1, posZ - z1, posX + x2, posY + y2, posZ + z2));
+            this.setBoundingBox(new AABB(posX - x1, posY - y1, posZ - z1, posX + x2, posY + y2, posZ + z2));
         }
     }
 
     @Override
-    public void onKillCommand() {
+    public void kill() {
         this.setDisplayedItem(ItemStack.EMPTY);
-        super.onKillCommand();
+        super.kill();
     }
 
     @Override
-    public boolean attackEntityFrom(@Nonnull DamageSource source, float amount) {
+    public boolean hurt(@Nonnull DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {
             return false;
         } else if (!source.isExplosion() && !this.getDisplayedItem().isEmpty()) {
-            if (!this.world.isRemote) {
-                this.dropItemOrSelf(source.getTrueSource(), false);
+            if (!this.level.isClientSide) {
+                this.dropItemOrSelf(source.getEntity(), false);
                 this.playSound(AquacultureSounds.FISH_MOUNT_REMOVED, 1.0F, 1.0F);
             }
             return true;
         } else {
-            return super.attackEntityFrom(source, amount);
+            return super.hurt(source, amount);
         }
     }
 
     @Override
-    public int getWidthPixels() {
+    public int getWidth() {
         return 12;
     }
 
     @Override
-    public int getHeightPixels() {
+    public int getHeight() {
         return 8;
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isInRangeToRenderDist(double distance) {
+    public boolean shouldRenderAtSqrDistance(double distance) {
         double d0 = 16.0D;
-        d0 = d0 * 64.0D * getRenderDistanceWeight();
+        d0 = d0 * 64.0D * getViewScale();
         return distance < d0 * d0;
     }
 
     @Override
-    public void onBroken(@Nullable Entity brokenEntity) {
+    public void dropItem(@Nullable Entity brokenEntity) {
         this.playSound(AquacultureSounds.FISH_MOUNT_BROKEN, 1.0F, 1.0F);
         this.dropItemOrSelf(brokenEntity, true);
     }
 
     @Override
-    public void playPlaceSound() {
+    public void playPlacementSound() {
         this.playSound(AquacultureSounds.FISH_MOUNT_PLACED, 1.0F, 1.0F);
     }
 
     private void dropItemOrSelf(@Nullable Entity entity, boolean shouldDropSelf) {
-        if (!this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
+        if (!this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             if (entity == null) {
                 this.setDisplayedItem(ItemStack.EMPTY);
             }
@@ -186,22 +187,22 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         } else {
             ItemStack displayStack = this.getDisplayedItem();
             this.setDisplayedItem(ItemStack.EMPTY);
-            if (entity instanceof PlayerEntity) {
-                PlayerEntity playerentity = (PlayerEntity) entity;
-                if (playerentity.abilities.isCreativeMode) {
+            if (entity instanceof Player) {
+                Player playerentity = (Player) entity;
+                if (playerentity.getAbilities().instabuild) {
                     this.setDisplayedItem(ItemStack.EMPTY);
                     return;
                 }
             }
 
             if (shouldDropSelf) {
-                this.entityDropItem(this.getItem());
+                this.spawnAtLocation(this.getItem());
             }
 
             if (!displayStack.isEmpty()) {
                 displayStack = displayStack.copy();
-                if (this.rand.nextFloat() < this.itemDropChance) {
-                    this.entityDropItem(displayStack);
+                if (this.random.nextFloat() < this.itemDropChance) {
+                    this.spawnAtLocation(displayStack);
                 }
             }
         }
@@ -217,7 +218,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
     @Nonnull
     public ItemStack getDisplayedItem() {
-        return this.getDataManager().get(ITEM);
+        return this.getEntityData().get(ITEM);
     }
 
     public void setDisplayedItem(@Nonnull ItemStack stack) {
@@ -230,34 +231,31 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
             stack.setCount(1);
         }
 
-        this.getDataManager().set(ITEM, stack);
+        this.getEntityData().set(ITEM, stack);
         if (!stack.isEmpty()) {
             this.playSound(AquacultureSounds.FISH_MOUNT_ADD_ITEM, 1.0F, 1.0F);
         }
 
-        if (shouldUpdate && this.hangingPosition != null) {
-            this.world.updateComparatorOutputLevel(this.hangingPosition, Blocks.AIR);
+        if (shouldUpdate && this.pos != null) {
+            this.level.updateNeighbourForOutputSignal(this.pos, Blocks.AIR);
         }
     }
 
     @Override
-    public boolean replaceItemInInventory(int inventorySlot, @Nonnull ItemStack stack) {
-        if (inventorySlot == 0) {
+    public void setItemSlot(@Nonnull EquipmentSlot slot, @Nonnull ItemStack stack) {
+        if (slot == EquipmentSlot.MAINHAND) {
             this.setDisplayedItem(stack);
-            return true;
-        } else {
-            return false;
         }
     }
 
     @Override
-    public void notifyDataManagerChange(DataParameter<?> key) {
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (key.equals(ITEM)) {
             ItemStack displayStack = this.getDisplayedItem();
             if (displayStack != null && !displayStack.isEmpty()) {
                 EntityType entityType = ForgeRegistries.ENTITIES.getValue(displayStack.getItem().getRegistryName());
                 if (entityType != null && entityType != EntityType.PIG) {
-                    this.entity = entityType.create(this.world);
+                    this.entity = entityType.create(this.level);
                 }
             } else {
                 this.entity = null;
@@ -266,27 +264,27 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
         if (!this.getDisplayedItem().isEmpty()) {
-            compound.put("Item", this.getDisplayedItem().write(new CompoundNBT()));
+            compound.put("Item", this.getDisplayedItem().save(new CompoundTag()));
             compound.putFloat("ItemDropChance", this.itemDropChance);
         }
-        compound.putByte("Facing", (byte) this.facingDirection.getIndex());
+        compound.putByte("Facing", (byte) this.direction.get3DDataValue());
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
-        CompoundNBT nbt = compound.getCompound("Item");
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        CompoundTag nbt = compound.getCompound("Item");
         if (nbt != null && !nbt.isEmpty()) {
-            ItemStack nbtStack = ItemStack.read(nbt);
+            ItemStack nbtStack = ItemStack.of(nbt);
             if (nbtStack.isEmpty()) {
                 PRIVATE_LOGGER.warn("Unable to load item from: {}", nbt);
             }
 
             ItemStack displayStack = this.getDisplayedItem();
-            if (!displayStack.isEmpty() && !ItemStack.areItemStacksEqual(nbtStack, displayStack)) {
+            if (!displayStack.isEmpty() && !ItemStack.matches(nbtStack, displayStack)) {
                 this.setDisplayedItem(ItemStack.EMPTY);
             }
 
@@ -295,56 +293,56 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
                 this.itemDropChance = compound.getFloat("ItemDropChance");
             }
         }
-        this.updateFacingWithBoundingBox(Direction.byIndex(compound.getByte("Facing")));
+        this.setDirection(Direction.from3DDataValue(compound.getByte("Facing")));
     }
 
     @Override
     @Nonnull
-    public ActionResultType processInitialInteract(PlayerEntity player, @Nonnull Hand hand) {
-        ItemStack heldStack = player.getHeldItem(hand);
-        if (!this.world.isRemote) {
+    public InteractionResult interact(Player player, @Nonnull InteractionHand hand) {
+        ItemStack heldStack = player.getItemInHand(hand);
+        if (!this.level.isClientSide) {
             if (this.getDisplayedItem().isEmpty()) {
                 Item heldItem = heldStack.getItem();
                 EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(heldItem.getRegistryName());
                 if (entityType != EntityType.PIG && AquacultureAPI.FISH_DATA.getFish().contains(heldItem)) {
                     this.setDisplayedItem(heldStack);
-                    if (!player.abilities.isCreativeMode) {
+                    if (!player.getAbilities().instabuild) {
                         heldStack.shrink(1);
                     }
                 }
             }
-            return ActionResultType.CONSUME;
+            return InteractionResult.CONSUME;
         }
-        return super.processInitialInteract(player, hand);
+        return super.interact(player, hand);
     }
 
     @Override
     @Nonnull
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    public ItemStack getPickedResult(RayTraceResult target) {
+    public ItemStack getPickedResult(HitResult target) {
         return !this.getDisplayedItem().isEmpty() ? this.getDisplayedItem() : new ItemStack(this.getItem());
     }
 
     @Override
-    protected void setRotation(float yaw, float pitch) {
-        super.setRotation(yaw, pitch);
+    protected void setRot(float yaw, float pitch) {
+        super.setRot(yaw, pitch);
         if (pitch == 0) {
-            this.updateFacingWithBoundingBox(Direction.fromAngle(yaw));
+            this.setDirection(Direction.fromYRot(yaw));
         } else {
-            this.updateFacingWithBoundingBox(pitch < 0 ? Direction.UP : Direction.DOWN);
+            this.setDirection(pitch < 0 ? Direction.UP : Direction.DOWN);
         }
     }
 
     @Override
-    public void writeSpawnData(PacketBuffer buffer) {
+    public void writeSpawnData(FriendlyByteBuf buffer) {
         buffer.writeResourceLocation(this.getType().getRegistryName());
     }
 
     @Override
-    public void readSpawnData(PacketBuffer additionalData) {
+    public void readSpawnData(FriendlyByteBuf additionalData) {
     }
 }

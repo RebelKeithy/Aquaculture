@@ -1,28 +1,28 @@
 package com.teammetallurgy.aquaculture.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FarmlandBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
 import javax.annotation.Nonnull;
 
-public class FarmlandMoistBlock extends FarmlandBlock {
+public class FarmlandMoistBlock extends FarmBlock {
 
     public FarmlandMoistBlock() {
-        super(Block.Properties.create(Material.EARTH).hardnessAndResistance(0.6F).sound(SoundType.GROUND));
-        this.setDefaultState(this.stateContainer.getBaseState().with(MOISTURE, 7));
+        super(Block.Properties.of(Material.DIRT).strength(0.6F).sound(SoundType.GRAVEL));
+        this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, 7));
     }
 
     @Override
-    public boolean canSustainPlant(@Nonnull BlockState state, @Nonnull IBlockReader world, BlockPos pos, @Nonnull Direction facing, IPlantable plantable) {
-        PlantType type = plantable.getPlantType(world, pos.offset(facing));
+    public boolean canSustainPlant(@Nonnull BlockState state, @Nonnull BlockGetter world, BlockPos pos, @Nonnull Direction facing, IPlantable plantable) {
+        PlantType type = plantable.getPlantType(world, pos.relative(facing));
 
         return type == PlantType.CROP || type == PlantType.PLAINS;
     }

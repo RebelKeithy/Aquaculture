@@ -1,26 +1,27 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.item.IDyeableArmorItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.HandSide;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Matrix3f;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.FishingRodItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -30,37 +31,37 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
     private static final ResourceLocation BOBBER_OVERLAY = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_overlay.png");
     private static final ResourceLocation BOBBER_VANILLA = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/bobber/bobber_vanilla.png");
     private static final ResourceLocation HOOK = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/rod/hook/hook.png");
-    private static final RenderType BOBBER_RENDER = RenderType.getEntityCutout(BOBBER);
-    private static final RenderType BOBBER_OVERLAY_RENDER = RenderType.getEntityCutout(BOBBER_OVERLAY);
-    private static final RenderType BOBBER_VANILLA_RENDER = RenderType.getEntityCutout(BOBBER_VANILLA);
-    private static final RenderType HOOK_RENDER = RenderType.getEntityCutout(HOOK);
+    private static final RenderType BOBBER_RENDER = RenderType.entityCutout(BOBBER);
+    private static final RenderType BOBBER_OVERLAY_RENDER = RenderType.entityCutout(BOBBER_OVERLAY);
+    private static final RenderType BOBBER_VANILLA_RENDER = RenderType.entityCutout(BOBBER_VANILLA);
+    private static final RenderType HOOK_RENDER = RenderType.entityCutout(HOOK);
 
-    public AquaBobberRenderer(EntityRendererManager manager) {
-        super(manager);
+    public AquaBobberRenderer(EntityRendererProvider.Context context) {
+        super(context);
     }
 
     @Override
-    public void render(@Nonnull AquaFishingBobberEntity bobber, float entityYaw, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
-        PlayerEntity angler = bobber.func_234606_i_();
+    public void render(@Nonnull AquaFishingBobberEntity bobber, float entityYaw, float partialTicks, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i) {
+        Player angler = bobber.getPlayerOwner();
         if (angler != null) {
-            matrixStack.push();
-            matrixStack.push(); //Start Hook/Bobber rendering
+            matrixStack.pushPose();
+            matrixStack.pushPose(); //Start Hook/Bobber rendering
             matrixStack.scale(0.5F, 0.5F, 0.5F);
-            matrixStack.rotate(this.renderManager.getCameraOrientation());
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F));
-            MatrixStack.Entry bobberMatrix = matrixStack.getLast();
-            Matrix4f posMatrix = bobberMatrix.getMatrix();
-            Matrix3f matrix3f = bobberMatrix.getNormal();
+            matrixStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+            PoseStack.Pose bobberMatrix = matrixStack.last();
+            Matrix4f posMatrix = bobberMatrix.pose();
+            Matrix3f matrix3f = bobberMatrix.normal();
             //Bobber + Bobber Overlay
-            IVertexBuilder bobberOverlayVertex = bobber.hasBobber() ? buffer.getBuffer(BOBBER_OVERLAY_RENDER) : buffer.getBuffer(BOBBER_VANILLA_RENDER);
+            VertexConsumer bobberOverlayVertex = bobber.hasBobber() ? buffer.getBuffer(BOBBER_OVERLAY_RENDER) : buffer.getBuffer(BOBBER_VANILLA_RENDER);
             //Bobber Overlay
             ItemStack bobberStack = bobber.getBobber();
             float bobberR = 1.0F;
             float bobberG = 1.0F;
             float bobberB = 1.0F;
             if (!bobberStack.isEmpty()) {
-                if (bobberStack.getItem() instanceof IDyeableArmorItem) {
-                    int colorInt = ((IDyeableArmorItem) bobberStack.getItem()).getColor(bobberStack);
+                if (bobberStack.getItem() instanceof DyeableLeatherItem) {
+                    int colorInt = ((DyeableLeatherItem) bobberStack.getItem()).getColor(bobberStack);
                     bobberR = (float) (colorInt >> 16 & 255) / 255.0F;
                     bobberG = (float) (colorInt >> 8 & 255) / 255.0F;
                     bobberB = (float) (colorInt & 255) / 255.0F;
@@ -72,63 +73,63 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             renderPosTextureColor(bobberOverlayVertex, posMatrix, matrix3f, i, 0.0F, 1, 0, 0, bobberR, bobberG, bobberB);
             //Bobber Background
             if (bobber.hasBobber()) {
-                IVertexBuilder bobberVertex = buffer.getBuffer(BOBBER_RENDER);
+                VertexConsumer bobberVertex = buffer.getBuffer(BOBBER_RENDER);
                 renderPosTexture(bobberVertex, posMatrix, matrix3f, i, 0.0F, 0, 0, 1);
                 renderPosTexture(bobberVertex, posMatrix, matrix3f, i, 1.0F, 0, 1, 1);
                 renderPosTexture(bobberVertex, posMatrix, matrix3f, i, 1.0F, 1, 1, 0);
                 renderPosTexture(bobberVertex, posMatrix, matrix3f, i, 0.0F, 1, 0, 0);
             }
             //Hook
-            IVertexBuilder hookVertex = bobber.hasHook() ? buffer.getBuffer(RenderType.getEntityCutout(bobber.getHook().getTexture())) : buffer.getBuffer(HOOK_RENDER);
+            VertexConsumer hookVertex = bobber.hasHook() ? buffer.getBuffer(RenderType.entityCutout(bobber.getHook().getTexture())) : buffer.getBuffer(HOOK_RENDER);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 0.0F, 0, 0, 1);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 1.0F, 0, 1, 1);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 1.0F, 1, 1, 0);
             renderPosTexture(hookVertex, posMatrix, matrix3f, i, 0.0F, 1, 0, 0);
-            matrixStack.pop(); //End Hook/Bobber rendering
+            matrixStack.popPose(); //End Hook/Bobber rendering
 
-            int hand = angler.getPrimaryHand() == HandSide.RIGHT ? 1 : -1;
-            ItemStack heldMain = angler.getHeldItemMainhand();
+            int hand = angler.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
+            ItemStack heldMain = angler.getMainHandItem();
             if (!(heldMain.getItem() instanceof FishingRodItem)) {
                 hand = -hand;
             }
 
-            float swingProgress = angler.getSwingProgress(partialTicks);
-            float swingProgressSqrt = MathHelper.sin(MathHelper.sqrt(swingProgress) * (float) Math.PI);
-            float yawOffset = MathHelper.lerp(partialTicks, angler.prevRenderYawOffset, angler.renderYawOffset) * ((float) Math.PI / 180.0F);
-            double sin = MathHelper.sin(yawOffset);
-            double cos = MathHelper.cos(yawOffset);
+            float swingProgress = angler.getAttackAnim(partialTicks);
+            float swingProgressSqrt = Mth.sin(Mth.sqrt(swingProgress) * (float) Math.PI);
+            float yawOffset = Mth.lerp(partialTicks, angler.yBodyRotO, angler.yBodyRot) * ((float) Math.PI / 180.0F);
+            double sin = Mth.sin(yawOffset);
+            double cos = Mth.cos(yawOffset);
             double handOffset = (double) hand * 0.35D;
             double anglerX;
             double anglerY;
             double anglerZ;
             float anglerEye;
-            if ((this.renderManager.options == null || this.renderManager.options.getPointOfView().func_243192_a()) && angler == Minecraft.getInstance().player) {
-                double fov = Objects.requireNonNull(this.renderManager.options).fov;
+            if ((this.entityRenderDispatcher.options == null || this.entityRenderDispatcher.options.getCameraType().isFirstPerson()) && angler == Minecraft.getInstance().player) {
+                double fov = Objects.requireNonNull(this.entityRenderDispatcher.options).fov;
                 fov /= 100.0D;
-                Vector3d rod = new Vector3d((double) hand * -0.36D * fov, -0.045D * fov, 0.4D);
-                rod = rod.rotatePitch(-MathHelper.lerp(partialTicks, angler.prevRotationPitch, angler.rotationPitch) * ((float) Math.PI / 180F));
-                rod = rod.rotateYaw(-MathHelper.lerp(partialTicks, angler.prevRotationYaw, angler.rotationYaw) * ((float) Math.PI / 180F));
-                rod = rod.rotateYaw(swingProgressSqrt * 0.5F);
-                rod = rod.rotatePitch(-swingProgressSqrt * 0.7F);
-                anglerX = MathHelper.lerp(partialTicks, angler.prevPosX, angler.getPosX()) + rod.x;
-                anglerY = MathHelper.lerp(partialTicks, angler.prevPosY, angler.getPosY()) + rod.y;
-                anglerZ = MathHelper.lerp(partialTicks, angler.prevPosZ, angler.getPosZ()) + rod.z;
+                Vec3 rod = new Vec3((double) hand * -0.36D * fov, -0.045D * fov, 0.4D);
+                rod = rod.xRot(-Mth.lerp(partialTicks, angler.xRotO, angler.getXRot()) * ((float) Math.PI / 180F));
+                rod = rod.yRot(-Mth.lerp(partialTicks, angler.yRotO, angler.getYRot()) * ((float) Math.PI / 180F));
+                rod = rod.yRot(swingProgressSqrt * 0.5F);
+                rod = rod.xRot(-swingProgressSqrt * 0.7F);
+                anglerX = Mth.lerp(partialTicks, angler.xo, angler.getX()) + rod.x;
+                anglerY = Mth.lerp(partialTicks, angler.yo, angler.getY()) + rod.y;
+                anglerZ = Mth.lerp(partialTicks, angler.zo, angler.getZ()) + rod.z;
                 anglerEye = angler.getEyeHeight();
             } else {
-                anglerX = MathHelper.lerp(partialTicks, angler.prevPosX, angler.getPosX()) - cos * handOffset - sin * 0.8D;
-                anglerY = angler.prevPosY + (double) angler.getEyeHeight() + (angler.getPosY() - angler.prevPosY) * (double) partialTicks - 0.45D;
-                anglerZ = MathHelper.lerp(partialTicks, angler.prevPosZ, angler.getPosZ()) - sin * handOffset + cos * 0.8D;
+                anglerX = Mth.lerp(partialTicks, angler.xo, angler.getX()) - cos * handOffset - sin * 0.8D;
+                anglerY = angler.yo + (double) angler.getEyeHeight() + (angler.getY() - angler.yo) * (double) partialTicks - 0.45D;
+                anglerZ = Mth.lerp(partialTicks, angler.zo, angler.getZ()) - sin * handOffset + cos * 0.8D;
                 anglerEye = angler.isCrouching() ? -0.1875F : 0.0F;
             }
 
-            double bobberX = MathHelper.lerp(partialTicks, bobber.prevPosX, bobber.getPosX());
-            double bobberY = MathHelper.lerp(partialTicks, bobber.prevPosY, bobber.getPosY()) + 0.25D;
-            double bobberZ = MathHelper.lerp(partialTicks, bobber.prevPosZ, bobber.getPosZ());
+            double bobberX = Mth.lerp(partialTicks, bobber.xo, bobber.getX());
+            double bobberY = Mth.lerp(partialTicks, bobber.yo, bobber.getY()) + 0.25D;
+            double bobberZ = Mth.lerp(partialTicks, bobber.zo, bobber.getZ());
             float startX = (float) (anglerX - bobberX);
             float startY = (float) (anglerY - bobberY) + anglerEye;
             float startZ = (float) (anglerZ - bobberZ);
-            IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.getLines());
-            Matrix4f matrix4f1 = matrixStack.getLast().getMatrix();
+            VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.lines());
+            Matrix4f matrix4f1 = matrixStack.last().pose();
 
             //Line color
             ItemStack line = bobber.getFishingLine();
@@ -136,8 +137,8 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             float g = 0;
             float b = 0;
             if (!line.isEmpty()) {
-                IDyeableArmorItem lineItem = (IDyeableArmorItem) line.getItem();
-                if (lineItem.hasColor(line)) {
+                DyeableLeatherItem lineItem = (DyeableLeatherItem) line.getItem();
+                if (lineItem.hasCustomColor(line)) {
                     int colorInt = lineItem.getColor(line);
                     r = (float) (colorInt >> 16 & 255) / 255.0F;
                     g = (float) (colorInt >> 8 & 255) / 255.0F;
@@ -148,27 +149,27 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
                 renderPosColor(startX, startY, startZ, vertexBuilder, matrix4f1, divide(size, 16), r, g, b);
                 renderPosColor(startX, startY, startZ, vertexBuilder, matrix4f1, divide(size + 1, 16), r, g, b);
             }
-            matrixStack.pop();
+            matrixStack.popPose();
             super.render(bobber, entityYaw, partialTicks, matrixStack, buffer, i);
         }
     }
 
     @Override
     @Nonnull
-    public ResourceLocation getEntityTexture(@Nonnull AquaFishingBobberEntity fishHook) {
+    public ResourceLocation getTextureLocation(@Nonnull AquaFishingBobberEntity fishHook) {
         return BOBBER_VANILLA;
     }
 
-    private static void renderPosTexture(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v) {
-        builder.pos(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(255, 255, 255, 255).tex((float) u, (float) v).overlay(OverlayTexture.NO_OVERLAY).lightmap(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+    private static void renderPosTexture(VertexConsumer builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v) {
+        builder.vertex(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(255, 255, 255, 255).uv((float) u, (float) v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    private static void renderPosTextureColor(IVertexBuilder builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v, float r, float g, float b) {
-        builder.pos(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(r, g, b, 1.0F).tex((float) u, (float) v).overlay(OverlayTexture.NO_OVERLAY).lightmap(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+    private static void renderPosTextureColor(VertexConsumer builder, Matrix4f matrix4f, Matrix3f matrix3f, int i, float x, int y, int u, int v, float r, float g, float b) {
+        builder.vertex(matrix4f, x - 0.5F, (float) y - 0.5F, 0.0F).color(r, g, b, 1.0F).uv((float) u, (float) v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(i).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    private static void renderPosColor(float x, float y, float z, IVertexBuilder builder, Matrix4f matrix4f, float f, float r, float g, float b) {
-        builder.pos(matrix4f, x * f, y * (f * f + f) * 0.5F + 0.25F, z * f).color(r, g, b, 1.0F).endVertex();
+    private static void renderPosColor(float x, float y, float z, VertexConsumer builder, Matrix4f matrix4f, float f, float r, float g, float b) {
+        builder.vertex(matrix4f, x * f, y * (f * f + f) * 0.5F + 0.25F, z * f).color(r, g, b, 1.0F).endVertex();
     }
 
     private static float divide(int value1, int value2) {

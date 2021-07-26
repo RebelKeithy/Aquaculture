@@ -7,16 +7,17 @@ import com.teammetallurgy.aquaculture.init.AquaLootTables;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.resources.ResourcePackType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.moddiscovery.ModFile;
+import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.BufferedReader;
@@ -39,8 +40,8 @@ public class FishReadFromJson {
             String filePath = Aquaculture.MOD_ID + "/loot_tables/" + AquaLootTables.FISH.getPath() + ".json";
             InputStreamReader fileReader;
             if (Aquaculture.IS_DEV) {
-                ModFile modFile = ModList.get().getModFileById(Aquaculture.MOD_ID).getFile();
-                Path root = modFile.getLocator().findPath(modFile, ResourcePackType.SERVER_DATA.getDirectoryName()).toAbsolutePath();
+                IModFile modFile = ModList.get().getModFileById(Aquaculture.MOD_ID).getFile();
+                Path root = modFile.findResource(PackType.SERVER_DATA.getDirectory()).toAbsolutePath();
                 fileReader = new FileReader(root.resolve(root.getFileSystem().getPath(filePath)).toFile());
             } else {
                 fileReader = new InputStreamReader(Aquaculture.instance.getClass().getResourceAsStream("/data/" + filePath));
@@ -130,7 +131,7 @@ public class FishReadFromJson {
                     }
 
                     int weight = FISH_WEIGHT_MAP.get(fish) / 3;
-                    int maxGroupSize = MathHelper.clamp((FISH_WEIGHT_MAP.get(fish) / 10), 1, 8);
+                    int maxGroupSize = Mth.clamp((FISH_WEIGHT_MAP.get(fish) / 10), 1, 8);
                     if (weight < 1) weight = 1;
                     if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
                         Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
@@ -139,7 +140,7 @@ public class FishReadFromJson {
                     if (name != null) {
                         for (ResourceLocation biome : FISH_BIOME_MAP.get(fish)) {
                             if (name.equals(biome)) {
-                                event.getSpawns().getSpawner(EntityClassification.WATER_AMBIENT).add(new MobSpawnInfo.Spawners(fish, weight, 1, maxGroupSize));
+                                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(fish, weight, 1, maxGroupSize));
                             }
                         }
                     }

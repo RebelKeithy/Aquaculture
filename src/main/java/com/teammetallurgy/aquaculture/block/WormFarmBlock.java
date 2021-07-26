@@ -5,27 +5,27 @@ import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,7 +34,7 @@ import java.util.Random;
 public class WormFarmBlock extends ComposterBlock {
 
     public WormFarmBlock() {
-        super(Block.Properties.create(Material.WOOD).hardnessAndResistance(0.6F).sound(SoundType.WOOD));
+        super(Block.Properties.of(Material.WOOD).strength(0.6F).sound(SoundType.WOOD));
     }
 
     public static void addCompostables() {
@@ -46,64 +46,64 @@ public class WormFarmBlock extends ComposterBlock {
                 if (fishStack.getTag() != null && fishStack.getTag().contains("fishWeight")) {
                     weight = fishStack.getTag().getDouble("fishWeight");
                 }
-                float chance = MathHelper.clamp((FishData.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
+                float chance = Mth.clamp((FishData.getFilletAmountFromWeight(weight) * 0.25F), 0.05F, 0.65F);
                 registerCompostable(fish, chance);
             }
         }
     }
 
     public static void registerCompostable(Item item, float chance) {
-        if (!CHANCES.containsKey(item) && CHANCES.size() < 256) {
-            CHANCES.put(item, chance);
+        if (!COMPOSTABLES.containsKey(item) && COMPOSTABLES.size() < 256) {
+            COMPOSTABLES.put(item, chance);
         }
     }
 
     @Override
     @Nonnull
-    public ActionResultType onBlockActivated(BlockState state, @Nonnull World world, @Nonnull BlockPos pos, PlayerEntity player, @Nonnull Hand hand, BlockRayTraceResult raytrace) {
-        int level = state.get(LEVEL);
-        ItemStack heldStack = player.getHeldItem(hand);
+    public InteractionResult use(BlockState state, @Nonnull Level world, @Nonnull BlockPos pos, Player player, @Nonnull InteractionHand hand, BlockHitResult raytrace) {
+        int level = state.getValue(LEVEL);
+        ItemStack heldStack = player.getItemInHand(hand);
 
-        if (CHANCES.containsKey(heldStack.getItem())) {
-            if (level < 8 && !world.isRemote) {
+        if (COMPOSTABLES.containsKey(heldStack.getItem())) {
+            if (level < 8 && !world.isClientSide) {
                 boolean addItem = WormFarmBlock.addItem(state, world, pos, heldStack);
-                world.playEvent(1500, pos, addItem ? 1 : 0);
-                if (!player.abilities.isCreativeMode) {
+                world.levelEvent(1500, pos, addItem ? 1 : 0);
+                if (!player.getAbilities().instabuild) {
                     heldStack.shrink(1);
                 }
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         } else if (level > 0) {
-            if (!world.isRemote) {
-                double x = (double) (world.rand.nextFloat() * 0.7F) + 0.15000000596046448D;
-                double y = (double) (world.rand.nextFloat() * 0.7F) + 0.06000000238418579D + 0.6D;
-                double z = (double) (world.rand.nextFloat() * 0.7F) + 0.15000000596046448D;
+            if (!world.isClientSide) {
+                double x = (double) (world.random.nextFloat() * 0.7F) + 0.15000000596046448D;
+                double y = (double) (world.random.nextFloat() * 0.7F) + 0.06000000238418579D + 0.6D;
+                double z = (double) (world.random.nextFloat() * 0.7F) + 0.15000000596046448D;
                 ItemEntity itemEntity = new ItemEntity(world, (double) pos.getX() + x, (double) pos.getY() + y, (double) pos.getZ() + z, new ItemStack(AquaItems.WORM));
-                itemEntity.setDefaultPickupDelay();
-                world.addEntity(itemEntity);
+                itemEntity.setDefaultPickUpDelay();
+                world.addFreshEntity(itemEntity);
             }
-            world.setBlockState(pos, state.with(LEVEL, state.get(LEVEL) - 1), 3);
-            world.playSound(null, pos, AquacultureSounds.WORM_FARM_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            return ActionResultType.SUCCESS;
+            world.setBlock(pos, state.setValue(LEVEL, state.getValue(LEVEL) - 1), 3);
+            world.playSound(null, pos, AquacultureSounds.WORM_FARM_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+            return InteractionResult.SUCCESS;
         } else {
-            return ActionResultType.FAIL;
+            return InteractionResult.FAIL;
         }
     }
 
     @Override
-    public void tick(BlockState state, @Nonnull ServerWorld world, @Nonnull BlockPos pos, Random random) {
+    public void tick(BlockState state, @Nonnull ServerLevel world, @Nonnull BlockPos pos, Random random) {
     }
     
-    private static boolean addItem(BlockState state, IWorld world, BlockPos pos, @Nonnull ItemStack stack) {
-        int level = state.get(LEVEL);
-        float chance = CHANCES.getFloat(stack.getItem());
+    private static boolean addItem(BlockState state, LevelAccessor world, BlockPos pos, @Nonnull ItemStack stack) {
+        int level = state.getValue(LEVEL);
+        float chance = COMPOSTABLES.getFloat(stack.getItem());
         if ((level != 0 || chance <= 0.0F) && world.getRandom().nextDouble() >= (double) chance) {
             return false;
         } else {
             int levelAdd = level + 1;
-            world.setBlockState(pos, state.with(LEVEL, levelAdd), 3);
+            world.setBlock(pos, state.setValue(LEVEL, levelAdd), 3);
             if (levelAdd == 7) {
-                world.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), 20);
+                world.getBlockTicks().scheduleTick(pos, state.getBlock(), 20);
             }
             return true;
         }
@@ -111,8 +111,8 @@ public class WormFarmBlock extends ComposterBlock {
 
     @Override
     @Nonnull
-    public ISidedInventory createInventory(BlockState state, @Nonnull IWorld world, @Nonnull BlockPos pos) {
-        int level = state.get(LEVEL);
+    public WorldlyContainer getContainer(BlockState state, @Nonnull LevelAccessor world, @Nonnull BlockPos pos) {
+        int level = state.getValue(LEVEL);
         if (level == 8) {
             return new FullInventory(state, world, pos, new ItemStack(AquaItems.WORM));
         } else {
@@ -120,13 +120,13 @@ public class WormFarmBlock extends ComposterBlock {
         }
     }
 
-    static class PartialInventory extends Inventory implements ISidedInventory {
+    static class PartialInventory extends SimpleContainer implements WorldlyContainer {
         private final BlockState state;
-        private final IWorld world;
+        private final LevelAccessor world;
         private final BlockPos pos;
         private boolean inserted;
 
-        PartialInventory(BlockState state, IWorld world, BlockPos pos) {
+        PartialInventory(BlockState state, LevelAccessor world, BlockPos pos) {
             super(1);
             this.state = state;
             this.world = world;
@@ -134,7 +134,7 @@ public class WormFarmBlock extends ComposterBlock {
         }
 
         @Override
-        public int getInventoryStackLimit() {
+        public int getMaxStackSize() {
             return 1;
         }
 
@@ -145,34 +145,34 @@ public class WormFarmBlock extends ComposterBlock {
         }
 
         @Override
-        public boolean canInsertItem(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
-            return !this.inserted && direction == Direction.UP && ComposterBlock.CHANCES.containsKey(stack.getItem());
+        public boolean canPlaceItemThroughFace(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
+            return !this.inserted && direction == Direction.UP && ComposterBlock.COMPOSTABLES.containsKey(stack.getItem());
         }
 
         @Override
-        public boolean canExtractItem(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
+        public boolean canTakeItemThroughFace(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
             return false;
         }
 
         @Override
-        public void markDirty() {
-            ItemStack stack = this.getStackInSlot(0);
+        public void setChanged() {
+            ItemStack stack = this.getItem(0);
             if (!stack.isEmpty()) {
                 this.inserted = true;
                 WormFarmBlock.addItem(this.state, this.world, this.pos, stack);
-                this.removeStackFromSlot(0);
+                this.removeItemNoUpdate(0);
             }
 
         }
     }
 
-    static class FullInventory extends Inventory implements ISidedInventory {
+    static class FullInventory extends SimpleContainer implements WorldlyContainer {
         private final BlockState state;
-        private final IWorld world;
+        private final LevelAccessor world;
         private final BlockPos pos;
         private boolean extracted;
 
-        FullInventory(BlockState state, IWorld world, BlockPos pos, @Nonnull ItemStack stack) {
+        FullInventory(BlockState state, LevelAccessor world, BlockPos pos, @Nonnull ItemStack stack) {
             super(stack);
             this.state = state;
             this.world = world;
@@ -180,7 +180,7 @@ public class WormFarmBlock extends ComposterBlock {
         }
 
         @Override
-        public int getInventoryStackLimit() {
+        public int getMaxStackSize() {
             return 1;
         }
 
@@ -191,23 +191,23 @@ public class WormFarmBlock extends ComposterBlock {
         }
 
         @Override
-        public boolean canInsertItem(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
+        public boolean canPlaceItemThroughFace(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
             return false;
         }
 
         @Override
-        public boolean canExtractItem(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
+        public boolean canTakeItemThroughFace(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
             return !this.extracted && direction == Direction.DOWN && stack.getItem() == AquaItems.WORM;
         }
 
         @Override
-        public void markDirty() {
-            this.world.setBlockState(this.pos, this.state.with(LEVEL, 0), 3);
+        public void setChanged() {
+            this.world.setBlock(this.pos, this.state.setValue(LEVEL, 0), 3);
             this.extracted = true;
         }
     }
 
-    static class EmptyInventory extends Inventory implements ISidedInventory {
+    static class EmptyInventory extends SimpleContainer implements WorldlyContainer {
 
         EmptyInventory() {
             super(0);
@@ -220,12 +220,12 @@ public class WormFarmBlock extends ComposterBlock {
         }
 
         @Override
-        public boolean canInsertItem(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
+        public boolean canPlaceItemThroughFace(int index, @Nonnull ItemStack stack, @Nullable Direction direction) {
             return false;
         }
 
         @Override
-        public boolean canExtractItem(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
+        public boolean canTakeItemThroughFace(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
             return false;
         }
     }

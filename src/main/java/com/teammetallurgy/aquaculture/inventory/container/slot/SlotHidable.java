@@ -1,8 +1,8 @@
 package com.teammetallurgy.aquaculture.inventory.container.slot;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
@@ -25,26 +25,26 @@ public class SlotHidable extends SlotItemHandler {
     }
 
     @Override
-    public boolean isItemValid(@Nonnull ItemStack stack) {
-        return this.fishingRod.getHasStack();
+    public boolean mayPlace(@Nonnull ItemStack stack) {
+        return this.fishingRod.hasItem();
     }
 
     @Override
-    public boolean canTakeStack(PlayerEntity player) {
-        return this.fishingRod.getHasStack() && super.canTakeStack(player);
+    public boolean mayPickup(Player player) {
+        return this.fishingRod.hasItem() && super.mayPickup(player);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isEnabled() {
-        return this.fishingRod.getHasStack();
+    public boolean isActive() {
+        return this.fishingRod.hasItem();
     }
 
     @Override
-    public void onSlotChanged() { //Save changes to the rod
-        ItemStack stack = this.fishingRod.getStack();
+    public void setChanged() { //Save changes to the rod
+        ItemStack stack = this.fishingRod.getItem();
         if (!stack.isEmpty()) {
-            CompoundNBT tag = stack.getOrCreateTag();
+            CompoundTag tag = stack.getOrCreateTag();
             tag.put("Inventory", ((ItemStackHandler) getItemHandler()).serializeNBT());
             stack.setTag(tag);
         }

@@ -2,14 +2,19 @@ package com.teammetallurgy.aquaculture.init;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.EntityHasProperty;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.FishingHookPredicate;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import java.util.List;
 
@@ -34,32 +39,32 @@ public class AquaLootTables {
     public static final ResourceLocation NETHER_TREASURE = register("gameplay/fishing/nether/treasure");
 
     private static ResourceLocation register(String path) {
-        return LootTables.register(new ResourceLocation(Aquaculture.MOD_ID, path));
+        return BuiltInLootTables.register(new ResourceLocation(Aquaculture.MOD_ID, path));
     }
 
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
-        if (name.equals(LootTables.GAMEPLAY_FISHING)) {
+        if (name.equals(BuiltInLootTables.FISHING)) {
             LootPool pool = event.getTable().getPool("main");
             if (pool != null) {
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.NEPTUNIUM_OPTIONS.addNeptunesBountyToLoot.get()) {
-                    LootEntry neptuniumEntry = TableLootEntry.builder(NEPTUNIUM).weight(1).quality(2).acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS, EntityPredicate.Builder.create().fishing(FishingPredicate.func_234640_a_(true)))).build();
+                    LootPoolEntryContainer neptuniumEntry = LootTableReference.lootTableReference(NEPTUNIUM).setWeight(1).setQuality(2).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().fishingHook(FishingHookPredicate.inOpenWater(true)))).build();
                     addEntry(pool, neptuniumEntry);
                 }
             }
         }
     }
 
-    private static LootEntry getInjectEntry(ResourceLocation location, int weight, int quality) {
-        return TableLootEntry.builder(location).weight(weight).quality(quality).build();
+    private static LootPoolEntryContainer getInjectEntry(ResourceLocation location, int weight, int quality) {
+        return LootTableReference.lootTableReference(location).setWeight(weight).setQuality(quality).build();
     }
 
-    private static void addEntry(LootPool pool, LootEntry entry) {
+    private static void addEntry(LootPool pool, LootPoolEntryContainer entry) {
         try {
-            List<LootEntry> lootEntries = (List<LootEntry>) ObfuscationReflectionHelper.findField(LootPool.class, "field_186453_a").get(pool);
+            List<LootPoolEntryContainer> lootEntries = (List<LootPoolEntryContainer>) ObfuscationReflectionHelper.findField(LootPool.class, "entries").get(pool);
             if (lootEntries.stream().anyMatch(e -> e == entry)) {
                 throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
             }

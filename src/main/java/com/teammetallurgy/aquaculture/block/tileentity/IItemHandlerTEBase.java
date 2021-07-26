@@ -1,13 +1,14 @@
 package com.teammetallurgy.aquaculture.block.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.INameable;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -17,38 +18,38 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class IItemHandlerTEBase extends TileEntity implements INameable {
-    private ITextComponent customName;
+public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable {
+    private Component customName;
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(this::createItemHandler);
 
-    public IItemHandlerTEBase(TileEntityType<?> tileEntityType) {
-        super(tileEntityType);
+    public IItemHandlerTEBase(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
+        super(tileEntityType, pos, state);
     }
 
     @Nonnull
     protected abstract IItemHandler createItemHandler();
 
     @Override
-    public void read(@Nonnull BlockState state, CompoundNBT tag) {
-        CompoundNBT invTag = tag.getCompound("inv");
-        this.handler.ifPresent(stack -> ((INBTSerializable<CompoundNBT>) stack).deserializeNBT(invTag));
+    public void load(CompoundTag tag) {
+        CompoundTag invTag = tag.getCompound("inv");
+        this.handler.ifPresent(stack -> ((INBTSerializable<CompoundTag>) stack).deserializeNBT(invTag));
         if (tag.contains("CustomName", 8)) {
-            this.customName = ITextComponent.Serializer.getComponentFromJson(tag.getString("CustomName"));
+            this.customName = Component.Serializer.fromJson(tag.getString("CustomName"));
         }
-        super.read(state, tag);
+        super.load(tag);
     }
 
     @Override
     @Nonnull
-    public CompoundNBT write(@Nonnull CompoundNBT tag) {
+    public CompoundTag save(@Nonnull CompoundTag tag) {
         this.handler.ifPresent(stack -> {
-            CompoundNBT compound = ((INBTSerializable<CompoundNBT>) stack).serializeNBT();
+            CompoundTag compound = ((INBTSerializable<CompoundTag>) stack).serializeNBT();
             tag.put("inv", compound);
         });
         if (this.customName != null) {
-            tag.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
+            tag.putString("CustomName", Component.Serializer.toJson(this.customName));
         }
-        return super.write(tag);
+        return super.save(tag);
     }
 
     @Nonnull
@@ -62,17 +63,17 @@ public abstract class IItemHandlerTEBase extends TileEntity implements INameable
 
     @Override
     @Nonnull
-    public ITextComponent getName() {
-        return this.customName != null ? this.customName : new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+    public Component getName() {
+        return this.customName != null ? this.customName : new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 
     @Override
     @Nonnull
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return getName();
     }
 
-    public void setCustomName(ITextComponent name) {
+    public void setCustomName(Component name) {
         this.customName = name;
     }
 }

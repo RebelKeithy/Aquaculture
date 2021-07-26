@@ -1,16 +1,16 @@
 package com.teammetallurgy.aquaculture.misc;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -23,40 +23,40 @@ public class StackHelper {
     /*
      * Gives the specified ItemStack to the player
      */
-    public static void giveItem(PlayerEntity player, @Nonnull ItemStack stack) {
-        if (!player.inventory.addItemStackToInventory(stack)) {
-            player.dropItem(stack, false);
-        } else if (player instanceof ServerPlayerEntity) {
-            ((ServerPlayerEntity) player).sendContainerToPlayer(player.container);
+    public static void giveItem(Player player, @Nonnull ItemStack stack) {
+        if (!player.getInventory().add(stack)) {
+            player.drop(stack, false);
+        } else if (player instanceof ServerPlayer) {
+            player.inventoryMenu.sendAllDataToRemote();
         }
     }
 
     /*
      * Stores the TileEntity in ItemStack form, making it contain its inventory etc.
      */
-    public static ItemStack storeTEInStack(@Nonnull ItemStack stack, TileEntity tileEntity) {
-        stack.setTagInfo("BlockEntityTag", tileEntity.write(new CompoundNBT()));
+    public static ItemStack storeTEInStack(@Nonnull ItemStack stack, BlockEntity tileEntity) {
+        stack.addTagElement("BlockEntityTag", tileEntity.save(new CompoundTag()));
         return stack;
     }
 
-    public static void dropInventory(World world, BlockPos pos, IItemHandler handler) {
+    public static void dropInventory(Level world, BlockPos pos, IItemHandler handler) {
         for (int slot = 0; slot < handler.getSlots(); ++slot) {
-            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(slot));
+            Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(slot));
         }
     }
 
-    public static Hand getUsedHand(@Nonnull ItemStack stackMainHand, Class<? extends Item> clazz) {
-        return clazz.isAssignableFrom(stackMainHand.getItem().getClass()) ? Hand.MAIN_HAND : Hand.OFF_HAND;
+    public static InteractionHand getUsedHand(@Nonnull ItemStack stackMainHand, Class<? extends Item> clazz) {
+        return clazz.isAssignableFrom(stackMainHand.getItem().getClass()) ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
     }
 
     public static Ingredient mergeIngredient(Ingredient i1, Ingredient i2) {
         List<ItemStack> stackList = new ArrayList<>();
-        stackList.addAll(Arrays.asList(i1.getMatchingStacks()));
-        stackList.addAll(Arrays.asList(i2.getMatchingStacks()));
+        stackList.addAll(Arrays.asList(i1.getItems()));
+        stackList.addAll(Arrays.asList(i2.getItems()));
         return ingredientFromStackList(stackList);
     }
 
     public static Ingredient ingredientFromStackList(List<ItemStack> stackList) {
-        return Ingredient.fromItemListStream(stackList.stream().map(Ingredient.SingleItemList::new));
+        return Ingredient.fromValues(stackList.stream().map(Ingredient.ItemValue::new));
     }
 }

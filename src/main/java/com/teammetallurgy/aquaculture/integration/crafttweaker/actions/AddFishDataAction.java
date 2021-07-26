@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.integration.crafttweaker.actions;
+/*package com.teammetallurgy.aquaculture.integration.crafttweaker.actions;
 
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
@@ -53,4 +53,4 @@ public class AddFishDataAction implements IUndoableAction {
     public String describeUndo() {
         return "Undoing removal of FishData for: " + this.fish.getRegistryName();
     }
-}
+}*/

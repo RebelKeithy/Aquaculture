@@ -7,18 +7,17 @@ import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
 import com.teammetallurgy.aquaculture.item.FishMountItem;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.OcelotEntity;
-import net.minecraft.entity.passive.fish.AbstractFishEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,8 +34,8 @@ public class FishRegistry {
     public static List<EntityType<FishMountEntity>> fishMounts = Lists.newArrayList();
 
     public static Item registerFishMount(@Nonnull String name) {
-        EntityType.Builder<FishMountEntity> fishMountBuilder = EntityType.Builder.<FishMountEntity>create(FishMountEntity::new, EntityClassification.MISC)
-                .size(0.5F, 0.5F)
+        EntityType.Builder<FishMountEntity> fishMountBuilder = EntityType.Builder.<FishMountEntity>of(FishMountEntity::new, MobCategory.MISC)
+                .sized(0.5F, 0.5F)
                 .setCustomClientFactory(FishMountEntity::new);
         EntityType<FishMountEntity> fishMount = AquaEntities.register(name, fishMountBuilder);
         FishMountItem fishMountItem = new FishMountItem(fishMount);
@@ -61,7 +60,7 @@ public class FishRegistry {
      */
     public static Item register(@Nonnull Item fishItem, @Nonnull String name, FishType fishSize) {
         AquaItems.register(fishItem, name);
-        EntityType<AquaFishEntity> fish = EntityType.Builder.create(AquaFishEntity::new, EntityClassification.WATER_AMBIENT).size(fishSize.getWidth(), fishSize.getHeight()).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
+        EntityType<AquaFishEntity> fish = EntityType.Builder.of(AquaFishEntity::new, MobCategory.WATER_AMBIENT).sized(fishSize.getWidth(), fishSize.getHeight()).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
         registerFishEntity(name, fish);
         AquaFishEntity.TYPES.put(fish, fishSize);
         return fishItem;
@@ -78,27 +77,27 @@ public class FishRegistry {
     public static void registerFishies(RegistryEvent.Register<EntityType<?>> event) {
         for (EntityType<AquaFishEntity> entityType : fishEntities) {
             event.getRegistry().register(entityType);
-            EntitySpawnPlacementRegistry.register(entityType, EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
+            SpawnPlacements.register(entityType, SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
         }
     }
 
     @SubscribeEvent
     public static void addFishEntity0Attributes(EntityAttributeCreationEvent event) {
         for (EntityType<AquaFishEntity> entityType : fishEntities) {
-            event.put(entityType, AbstractFishEntity.func_234176_m_().create());
+            event.put(entityType, AbstractFish.createAttributes().build());
         }
     }
 
     public static void addCatBreeding() {
         try {
-            Ingredient catBreedingItems = CatEntity.BREEDING_ITEMS;
-            Ingredient ocelotBreedingItems = OcelotEntity.BREEDING_ITEMS;
+            Ingredient catBreedingItems = Cat.TEMPT_INGREDIENT;
+            Ingredient ocelotBreedingItems = Ocelot.TEMPT_INGREDIENT;
             List<ItemStack> aquaFish = new ArrayList<>();
             fishEntities.forEach(f -> aquaFish.add(new ItemStack(ForgeRegistries.ITEMS.getValue(f.getRegistryName()))));
             aquaFish.removeIf(p -> p.getItem().equals(AquaItems.JELLYFISH));
 
-            CatEntity.BREEDING_ITEMS = StackHelper.mergeIngredient(catBreedingItems, StackHelper.ingredientFromStackList(aquaFish));
-            OcelotEntity.BREEDING_ITEMS = StackHelper.mergeIngredient(ocelotBreedingItems, StackHelper.ingredientFromStackList(aquaFish));
+            Cat.TEMPT_INGREDIENT = StackHelper.mergeIngredient(catBreedingItems, StackHelper.ingredientFromStackList(aquaFish));
+            Ocelot.TEMPT_INGREDIENT = StackHelper.mergeIngredient(ocelotBreedingItems, StackHelper.ingredientFromStackList(aquaFish));
         } catch (Throwable t) {
             t.printStackTrace();
         }

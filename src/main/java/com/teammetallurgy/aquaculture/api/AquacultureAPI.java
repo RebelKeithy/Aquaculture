@@ -4,11 +4,11 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.item.BaitItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.tags.ITag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 
 import javax.annotation.Nonnull;
 
@@ -23,7 +23,7 @@ public class AquacultureAPI {
      **/
     public static FishData FISH_DATA = new FishData();
 
-    public static BaitItem createBait(int durability, int lureSpeedModifier, ItemGroup group) {
+    public static BaitItem createBait(int durability, int lureSpeedModifier, CreativeModeTab group) {
         return new BaitItem(durability, lureSpeedModifier, group);
     }
 
@@ -32,15 +32,15 @@ public class AquacultureAPI {
     }
 
     public static class Tags {
-        public static final ITag.INamedTag<Item> FILLET_KNIFE = tag("forge", "fillet_knife");
-        public static final ITag.INamedTag<Item> FISHING_LINE = tag(Aquaculture.MOD_ID, "fishing_line");
-        public static final ITag.INamedTag<Item> BOBBER = tag(Aquaculture.MOD_ID, "bobber");
-        public static final ITag.INamedTag<Item> TACKLE_BOX = tag(Aquaculture.MOD_ID, "tackle_box");
-        public static final ITag.INamedTag<Item> TURTLE_EDIBLE = tag(Aquaculture.MOD_ID, "turtle_edible");
-        public static final ITag.INamedTag<Item> TOOLTIP = tag(Aquaculture.MOD_ID, "tooltip");
+        public static final Tag.Named<Item> FILLET_KNIFE = tag("forge", "fillet_knife");
+        public static final Tag.Named<Item> FISHING_LINE = tag(Aquaculture.MOD_ID, "fishing_line");
+        public static final Tag.Named<Item> BOBBER = tag(Aquaculture.MOD_ID, "bobber");
+        public static final Tag.Named<Item> TACKLE_BOX = tag(Aquaculture.MOD_ID, "tackle_box");
+        public static final Tag.Named<Item> TURTLE_EDIBLE = tag(Aquaculture.MOD_ID, "turtle_edible");
+        public static final Tag.Named<Item> TOOLTIP = tag(Aquaculture.MOD_ID, "tooltip");
 
-        public static ITag.INamedTag<Item> tag(String modID, String name) {
-            return ItemTags.makeWrapperTag(new ResourceLocation(modID, name).toString());
+        public static Tag.Named<Item> tag(String modID, String name) {
+            return ItemTags.bind(new ResourceLocation(modID, name).toString());
         }
 
         public static void init() {

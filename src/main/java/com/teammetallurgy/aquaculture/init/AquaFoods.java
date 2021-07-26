@@ -1,11 +1,11 @@
 package com.teammetallurgy.aquaculture.init;
 
-import net.minecraft.item.Food;
+import net.minecraft.world.food.FoodProperties;
 
 public class AquaFoods {
-    public static final Food ALGAE = new Food.Builder().hunger(1).saturation(0.0F).fastToEat().build();
-    public static final Food FISH_RAW = new Food.Builder().hunger(1).saturation(0.2F).build();
-    public static final Food FISH_FILLET = new Food.Builder().hunger(3).saturation(0.6F).build();
-    public static final Food FROG_LEGS = new Food.Builder().hunger(3).saturation(0.1F).meat().fastToEat().build();
-    public static final Food SUSHI = new Food.Builder().hunger(4).saturation(0.8F).build();
+    public static final FoodProperties ALGAE = new FoodProperties.Builder().nutrition(1).saturationMod(0.0F).fast().build();
+    public static final FoodProperties FISH_RAW = new FoodProperties.Builder().nutrition(1).saturationMod(0.2F).build();
+    public static final FoodProperties FISH_FILLET = new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build();
+    public static final FoodProperties FROG_LEGS = new FoodProperties.Builder().nutrition(3).saturationMod(0.1F).meat().fast().build();
+    public static final FoodProperties SUSHI = new FoodProperties.Builder().nutrition(4).saturationMod(0.8F).build();
 }

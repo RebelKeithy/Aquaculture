@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.integration.jei;
+/*package com.teammetallurgy.aquaculture.integration.jei;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.integration.jei.recipes.FilletKnifeRecipeMaker;
@@ -23,4 +23,4 @@ public class JEIIntegration implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         registration.addRecipes(FilletKnifeRecipeMaker.createFilletKnifeRecipes(), VanillaRecipeCategoryUid.CRAFTING);
     }
-}
+}*/

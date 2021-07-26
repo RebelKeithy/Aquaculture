@@ -1,8 +1,8 @@
 package com.teammetallurgy.aquaculture.item;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -10,8 +10,8 @@ public class BaitItem extends Item {
     private int lureSpeedModifier;
     private int durability;
 
-    public BaitItem(int durability, int lureSpeedModifier, ItemGroup group) {
-        super(new Item.Properties().group(group).setNoRepair());
+    public BaitItem(int durability, int lureSpeedModifier, CreativeModeTab group) {
+        super(new Item.Properties().tab(group).setNoRepair());
         this.lureSpeedModifier = lureSpeedModifier;
         this.durability = durability;
     }
@@ -21,7 +21,7 @@ public class BaitItem extends Item {
     }
 
     @Override
-    public boolean isDamageable() {
+    public boolean canBeDepleted() {
         return this.durability > 0;
     }
 

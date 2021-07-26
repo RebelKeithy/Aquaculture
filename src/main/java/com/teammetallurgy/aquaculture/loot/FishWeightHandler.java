@@ -4,13 +4,13 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
@@ -36,7 +36,7 @@ public class FishWeightHandler {
                 if (AquacultureAPI.FISH_DATA.hasWeight(fish.getItem())) {
                     FishData fishWeight = AquacultureAPI.FISH_DATA;
                     assignRandomWeight(fish, fishWeight.getMinWeight(fish.getItem()), fishWeight.getMaxWeight(fish.getItem()));
-                } else if (fish.getItem().isIn(ItemTags.FISHES)) { //Adds weight to any fish that does not have one specified
+                } else if (fish.is(ItemTags.FISHES)) { //Adds weight to any fish that does not have one specified
                     assignRandomWeight(fish, 0.1, 100);
                 }
             }
@@ -49,8 +49,8 @@ public class FishWeightHandler {
         ItemStack stack = event.getItemStack();
         if (!stack.isEmpty() && stack != null && stack.hasTag() && stack.getTag() != null) { //Keep stack null check, in case of other mods is doing bad things
             if (stack.getTag().contains("fishSize")) {
-                IFormattableTextComponent fishWeightString = new TranslationTextComponent("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize")));
-                event.getToolTip().add(fishWeightString.mergeStyle(fishWeightString.getStyle().setItalic(true).setFormatting(TextFormatting.AQUA)));
+                MutableComponent fishWeightString = new TranslatableComponent("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize")));
+                event.getToolTip().add(fishWeightString.withStyle(fishWeightString.getStyle().withItalic(true).withColor(ChatFormatting.AQUA)));
             }
             if (stack.getTag().contains("fishWeight")) {
                 double weight = stack.getTag().getDouble("fishWeight");
@@ -60,11 +60,11 @@ public class FishWeightHandler {
                 BigDecimal bd = new BigDecimal(weight);
                 bd = bd.round(new MathContext(3));
                 if (bd.doubleValue() > 999) {
-                    IFormattableTextComponent doubleWeight = new TranslationTextComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb);
-                    event.getToolTip().add(doubleWeight.mergeStyle(doubleWeight.getStyle().setItalic(true).setFormatting(TextFormatting.GRAY)));
+                    MutableComponent doubleWeight = new TranslatableComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb);
+                    event.getToolTip().add(doubleWeight.withStyle(doubleWeight.getStyle().withItalic(true).withColor(ChatFormatting.GRAY)));
                 } else {
-                    IFormattableTextComponent decimalWeight = new TranslationTextComponent("aquaculture.fishWeight.weight", bd + lb);
-                    event.getToolTip().add(decimalWeight.mergeStyle(decimalWeight.getStyle().setItalic(true).setFormatting(TextFormatting.GRAY)));
+                    MutableComponent decimalWeight = new TranslatableComponent("aquaculture.fishWeight.weight", bd + lb);
+                    event.getToolTip().add(decimalWeight.withStyle(decimalWeight.getStyle().withItalic(true).withColor(ChatFormatting.GRAY)));
                 }
             }
         }
@@ -77,10 +77,10 @@ public class FishWeightHandler {
         double weight = min + Math.random() * (max - min);
 
         if (!fish.hasTag()) {
-            fish.setTag(new CompoundNBT());
+            fish.setTag(new CompoundTag());
         }
 
-        CompoundNBT tag = fish.getTag();
+        CompoundTag tag = fish.getTag();
 
         if (tag != null) {
             tag.putDouble("fishWeight", weight);

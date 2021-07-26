@@ -13,13 +13,12 @@ import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import cpw.mods.modlauncher.Environment;
 import cpw.mods.modlauncher.Launcher;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.conditions.LootConditionManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditions;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -37,14 +36,14 @@ public class Aquaculture {
     public static final boolean IS_DEV = Launcher.INSTANCE.environment().getProperty(Environment.Keys.VERSION.get()).filter(v -> v.equals("MOD_DEV")).isPresent();
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
-    public static final ItemGroup GROUP = new ItemGroup(Aquaculture.MOD_ID) {
+    public static final CreativeModeTab GROUP = new CreativeModeTab(Aquaculture.MOD_ID) {
         @Override
         @Nonnull
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(AquaItems.IRON_FISHING_ROD);
         }
     };
-    public static final LootConditionType BIOME_TAG_CHECK = LootConditionManager.register(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.Serializer());
+    public static final LootItemConditionType BIOME_TAG_CHECK = LootItemConditions.register(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.BiomeTagCheckSerializer());
 
     public Aquaculture() {
         instance = this;
@@ -57,17 +56,15 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
-        DeferredWorkQueue.runLater(() -> {
-            FishWeightHandler.registerFishData();
-            AquaEntities.setSpawnPlacement();
-            WormFarmBlock.addCompostables();
-            if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
-                FishRegistry.addCatBreeding();
-            }
-            if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
-                FishReadFromJson.read();
-            }
-        });
+        FishWeightHandler.registerFishData();
+        AquaEntities.setSpawnPlacement();
+        WormFarmBlock.addCompostables();
+        if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
+            FishRegistry.addCatBreeding();
+        }
+        if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
+            FishReadFromJson.read();
+        }
     }
 
     private void setupClient(FMLClientSetupEvent event) {

@@ -1,61 +1,62 @@
 package com.teammetallurgy.aquaculture.item;
 
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.passive.fish.AbstractFishEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.FishBucketItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.MobBucketItem;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nonnull;
 
-public class AquaFishBucket extends FishBucketItem {
+public class AquaFishBucket extends MobBucketItem {
     private final EntityType<?> fishType;
 
-    public AquaFishBucket(EntityType<?> entityType, Fluid fluid, Properties properties) {
-        super(entityType, fluid, properties);
+    public AquaFishBucket(EntityType<?> entityType, Properties properties) {
+        super(entityType, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, properties);
         this.fishType = entityType;
     }
 
     @Override
     @Nonnull
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
-        ItemStack heldStack = player.getHeldItem(hand);
-        if (world.isRemote) {
-            return new ActionResult<>(ActionResultType.PASS, heldStack);
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
+        ItemStack heldStack = player.getItemInHand(hand);
+        if (world.isClientSide) {
+            return new InteractionResultHolder<>(InteractionResult.PASS, heldStack);
         } else {
-            RayTraceResult raytrace = rayTrace(world, player, RayTraceContext.FluidMode.SOURCE_ONLY);
-            if (raytrace.getType() != RayTraceResult.Type.BLOCK) {
-                return new ActionResult<>(ActionResultType.PASS, heldStack);
+            HitResult raytrace = getPlayerPOVHitResult(world, player, ClipContext.Fluid.SOURCE_ONLY);
+            if (raytrace.getType() != HitResult.Type.BLOCK) {
+                return new InteractionResultHolder<>(InteractionResult.PASS, heldStack);
             } else {
-                BlockRayTraceResult blockRaytrace = (BlockRayTraceResult) raytrace;
-                BlockPos pos = blockRaytrace.getPos();
-                if (!(world.getBlockState(pos).getBlock() instanceof FlowingFluidBlock)) {
-                    return super.onItemRightClick(world, player, hand);
-                } else if (world.isBlockModifiable(player, pos) && player.canPlayerEdit(pos, blockRaytrace.getFace(), heldStack)) {
-                    if (world instanceof ServerWorld) {
-                        Entity fishEntity = this.fishType.spawn((ServerWorld) world, heldStack, null, pos, SpawnReason.BUCKET, true, false);
+                BlockHitResult blockRaytrace = (BlockHitResult) raytrace;
+                BlockPos pos = blockRaytrace.getBlockPos();
+                if (!(world.getBlockState(pos).getBlock() instanceof LiquidBlock)) {
+                    return super.use(world, player, hand);
+                } else if (world.mayInteract(player, pos) && player.mayUseItemAt(pos, blockRaytrace.getDirection(), heldStack)) {
+                    if (world instanceof ServerLevel) {
+                        Entity fishEntity = this.fishType.spawn((ServerLevel) world, heldStack, null, pos, MobSpawnType.BUCKET, true, false);
                         if (fishEntity != null) {
-                            ((AbstractFishEntity) fishEntity).setFromBucket(true);
+                            ((AbstractFish) fishEntity).setFromBucket(true);
                         }
                     }
-                    player.addStat(Stats.ITEM_USED.get(this));
-                    return new ActionResult<>(ActionResultType.SUCCESS, this.emptyBucket(heldStack, player));
+                    player.awardStat(Stats.ITEM_USED.get(this));
+                    return new InteractionResultHolder<>(InteractionResult.SUCCESS, this.getEmptySuccessItem(heldStack, player));
                 } else {
-                    return new ActionResult<>(ActionResultType.FAIL, heldStack);
+                    return new InteractionResultHolder<>(InteractionResult.FAIL, heldStack);
                 }
             }
         }

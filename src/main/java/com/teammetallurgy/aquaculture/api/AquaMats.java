@@ -1,69 +1,69 @@
 package com.teammetallurgy.aquaculture.api;
 
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
 
 public class AquaMats {
-    public IItemTier NEPTUNIUM = new IItemTier() {
+    public Tier NEPTUNIUM = new Tier() {
         @Override
-        public int getMaxUses() {
+        public int getUses() {
             return 2500;
         }
         @Override
-        public float getEfficiency() {
+        public float getSpeed() {
             return 9.0F;
         }
         @Override
-        public float getAttackDamage() {
+        public float getAttackDamageBonus() {
             return 6.0F;
         }
         @Override
-        public int getHarvestLevel() {
+        public int getLevel() {
             return 3;
         }
         @Override
-        public int getEnchantability() {
+        public int getEnchantmentValue() {
             return 15;
         }
         @Override
         @Nonnull
-        public Ingredient getRepairMaterial() {
-            return Ingredient.fromItems(AquaItems.NEPTUNIUM_INGOT);
+        public Ingredient getRepairIngredient() {
+            return Ingredient.of(AquaItems.NEPTUNIUM_INGOT);
         }
     };
-    public IArmorMaterial NEPTINIUM_ARMOR = new IArmorMaterial() {
+    public ArmorMaterial NEPTINIUM_ARMOR = new ArmorMaterial() {
         private final int MAX_DAMAGE_FACTOR = 75;
 
         @Override
-        public int getDurability(@Nonnull EquipmentSlotType slot) {
+        public int getDurabilityForSlot(@Nonnull EquipmentSlot slot) {
             int[] maxDamageArray = new int[]{13, 15, 16, 11};
             return maxDamageArray[slot.getIndex()] * MAX_DAMAGE_FACTOR;
         }
         @Override
-        public int getDamageReductionAmount(@Nonnull EquipmentSlotType slot) {
+        public int getDefenseForSlot(@Nonnull EquipmentSlot slot) {
             int[] damageReduction = new int[]{3, 6, 8, 3};
             return damageReduction[slot.getIndex()];
         }
         @Override
-        public int getEnchantability() {
+        public int getEnchantmentValue() {
             return 15;
         }
         @Override
         @Nonnull
-        public SoundEvent getSoundEvent() {
-            return SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND;
+        public SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_DIAMOND;
         }
         @Override
         @Nonnull
-        public Ingredient getRepairMaterial() {
-            return Ingredient.fromItems(AquaItems.NEPTUNIUM_INGOT);
+        public Ingredient getRepairIngredient() {
+            return Ingredient.of(AquaItems.NEPTUNIUM_INGOT);
         }
         @Override
         @Nonnull

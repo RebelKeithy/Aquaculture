@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.integration.crafttweaker;
+/*package com.teammetallurgy.aquaculture.integration.crafttweaker;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
@@ -20,4 +20,4 @@ public class CTFishData {
     public static void remove(Item fish) {
         CraftTweakerAPI.apply(new RemoveFishDataAction(fish));
     }
-}
+}*/

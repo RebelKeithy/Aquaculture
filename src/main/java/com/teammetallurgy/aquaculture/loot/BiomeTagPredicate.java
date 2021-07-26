@@ -7,31 +7,31 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
 public class BiomeTagPredicate {
-    private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, MinMaxBounds.FloatBound.UNBOUNDED, Lists.newArrayList(), Lists.newArrayList(), false);
+    private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, Lists.newArrayList(), Lists.newArrayList(), false);
     private static final HashMap<CheckType, List<ResourceLocation>> CACHE = new HashMap<>();
     private static final List<BiomeDictionary.Type> INVALID_TYPES = Arrays.asList(BiomeDictionary.Type.NETHER, BiomeDictionary.Type.END);
-    private final MinMaxBounds.FloatBound x;
-    private final MinMaxBounds.FloatBound y;
-    private final MinMaxBounds.FloatBound z;
+    private final MinMaxBounds.Doubles x;
+    private final MinMaxBounds.Doubles y;
+    private final MinMaxBounds.Doubles z;
     private final List<BiomeDictionary.Type> include;
     private final List<BiomeDictionary.Type> exclude;
     private final boolean and;
 
-    public BiomeTagPredicate(MinMaxBounds.FloatBound x, MinMaxBounds.FloatBound y, MinMaxBounds.FloatBound z, List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
+    public BiomeTagPredicate(MinMaxBounds.Doubles x, MinMaxBounds.Doubles y, MinMaxBounds.Doubles z, List<BiomeDictionary.Type> include, List<BiomeDictionary.Type> exclude, boolean and) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -40,17 +40,17 @@ public class BiomeTagPredicate {
         this.and = and;
     }
 
-    public boolean test(ServerWorld world, float x, float y, float z) {
-        if (!this.x.test(x)) {
+    public boolean test(ServerLevel world, float x, float y, float z) {
+        if (!this.x.matches(x)) {
             return false;
-        } else if (!this.y.test(y)) {
+        } else if (!this.y.matches(y)) {
             return false;
-        } else if (!this.z.test(z)) {
+        } else if (!this.z.matches(z)) {
             return false;
         } else {
             BlockPos pos = new BlockPos(x, y, z);
             Biome biome = world.getBiome(pos);
-            ResourceLocation biomeFromRegistry = world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(biome);
+            ResourceLocation biomeFromRegistry = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getKey(biome);
 
             CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
 
@@ -77,7 +77,7 @@ public class BiomeTagPredicate {
         }
 
         if (!includeList.isEmpty()) {
-            List<RegistryKey<Biome>> addBiomes = Lists.newArrayList();
+            List<ResourceKey<Biome>> addBiomes = Lists.newArrayList();
             for (BiomeDictionary.Type type : includeList) {
                 addBiomes.addAll(BiomeDictionary.getBiomes(type));
             }
@@ -91,16 +91,16 @@ public class BiomeTagPredicate {
             if (includeList.stream().noneMatch(INVALID_TYPES::contains)) { //Exclude invalid tags, as long as they're not specified in include
                 excludeList.addAll(INVALID_TYPES);
             }
-            for (RegistryKey<Biome> addBiome : addBiomes) {
-                if (!biomes.contains(addBiome.getLocation())) {
-                    biomes.add(addBiome.getLocation());
+            for (ResourceKey<Biome> addBiome : addBiomes) {
+                if (!biomes.contains(addBiome.location())) {
+                    biomes.add(addBiome.location());
                 }
             }
         }
         if (!excludeList.isEmpty()) {
             for (BiomeDictionary.Type type : excludeList) {
-                for (RegistryKey<Biome> biome : BiomeDictionary.getBiomes(type)) {
-                    biomes.remove(biome.getLocation());
+                for (ResourceKey<Biome> biome : BiomeDictionary.getBiomes(type)) {
+                    biomes.remove(biome.location());
                 }
             }
         }
@@ -113,11 +113,11 @@ public class BiomeTagPredicate {
             return JsonNull.INSTANCE;
         } else {
             JsonObject object = new JsonObject();
-            if (!this.x.isUnbounded() || !this.y.isUnbounded() || !this.z.isUnbounded()) {
+            if (!this.x.isAny() || !this.y.isAny() || !this.z.isAny()) {
                 JsonObject posObj = new JsonObject();
-                posObj.add("x", this.x.serialize());
-                posObj.add("y", this.y.serialize());
-                posObj.add("z", this.z.serialize());
+                posObj.add("x", this.x.serializeToJson());
+                posObj.add("y", this.y.serializeToJson());
+                posObj.add("z", this.z.serializeToJson());
                 object.add("position", posObj);
             }
             if (this.include != null) {
@@ -137,14 +137,14 @@ public class BiomeTagPredicate {
 
     public static BiomeTagPredicate deserialize(@Nullable JsonElement element) {
         if (element != null && !element.isJsonNull()) {
-            JsonObject location = JSONUtils.getJsonObject(element, "location");
-            JsonObject position = JSONUtils.getJsonObject(location, "position", new JsonObject());
-            MinMaxBounds.FloatBound x = MinMaxBounds.FloatBound.fromJson(position.get("x"));
-            MinMaxBounds.FloatBound y = MinMaxBounds.FloatBound.fromJson(position.get("y"));
-            MinMaxBounds.FloatBound z = MinMaxBounds.FloatBound.fromJson(position.get("z"));
+            JsonObject location = GsonHelper.convertToJsonObject(element, "location");
+            JsonObject position = GsonHelper.getAsJsonObject(location, "position", new JsonObject());
+            MinMaxBounds.Doubles x = MinMaxBounds.Doubles.fromJson(position.get("x"));
+            MinMaxBounds.Doubles y = MinMaxBounds.Doubles.fromJson(position.get("y"));
+            MinMaxBounds.Doubles z = MinMaxBounds.Doubles.fromJson(position.get("z"));
             List<BiomeDictionary.Type> include = Lists.newArrayList();
             if (location.has("include")) {
-                JsonArray includeArray = JSONUtils.getJsonArray(location, "include");
+                JsonArray includeArray = GsonHelper.getAsJsonArray(location, "include");
                 for (int entry = 0; entry < includeArray.size(); entry++) {
                     String name = includeArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
                     BiomeDictionary.Type type = BiomeDictionaryHelper.getType(name);
@@ -158,7 +158,7 @@ public class BiomeTagPredicate {
 
             List<BiomeDictionary.Type> exclude = Lists.newArrayList();
             if (location.has("exclude")) {
-                JsonArray excludeArray = JSONUtils.getJsonArray(location, "exclude");
+                JsonArray excludeArray = GsonHelper.getAsJsonArray(location, "exclude");
                 for (int entry = 0; entry < excludeArray.size(); entry++) {
                     String name = excludeArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
                     BiomeDictionary.Type type = BiomeDictionaryHelper.getType(name);
@@ -171,7 +171,7 @@ public class BiomeTagPredicate {
             }
             boolean and = false;
             if (location.has("and")) {
-                and = JSONUtils.getBoolean(location, "and");
+                and = GsonHelper.getAsBoolean(location, "and");
             }
             return new BiomeTagPredicate(x, y, z, include, exclude, and);
         } else {

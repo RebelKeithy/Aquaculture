@@ -1,25 +1,26 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.client.renderer.entity.layers.JellyfishLayer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.*;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.TropicalFishModelB;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.TropicalFishBModel;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 
 public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<AquaFishEntity>> {
     private static final ResourceLocation DEFAULT_LOCATION = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/fish/atlantic_cod.png");
-    private static final TropicalFishBModel<AquaFishEntity> TROPICAL_FISH_B_MODEL = new TropicalFishBModel<>(0.0F);
+    private static final TropicalFishModelB<AquaFishEntity> TROPICAL_FISH_B_MODEL = new TropicalFishModelB<>(0.0F);
     private static final FishSmallModel<AquaFishEntity> SMALL_MODEL = new FishSmallModel<>();
     private static final FishMediumModel<AquaFishEntity> MEDIUM_MODEL = new FishMediumModel<>();
     private static final FishLargeModel<AquaFishEntity> LARGE_MODEL = new FishLargeModel<>();
@@ -27,37 +28,37 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     private static final FishCathfishModel<AquaFishEntity> CATFISH_MODEL = new FishCathfishModel<>();
     private static final JellyfishModel<AquaFishEntity> JELLYFISH_MODEL = new JellyfishModel<>();
 
-    public AquaFishRenderer(EntityRendererManager manager, boolean isJellyfish) {
-        super(manager, MEDIUM_MODEL, 0.35F);
+    public AquaFishRenderer(EntityRendererProvider.Context context, boolean isJellyfish) {
+        super(context, MEDIUM_MODEL, 0.35F);
         if (isJellyfish) {
             this.addLayer(new JellyfishLayer(this));
         }
     }
 
     @Override
-    public void render(@Nonnull AquaFishEntity fishEntity, float entityYaw, float partialTicks, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i) {
+    public void render(@Nonnull AquaFishEntity fishEntity, float entityYaw, float partialTicks, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i) {
         switch (AquaFishEntity.TYPES.get(fishEntity.getType())) {
             case SMALL:
-                this.entityModel = SMALL_MODEL;
+                this.model = SMALL_MODEL;
                 break;
             case LARGE:
-                this.entityModel = LARGE_MODEL;
+                this.model = LARGE_MODEL;
                 break;
             case LONGNOSE:
-                this.entityModel = LONGNOSE_MODEL;
+                this.model = LONGNOSE_MODEL;
                 break;
             case CATFISH:
-                this.entityModel = CATFISH_MODEL;
+                this.model = CATFISH_MODEL;
                 break;
             case JELLYFISH:
-                this.entityModel = JELLYFISH_MODEL;
+                this.model = JELLYFISH_MODEL;
                 break;
             case HALIBUT:
-                this.entityModel = TROPICAL_FISH_B_MODEL;
+                this.model = TROPICAL_FISH_B_MODEL;
                 break;
             case MEDIUM:
             default:
-                this.entityModel = MEDIUM_MODEL;
+                this.model = MEDIUM_MODEL;
                 break;
         }
         super.render(fishEntity, entityYaw, partialTicks, matrixStack, buffer, i);
@@ -65,7 +66,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
 
     @Override
     @Nonnull
-    public ResourceLocation getEntityTexture(@Nonnull AquaFishEntity fishEntity) {
+    public ResourceLocation getTextureLocation(@Nonnull AquaFishEntity fishEntity) {
         ResourceLocation location = fishEntity.getType().getRegistryName();
         if (location != null) {
             return new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/fish/" + location.getPath() + ".png");
@@ -74,8 +75,8 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     }
 
     @Override
-    protected void applyRotations(AquaFishEntity fishEntity, @Nonnull MatrixStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
-        super.applyRotations(fishEntity, matrixStack, ageInTicks, rotationYaw, partialTicks);
+    protected void setupRotations(AquaFishEntity fishEntity, @Nonnull PoseStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
+        super.setupRotations(fishEntity, matrixStack, ageInTicks, rotationYaw, partialTicks);
         FishType fishType = AquaFishEntity.TYPES.get(fishEntity.getType());
         if (fishType != FishType.JELLYFISH) {
             float salmonRotation = 1.0F;
@@ -86,9 +87,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                     salmonMultiplier = 1.7F;
                 }
             }
-            float fishRotation = fishType == FishType.LONGNOSE ? salmonRotation * 4.3F * MathHelper.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * MathHelper.sin(0.6F * ageInTicks);
+            float fishRotation = fishType == FishType.LONGNOSE ? salmonRotation * 4.3F * Mth.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * Mth.sin(0.6F * ageInTicks);
 
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(fishRotation));
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(fishRotation));
             if (fishType == FishType.LONGNOSE) {
                 matrixStack.translate(0.0F, 0.0F, -0.4F);
             }
@@ -98,17 +99,17 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 } else {
                     matrixStack.translate(0.2F, 0.1F, 0.0F);
                 }
-                matrixStack.rotate(Vector3f.ZP.rotationDegrees(90));
+                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90));
             }
             if (fishType == FishType.HALIBUT) {
                 matrixStack.translate(-0.4F, 0.1F, 0.0F);
-                matrixStack.rotate(Vector3f.ZP.rotationDegrees(-90));
+                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(-90));
             }
         }
     }
 
     @Override
-    protected void preRenderCallback(AquaFishEntity fishEntity, MatrixStack matrixStack, float partialTickTime) {
+    protected void scale(AquaFishEntity fishEntity, PoseStack matrixStack, float partialTickTime) {
         ResourceLocation location = fishEntity.getType().getRegistryName();
         float scale = 0.0F;
         if (location != null) {
@@ -144,9 +145,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             }
         }
         if (scale > 0) {
-            matrixStack.push();
+            matrixStack.pushPose();
             matrixStack.scale(scale, scale, scale);
-            matrixStack.pop();
+            matrixStack.popPose();
         }
     }
 }

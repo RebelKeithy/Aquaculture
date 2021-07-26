@@ -1,9 +1,9 @@
 package com.teammetallurgy.aquaculture.misc;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -54,13 +54,13 @@ public class BiomeDictionaryHelper {
             if (event.getName() != null) {
                 Biome biome = ForgeRegistries.BIOMES.getValue(event.getName());
                 if (biome != null) {
-                    RegistryKey<Biome> biomeKey = RegistryKey.getOrCreateKey(ForgeRegistries.Keys.BIOMES, event.getName());
+                    ResourceKey<Biome> biomeKey = ResourceKey.create(ForgeRegistries.Keys.BIOMES, event.getName());
                     List<BiomeDictionary.Type> includeList = Arrays.asList(BiomeDictionaryHelper.toBiomeTypeArray(include));
                     List<BiomeDictionary.Type> excludeList = Arrays.asList(BiomeDictionaryHelper.toBiomeTypeArray(exclude));
                     if (!includeList.isEmpty()) {
                         Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biomeKey);
                         if (biomeTypes.stream().noneMatch(excludeList::contains) && biomeTypes.stream().anyMatch(includeList::contains)) {
-                            event.getSpawns().getSpawner(entityType.getClassification()).add(new MobSpawnInfo.Spawners(entityType, weight, min, max));
+                            event.getSpawns().getSpawner(entityType.getCategory()).add(new MobSpawnSettings.SpawnerData(entityType, weight, min, max));
                         }
                     } else {
                         throw new IllegalArgumentException("Do not leave the BiomeDictionary type inclusion list empty. If you wish to disable spawning of an entity, set the weight to 0 instead.");

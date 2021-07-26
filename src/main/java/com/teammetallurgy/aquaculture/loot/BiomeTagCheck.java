@@ -4,16 +4,16 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.teammetallurgy.aquaculture.Aquaculture;
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.Serializer;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nonnull;
 
-public class BiomeTagCheck implements ILootCondition {
+public class BiomeTagCheck implements LootItemCondition {
     private final BiomeTagPredicate predicate;
 
     private BiomeTagCheck(BiomeTagPredicate predicate) {
@@ -22,17 +22,17 @@ public class BiomeTagCheck implements ILootCondition {
 
     @Override
     public boolean test(LootContext context) {
-        Vector3d pos = context.get(LootParameters.field_237457_g_);
-        return pos != null && this.predicate.test(context.getWorld(), (float) pos.getX(), (float) pos.getY(), (float) pos.getZ());
+        Vec3 pos = context.getParamOrNull(LootContextParams.ORIGIN);
+        return pos != null && this.predicate.test(context.getLevel(), (float) pos.x(), (float) pos.y(), (float) pos.z());
     }
 
     @Override
     @Nonnull
-    public LootConditionType func_230419_b_() {
+    public LootItemConditionType getType() {
         return Aquaculture.BIOME_TAG_CHECK;
     }
 
-    public static class Serializer implements ILootSerializer<BiomeTagCheck> {
+    public static class BiomeTagCheckSerializer implements Serializer<BiomeTagCheck> {
 
         @Override
         public void serialize(JsonObject json, BiomeTagCheck tagCheck, @Nonnull JsonSerializationContext context) {

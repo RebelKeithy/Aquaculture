@@ -1,35 +1,44 @@
 package com.teammetallurgy.aquaculture.client.renderer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.teammetallurgy.aquaculture.block.NeptunesBountyBlock;
 import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import com.teammetallurgy.aquaculture.init.AquaBlocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
-public class AquatemRenderer extends ItemStackTileEntityRenderer {
+public class AquatemRenderer extends BlockEntityWithoutLevelRenderer {
+
+    public AquatemRenderer(BlockEntityRenderDispatcher renderDispatcher, EntityModelSet entityModelSet) {
+        super(renderDispatcher, entityModelSet);
+    }
 
     @Override
-    public void func_239207_a_(@Nonnull ItemStack stack, @Nonnull ItemCameraTransforms.TransformType transformType, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
+    public void renderByItem(@Nonnull ItemStack stack, @Nonnull ItemTransforms.TransformType transformType, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i, int i1) {
+        Minecraft mc = Minecraft.getInstance();
         Item item = stack.getItem();
         if (item instanceof BlockItem) {
             Block block = ((BlockItem) item).getBlock();
             if (block instanceof TackleBoxBlock) {
-                TileEntityRendererDispatcher.instance.renderItem(new TackleBoxTileEntity(), matrixStack, buffer, i, i1);
+                mc.getBlockEntityRenderDispatcher().renderItem(new TackleBoxTileEntity(BlockPos.ZERO, AquaBlocks.TACKLE_BOX.defaultBlockState()), matrixStack, buffer, i, i1);
             } else if (block instanceof NeptunesBountyBlock) {
-                TileEntityRendererDispatcher.instance.renderItem(new NeptunesBountyTileEntity(), matrixStack, buffer, i, i1);
+                mc.getBlockEntityRenderDispatcher().renderItem(new NeptunesBountyTileEntity(BlockPos.ZERO, AquaBlocks.NEPTUNES_BOUNTY.defaultBlockState()), matrixStack, buffer, i, i1);
             }
         }
     }

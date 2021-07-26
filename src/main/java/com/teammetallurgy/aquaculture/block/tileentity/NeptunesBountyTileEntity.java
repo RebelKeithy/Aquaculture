@@ -1,21 +1,23 @@
 package com.teammetallurgy.aquaculture.block.tileentity;
 
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
 
-public class NeptunesBountyTileEntity extends ChestTileEntity {
+public class NeptunesBountyTileEntity extends ChestBlockEntity {
 
-    public NeptunesBountyTileEntity() {
-        super(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY);
+    public NeptunesBountyTileEntity(BlockPos pos, BlockState state) {
+        super(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, pos, state);
     }
 
     @Override
     @Nonnull
-    public ITextComponent getDefaultName() {
-        return new TranslationTextComponent(this.getBlockState().getBlock().getTranslationKey());
+    public Component getDefaultName() {
+        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 }

@@ -1,58 +1,59 @@
 package com.teammetallurgy.aquaculture.entity.ai.goal;
 
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
+import com.mojang.datafixers.DataFixUtils;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 public class FollowTypeSchoolLeaderGoal extends Goal {
-    private final AbstractGroupFishEntity taskOwner;
+    private final AbstractSchoolingFish taskOwner;
     private int navigateTimer;
     private int cooldown;
 
-    public FollowTypeSchoolLeaderGoal(AbstractGroupFishEntity fishEntity) {
+    public FollowTypeSchoolLeaderGoal(AbstractSchoolingFish fishEntity) {
         this.taskOwner = fishEntity;
         this.cooldown = this.getNewCooldown(fishEntity);
     }
 
-    private int getNewCooldown(AbstractGroupFishEntity fishEntity) {
-        return 200 + fishEntity.getRNG().nextInt(200) % 20;
+    private int getNewCooldown(AbstractSchoolingFish fishEntity) {
+        return 200 + fishEntity.getRandom().nextInt(200) % 20;
     }
 
     @Override
-    public boolean shouldExecute() {
-        if (this.taskOwner.isGroupLeader()) {
+    public boolean canUse() {
+        if (this.taskOwner.hasFollowers()) {
             return false;
-        } else if (this.taskOwner.hasGroupLeader()) {
+        } else if (this.taskOwner.isFollower()) {
             return true;
         } else if (this.cooldown > 0) {
             --this.cooldown;
             return false;
         } else {
             this.cooldown = this.getNewCooldown(this.taskOwner);
-            Predicate<AbstractGroupFishEntity> predicate = (fishEntity) -> fishEntity.getType() == this.taskOwner.getType() && (fishEntity.canGroupGrow() || !fishEntity.hasGroupLeader());
-            List<AbstractGroupFishEntity> schoolList = this.taskOwner.world.getEntitiesWithinAABB(this.taskOwner.getClass(), this.taskOwner.getBoundingBox().grow(8.0D, 8.0D, 8.0D), predicate);
-            AbstractGroupFishEntity fishEntity = schoolList.stream().filter(AbstractGroupFishEntity::canGroupGrow).findAny().orElse(this.taskOwner);
-            fishEntity.func_212810_a(schoolList.stream().filter((schoolFish) -> !schoolFish.hasGroupLeader()));
-            return this.taskOwner.hasGroupLeader();
+            Predicate<AbstractSchoolingFish> predicate = (fishEntity) -> fishEntity.getType() == this.taskOwner.getType() && (fishEntity.canBeFollowed() || !fishEntity.isFollower());
+            List<? extends AbstractSchoolingFish> schoolList = this.taskOwner.level.getEntitiesOfClass(this.taskOwner.getClass(), this.taskOwner.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), predicate);
+            AbstractSchoolingFish fishEntity = DataFixUtils.orElse(schoolList.stream().filter(AbstractSchoolingFish::canBeFollowed).findAny(), this.taskOwner);
+            fishEntity.addFollowers(schoolList.stream().filter((schoolFish) -> !schoolFish.isFollower()));
+            return this.taskOwner.isFollower();
         }
     }
 
     @Override
-    public boolean shouldContinueExecuting() {
-        return this.taskOwner.hasGroupLeader() && this.taskOwner.inRangeOfGroupLeader();
+    public boolean canContinueToUse() {
+        return this.taskOwner.isFollower() && this.taskOwner.inRangeOfLeader();
     }
 
     @Override
-    public void startExecuting() {
+    public void start() {
         this.navigateTimer = 0;
     }
 
     @Override
-    public void resetTask() {
+    public void stop() {
         if (this.taskOwner != null) {
-            this.taskOwner.leaveGroup();
+            this.taskOwner.stopFollowing();
         }
     }
 
@@ -60,7 +61,7 @@ public class FollowTypeSchoolLeaderGoal extends Goal {
     public void tick() {
         if (--this.navigateTimer <= 0) {
             this.navigateTimer = 10;
-            this.taskOwner.moveToGroupLeader();
+            this.taskOwner.pathToLeader();
         }
     }
 }

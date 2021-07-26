@@ -3,8 +3,8 @@ package com.teammetallurgy.aquaculture.item.crafting;
 import com.google.gson.JsonObject;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ConditionFactory {
 
     @SubscribeEvent
-    public static void registerConditions(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+    public static void registerConditions(RegistryEvent.Register<RecipeSerializer<?>> event) {
         CraftingHelper.register(NeptuniumItems.Serializer.INSTANCE);
         CraftingHelper.register(NeptuniumArmor.Serializer.INSTANCE);
     }

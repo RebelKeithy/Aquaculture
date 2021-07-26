@@ -1,29 +1,29 @@
 package com.teammetallurgy.aquaculture.item.neptunium;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShovelItem;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
 
 public class NeptuniumShovel extends ShovelItem {
 
-    public NeptuniumShovel(IItemTier tier, float damage, float speed) {
-        super(tier, damage, speed, new Item.Properties().group(Aquaculture.GROUP));
+    public NeptuniumShovel(Tier tier, float damage, float speed) {
+        super(tier, damage, speed, new Item.Properties().tab(Aquaculture.GROUP));
     }
 
     @Override
-    public void inventoryTick(@Nonnull ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-        if (entity instanceof PlayerEntity && stack.getItem() == this) {
-            PlayerEntity player = (PlayerEntity) entity;
-            stack.getOrCreateTag().putBoolean("inWater", player.areEyesInFluid(FluidTags.WATER));
+    public void inventoryTick(@Nonnull ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
+        if (entity instanceof Player && stack.getItem() == this) {
+            Player player = (Player) entity;
+            stack.getOrCreateTag().putBoolean("inWater", player.isEyeInFluid(FluidTags.WATER));
         }
     }
 

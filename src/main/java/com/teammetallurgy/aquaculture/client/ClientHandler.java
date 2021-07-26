@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.FishMountRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.TurtleLandRenderer;
+import com.teammetallurgy.aquaculture.client.renderer.entity.model.TurtleLandModel;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.NeptunesBountyRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
@@ -13,43 +14,35 @@ import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.init.*;
 import com.teammetallurgy.aquaculture.item.DyeableItem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.color.item.ItemColors;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.SpectralArrowRenderer;
-import net.minecraft.client.renderer.entity.TippedArrowRenderer;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.TippableArrowRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.FishingRodItem;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientHandler {
+    public static final ModelLayerLocation TURTLE_LAND_LAYER = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "turtle_land"), "turtle_land");
+    public static final ModelLayerLocation TACKLE_BOX = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "tackle_box"), "tackle_box");
 
     public static void setupClient() {
-        ScreenManager.registerFactory(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
-        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, NeptunesBountyRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(AquaBlocks.AquaTileEntities.TACKLE_BOX, TackleBoxRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AquaEntities.BOBBER, AquaBobberRenderer::new);
-        for (EntityType<AquaFishEntity> fish : FishRegistry.fishEntities) {
-            RenderingRegistry.registerEntityRenderingHandler(fish, (manager) -> new AquaFishRenderer(manager, fish.getRegistryName() != null && fish.getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
-        }
-        RenderingRegistry.registerEntityRenderingHandler(AquaEntities.WATER_ARROW, TippedArrowRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AquaEntities.SPECTRAL_WATER_ARROW, SpectralArrowRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AquaEntities.BOX_TURTLE, TurtleLandRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AquaEntities.ARRAU_TURTLE, TurtleLandRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(AquaEntities.STARSHELL_TURTLE, TurtleLandRenderer::new);
-        for (EntityType<FishMountEntity> fishMount : FishRegistry.fishMounts) {
-            RenderingRegistry.registerEntityRenderingHandler(fishMount, FishMountRenderer::new);
-        }
+        MenuScreens.register(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
+        BlockEntityRenderers.register(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, NeptunesBountyRenderer::new);
+        BlockEntityRenderers.register(AquaBlocks.AquaTileEntities.TACKLE_BOX, TackleBoxRenderer::new);
+
         //Item Colors
         ItemColors itemColor = Minecraft.getInstance().getItemColors();
         itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE, AquaItems.BOBBER);
@@ -58,6 +51,28 @@ public class ClientHandler {
         registerFishingRodModelProperties(AquaItems.DIAMOND_FISHING_ROD);
         registerFishingRodModelProperties(AquaItems.NEPTUNIUM_FISHING_ROD);
         registerBowModelProperties(AquaItems.NEPTUNIUM_BOW);
+    }
+
+    @SubscribeEvent
+    public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(AquaEntities.BOBBER, AquaBobberRenderer::new);
+        for (EntityType<AquaFishEntity> fish : FishRegistry.fishEntities) {
+            event.registerEntityRenderer(fish, (context) -> new AquaFishRenderer(context, fish.getRegistryName() != null && fish.getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
+        }
+        event.registerEntityRenderer(AquaEntities.WATER_ARROW, TippableArrowRenderer::new);
+        event.registerEntityRenderer(AquaEntities.SPECTRAL_WATER_ARROW, SpectralArrowRenderer::new);
+        event.registerEntityRenderer(AquaEntities.BOX_TURTLE, TurtleLandRenderer::new);
+        event.registerEntityRenderer(AquaEntities.ARRAU_TURTLE, TurtleLandRenderer::new);
+        event.registerEntityRenderer(AquaEntities.STARSHELL_TURTLE, TurtleLandRenderer::new);
+        for (EntityType<FishMountEntity> fishMount : FishRegistry.fishMounts) {
+            event.registerEntityRenderer(fishMount, FishMountRenderer::new);
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(TURTLE_LAND_LAYER, TurtleLandModel::createBodyLayer);
+        event.registerLayerDefinition(TACKLE_BOX, TackleBoxRenderer::createLayer);
     }
 
     @SubscribeEvent
@@ -71,28 +86,28 @@ public class ClientHandler {
     }
 
     public static void registerFishingRodModelProperties(Item fishingRod) {
-        ItemModelsProperties.registerProperty(fishingRod, new ResourceLocation("cast"), (heldStack, world, livingEntity) -> {
-            if (livingEntity == null) {
+        ItemProperties.register(fishingRod, new ResourceLocation("cast"), (stack, level, entity, i) -> {
+            if (entity == null) {
                 return 0.0F;
             } else {
-                boolean isMainhand = livingEntity.getHeldItemMainhand() == heldStack;
-                boolean isOffHand = livingEntity.getHeldItemOffhand() == heldStack;
-                if (livingEntity.getHeldItemMainhand().getItem() instanceof FishingRodItem) {
+                boolean isMainhand = entity.getMainHandItem() == stack;
+                boolean isOffHand = entity.getOffhandItem() == stack;
+                if (entity.getMainHandItem().getItem() instanceof FishingRodItem) {
                     isOffHand = false;
                 }
-                return (isMainhand || isOffHand) && livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).fishingBobber != null ? 1.0F : 0.0F;
+                return (isMainhand || isOffHand) && entity instanceof Player && ((Player) entity).fishing != null ? 1.0F : 0.0F;
             }
         });
     }
 
     public static void registerBowModelProperties(Item bow) {
-        ItemModelsProperties.registerProperty(bow, new ResourceLocation("pull"), (stack, world, entity) -> {
+        ItemProperties.register(bow, new ResourceLocation("pull"), (stack, level, entity, i) -> {
             if (entity == null) {
                 return 0.0F;
             } else {
-                return entity.getActiveItemStack() != stack ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F;
+                return entity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F;
             }
         });
-        ItemModelsProperties.registerProperty(bow, new ResourceLocation("pulling"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+        ItemProperties.register(bow, new ResourceLocation("pulling"), (stack, level, entity, i) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
     }
 }

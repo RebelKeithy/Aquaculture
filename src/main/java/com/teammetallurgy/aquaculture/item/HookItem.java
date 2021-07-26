@@ -3,16 +3,16 @@ package com.teammetallurgy.aquaculture.item;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,7 +24,7 @@ public class HookItem extends Item {
     private final Hook hook;
 
     public HookItem(Hook hook) {
-        super(new Item.Properties().group(Aquaculture.GROUP).maxStackSize(16));
+        super(new Item.Properties().tab(Aquaculture.GROUP).stacksTo(16));
         this.hook = hook;
     }
 
@@ -34,17 +34,17 @@ public class HookItem extends Item {
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World world, List<ITextComponent> tooltips, ITooltipFlag tooltipFlag) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level world, List<Component> tooltips, TooltipFlag tooltipFlag) {
         Hook hook = getHookType();
         if (hook != Hooks.EMPTY && hook.getFluids().contains(FluidTags.LAVA)) {
             if (hook.getFluids().contains(FluidTags.WATER)) {
-                IFormattableTextComponent universal = new TranslationTextComponent("aquaculture.universal");
-                tooltips.add(universal.mergeStyle(universal.getStyle().setFormatting(TextFormatting.BOLD)));
+                MutableComponent universal = new TranslatableComponent("aquaculture.universal");
+                tooltips.add(universal.withStyle(universal.getStyle().withColor(ChatFormatting.BOLD)));
             } else {
-                IFormattableTextComponent lava = new TranslationTextComponent(Blocks.LAVA.getTranslationKey());
-                tooltips.add(lava.mergeStyle(lava.getStyle().setFormatting(TextFormatting.RED)));
+                MutableComponent lava = new TranslatableComponent(Blocks.LAVA.getDescriptionId());
+                tooltips.add(lava.withStyle(lava.getStyle().withColor(ChatFormatting.RED)));
             }
         }
-        super.addInformation(stack, world, tooltips, tooltipFlag);
+        super.appendHoverText(stack, world, tooltips, tooltipFlag);
     }
 }

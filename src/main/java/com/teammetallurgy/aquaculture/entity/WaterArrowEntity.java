@@ -1,32 +1,32 @@
 package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.init.AquaEntities;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 
-public class WaterArrowEntity extends ArrowEntity {
+public class WaterArrowEntity extends Arrow {
 
-    public WaterArrowEntity(FMLPlayMessages.SpawnEntity spawnPacket, World world) {
+    public WaterArrowEntity(FMLPlayMessages.SpawnEntity spawnPacket, Level world) {
         super(world, 0, 0, 0);
     }
 
-    public WaterArrowEntity(EntityType<? extends ArrowEntity> arrow, World world) {
+    public WaterArrowEntity(EntityType<? extends Arrow> arrow, Level world) {
         super(arrow, world);
     }
 
-    public WaterArrowEntity(World world, LivingEntity livingEntity) {
+    public WaterArrowEntity(Level world, LivingEntity livingEntity) {
         super(world, livingEntity);
     }
 
     @Override
-    protected float getWaterDrag() {
+    protected float getWaterInertia() {
         return 1.0F;
     }
 
@@ -38,7 +38,7 @@ public class WaterArrowEntity extends ArrowEntity {
 
     @Override
     @Nonnull
-    public IPacket<?> createSpawnPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }
