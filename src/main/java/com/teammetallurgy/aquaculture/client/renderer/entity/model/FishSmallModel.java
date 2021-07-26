@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity.model;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.model.ColorableHierarchicalModel;
+import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nonnull;
 
-public class FishSmallModel<T extends Entity> extends ColorableHierarchicalModel<T> { //Based on TropicalFishA
+public class FishSmallModel<T extends Entity> extends ListModel<T> { //Based on TropicalFishA
     private final ModelPart finRight;
     private final ModelPart finTop;
     private final ModelPart tail;

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
@@ -17,7 +18,7 @@ public class TurtleLandModel<T extends TurtleLandEntity> extends QuadrupedModel<
     private final ModelPart belly;
 
     public TurtleLandModel(ModelPart part) {
-        super(0, 0.0F, false, 1.1F, 1.5F, 2.0F, 2.0F, 24);
+        super(part, false, 1.1F, 1.5F, 2.0F, 2.0F, 24);
         this.tail = part.getChild("tail");
         this.shellTop = part.getChild("shell_top");
         this.belly = part.getChild("belly");
@@ -59,7 +60,7 @@ public class TurtleLandModel<T extends TurtleLandEntity> extends QuadrupedModel<
     }
 
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition modelDefinition = new MeshDefinition();
+        MeshDefinition modelDefinition = createBodyMesh(0, CubeDeformation.NONE);
         PartDefinition def = modelDefinition.getRoot();
 
         return LayerDefinition.create(modelDefinition, 64, 32);
@@ -68,23 +69,17 @@ public class TurtleLandModel<T extends TurtleLandEntity> extends QuadrupedModel<
     @Override
     @Nonnull
     protected Iterable<ModelPart> bodyParts() {
-        return ImmutableList.of(this.body, this.leg0, this.leg1, this.leg2, this.leg3, this.tail);
+        return ImmutableList.of(this.body, this.rightHindLeg, this.leftHindLeg, this.rightFrontLeg, this.leftFrontLeg, this.tail, this.shellTop, this.belly);
     }
 
     @Override
     public void setupAnim(@Nonnull T turtle, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * 0.017453292F;
         this.head.yRot = netHeadYaw * 0.017453292F;
-        this.leg0.xRot = 0.5235987755982988F + (Mth.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);
-        this.leg1.xRot = -0.5235987755982988F + -(Mth.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);
-        this.leg2.xRot = -0.5235987755982988F + -(Mth.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);
-        this.leg3.xRot = 0.5235987755982988F + (Mth.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);
+        this.rightHindLeg.xRot = 0.5235987755982988F + (Mth.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);
+        this.leftHindLeg.xRot = -0.5235987755982988F + -(Mth.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);
+        this.rightFrontLeg.xRot = -0.5235987755982988F + -(Mth.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);
+        this.leftFrontLeg.xRot = 0.5235987755982988F + (Mth.cos(limbSwing * 5.0F) * 1.4F * limbSwingAmount);
         this.tail.yRot = Mth.cos(limbSwing * 0.4662F) * 0.6F * limbSwingAmount;
-    }
-
-    private void setRotateAngle(ModelPart ModelRenderer, float x, float y, float z) {
-        ModelRenderer.xRot = x;
-        ModelRenderer.yRot = y;
-        ModelRenderer.zRot = z;
     }
 }

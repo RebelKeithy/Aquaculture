@@ -93,10 +93,4 @@ public class FishCathfishModel<T extends Entity> extends ListModel<T> { //Based 
         }
         this.tail.yRot = -movement * 0.45F * Mth.sin(0.6F * ageInTicks);
     }
-
-    public void setRotateAngle(ModelPart ModelRenderer, float x, float y, float z) {
-        ModelRenderer.xRot = x;
-        ModelRenderer.yRot = y;
-        ModelRenderer.zRot = z;
-    }
 }

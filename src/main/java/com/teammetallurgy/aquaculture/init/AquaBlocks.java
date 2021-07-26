@@ -8,7 +8,6 @@ import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
-import com.teammetallurgy.aquaculture.client.renderer.AquatemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

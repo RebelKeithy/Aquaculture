@@ -128,7 +128,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
     public int retrieve(@Nonnull ItemStack stack) {
         boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && stack.getItem() == AquaItems.NEPTUNIUM_FISHING_ROD;
         Player angler = this.getPlayerOwner();
-        if (!this.level.isClientSide && angler != null) {
+        if (!this.level.isClientSide && angler != null && !this.shouldStopFishing(angler)) {
             int rodDamage = 0;
             ItemFishedEvent event = null;
             if (this.hookedIn != null && !isAdminRod) {
@@ -275,6 +275,8 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                     this.discard();
                     return;
                 }
+            } else {
+                this.life = 0;
             }
 
             float f = 0.0F;
@@ -303,10 +305,10 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 if (this.currentState == FishHookState.HOOKED_IN_ENTITY) {
                     if (this.hookedIn != null) {
                         if (!this.hookedIn.isRemoved() && this.hookedIn.level.dimension() == this.level.dimension()) {
-                            this.hookedIn = null;
-                            this.currentState = FishHookState.FLYING;
-                        } else {
                             this.setPos(this.hookedIn.getX(), this.hookedIn.getY(0.8D), this.hookedIn.getZ());
+                        } else {
+                            this.setHookedEntity(null);
+                            this.currentState = FishingHook.FishHookState.FLYING;
                         }
                     }
                     return;
@@ -442,7 +444,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 float sin = Mth.nextFloat(this.random, 0.0F, 360.0F) * ((float) Math.PI / 180F);
                 float cos = Mth.nextFloat(this.random, 25.0F, 60.0F);
                 double x = this.getX() + (double) (Mth.sin(sin) * cos * 0.1F);
-                double y = ((float) Mth.floor(this.getBoundingBox().minY) + 1.0F);
+                double y = ((float) Mth.floor(this.getY()) + 1.0F);
                 double z = this.getZ() + (double) (Mth.cos(sin) * cos * 0.1F);
                 FluidState fluidState = serverworld.getFluidState(new BlockPos(x, y - 1.0D, z)); //Replaced BlockState check, with a FluidState check
                 if (fluidState.is(FluidTags.WATER)) { //Check tag, instead of only water block

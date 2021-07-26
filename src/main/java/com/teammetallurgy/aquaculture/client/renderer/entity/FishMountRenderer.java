@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -72,8 +71,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
 
     private void renderFish(FishMountEntity fishMount, PoseStack matrixStack, MultiBufferSource buffer, int i) {
         Entity entity = fishMount.entity;
-        if (entity instanceof Mob) {
-            Mob fish = (Mob) entity;
+        if (entity instanceof Mob fish) {
             double x = 0.0D;
             double y = 0.0D;
             double depth = 0.42D;

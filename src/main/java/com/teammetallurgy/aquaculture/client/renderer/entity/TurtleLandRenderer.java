@@ -5,7 +5,6 @@ import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.TurtleLandModel;
 import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
 import com.teammetallurgy.aquaculture.init.AquaEntities;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;

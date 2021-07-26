@@ -6,7 +6,7 @@ import com.teammetallurgy.aquaculture.client.renderer.entity.AquaBobberRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.AquaFishRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.FishMountRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.entity.TurtleLandRenderer;
-import com.teammetallurgy.aquaculture.client.renderer.entity.model.TurtleLandModel;
+import com.teammetallurgy.aquaculture.client.renderer.entity.model.*;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.NeptunesBountyRenderer;
 import com.teammetallurgy.aquaculture.client.renderer.tileentity.TackleBoxRenderer;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
@@ -35,8 +35,14 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientHandler {
-    public static final ModelLayerLocation TURTLE_LAND_LAYER = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "turtle_land"), "turtle_land");
     public static final ModelLayerLocation TACKLE_BOX = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "tackle_box"), "tackle_box");
+    public static final ModelLayerLocation TURTLE_LAND_LAYER = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "turtle_land"), "turtle_land");
+    public static final ModelLayerLocation SMALL_MODEL = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "small_model"), "small_model");
+    public static final ModelLayerLocation MEDIUM_MODEL = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "medium_model"), "medium_model");
+    public static final ModelLayerLocation LARGE_MODEL = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "large_model"), "large_model");
+    public static final ModelLayerLocation LONGNOSE_MODEL = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "longnose_model"), "longnose_model");
+    public static final ModelLayerLocation CATFISH_MODEL = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "catfish_model"), "catfish_model");
+    public static final ModelLayerLocation JELLYFISH_MODEL = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish_model"), "jellyfish_model");
 
     public static void setupClient() {
         MenuScreens.register(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
@@ -71,8 +77,14 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(TURTLE_LAND_LAYER, TurtleLandModel::createBodyLayer);
         event.registerLayerDefinition(TACKLE_BOX, TackleBoxRenderer::createLayer);
+        event.registerLayerDefinition(TURTLE_LAND_LAYER, TurtleLandModel::createBodyLayer);
+        event.registerLayerDefinition(SMALL_MODEL, FishSmallModel::createBodyLayer);
+        event.registerLayerDefinition(MEDIUM_MODEL, FishMediumModel::createBodyLayer);
+        event.registerLayerDefinition(LARGE_MODEL, FishLargeModel::createBodyLayer);
+        event.registerLayerDefinition(LONGNOSE_MODEL, FishLongnoseModel::createBodyLayer);
+        event.registerLayerDefinition(CATFISH_MODEL, FishCathfishModel::createBodyLayer);
+        event.registerLayerDefinition(JELLYFISH_MODEL, JellyfishModel::createBodyLayer);
     }
 
     @SubscribeEvent
