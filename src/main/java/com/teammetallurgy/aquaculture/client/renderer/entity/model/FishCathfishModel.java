@@ -49,8 +49,8 @@ public class FishCathfishModel<T extends Entity> extends ListModel<T> { //Based 
         def.addOrReplaceChild("right_fin", CubeListBuilder.create().texOffs(26, 4).addBox(-2.0F, 0.0F, -1.0F, 2, 0, 2), PartPose.offsetAndRotation(-1.0F, 22.0F, 1.0F, -1.5707963267948966F, 0.0F, -0.7853981633974483F));
         def.addOrReplaceChild("bottom_fin", CubeListBuilder.create().texOffs(20, 5).addBox(0.0F, -1.0F, 0.0F, 0, 2, 6), PartPose.offset(0.0F, 25.0F, 0.0F));
         def.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(22, 3).addBox(0.0F, -2.0F, 0.0F, 0, 4, 4), PartPose.offset(0.0F, 22.0F, 7.0F));
-        def.addOrReplaceChild("left_whisker", CubeListBuilder.create().texOffs(28, 15).addBox(0.0F, -1.0F, -0.5F, 2, 2, 0), PartPose.offset(3.0F, 0.0F, -2.0F));
-        def.addOrReplaceChild("right_whisker", CubeListBuilder.create().texOffs(28, 17).addBox(-2.0F, -1.0F, -0.5F, 2, 2, 0), PartPose.offset(-1.0F, 0.0F, -2.0F));
+        def.addOrReplaceChild("left_whisker", CubeListBuilder.create().texOffs(28, 15).addBox(0.0F, -1.0F, -0.5F, 2, 2, 0), PartPose.offset(2.0F, 22.5F, -2.0F));
+        def.addOrReplaceChild("right_whisker", CubeListBuilder.create().texOffs(28, 17).addBox(-2.0F, -1.0F, -0.5F, 2, 2, 0), PartPose.offset(-2.0F, 22.5F, -2.0F));
         return LayerDefinition.create(modelDefinition, 32, 32);
     }
 

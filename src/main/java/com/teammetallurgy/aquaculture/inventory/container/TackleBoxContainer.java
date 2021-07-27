@@ -51,6 +51,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
                     public boolean mayPlace(@Nonnull ItemStack stack) {
                         return stack.getItem() instanceof BaitItem && super.mayPlace(stack);
                     }
+
                     @Override
                     public boolean mayPickup(Player player) {
                         return false;
@@ -131,9 +132,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        if (this.tackleBox != null) {
-            this.tackleBox.stopOpen(player);
-        }
+        this.tackleBox.stopOpen(player);
     }
 
     @Override

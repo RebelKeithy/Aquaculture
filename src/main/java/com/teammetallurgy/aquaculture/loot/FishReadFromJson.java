@@ -8,21 +8,16 @@ import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import com.teammetallurgy.aquaculture.misc.BiomeDictionaryHelper;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,14 +32,7 @@ public class FishReadFromJson {
     public static void read() {
         try {
             String filePath = Aquaculture.MOD_ID + "/loot_tables/" + AquaLootTables.FISH.getPath() + ".json";
-            InputStreamReader fileReader;
-            if (Aquaculture.IS_DEV) {
-                IModFile modFile = ModList.get().getModFileById(Aquaculture.MOD_ID).getFile();
-                Path root = modFile.findResource(PackType.SERVER_DATA.getDirectory()).toAbsolutePath();
-                fileReader = new FileReader(root.resolve(root.getFileSystem().getPath(filePath)).toFile());
-            } else {
-                fileReader = new InputStreamReader(Aquaculture.instance.getClass().getResourceAsStream("/data/" + filePath));
-            }
+            InputStreamReader fileReader = new InputStreamReader(Aquaculture.instance.getClass().getResourceAsStream("/data/" + filePath));
 
             BufferedReader reader = new BufferedReader(fileReader);
             JsonElement json = GSON_INSTANCE.fromJson(reader, JsonElement.class);

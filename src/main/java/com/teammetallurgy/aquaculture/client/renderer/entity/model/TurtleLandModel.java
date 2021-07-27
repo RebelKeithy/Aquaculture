@@ -30,8 +30,8 @@ public class TurtleLandModel<T extends TurtleLandEntity> extends QuadrupedModel<
         PartDefinition def = modelDefinition.getRoot();
         def.addOrReplaceChild("head", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0F, -1.0F, -0.5F, 2, 2, 2), PartPose.offset(0.0F, 22.2F, -4.0F));
         def.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-2.5F, -1.0F, -3.0F, 5, 2, 6), PartPose.offset(0.0F, 22.0F, 0.0F));
-        def.addOrReplaceChild("belly", CubeListBuilder.create().texOffs(0, 14).addBox(-2.0F, -0.5F, -2.5F, 4, 1, 5), PartPose.offset(0.0F, 1.0F, 0.0F));
-        def.addOrReplaceChild("shell_top", CubeListBuilder.create().texOffs(0, 8).addBox(-2.0F, -0.5F, -2.5F, 4, 1, 5), PartPose.offset(0.0F, -1.5F, 0.0F));
+        def.addOrReplaceChild("belly", CubeListBuilder.create().texOffs(0, 14).addBox(-2.0F, -0.5F, -2.5F, 4, 1, 5), PartPose.offset(0.0F, 23.0F, 0.0F));
+        def.addOrReplaceChild("shell_top", CubeListBuilder.create().texOffs(0, 8).addBox(-2.0F, -0.5F, -2.5F, 4, 1, 5), PartPose.offset(0.0F, 20.5F, 0.0F));
         def.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(16, 3).addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1), PartPose.offsetAndRotation(-2.5F, 23.0F, 3.0F, 0.5235987755982988F, 5.759586531581287F, 0.0F));
         def.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(16, 0).addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1), PartPose.offsetAndRotation(2.5F, 23.0F, -3.0F, -0.5235987755982988F, -0.5235987755982988F, 0.0F));
         def.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(20, 3).addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1), PartPose.offsetAndRotation(-2.5F, 23.0F, -3.0F, -0.5235987755982988F, 0.5235987755982988F, 0.0F));

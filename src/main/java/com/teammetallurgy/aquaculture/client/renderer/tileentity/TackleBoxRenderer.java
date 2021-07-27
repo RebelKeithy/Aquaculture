@@ -35,21 +35,20 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity> implements BlockE
     private static final RenderType TACKLE_BOX_RENDER = RenderType.entityCutout(TACKLE_BOX_TEXTURE);
     private final ModelPart base;
     private final ModelPart lid;
-    private final ModelPart handle;
 
     public TackleBoxRenderer(BlockEntityRendererProvider.Context context) {
         ModelPart part = context.bakeLayer(ClientHandler.TACKLE_BOX);
         this.base = part.getChild("base");
         this.lid = part.getChild("lid");
-        this.handle = part.getChild("handle");
     }
 
     public static LayerDefinition createLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
+        PartDefinition lid = partDefinition.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -3.0F, -8.0F, 14, 3, 8), PartPose.offset(7.0F, 12.0F, 4.0F));
+
         partDefinition.addOrReplaceChild("base", CubeListBuilder.create().texOffs(0, 11).addBox(0.0F, -6.0F, -8.0F, 14, 6, 8), PartPose.offset(0.0F, 18.0F, 4.0F));
-        partDefinition.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -3.0F, -8.0F, 14, 3, 8), PartPose.offset(7.0F, 12.0F, 4.0F));
-        partDefinition.addOrReplaceChild("handle", CubeListBuilder.create().texOffs(36, 0).addBox(-2.0F, -4.0F, -5.0F, 4, 1, 2), PartPose.offset(0.0F, 0.0F, 0.0F));
+        lid.addOrReplaceChild("handle", CubeListBuilder.create().texOffs(36, 0).addBox(-2.0F, -4.0F, -5.0F, 4, 1, 2), PartPose.offset(0.0F, 0.0F, 0.0F));
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
@@ -70,20 +69,20 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity> implements BlockE
 
             DoubleBlockCombiner.NeighborCombineResult<?> callbackWrapper = DoubleBlockCombiner.Combiner::acceptNone;
             float angle = tackleBox.getOpenNess(partialTicks);
+            //System.out.println("angle: " + angle);
             angle = 1.0F - angle;
             angle = 1.0F - angle * angle * angle;
             int brightness = ((Int2IntFunction) callbackWrapper.apply(new BrightnessCombiner())).applyAsInt(combinedLight);
             VertexConsumer tackleBoxBuilder = buffer.getBuffer(TACKLE_BOX_RENDER);
-            this.render(matrixStack, tackleBoxBuilder, this.base, this.lid, this.handle, angle, brightness, combinedOverlay);
+            this.render(matrixStack, tackleBoxBuilder, this.base, this.lid, angle, brightness, combinedOverlay);
             matrixStack.popPose();
         }
     }
 
-    private void render(PoseStack matrixStack, VertexConsumer builder, ModelPart base, ModelPart lid, ModelPart handle, float angle, int brightness, int combinedOverlay) {
+    private void render(PoseStack matrixStack, VertexConsumer builder, ModelPart base, ModelPart lid, float angle, int brightness, int combinedOverlay) {
         lid.xRot = -(angle * 1.5707964F);
         base.render(matrixStack, builder, brightness, combinedOverlay);
         lid.render(matrixStack, builder, brightness, combinedOverlay);
         lid.render(matrixStack, builder, brightness, combinedOverlay);
-        handle.render(matrixStack, builder, brightness, combinedOverlay);
     }
 }

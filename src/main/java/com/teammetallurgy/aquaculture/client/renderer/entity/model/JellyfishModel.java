@@ -39,8 +39,8 @@ public class JellyfishModel<T extends Entity> extends ListModel<T> {
         def.addOrReplaceChild("tentacles_main", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, -3.0F, 0.0F, 0, 6, 14), PartPose.offset(0.0F, 21.0F, -3.5F));
         def.addOrReplaceChild("tentacles_left", CubeListBuilder.create().texOffs(0, 8).addBox(2.0F, -3.0F, 0.0F, 0, 6, 12), PartPose.offset(0.0F, 21.0F, -3.5F));
         def.addOrReplaceChild("tentacles_right", CubeListBuilder.create().texOffs(0, 14).addBox(-2.0F, -3.0F, 0.0F, 0, 6, 12), PartPose.offset(0.0F, 21.0F, -3.5F));
-        def.addOrReplaceChild("frill", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, 0.0F, 6, 6, 1), PartPose.offset(0.0F, 0.0F, -2.0F));
-        def.addOrReplaceChild("heart", CubeListBuilder.create().texOffs(34, 0).addBox(-1.5F, -1.5F, -2.0F, 3, 3, 3), PartPose.offset(0.0F, 0.0F, 0.0F));
+        def.addOrReplaceChild("frill", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -3.0F, 0.0F, 6, 6, 1), PartPose.offset(0.0F, 21.0F, -5.0F));
+        def.addOrReplaceChild("heart", CubeListBuilder.create().texOffs(34, 0).addBox(-1.5F, -1.5F, -2.0F, 3, 3, 3), PartPose.offset(0.0F, 21.0F, -3.0F));
         return LayerDefinition.create(modelDefinition, 64, 32);
     }
 

@@ -105,17 +105,6 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements MenuProvi
         return this.lidController.getOpenness(partialTicks);
     }
 
-    public static int getOpenCount(BlockGetter blockGetter, BlockPos pos) {
-        BlockState blockstate = blockGetter.getBlockState(pos);
-        if (blockstate.hasBlockEntity()) {
-            BlockEntity blockentity = blockGetter.getBlockEntity(pos);
-            if (blockentity instanceof TackleBoxTileEntity) {
-                return ((TackleBoxTileEntity) blockentity).openersCounter.getOpenerCount();
-            }
-        }
-        return 0;
-    }
-
     public void recheckOpen() {
         if (!this.remove) {
             this.openersCounter.recheckOpeners(this.getLevel(), this.getBlockPos(), this.getBlockState());

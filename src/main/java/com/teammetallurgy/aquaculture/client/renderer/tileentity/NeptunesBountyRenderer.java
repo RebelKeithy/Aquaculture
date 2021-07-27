@@ -17,10 +17,12 @@ import javax.annotation.Nonnull;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class NeptunesBountyRenderer extends ChestRenderer<NeptunesBountyTileEntity> {
+    public static NeptunesBountyRenderer instance;
     private static final ResourceLocation NEPTUNES_BOUNTY = new ResourceLocation(Aquaculture.MOD_ID, "entity/tileentity/neptunes_bounty");
 
-    public NeptunesBountyRenderer(BlockEntityRendererProvider.Context contex) {
-        super(contex);
+    public NeptunesBountyRenderer(BlockEntityRendererProvider.Context context) {
+        super(context);
+        instance = this;
     }
 
     @Override
