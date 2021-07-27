@@ -18,9 +18,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -86,6 +88,7 @@ public class AquaFishingRodItem extends FishingRodItem {
             }
             player.swing(hand);
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.random.nextFloat() * 0.4F + 0.8F));
+            level.gameEvent(player, GameEvent.FISHING_ROD_REEL_IN, player);
         } else {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.random.nextFloat() * 0.4F + 0.8F));
             if (!level.isClientSide) {
@@ -103,8 +106,8 @@ public class AquaFishingRodItem extends FishingRodItem {
 
                 level.addFreshEntity(new AquaFishingBobberEntity(player, level, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack));
             }
-            player.swing(hand);
             player.awardStat(Stats.ITEM_USED.get(this));
+            level.gameEvent(player, GameEvent.FISHING_ROD_CAST, player);
         }
         return InteractionResultHolder.sidedSuccess(heldStack, level.isClientSide());
     }

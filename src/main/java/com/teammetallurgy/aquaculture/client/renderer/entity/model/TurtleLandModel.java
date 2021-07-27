@@ -4,7 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
 import net.minecraft.client.model.QuadrupedModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
@@ -22,47 +23,20 @@ public class TurtleLandModel<T extends TurtleLandEntity> extends QuadrupedModel<
         this.tail = part.getChild("tail");
         this.shellTop = part.getChild("shell_top");
         this.belly = part.getChild("belly");
-
-        /*
-        this.head = new ModelPart(this, 24, 0);
-        this.head.setPos(0.0F, 22.2F, -4.0F);
-        this.head.addBox(-1.0F, -1.0F, -0.5F, 2, 2, 2, -0.2F);
-        this.body = new ModelPart(this, 0, 0);
-        this.body.setPos(0.0F, 22.0F, 0.0F);
-        this.body.addBox(-2.5F, -1.0F, -3.0F, 5, 2, 6, 0.0F);
-        this.belly = new ModelPart(this, 0, 14);
-        this.belly.setPos(0.0F, 1.0F, 0.0F);
-        this.belly.addBox(-2.0F, -0.5F, -2.5F, 4, 1, 5, 0.0F);
-        this.shellTop = new ModelPart(this, 0, 8);
-        this.shellTop.setPos(0.0F, -1.5F, 0.0F);
-        this.shellTop.addBox(-2.0F, -0.5F, -2.5F, 4, 1, 5, 0.0F);
-        this.leg0 = new ModelPart(this, 16, 3);
-        this.leg0.setPos(-2.5F, 23.0F, 3.0F);
-        this.leg0.addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1, 0.1F);
-        this.setRotateAngle(leg0, 0.5235987755982988F, 5.759586531581287F, 0.0F);
-        this.leg1 = new ModelPart(this, 16, 0);
-        this.leg1.setPos(2.5F, 23.0F, -3.0F);
-        this.leg1.addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1, 0.1F);
-        this.setRotateAngle(leg1, -0.5235987755982988F, -0.5235987755982988F, 0.0F);
-        this.leg2 = new ModelPart(this, 20, 3);
-        this.leg2.setPos(-2.5F, 23.0F, -3.0F);
-        this.leg2.addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1, 0.1F);
-        this.setRotateAngle(leg2, -0.5235987755982988F, 0.5235987755982988F, 0.0F);
-        this.leg3 = new ModelPart(this, 20, 0);
-        this.leg3.setPos(2.5F, 23.0F, 3.0F);
-        this.leg3.addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1, 0.1F);
-        this.setRotateAngle(leg3, 0.5235987755982988F, 0.5235987755982988F, 0.0F);
-        this.tail = new ModelPart(this, 26, 0);
-        this.tail.setPos(0.0F, 22.5F, 3.2F);
-        this.tail.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1, -0.2F);
-        this.body.addChild(this.belly);
-        this.body.addChild(this.shellTop);*/
     }
 
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition modelDefinition = createBodyMesh(0, CubeDeformation.NONE);
+        MeshDefinition modelDefinition = new MeshDefinition();
         PartDefinition def = modelDefinition.getRoot();
-
+        def.addOrReplaceChild("head", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0F, -1.0F, -0.5F, 2, 2, 2), PartPose.offset(0.0F, 22.2F, -4.0F));
+        def.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-2.5F, -1.0F, -3.0F, 5, 2, 6), PartPose.offset(0.0F, 22.0F, 0.0F));
+        def.addOrReplaceChild("belly", CubeListBuilder.create().texOffs(0, 14).addBox(-2.0F, -0.5F, -2.5F, 4, 1, 5), PartPose.offset(0.0F, 1.0F, 0.0F));
+        def.addOrReplaceChild("shell_top", CubeListBuilder.create().texOffs(0, 8).addBox(-2.0F, -0.5F, -2.5F, 4, 1, 5), PartPose.offset(0.0F, -1.5F, 0.0F));
+        def.addOrReplaceChild("right_hind_leg", CubeListBuilder.create().texOffs(16, 3).addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1), PartPose.offsetAndRotation(-2.5F, 23.0F, 3.0F, 0.5235987755982988F, 5.759586531581287F, 0.0F));
+        def.addOrReplaceChild("left_hind_leg", CubeListBuilder.create().texOffs(16, 0).addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1), PartPose.offsetAndRotation(2.5F, 23.0F, -3.0F, -0.5235987755982988F, -0.5235987755982988F, 0.0F));
+        def.addOrReplaceChild("right_front_leg", CubeListBuilder.create().texOffs(20, 3).addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1), PartPose.offsetAndRotation(-2.5F, 23.0F, -3.0F, -0.5235987755982988F, 0.5235987755982988F, 0.0F));
+        def.addOrReplaceChild("left_front_leg", CubeListBuilder.create().texOffs(20, 0).addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1), PartPose.offsetAndRotation(2.5F, 23.0F, 3.0F, 0.5235987755982988F, 0.5235987755982988F, 0.0F));
+        def.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(26, 0).addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1), PartPose.offset(0.0F, 22.5F, 3.2F));
         return LayerDefinition.create(modelDefinition, 64, 32);
     }
 

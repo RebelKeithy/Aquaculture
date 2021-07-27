@@ -31,6 +31,7 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -200,6 +201,20 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
         }
     }
 
+    @Override
+    protected boolean shouldStopFishing(Player player) {
+        ItemStack mainHand = player.getMainHandItem();
+        ItemStack offHand = player.getOffhandItem();
+        boolean isMainHandRod = mainHand.getItem() instanceof FishingRodItem;
+        boolean isOffHandRod = mainHand.getItem() instanceof FishingRodItem;
+        if (!player.isRemoved() && player.isAlive() && (isMainHandRod || isOffHandRod) && !(this.distanceToSqr(player) > 1024.0D)) {
+            return false;
+        } else {
+            this.discard();
+            return true;
+        }
+    }
+
     private List<ItemStack> getLoot(LootContext.Builder builder, ServerLevel serverWorld) {
         ResourceLocation lootTableLocation;
         if (this.isLavaHookInLava(this, this.level, this.blockPosition())) {
@@ -286,7 +301,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 f = fluidState.getHeight(this.level, bobberPos);
             }
 
-            boolean flag = f > 0.0F;
+            boolean isMainHandRod = f > 0.0F;
             if (this.currentState == FishHookState.FLYING) {
                 if (this.hookedIn != null) {
                     this.setDeltaMovement(Vec3.ZERO);
@@ -294,7 +309,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                     return;
                 }
 
-                if (flag) {
+                if (isMainHandRod) {
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.3D, 0.2D, 0.3D));
                     this.currentState = FishHookState.BOBBING;
                     return;
@@ -328,7 +343,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                         this.openWater = this.openWater && this.outOfWaterTime < 10 && this.calculateOpenWater(bobberPos);
                     }
 
-                    if (flag) {
+                    if (isMainHandRod) {
                         this.outOfWaterTime = Math.max(0, this.outOfWaterTime - 1);
                         if (this.biting) {
                             this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.1D * (double) this.lavaTickRand.nextFloat() * (double) this.lavaTickRand.nextFloat(), 0.0D));

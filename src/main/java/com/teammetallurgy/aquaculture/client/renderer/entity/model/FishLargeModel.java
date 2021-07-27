@@ -3,6 +3,8 @@ package com.teammetallurgy.aquaculture.client.renderer.entity.model;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
@@ -30,39 +32,19 @@ public class FishLargeModel<T extends Entity> extends ListModel<T> { //Based on 
         this.rightFin = part.getChild("right_fin");
         this.headFront = part.getChild("head_front");
         this.bottomFin = part.getChild("bottom_fin");
-
-        /*this.bottomFin = new ModelPart(this, 20, 6);
-        this.bottomFin.setPos(0.0F, 26.0F, 0.0F);
-        this.bottomFin.addBox(0.0F, -1.0F, 0.0F, 0, 2, 6, 0.0F);
-        this.head = new ModelPart(this, 11, 0);
-        this.head.setPos(0.0F, 22.0F, 0.0F);
-        this.head.addBox(-1.0F, -2.0F, -3.0F, 2, 4, 3, 0.0F);
-        this.headFront = new ModelPart(this, 0, 0);
-        this.headFront.setPos(0.0F, 22.0F, -3.0F);
-        this.headFront.addBox(-1.0F, -2.0F, -1.0F, 2, 3, 1, 0.0F);
-        this.leftFin = new ModelPart(this, 22, 4);
-        this.leftFin.setPos(1.0F, 24.0F, 0.0F);
-        this.leftFin.addBox(0.0F, 0.0F, -1.0F, 2, 0, 2, 0.0F);
-        this.leftFin.zRot = 0.7853981633974483F;
-        this.rightFin = new ModelPart(this, 26, 4);
-        this.rightFin.setPos(-1.0F, 24.0F, 0.0F);
-        this.rightFin.addBox(-2.0F, 0.0F, -1.0F, 2, 0, 2, 0.0F);
-        this.rightFin.zRot = -0.7853981633974483F;
-        this.topFin = new ModelPart(this, 18, -7);
-        this.topFin.setPos(0.0F, 19.0F, 0.0F);
-        this.topFin.addBox(0.0F, -1.0F, -1.0F, 0, 2, 7, 0.0F);
-        this.tail = new ModelPart(this, 21, 2);
-        this.tail.setPos(0.0F, 21.5F, 7.0F);
-        this.tail.addBox(0.0F, -2.0F, 0.0F, 0, 5, 5, 0.0F);
-        this.body = new ModelPart(this, 0, 1);
-        this.body.setPos(0.0F, 22.0F, 0.0F);
-        this.body.addBox(-1.0F, -2.0F, 0.0F, 2, 5, 7, 0.0F);*/
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition modelDefinition = new MeshDefinition();
         PartDefinition def = modelDefinition.getRoot();
-
+        def.addOrReplaceChild("head", CubeListBuilder.create().texOffs(11, 0).addBox(-1.0F, -2.0F, -3.0F, 2, 4, 3), PartPose.offset(0.0F, 22.0F, 0.0F));
+        def.addOrReplaceChild("top_fin", CubeListBuilder.create().texOffs(18, -7).addBox(0.0F, -1.0F, -1.0F, 0, 2, 7), PartPose.offset(0.0F, 19.0F, 0.0F));
+        def.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(21, 2).addBox(0.0F, -2.0F, 0.0F, 0, 5, 5), PartPose.offset(0.0F, 21.5F, 7.0F));
+        def.addOrReplaceChild("left_fin", CubeListBuilder.create().texOffs(22, 4).addBox(0.0F, 0.0F, -1.0F, 2, 0, 2), PartPose.offsetAndRotation(1.0F, 24.0F, 0.0F, 0.0F, 0.0F, 0.7853981633974483F));
+        def.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 1).addBox(-1.0F, -2.0F, 0.0F, 2, 5, 7), PartPose.offset(0.0F, 22.0F, 0.0F));
+        def.addOrReplaceChild("right_fin", CubeListBuilder.create().texOffs(26, 4).addBox(-2.0F, 0.0F, -1.0F, 2, 0, 2), PartPose.offsetAndRotation(-1.0F, 24.0F, 0.0F, 0.0F, 0.0F, -0.7853981633974483F));
+        def.addOrReplaceChild("head_front", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -2.0F, -1.0F, 2, 3, 1), PartPose.offset(0.0F, 22.0F, -3.0F));
+        def.addOrReplaceChild("bottom_fin", CubeListBuilder.create().texOffs(20, 6).addBox(0.0F, -1.0F, 0.0F, 0, 2, 6), PartPose.offset(0.0F, 26.0F, 0.0F));
         return LayerDefinition.create(modelDefinition, 32, 32);
     }
 
