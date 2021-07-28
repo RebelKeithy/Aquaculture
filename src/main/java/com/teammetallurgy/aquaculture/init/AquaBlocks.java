@@ -8,6 +8,7 @@ import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
+import com.teammetallurgy.aquaculture.item.BlockItemWithoutLevelRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -33,8 +34,8 @@ public class AquaBlocks {
     public static List<Block> BLOCKS = Lists.newArrayList();
     public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", null);
     public static final Block NEPTUNIUM_BLOCK = register(new Block(Block.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).strength(5.0F, 6.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.METAL)), "neptunium_block");
-    public static final Block NEPTUNES_BOUNTY = register(new NeptunesBountyBlock(), "neptunes_bounty", new Item.Properties()/*.setISTER(() -> AquatemRenderer::new)*/); //TODO
-    public static final Block TACKLE_BOX = register(new TackleBoxBlock(), "tackle_box", new Item.Properties()/*.setISTER(() -> AquatemRenderer::new)*/); //TODO
+    public static final Block NEPTUNES_BOUNTY = registerWithRenderer(new NeptunesBountyBlock(), "neptunes_bounty", new Item.Properties());
+    public static final Block TACKLE_BOX = registerWithRenderer(new TackleBoxBlock(), "tackle_box", new Item.Properties());
     public static final Block WORM_FARM = register(new WormFarmBlock(), "worm_farm");
 
     /**
@@ -54,6 +55,19 @@ public class AquaBlocks {
     public static Block register(@Nonnull Block block, @Nonnull String name, @Nullable Item.Properties properties) {
         registerBaseBlock(block, name);
         AquaItems.register(new BlockItem(block, properties == null ? new Item.Properties() : properties.tab(Aquaculture.GROUP)), name);
+        return block;
+    }
+
+    /**
+     * Registers an block with a BlockItemWithoutLevelRenderer
+     *
+     * @param block The block to be registered
+     * @param name  The name to register the block with
+     * @return The Block that was registered
+     */
+    public static Block registerWithRenderer(@Nonnull Block block, @Nonnull String name, @Nullable Item.Properties properties) {
+        registerBaseBlock(block, name);
+        AquaItems.register(new BlockItemWithoutLevelRenderer(block, properties == null ? new Item.Properties() : properties.tab(Aquaculture.GROUP)), name);
         return block;
     }
 

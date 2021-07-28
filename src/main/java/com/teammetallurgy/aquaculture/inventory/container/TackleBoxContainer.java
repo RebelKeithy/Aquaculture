@@ -107,7 +107,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
 
     @Override
     @Nonnull
-    public ItemStack quickMoveStack(Player player, int index) {
+    public ItemStack quickMoveStack(@Nonnull Player player, int index) {
         ItemStack transferStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -130,7 +130,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
     }
 
     @Override
-    public void removed(Player player) {
+    public void removed(@Nonnull Player player) {
         super.removed(player);
         this.tackleBox.stopOpen(player);
     }

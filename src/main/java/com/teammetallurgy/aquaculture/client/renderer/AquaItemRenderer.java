@@ -17,15 +17,12 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
-@OnlyIn(Dist.CLIENT)
-public class AquatemRenderer extends BlockEntityWithoutLevelRenderer {
+public class AquaItemRenderer extends BlockEntityWithoutLevelRenderer {
 
-    public AquatemRenderer(BlockEntityRenderDispatcher renderDispatcher, EntityModelSet entityModelSet) {
+    public AquaItemRenderer(BlockEntityRenderDispatcher renderDispatcher, EntityModelSet entityModelSet) {
         super(renderDispatcher, entityModelSet);
     }
 
