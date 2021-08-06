@@ -2,7 +2,6 @@
     "itemGroup.aquaculture": "Aquaculture",
 
     "_comment": "Blocks",
-    "block.aquaculture.fish_trap": "Верша",
     "block.aquaculture.neptunium_block": "Нептуниевый блок",
     "block.aquaculture.neptunes_bounty": "Подарок Нептуна",
     "block.aquaculture.tackle_box": "Ящик снастей",

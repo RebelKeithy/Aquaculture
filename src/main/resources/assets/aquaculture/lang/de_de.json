@@ -2,7 +2,6 @@
   "itemGroup.aquaculture": "Aquaculture",
 
   "_comment": "Blocks",
-  "block.aquaculture.fish_trap": "Fischfalle",
   "block.aquaculture.neptunium_block": "Neptunium Block",
   "block.aquaculture.neptunes_bounty": "Neptune's Kopfgeld",
   "block.aquaculture.tackle_box": "Angelkiste",

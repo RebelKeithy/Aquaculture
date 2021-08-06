@@ -2,7 +2,6 @@
   "itemGroup.aquaculture": "Aquaculture",
 
   "_comment": "Blocks",
-  "block.aquaculture.fish_trap": "Fish Trap",
   "block.aquaculture.neptunium_block": "Neptunium Block",
   "block.aquaculture.neptunes_bounty": "Neptune's Bounty",
   "block.aquaculture.tackle_box": "Box O' Tackle",

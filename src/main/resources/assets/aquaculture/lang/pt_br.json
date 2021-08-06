@@ -2,7 +2,6 @@
   "itemGroup.aquaculture": "Aquaculture",
 
   "_comment": "Blocks",
-  "block.aquaculture.fish_trap": "Armadilha para peixes",
   "block.aquaculture.neptunium_block": "Bloco de netúnio",
   "block.aquaculture.neptunes_bounty": "Recompensa de Netuno",
   "block.aquaculture.tackle_box": "Caixa de apetrechos de pesca",

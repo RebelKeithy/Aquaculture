@@ -2,7 +2,6 @@
   "itemGroup.aquaculture":"Aquaculture",
   
   "_comment": "Blocks",
-  "block.aquaculture.fish_trap":"Trampa para peces",
   "block.aquaculture.neptunium_block":"Bloque de neptunio",
   "block.aquaculture.neptunes_bounty":"Don de Neptuno",
   "block.aquaculture.tackle_box":"Caja de pesca",
