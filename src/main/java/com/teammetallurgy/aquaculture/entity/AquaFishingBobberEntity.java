@@ -159,7 +159,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                     event = new ItemFishedEvent(lootEntries, this.onGround ? 2 : 1, this);
                     MinecraftForge.EVENT_BUS.post(event);
                     if (event.isCanceled()) {
-                        this.remove(false);
+                        this.discard();
                         return event.getRodDamage();
                     }
                     CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayer) angler, stack, this, lootEntries);

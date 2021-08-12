@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,7 +32,7 @@ import java.util.List;
 public class AquaBlocks {
     public static List<Block> BLOCKS = Lists.newArrayList();
     public static final Block FARMLAND = register(new FarmlandMoistBlock(), "farmland", null);
-    public static final Block NEPTUNIUM_BLOCK = register(new Block(Block.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).strength(5.0F, 6.0F).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.METAL)), "neptunium_block");
+    public static final Block NEPTUNIUM_BLOCK = register(new Block(Block.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).strength(5.0F, 6.0F).sound(SoundType.METAL)), "neptunium_block");
     public static final Block NEPTUNES_BOUNTY = registerWithRenderer(new NeptunesBountyBlock(), "neptunes_bounty", new Item.Properties());
     public static final Block TACKLE_BOX = registerWithRenderer(new TackleBoxBlock(), "tackle_box", new Item.Properties());
     public static final Block WORM_FARM = register(new WormFarmBlock(), "worm_farm");
