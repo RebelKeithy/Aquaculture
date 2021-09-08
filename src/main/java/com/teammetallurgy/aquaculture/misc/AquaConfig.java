@@ -21,6 +21,7 @@ public class AquaConfig {
         public ForgeConfigSpec.BooleanValue aqFishToBreedCats;
         public ForgeConfigSpec.IntValue messageInABottleAmount;
         public ForgeConfigSpec.BooleanValue debugMode;
+        public ForgeConfigSpec.BooleanValue showFilletRecipesInJEI;
 
         BasicOptions(ForgeConfigSpec.Builder builder) {
             builder.push(BASIC_OPTIONS);
@@ -30,6 +31,7 @@ public class AquaConfig {
             aqFishToBreedCats = builder.define("Should Aquaculture fish be able to be used to breed cats & ocelots?", true);
             messageInABottleAmount = builder.defineInRange("Amount of Message In A Bottle messages. Used to add additional custom messages", 29, 0, 255);
             debugMode = builder.define("Enable debug mode? (Enables additional logging)", false);
+            showFilletRecipesInJEI = builder.define("Show Fillet recipes in JEI?", true);
             builder.pop();
         }
     }
