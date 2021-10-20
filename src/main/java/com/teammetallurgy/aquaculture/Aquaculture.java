@@ -74,5 +74,6 @@ public class Aquaculture {
         AquaBlockEntities.BLOCK_ENTITY_DEFERRED.register(modBus);
         AquaBlocks.BLOCK_DEFERRED.register(modBus);
         AquaItems.ITEM_DEFERRED.register(modBus);
+        AquaGuis.MENU_DEFERRED.register(modBus);
     }
 }

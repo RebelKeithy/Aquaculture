@@ -34,7 +34,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
     public Slot slotBobber;
 
     public TackleBoxContainer(int windowID, BlockPos pos, Inventory playerInventory) {
-        super(AquaGuis.TACKLE_BOX, windowID);
+        super(AquaGuis.TACKLE_BOX.get(), windowID);
         this.tackleBox = (TackleBoxTileEntity) playerInventory.player.level.getBlockEntity(pos);
         if (this.tackleBox != null) {
             this.tackleBox.startOpen(playerInventory.player);

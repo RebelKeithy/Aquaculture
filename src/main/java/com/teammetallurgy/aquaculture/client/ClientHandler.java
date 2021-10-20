@@ -45,7 +45,7 @@ public class ClientHandler {
     public static final ModelLayerLocation JELLYFISH_MODEL = new ModelLayerLocation(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish_model"), "jellyfish_model");
 
     public static void setupClient() {
-        MenuScreens.register(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
+        MenuScreens.register(AquaGuis.TACKLE_BOX.get(), TackleBoxScreen::new);
         BlockEntityRenderers.register(AquaBlockEntities.NEPTUNES_BOUNTY.get(), NeptunesBountyRenderer::new);
         BlockEntityRenderers.register(AquaBlockEntities.TACKLE_BOX.get(), TackleBoxRenderer::new);
 
