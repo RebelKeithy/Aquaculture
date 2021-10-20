@@ -46,7 +46,7 @@ public class ClientHandler {
 
     public static void setupClient() {
         MenuScreens.register(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
-        //BlockEntityRenderers.register(AquaBlockEntities.NEPTUNES_BOUNTY.get(), NeptunesBountyRenderer::new);
+        BlockEntityRenderers.register(AquaBlockEntities.NEPTUNES_BOUNTY.get(), NeptunesBountyRenderer::new);
         BlockEntityRenderers.register(AquaBlockEntities.TACKLE_BOX.get(), TackleBoxRenderer::new);
 
         //Item Colors
