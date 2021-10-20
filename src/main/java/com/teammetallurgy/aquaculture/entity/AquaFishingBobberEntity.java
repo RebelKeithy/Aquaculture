@@ -127,7 +127,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
 
     @Override
     public int retrieve(@Nonnull ItemStack stack) {
-        boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && stack.getItem() == AquaItems.NEPTUNIUM_FISHING_ROD;
+        boolean isAdminRod = AquaConfig.BASIC_OPTIONS.debugMode.get() && stack.getItem() == AquaItems.NEPTUNIUM_FISHING_ROD.get();
         Player angler = this.getPlayerOwner();
         if (!this.level.isClientSide && angler != null && !this.shouldStopFishing(angler)) {
             int rodDamage = 0;
@@ -145,7 +145,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 List<ItemStack> lootEntries = getLoot(builder, serverWorld);
                 if (lootEntries.isEmpty()) {
                     if (this.level.dimension() == Level.END) {
-                        lootEntries.add(new ItemStack(AquaItems.FISH_BONES));
+                        lootEntries.add(new ItemStack(AquaItems.FISH_BONES.get()));
                     } else {
                         if (!this.level.isEmptyBlock(this.blockPosition()) && (this.level.getFluidState(this.blockPosition()).isSource())) {
                             ResourceLocation biomeFromRegistry = this.level.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getKey(this.level.getBiome(this.blockPosition()));

@@ -93,7 +93,7 @@ public class FishFilletRecipe extends CustomRecipe {
             if (isKnifeNeptunium(knife)) {
                 filletAmount += filletAmount * (25.0F / 100.0F);
             }
-            return new ItemStack(AquaItems.FISH_FILLET, filletAmount);
+            return new ItemStack(AquaItems.FISH_FILLET.get(), filletAmount);
         } else {
             return ItemStack.EMPTY;
         }

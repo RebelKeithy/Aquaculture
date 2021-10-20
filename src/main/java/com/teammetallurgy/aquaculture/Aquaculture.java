@@ -3,9 +3,7 @@ package com.teammetallurgy.aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
-import com.teammetallurgy.aquaculture.init.AquaEntities;
-import com.teammetallurgy.aquaculture.init.AquaItems;
-import com.teammetallurgy.aquaculture.init.FishRegistry;
+import com.teammetallurgy.aquaculture.init.*;
 import com.teammetallurgy.aquaculture.item.crafting.FishFilletRecipe;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.loot.FishReadFromJson;
@@ -40,7 +38,7 @@ public class Aquaculture {
         @Override
         @Nonnull
         public ItemStack makeIcon() {
-            return new ItemStack(AquaItems.IRON_FISHING_ROD);
+            return new ItemStack(AquaItems.IRON_FISHING_ROD.get());
         }
     };
     public static final LootItemConditionType BIOME_TAG_CHECK = LootItemConditions.register(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.BiomeTagCheckSerializer());
@@ -50,6 +48,7 @@ public class Aquaculture {
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
+        this.registerDeferredRegistries(modBus);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
         AquacultureAPI.Tags.init();
         FishFilletRecipe.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
@@ -60,7 +59,7 @@ public class Aquaculture {
         event.enqueueWork(AquaEntities::setSpawnPlacement);
         event.enqueueWork(WormFarmBlock::addCompostables);
         if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
-            FishRegistry.addCatBreeding();
+            event.enqueueWork(FishRegistry::addCatBreeding);
         }
         if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
             FishReadFromJson.read();
@@ -69,5 +68,11 @@ public class Aquaculture {
 
     private void setupClient(FMLClientSetupEvent event) {
         ClientHandler.setupClient();
+    }
+
+    public void registerDeferredRegistries(IEventBus modBus) {
+        AquaBlockEntities.BLOCK_ENTITY_DEFERRED.register(modBus);
+        AquaBlocks.BLOCK_DEFERRED.register(modBus);
+        AquaItems.ITEM_DEFERRED.register(modBus);
     }
 }

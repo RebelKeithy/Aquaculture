@@ -33,9 +33,9 @@ public class AquaItemRenderer extends BlockEntityWithoutLevelRenderer {
         if (item instanceof BlockItem) {
             Block block = ((BlockItem) item).getBlock();
             if (block instanceof TackleBoxBlock) {
-                mc.getBlockEntityRenderDispatcher().renderItem(new TackleBoxTileEntity(BlockPos.ZERO, AquaBlocks.TACKLE_BOX.defaultBlockState()), matrixStack, buffer, i, i1);
+                mc.getBlockEntityRenderDispatcher().renderItem(new TackleBoxTileEntity(BlockPos.ZERO, AquaBlocks.TACKLE_BOX.get().defaultBlockState()), matrixStack, buffer, i, i1);
             } else if (block instanceof NeptunesBountyBlock) {
-                mc.getBlockEntityRenderDispatcher().renderItem(new NeptunesBountyTileEntity(BlockPos.ZERO, AquaBlocks.NEPTUNES_BOUNTY.defaultBlockState()), matrixStack, buffer, i, i1);
+                mc.getBlockEntityRenderDispatcher().renderItem(new NeptunesBountyTileEntity(BlockPos.ZERO, AquaBlocks.NEPTUNES_BOUNTY.get().defaultBlockState()), matrixStack, buffer, i, i1);
             }
         }
     }

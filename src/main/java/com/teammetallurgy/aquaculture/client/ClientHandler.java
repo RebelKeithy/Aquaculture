@@ -46,17 +46,17 @@ public class ClientHandler {
 
     public static void setupClient() {
         MenuScreens.register(AquaGuis.TACKLE_BOX, TackleBoxScreen::new);
-        BlockEntityRenderers.register(AquaBlocks.AquaTileEntities.NEPTUNES_BOUNTY, NeptunesBountyRenderer::new);
-        BlockEntityRenderers.register(AquaBlocks.AquaTileEntities.TACKLE_BOX, TackleBoxRenderer::new);
+        //BlockEntityRenderers.register(AquaBlockEntities.NEPTUNES_BOUNTY.get(), NeptunesBountyRenderer::new);
+        BlockEntityRenderers.register(AquaBlockEntities.TACKLE_BOX.get(), TackleBoxRenderer::new);
 
         //Item Colors
         ItemColors itemColor = Minecraft.getInstance().getItemColors();
-        itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE, AquaItems.BOBBER);
-        registerFishingRodModelProperties(AquaItems.IRON_FISHING_ROD);
-        registerFishingRodModelProperties(AquaItems.GOLD_FISHING_ROD);
-        registerFishingRodModelProperties(AquaItems.DIAMOND_FISHING_ROD);
-        registerFishingRodModelProperties(AquaItems.NEPTUNIUM_FISHING_ROD);
-        registerBowModelProperties(AquaItems.NEPTUNIUM_BOW);
+        itemColor.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AquaItems.FISHING_LINE.get(), AquaItems.BOBBER.get());
+        registerFishingRodModelProperties(AquaItems.IRON_FISHING_ROD.get());
+        registerFishingRodModelProperties(AquaItems.GOLD_FISHING_ROD.get());
+        registerFishingRodModelProperties(AquaItems.DIAMOND_FISHING_ROD.get());
+        registerFishingRodModelProperties(AquaItems.NEPTUNIUM_FISHING_ROD.get());
+        registerBowModelProperties(AquaItems.NEPTUNIUM_BOW.get());
     }
 
     @SubscribeEvent

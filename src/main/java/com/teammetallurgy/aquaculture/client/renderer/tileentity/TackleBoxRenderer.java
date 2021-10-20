@@ -56,7 +56,7 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity> implements BlockE
     public void render(@Nonnull T tackleBox, float partialTicks, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         Level world = tackleBox.getLevel();
         boolean hasWorld = world != null;
-        BlockState state = hasWorld ? tackleBox.getBlockState() : AquaBlocks.TACKLE_BOX.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
+        BlockState state = hasWorld ? tackleBox.getBlockState() : AquaBlocks.TACKLE_BOX.get().defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
         Block block = state.getBlock();
         if (block instanceof TackleBoxBlock) {
             matrixStack.pushPose();

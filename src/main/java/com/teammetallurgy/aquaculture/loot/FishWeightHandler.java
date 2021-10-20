@@ -97,36 +97,36 @@ public class FishWeightHandler {
     }
 
     public static void registerFishData() {
-        AquacultureAPI.FISH_DATA.add(ATLANTIC_COD, 10, 211, 6);
-        AquacultureAPI.FISH_DATA.add(BLACKFISH, 1, 28, 2);
-        AquacultureAPI.FISH_DATA.add(PACIFIC_HALIBUT, 25, 550, 12);
-        AquacultureAPI.FISH_DATA.add(ATLANTIC_HALIBUT, 50, 710, 14);
-        AquacultureAPI.FISH_DATA.add(ATLANTIC_HERRING, 0.5, 2.4);
-        AquacultureAPI.FISH_DATA.add(PINK_SALMON, 1.5, 15, 2);
-        AquacultureAPI.FISH_DATA.add(POLLOCK, 3, 46, 2);
-        AquacultureAPI.FISH_DATA.add(RAINBOW_TROUT, 2, 27, 2);
-        AquacultureAPI.FISH_DATA.add(BAYAD, 5, 145, 4);
-        AquacultureAPI.FISH_DATA.add(BOULTI, 1, 9.5, 1);
-        AquacultureAPI.FISH_DATA.add(CAPITAINE, 20, 440, 10);
-        AquacultureAPI.FISH_DATA.add(SYNODONTIS, 0.5, 2.5);
-        AquacultureAPI.FISH_DATA.add(SMALLMOUTH_BASS, 1, 12, 2);
-        AquacultureAPI.FISH_DATA.add(BLUEGILL, 0.8, 4.5);
-        AquacultureAPI.FISH_DATA.add(BROWN_TROUT, 1.5, 44, 2);
-        AquacultureAPI.FISH_DATA.add(CARP, 2, 40, 2);
-        AquacultureAPI.FISH_DATA.add(CATFISH, 10, 220, 6);
-        AquacultureAPI.FISH_DATA.add(GAR, 8, 100, 4);
-        AquacultureAPI.FISH_DATA.add(MINNOW, 0.2, 1.5, 0);
-        AquacultureAPI.FISH_DATA.add(MUSKELLUNGE, 5, 70, 3);
-        AquacultureAPI.FISH_DATA.add(PERCH, 0.5, 6);
-        AquacultureAPI.FISH_DATA.add(ARAPAIMA, 20, 440, 10);
-        AquacultureAPI.FISH_DATA.add(PIRANHA, 0.5, 7.7);
-        AquacultureAPI.FISH_DATA.add(TAMBAQUI, 7, 97, 3);
-        AquacultureAPI.FISH_DATA.add(BROWN_SHROOMA, 1, 5, 0);
-        AquacultureAPI.FISH_DATA.add(RED_SHROOMA, 1, 5, 0);
-        AquacultureAPI.FISH_DATA.add(JELLYFISH, 5, 400, 0);
-        AquacultureAPI.FISH_DATA.add(RED_GROUPER, 4, 50, 3);
-        AquacultureAPI.FISH_DATA.add(TUNA, 30, 1508, 10);
-        AquacultureAPI.FISH_DATA.add(GOLDFISH, 0.05, 5, 0);
+        AquacultureAPI.FISH_DATA.add(ATLANTIC_COD.get(), 10, 211, 6);
+        AquacultureAPI.FISH_DATA.add(BLACKFISH.get(), 1, 28, 2);
+        AquacultureAPI.FISH_DATA.add(PACIFIC_HALIBUT.get(), 25, 550, 12);
+        AquacultureAPI.FISH_DATA.add(ATLANTIC_HALIBUT.get(), 50, 710, 14);
+        AquacultureAPI.FISH_DATA.add(ATLANTIC_HERRING.get(), 0.5, 2.4);
+        AquacultureAPI.FISH_DATA.add(PINK_SALMON.get(), 1.5, 15, 2);
+        AquacultureAPI.FISH_DATA.add(POLLOCK.get(), 3, 46, 2);
+        AquacultureAPI.FISH_DATA.add(RAINBOW_TROUT.get(), 2, 27, 2);
+        AquacultureAPI.FISH_DATA.add(BAYAD.get(), 5, 145, 4);
+        AquacultureAPI.FISH_DATA.add(BOULTI.get(), 1, 9.5, 1);
+        AquacultureAPI.FISH_DATA.add(CAPITAINE.get(), 20, 440, 10);
+        AquacultureAPI.FISH_DATA.add(SYNODONTIS.get(), 0.5, 2.5);
+        AquacultureAPI.FISH_DATA.add(SMALLMOUTH_BASS.get(), 1, 12, 2);
+        AquacultureAPI.FISH_DATA.add(BLUEGILL.get(), 0.8, 4.5);
+        AquacultureAPI.FISH_DATA.add(BROWN_TROUT.get(), 1.5, 44, 2);
+        AquacultureAPI.FISH_DATA.add(CARP.get(), 2, 40, 2);
+        AquacultureAPI.FISH_DATA.add(CATFISH.get(), 10, 220, 6);
+        AquacultureAPI.FISH_DATA.add(GAR.get(), 8, 100, 4);
+        AquacultureAPI.FISH_DATA.add(MINNOW.get(), 0.2, 1.5, 0);
+        AquacultureAPI.FISH_DATA.add(MUSKELLUNGE.get(), 5, 70, 3);
+        AquacultureAPI.FISH_DATA.add(PERCH.get(), 0.5, 6);
+        AquacultureAPI.FISH_DATA.add(ARAPAIMA.get(), 20, 440, 10);
+        AquacultureAPI.FISH_DATA.add(PIRANHA.get(), 0.5, 7.7);
+        AquacultureAPI.FISH_DATA.add(TAMBAQUI.get(), 7, 97, 3);
+        AquacultureAPI.FISH_DATA.add(BROWN_SHROOMA.get(), 1, 5, 0);
+        AquacultureAPI.FISH_DATA.add(RED_SHROOMA.get(), 1, 5, 0);
+        AquacultureAPI.FISH_DATA.add(JELLYFISH.get(), 5, 400, 0);
+        AquacultureAPI.FISH_DATA.add(RED_GROUPER.get(), 4, 50, 3);
+        AquacultureAPI.FISH_DATA.add(TUNA.get(), 30, 1508, 10);
+        AquacultureAPI.FISH_DATA.add(GOLDFISH.get(), 0.05, 5, 0);
 
         //Vanilla
         AquacultureAPI.FISH_DATA.add(Items.COD, 12, 211, 4);

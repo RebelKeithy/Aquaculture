@@ -40,7 +40,7 @@ public class NeptuniumHoe extends HoeItem {
                     Player player = context.getPlayer();
                     level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                     if (!level.isClientSide) {
-                        level.setBlock(pos, AquaBlocks.FARMLAND.defaultBlockState(), 2);
+                        level.setBlock(pos, AquaBlocks.FARMLAND.get().defaultBlockState(), 2);
                         if (player != null) {
                             context.getItemInHand().hurtAndBreak(1, player, (p_150845_) -> {
                                 p_150845_.broadcastBreakEvent(context.getHand());

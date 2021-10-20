@@ -22,10 +22,10 @@ public class FilletKnifeRecipeMaker {
 
         for (Item fish : AquacultureAPI.FISH_DATA.getFish()) {
             Tag.Named<Item> filletKnifeTag = AquacultureAPI.Tags.FILLET_KNIFE;
-            Ingredient filletKnifes = Ingredient.of(AquaItems.WOODEN_FILLET_KNIFE, AquaItems.STONE_FILLET_KNIFE, AquaItems.IRON_FILLET_KNIFE, AquaItems.GOLD_FILLET_KNIFE, AquaItems.DIAMOND_FILLET_KNIFE, AquaItems.NEPTINIUM_FILLET_KNIFE);
+            Ingredient filletKnifes = Ingredient.of(AquaItems.WOODEN_FILLET_KNIFE.get(), AquaItems.STONE_FILLET_KNIFE.get(), AquaItems.IRON_FILLET_KNIFE.get(), AquaItems.GOLD_FILLET_KNIFE.get(), AquaItems.DIAMOND_FILLET_KNIFE.get(), AquaItems.NEPTINIUM_FILLET_KNIFE.get());
             NonNullList<Ingredient> input = NonNullList.of(Ingredient.EMPTY, filletKnifeTag.getValues().isEmpty() ? filletKnifes : Ingredient.of(filletKnifeTag), Ingredient.of(fish));
             if (AquacultureAPI.FISH_DATA.hasFilletAmount(fish)) {
-                ItemStack output = new ItemStack(AquaItems.FISH_FILLET, AquacultureAPI.FISH_DATA.getFilletAmount(fish));
+                ItemStack output = new ItemStack(AquaItems.FISH_FILLET.get(), AquacultureAPI.FISH_DATA.getFilletAmount(fish));
                 if (fish.getRegistryName() != null) {
                     ResourceLocation id = new ResourceLocation(Aquaculture.MOD_ID, "fish_fillet." + fish.getRegistryName().getPath());
                     recipes.add(new ShapelessRecipe(id, VanillaRecipeCategoryUid.CRAFTING.getPath(), output, input));

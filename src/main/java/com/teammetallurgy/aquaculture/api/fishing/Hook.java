@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,8 @@ public class Hook {
         this.catchSound = catchSound;
         this.texture = new ResourceLocation(modID, "textures/entity/rod/hook/" + name + "_hook" + ".png");
         if (name != null) {
-            this.hookItem = AquaItems.register(new HookItem(this), new ResourceLocation(modID, name + "_hook"));
+            this.hookItem = new HookItem(this).setRegistryName(new ResourceLocation(modID, name + "_hook"));
+            ForgeRegistries.ITEMS.register(this.hookItem); //TODO Move to DeferredRegistry in 1.18
             HOOKS.put(name, hookItem);
         } else {
             this.hookItem = Items.AIR;

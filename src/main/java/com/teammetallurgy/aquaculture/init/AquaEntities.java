@@ -70,7 +70,7 @@ public class AquaEntities {
     private static <T extends Mob> EntityType<T> registerMob(String name, int min, int max, int weight, int eggPrimary, int eggSecondary, List<? extends String> include, List<? extends String> exclude, EntityType.Builder<T> builder) {
         EntityType<T> entityType = register(name, builder);
         Item spawnEgg = new SpawnEggItem(entityType, eggPrimary, eggSecondary, (new Item.Properties()).tab(CreativeModeTab.TAB_MISC));
-        AquaItems.register(spawnEgg, name + "_spawn_egg");
+        AquaItems.register(() -> spawnEgg, name + "_spawn_egg");
         new AquaConfig.Spawn(AquaConfig.BUILDER, name, min, max, weight, include, exclude);
         MOBS.add(entityType);
         return entityType;

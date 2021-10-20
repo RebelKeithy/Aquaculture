@@ -38,7 +38,7 @@ public class WormFarmBlock extends ComposterBlock {
     }
 
     public static void addCompostables() {
-        registerCompostable(AquaItems.ALGAE.asItem(), 0.3F);
+        registerCompostable(AquaItems.ALGAE.get().asItem(), 0.3F);
         if (AquaConfig.BASIC_OPTIONS.compostableFish.get()) {
             for (Item fish : AquacultureAPI.FISH_DATA.getFish()) {
                 double weight = AquacultureAPI.FISH_DATA.getMinWeight(fish);
@@ -78,7 +78,7 @@ public class WormFarmBlock extends ComposterBlock {
                 double x = (double) (world.random.nextFloat() * 0.7F) + 0.15000000596046448D;
                 double y = (double) (world.random.nextFloat() * 0.7F) + 0.06000000238418579D + 0.6D;
                 double z = (double) (world.random.nextFloat() * 0.7F) + 0.15000000596046448D;
-                ItemEntity itemEntity = new ItemEntity(world, (double) pos.getX() + x, (double) pos.getY() + y, (double) pos.getZ() + z, new ItemStack(AquaItems.WORM));
+                ItemEntity itemEntity = new ItemEntity(world, (double) pos.getX() + x, (double) pos.getY() + y, (double) pos.getZ() + z, new ItemStack(AquaItems.WORM.get()));
                 itemEntity.setDefaultPickUpDelay();
                 world.addFreshEntity(itemEntity);
             }
@@ -114,7 +114,7 @@ public class WormFarmBlock extends ComposterBlock {
     public WorldlyContainer getContainer(BlockState state, @Nonnull LevelAccessor world, @Nonnull BlockPos pos) {
         int level = state.getValue(LEVEL);
         if (level == 8) {
-            return new FullInventory(state, world, pos, new ItemStack(AquaItems.WORM));
+            return new FullInventory(state, world, pos, new ItemStack(AquaItems.WORM.get()));
         } else {
             return level < 7 ? new PartialInventory(state, world, pos) : new EmptyInventory();
         }
@@ -197,7 +197,7 @@ public class WormFarmBlock extends ComposterBlock {
 
         @Override
         public boolean canTakeItemThroughFace(int index, @Nonnull ItemStack stack, @Nonnull Direction direction) {
-            return !this.extracted && direction == Direction.DOWN && stack.getItem() == AquaItems.WORM;
+            return !this.extracted && direction == Direction.DOWN && stack.getItem() == AquaItems.WORM.get();
         }
 
         @Override

@@ -35,7 +35,7 @@ public class AquaMats {
         @Override
         @Nonnull
         public Ingredient getRepairIngredient() {
-            return Ingredient.of(AquaItems.NEPTUNIUM_INGOT);
+            return Ingredient.of(AquaItems.NEPTUNIUM_INGOT.get());
         }
     };
     public ArmorMaterial NEPTINIUM_ARMOR = new ArmorMaterial() {
@@ -63,7 +63,7 @@ public class AquaMats {
         @Override
         @Nonnull
         public Ingredient getRepairIngredient() {
-            return Ingredient.of(AquaItems.NEPTUNIUM_INGOT);
+            return Ingredient.of(AquaItems.NEPTUNIUM_INGOT.get());
         }
         @Override
         @Nonnull

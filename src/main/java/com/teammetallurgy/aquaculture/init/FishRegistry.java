@@ -22,11 +22,13 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FishRegistry {
@@ -39,31 +41,30 @@ public class FishRegistry {
                 .setCustomClientFactory(FishMountEntity::new);
         EntityType<FishMountEntity> fishMount = AquaEntities.register(name, fishMountBuilder);
         FishMountItem fishMountItem = new FishMountItem(fishMount);
-        AquaItems.register(fishMountItem, name);
+        AquaItems.register(() -> fishMountItem, name);
         fishMounts.add(fishMount);
         return fishMountItem;
     }
 
     /**
-     * Same as {@link #register(Item, String, FishType)}, but with default size
+     * Same as {@link #register(Supplier, String, FishType)}, but with default size
      */
-    public static Item register(@Nonnull Item fishItem, @Nonnull String name) {
-        return register(fishItem, name, FishType.MEDIUM);
+    public static RegistryObject<Item> register(@Nonnull Supplier<Item> initializer, @Nonnull String name) {
+        return register(initializer, name, FishType.MEDIUM);
     }
 
     /**
      * Registers the fish item, fish entity and fish bucket
      *
-     * @param fishItem The fish item to be registered
+     * @param initializer The fish initializer
      * @param name     The fish name
      * @return The fish Item that was registered
      */
-    public static Item register(@Nonnull Item fishItem, @Nonnull String name, FishType fishSize) {
-        AquaItems.register(fishItem, name);
+    public static RegistryObject<Item> register(@Nonnull Supplier<Item> initializer, @Nonnull String name, FishType fishSize) {
         EntityType<AquaFishEntity> fish = EntityType.Builder.of(AquaFishEntity::new, MobCategory.WATER_AMBIENT).sized(fishSize.getWidth(), fishSize.getHeight()).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
         registerFishEntity(name, fish);
         AquaFishEntity.TYPES.put(fish, fishSize);
-        return fishItem;
+        return AquaItems.register(initializer, name);
     }
 
     public static EntityType<AquaFishEntity> registerFishEntity(String name, EntityType<AquaFishEntity> entityType) {

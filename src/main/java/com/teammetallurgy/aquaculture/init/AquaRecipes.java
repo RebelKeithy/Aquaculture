@@ -23,8 +23,8 @@ public class AquaRecipes {
 
     @SubscribeEvent
     public static void registerBrewingRecipes(RegistryEvent.Register<RecipeSerializer<?>> event) {
-        addBrewingRecipeWithSubPotions(AquaItems.JELLYFISH, Potions.POISON);
-        addBrewingRecipeWithSubPotions(AquaItems.LEECH, Potions.HEALING);
+        addBrewingRecipeWithSubPotions(AquaItems.JELLYFISH.get(), Potions.POISON);
+        addBrewingRecipeWithSubPotions(AquaItems.LEECH.get(), Potions.HEALING);
     }
 
     private static void addBrewingRecipeWithSubPotions(Item item, Potion potionType) {

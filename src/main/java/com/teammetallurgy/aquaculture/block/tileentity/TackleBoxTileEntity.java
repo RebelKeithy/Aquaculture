@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.block.tileentity;
 
+import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.inventory.container.TackleBoxContainer;
 import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
@@ -48,7 +49,7 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements MenuProvi
     private final ChestLidController lidController = new ChestLidController();
 
     public TackleBoxTileEntity(BlockPos pos, BlockState state) {
-        super(AquaBlocks.AquaTileEntities.TACKLE_BOX, pos, state);
+        super(AquaBlockEntities.TACKLE_BOX.get(), pos, state);
     }
 
     @Override

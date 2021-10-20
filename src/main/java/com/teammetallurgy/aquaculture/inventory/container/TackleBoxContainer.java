@@ -102,7 +102,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(@Nonnull Player player) {
-        return stillValid(ContainerLevelAccess.create(Objects.requireNonNull(tackleBox.getLevel()), tackleBox.getBlockPos()), player, AquaBlocks.TACKLE_BOX);
+        return stillValid(ContainerLevelAccess.create(Objects.requireNonNull(tackleBox.getLevel()), tackleBox.getBlockPos()), player, AquaBlocks.TACKLE_BOX.get());
     }
 
     @Override
