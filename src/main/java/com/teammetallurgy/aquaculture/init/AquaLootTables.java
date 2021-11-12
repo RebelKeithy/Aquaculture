@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
@@ -66,11 +67,20 @@ public class AquaLootTables {
     private static void addEntry(LootPool pool, LootPoolEntryContainer entry) {
         try {
             Field entries = ObfuscationReflectionHelper.findField(LootPool.class, "f_79023_");
-            List<LootPoolEntryContainer> lootEntries = (List<LootPoolEntryContainer>) entries.get(pool);
-            if (lootEntries.stream().anyMatch(e -> e == entry)) {
+            entries.setAccessible(true);
+
+            LootPoolEntryContainer[] lootPoolEntriesArray = (LootPoolEntryContainer[]) entries.get(pool);
+            ArrayList<LootPoolEntryContainer> newLootEntries = new ArrayList(List.of(lootPoolEntriesArray));
+
+            if (newLootEntries.stream().anyMatch(e -> e == entry)) {
                 throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
             }
-            lootEntries.add(entry);
+
+            newLootEntries.add(entry);
+
+            LootPoolEntryContainer[] newLootEntriesArray = new LootPoolEntryContainer[newLootEntries.size()];
+            newLootEntries.toArray(newLootEntriesArray);
+            entries.set(pool, newLootEntriesArray);
         } catch (IllegalAccessException e) {
             Aquaculture.LOG.error("Error occurred when attempting to add a new entry, to the fishing loot table");
             e.printStackTrace();
