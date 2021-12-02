@@ -52,7 +52,13 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements MenuProvi
     @Override
     @Nonnull
     protected IItemHandler createItemHandler() {
-        return new ItemStackHandler(17);
+        return new ItemStackHandler(17) {
+            @Override
+            protected void onContentsChanged(int slot) {
+                super.onContentsChanged(slot);
+                setChanged();
+            }
+        };
     }
 
     @Nullable

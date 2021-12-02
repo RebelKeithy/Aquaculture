@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable {
     private Component customName;
-    private final LazyOptional<IItemHandler> handler = LazyOptional.of(this::createItemHandler);
+    private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createItemHandler);
 
     public IItemHandlerTEBase(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state);
@@ -31,7 +31,6 @@ public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable
 
     @Override
     public void load(@Nonnull CompoundTag tag) {
-        System.out.println("Load");
         CompoundTag invTag = tag.getCompound("inv");
         this.handler.ifPresent(stack -> ((INBTSerializable<CompoundTag>) stack).deserializeNBT(invTag));
         if (tag.contains("CustomName", 8)) {
@@ -59,6 +58,18 @@ public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable
             return handler.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        this.handler.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.handler = LazyOptional.of(this::createItemHandler);
     }
 
     @Override

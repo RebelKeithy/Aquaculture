@@ -48,7 +48,7 @@ public class Hook {
         this.texture = new ResourceLocation(modID, "textures/entity/rod/hook/" + name + "_hook" + ".png");
         if (name != null) {
             this.hookItem = new HookItem(this).setRegistryName(new ResourceLocation(modID, name + "_hook"));
-            ForgeRegistries.ITEMS.register(this.hookItem); //TODO Move to DeferredRegistry in 1.18
+            ForgeRegistries.ITEMS.register(this.hookItem);
             HOOKS.put(name, hookItem);
         } else {
             this.hookItem = Items.AIR;
