@@ -70,7 +70,7 @@ public class AquaLootTables {
             entries.setAccessible(true);
 
             LootPoolEntryContainer[] lootPoolEntriesArray = (LootPoolEntryContainer[]) entries.get(pool);
-            ArrayList<LootPoolEntryContainer> newLootEntries = new ArrayList(List.of(lootPoolEntriesArray));
+            ArrayList<LootPoolEntryContainer> newLootEntries = new ArrayList<>(List.of(lootPoolEntriesArray));
 
             if (newLootEntries.stream().anyMatch(e -> e == entry)) {
                 throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);

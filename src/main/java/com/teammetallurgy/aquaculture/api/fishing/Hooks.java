@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.api.fishing;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
+import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.phys.Vec3;
@@ -18,7 +18,7 @@ public class Hooks {
     public static final Hook HEAVY = new Hook.HookBuilder("heavy").setColor(ChatFormatting.BOLD).setWeight(new Vec3(0.6D, 0.15D, 0.6D)).build();
     public static final Hook DOUBLE = new Hook.HookBuilder("double").setColor(ChatFormatting.DARK_GRAY).setDoubleCatchChance(0.10).build();
     public static final Hook REDSTONE = new Hook.HookBuilder("redstone").setColor(ChatFormatting.RED).setCatchableWindow(35, 70).build();
-    public static final Hook NOTE = new Hook.HookBuilder("note").setColor(ChatFormatting.DARK_RED).setCatchSound(AquacultureSounds.BOBBER_NOTE).build();
+    public static final Hook NOTE = new Hook.HookBuilder("note").setColor(ChatFormatting.DARK_RED).setCatchSound(AquaSounds.BOBBER_NOTE).build();
     public static final Hook NETHER_STAR = new Hook.HookBuilder("nether_star").setColor(ChatFormatting.BLACK)/*.setFluid(FluidTags.LAVA)*/.setFluid(FluidTags.WATER).setDurabilityChance(0.50).setLuckModifier(1).build();
     //Lava
     //public static final Hook OBSIDIAN = new Hook.HookBuilder("obsidian").setColor(TextFormatting.DARK_PURPLE).setFluid(FluidTags.LAVA).build();

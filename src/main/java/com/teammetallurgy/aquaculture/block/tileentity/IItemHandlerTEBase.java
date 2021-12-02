@@ -30,7 +30,8 @@ public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable
     protected abstract IItemHandler createItemHandler();
 
     @Override
-    public void load(CompoundTag tag) {
+    public void load(@Nonnull CompoundTag tag) {
+        System.out.println("Load");
         CompoundTag invTag = tag.getCompound("inv");
         this.handler.ifPresent(stack -> ((INBTSerializable<CompoundTag>) stack).deserializeNBT(invTag));
         if (tag.contains("CustomName", 8)) {
@@ -40,8 +41,7 @@ public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable
     }
 
     @Override
-    @Nonnull
-    public CompoundTag save(@Nonnull CompoundTag tag) {
+    public void saveAdditional(@Nonnull CompoundTag tag) {
         this.handler.ifPresent(stack -> {
             CompoundTag compound = ((INBTSerializable<CompoundTag>) stack).serializeNBT();
             tag.put("inv", compound);
@@ -49,13 +49,13 @@ public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable
         if (this.customName != null) {
             tag.putString("CustomName", Component.Serializer.toJson(this.customName));
         }
-        return super.save(tag);
+        super.saveAdditional(tag);
     }
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (!this.remove && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return handler.cast();
         }
         return super.getCapability(cap, side);

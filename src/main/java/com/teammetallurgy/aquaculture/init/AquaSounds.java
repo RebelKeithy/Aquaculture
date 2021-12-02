@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.misc;
+package com.teammetallurgy.aquaculture.init;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +10,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public final class AquacultureSounds{
+public final class AquaSounds {
     public static final SoundEvent TACKLE_BOX_OPEN = registerSound("tackle_box_open");
     public static final SoundEvent TACKLE_BOX_CLOSE = registerSound("tackle_box_close");
     public static final SoundEvent WORM_FARM_EMPTY = registerSound("worm_farm_empty");
@@ -22,10 +22,9 @@ public final class AquacultureSounds{
     public static final SoundEvent BOBBER_LAND_IN_LAVA = registerSound("bobber_land_lava");
     public static final SoundEvent JELLYFISH_FLOP = registerSound("jellyfish_flop");
     public static final SoundEvent FISH_FLOP = registerSound("fish_flop");
-    public static final SoundEvent FISH_AMBIENT = registerSound("fish_ambient");
     public static final SoundEvent FISH_DEATH = registerSound("fish_death");
     public static final SoundEvent FISH_HURT = registerSound("fish_hurt");
-    public static final SoundEvent FISH_COLLIDE = registerSound("fish_collide");
+    public static final SoundEvent JELLYFISH_COLLIDE = registerSound("jellyfish_collide");
     public static final SoundEvent BOTTLE_OPEN = registerSound("bottle_open");
     public static final SoundEvent BOBBER_NOTE = registerSound("bobber_note_catch");
 
@@ -48,10 +47,9 @@ public final class AquacultureSounds{
         registry.register(BOBBER_LAND_IN_LAVA);
         registry.register(JELLYFISH_FLOP);
         registry.register(FISH_FLOP);
-        registry.register(FISH_AMBIENT);
         registry.register(FISH_DEATH);
         registry.register(FISH_HURT);
-        registry.register(FISH_COLLIDE);
+        registry.register(JELLYFISH_COLLIDE);
         registry.register(BOTTLE_OPEN);
         registry.register(BOBBER_NOTE);
     }

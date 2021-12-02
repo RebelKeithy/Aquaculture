@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
-import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
+import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -141,7 +141,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         } else if (!source.isExplosion() && !this.getDisplayedItem().isEmpty()) {
             if (!this.level.isClientSide) {
                 this.dropItemOrSelf(source.getEntity(), false);
-                this.playSound(AquacultureSounds.FISH_MOUNT_REMOVED, 1.0F, 1.0F);
+                this.playSound(AquaSounds.FISH_MOUNT_REMOVED, 1.0F, 1.0F);
             }
             return true;
         } else {
@@ -169,13 +169,13 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
     @Override
     public void dropItem(@Nullable Entity brokenEntity) {
-        this.playSound(AquacultureSounds.FISH_MOUNT_BROKEN, 1.0F, 1.0F);
+        this.playSound(AquaSounds.FISH_MOUNT_BROKEN, 1.0F, 1.0F);
         this.dropItemOrSelf(brokenEntity, true);
     }
 
     @Override
     public void playPlacementSound() {
-        this.playSound(AquacultureSounds.FISH_MOUNT_PLACED, 1.0F, 1.0F);
+        this.playSound(AquaSounds.FISH_MOUNT_PLACED, 1.0F, 1.0F);
     }
 
     private void dropItemOrSelf(@Nullable Entity entity, boolean shouldDropSelf) {
@@ -233,7 +233,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
         this.getEntityData().set(ITEM, stack);
         if (!stack.isEmpty()) {
-            this.playSound(AquacultureSounds.FISH_MOUNT_ADD_ITEM, 1.0F, 1.0F);
+            this.playSound(AquaSounds.FISH_MOUNT_ADD_ITEM, 1.0F, 1.0F);
         }
 
         if (shouldUpdate && this.pos != null) {

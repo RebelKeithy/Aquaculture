@@ -2,7 +2,7 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.entity.ai.goal.FollowTypeSchoolLeaderGoal;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
+import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -63,24 +63,19 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Nonnull
     protected SoundEvent getFlopSound() {
         if (AquaFishEntity.TYPES.get(this.getType()) == FishType.JELLYFISH) {
-            return AquacultureSounds.JELLYFISH_FLOP;
+            return AquaSounds.JELLYFISH_FLOP;
         }
-        return AquacultureSounds.FISH_FLOP;
-    }
-
-    @Override
-    protected SoundEvent getAmbientSound() {
-        return AquacultureSounds.FISH_AMBIENT;
+        return AquaSounds.FISH_FLOP;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return AquacultureSounds.FISH_DEATH;
+        return AquaSounds.FISH_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
-        return AquacultureSounds.FISH_HURT;
+        return AquaSounds.FISH_HURT;
     }
 
     @Override
@@ -95,7 +90,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
         if (Objects.equals(this.getType().getRegistryName(), AquaItems.JELLYFISH.get().getRegistryName())) {
             if (this.isAlive()) {
                 if (this.distanceToSqr(player) < 1.0D && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
-                    this.playSound(AquacultureSounds.FISH_COLLIDE, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    this.playSound(AquaSounds.JELLYFISH_COLLIDE, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                     this.doEnchantDamageEffects(this, player);
                 }
             }
@@ -110,8 +105,10 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     }
 
     public static boolean canSpawnHere(EntityType<? extends AbstractFish> fish, LevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
+        int seaLevel = world.getSeaLevel();
+        int minY = seaLevel - 13;
         boolean isAllNeighborsSource = isSourceBlock(world, pos.north()) && isSourceBlock(world, pos.south()) && isSourceBlock(world, pos.west()) && isSourceBlock(world, pos.east());
-        return isSourceBlock(world, pos) && isAllNeighborsSource;
+        return isSourceBlock(world, pos) && isAllNeighborsSource && pos.getY() >= minY && pos.getY() <= seaLevel;
     }
 
     private static boolean isSourceBlock(LevelAccessor world, BlockPos pos) {

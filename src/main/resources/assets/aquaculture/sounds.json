@@ -107,15 +107,6 @@
 		],
 		"subtitle": "aquaculture.subtitles.fish_flop"
 	},
-	"fish_ambient": {
-		"sounds": [
-			{
-				"type": "event",
-				"name": "minecraft:entity.cod.ambient"
-			}
-		],
-		"subtitle": "aquaculture.subtitles.fish_ambient"
-	},
 	"fish_death": {
 		"sounds": [
 			{
@@ -134,7 +125,7 @@
 		],
 		"subtitle": "aquaculture.subtitles.fish_hurt"
 	},
-	"fish_collide": {
+	"jellyfish_collide": {
 		"sounds": [
 			{
 				"type": "event",

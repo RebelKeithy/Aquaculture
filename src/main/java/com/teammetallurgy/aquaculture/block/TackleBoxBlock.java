@@ -94,7 +94,9 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
                 if (player.isShiftKeyDown()) {
                     BlockEntity tileEntity = world.getBlockEntity(pos);
                     if (tileEntity != null) {
-                        StackHelper.giveItem(serverPlayer, StackHelper.storeTEInStack(new ItemStack(this), tileEntity));
+                        ItemStack giveStack = new ItemStack(this);
+                        tileEntity.saveToItem(giveStack);
+                        StackHelper.giveItem(serverPlayer, giveStack);
                         world.removeBlock(pos, false);
                         world.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6F, 0.8F);
                     }
@@ -189,7 +191,9 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
         if (tileEntity != null) {
-            popResource(world, pos, StackHelper.storeTEInStack(new ItemStack(this), tileEntity));
+            ItemStack tackleBox = new ItemStack(this);
+            tileEntity.saveToItem(tackleBox);
+            popResource(world, pos, tackleBox);
         }
     }
 

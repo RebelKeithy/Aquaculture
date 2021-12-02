@@ -4,7 +4,7 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
-import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
+import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -83,7 +83,7 @@ public class WormFarmBlock extends ComposterBlock {
                 world.addFreshEntity(itemEntity);
             }
             world.setBlock(pos, state.setValue(LEVEL, state.getValue(LEVEL) - 1), 3);
-            world.playSound(null, pos, AquacultureSounds.WORM_FARM_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, pos, AquaSounds.WORM_FARM_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.FAIL;

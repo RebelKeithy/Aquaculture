@@ -31,14 +31,6 @@ public class StackHelper {
         }
     }
 
-    /*
-     * Stores the TileEntity in ItemStack form, making it contain its inventory etc.
-     */
-    public static ItemStack storeTEInStack(@Nonnull ItemStack stack, BlockEntity tileEntity) {
-        stack.addTagElement("BlockEntityTag", tileEntity.save(new CompoundTag()));
-        return stack;
-    }
-
     public static void dropInventory(Level world, BlockPos pos, IItemHandler handler) {
         for (int slot = 0; slot < handler.getSlots(); ++slot) {
             Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(slot));

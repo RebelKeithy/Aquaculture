@@ -61,7 +61,7 @@ public class FishRegistry {
      * @return The fish Item that was registered
      */
     public static RegistryObject<Item> register(@Nonnull Supplier<Item> initializer, @Nonnull String name, FishType fishSize) {
-        EntityType<AquaFishEntity> fish = EntityType.Builder.of(AquaFishEntity::new, MobCategory.WATER_AMBIENT).sized(fishSize.getWidth(), fishSize.getHeight()).build("minecraft:cod"); //TODO Change when Forge allow for custom datafixers
+        EntityType<AquaFishEntity> fish = EntityType.Builder.of(AquaFishEntity::new, MobCategory.WATER_AMBIENT).sized(fishSize.getWidth(), fishSize.getHeight()).build(Aquaculture.MOD_ID + ":" + name);
         registerFishEntity(name, fish);
         AquaFishEntity.TYPES.put(fish, fishSize);
         return AquaItems.register(initializer, name);
