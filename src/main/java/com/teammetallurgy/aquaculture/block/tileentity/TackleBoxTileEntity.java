@@ -1,7 +1,6 @@
 package com.teammetallurgy.aquaculture.block.tileentity;
 
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
-import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.inventory.container.TackleBoxContainer;
 import com.teammetallurgy.aquaculture.misc.AquacultureSounds;
 import net.minecraft.core.BlockPos;
@@ -11,10 +10,8 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ChestLidController;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;

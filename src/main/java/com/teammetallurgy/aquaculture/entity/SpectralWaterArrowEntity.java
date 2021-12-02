@@ -6,14 +6,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.SpectralArrow;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
 import javax.annotation.Nonnull;
 
 public class SpectralWaterArrowEntity extends SpectralArrow {
 
-    public SpectralWaterArrowEntity(FMLPlayMessages.SpawnEntity spawnPacket, Level world) {
+    public SpectralWaterArrowEntity(PlayMessages.SpawnEntity spawnPacket, Level world) {
         super(world, 0, 0, 0);
     }
 

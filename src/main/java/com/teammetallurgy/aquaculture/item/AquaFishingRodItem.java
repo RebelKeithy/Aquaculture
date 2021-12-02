@@ -55,8 +55,8 @@ public class AquaFishingRodItem extends FishingRodItem {
     }
 
     @Override
-    public boolean showDurabilityBar(@Nonnull ItemStack stack) {
-        return this.getDamage(stack) < this.getMaxDamage(stack) && super.showDurabilityBar(stack);
+    public boolean isBarVisible(@Nonnull ItemStack stack) {
+        return this.getDamage(stack) < this.getMaxDamage(stack) && super.isBarVisible(stack);
     }
 
     @Override

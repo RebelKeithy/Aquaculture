@@ -43,11 +43,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
-import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -62,7 +62,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
     private final ItemStack fishingRod;
     private final int luck;
 
-    public AquaFishingBobberEntity(FMLPlayMessages.SpawnEntity spawnPacket, Level world) {
+    public AquaFishingBobberEntity(PlayMessages.SpawnEntity spawnPacket, Level world) {
         super(world.getPlayerByUUID(spawnPacket.getAdditionalData().readUUID()), world, 0, 0);
         FriendlyByteBuf buf = spawnPacket.getAdditionalData();
         this.luck = buf.readInt();

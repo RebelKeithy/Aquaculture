@@ -3,13 +3,15 @@
   "_comment": "Do not add anything to this loot table, besides Neptune's Bounty",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:set_contents",
+              "type": "aquaculture:neptunes_bounty",
               "entries": [
                 {
                   "type": "minecraft:loot_table",
@@ -21,9 +23,9 @@
           "name": "aquaculture:neptunes_bounty"
         },
         {
-          "_comment": "50% chance of getting fish, to make Neptunium rarer without making vanilla loot a lot rarer",
+          "_comment": "50% chance of getting vanilla treasure, to make Neptunium rarer without making vanilla loot a lot rarer",
           "type": "minecraft:loot_table",
-          "name": "aquaculture:gameplay/fishing/fish"
+          "name": "minecraft:gameplay/fishing/treasure"
         }
       ]
     }

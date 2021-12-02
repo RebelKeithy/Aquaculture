@@ -1,7 +1,6 @@
 package com.teammetallurgy.aquaculture.block.tileentity;
 
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
-import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;

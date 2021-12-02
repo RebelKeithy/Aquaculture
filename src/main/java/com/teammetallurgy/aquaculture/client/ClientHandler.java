@@ -29,7 +29,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -89,12 +89,12 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        ModelLoader.addSpecialModel(FishMountRenderer.OAK);
-        ModelLoader.addSpecialModel(FishMountRenderer.SPRUCE);
-        ModelLoader.addSpecialModel(FishMountRenderer.BIRCH);
-        ModelLoader.addSpecialModel(FishMountRenderer.JUNGLE);
-        ModelLoader.addSpecialModel(FishMountRenderer.ACACIA);
-        ModelLoader.addSpecialModel(FishMountRenderer.DARK_OAK);
+        ForgeModelBakery.addSpecialModel(FishMountRenderer.OAK);
+        ForgeModelBakery.addSpecialModel(FishMountRenderer.SPRUCE);
+        ForgeModelBakery.addSpecialModel(FishMountRenderer.BIRCH);
+        ForgeModelBakery.addSpecialModel(FishMountRenderer.JUNGLE);
+        ForgeModelBakery.addSpecialModel(FishMountRenderer.ACACIA);
+        ForgeModelBakery.addSpecialModel(FishMountRenderer.DARK_OAK);
     }
 
     public static void registerFishingRodModelProperties(Item fishingRod) {

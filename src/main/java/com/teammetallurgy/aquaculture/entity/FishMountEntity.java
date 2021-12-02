@@ -29,9 +29,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fmllegacy.network.FMLPlayMessages;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
@@ -55,7 +55,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         this.setDirection(direction);
     }
 
-    public FishMountEntity(FMLPlayMessages.SpawnEntity spawnPacket, Level world) {
+    public FishMountEntity(PlayMessages.SpawnEntity spawnPacket, Level world) {
         this((EntityType<? extends FishMountEntity>) ForgeRegistries.ENTITIES.getValue(spawnPacket.getAdditionalData().readResourceLocation()), world);
     }
 

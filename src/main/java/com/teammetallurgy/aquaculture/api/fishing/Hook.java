@@ -1,7 +1,6 @@
 package com.teammetallurgy.aquaculture.api.fishing;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;

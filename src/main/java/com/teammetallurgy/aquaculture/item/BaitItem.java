@@ -31,7 +31,7 @@ public class BaitItem extends Item {
     }
 
     @Override
-    public int getRGBDurabilityForDisplay(@Nonnull ItemStack stack) {
+    public int getBarColor(@Nonnull ItemStack stack) {
         return 16761035;
     }
 }

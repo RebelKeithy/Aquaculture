@@ -2,7 +2,6 @@ package com.teammetallurgy.aquaculture.block;
 
 import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
-import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -40,9 +38,9 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -138,7 +136,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     @Nonnull
     public BlockState updateShape(BlockState state, @Nonnull Direction facing, @Nonnull BlockState facingState, @Nonnull LevelAccessor world, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
         if (state.getValue(WATERLOGGED)) {
-            world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+            world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
         return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
     }

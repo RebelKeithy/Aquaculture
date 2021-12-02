@@ -2,7 +2,6 @@ package com.teammetallurgy.aquaculture.block;
 
 import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
-import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,7 +51,7 @@ public class NeptunesBountyBlock extends ChestBlock {
     @Nonnull
     public BlockState updateShape(BlockState state, @Nonnull Direction direction, @Nonnull BlockState facingState, @Nonnull LevelAccessor world, @Nonnull BlockPos currentPos, @Nonnull BlockPos facingPos) {
         if (state.getValue(WATERLOGGED)) {
-            world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+            world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
         return state;
     }

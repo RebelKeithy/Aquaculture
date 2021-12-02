@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.integration.jei.recipes;
+/*package com.teammetallurgy.aquaculture.integration.jei.recipes;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
@@ -34,4 +34,4 @@ public class FilletKnifeRecipeMaker {
         }
         return recipes;
     }
-}
+}*/

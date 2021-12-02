@@ -103,7 +103,7 @@ public class WormFarmBlock extends ComposterBlock {
             int levelAdd = level + 1;
             world.setBlock(pos, state.setValue(LEVEL, levelAdd), 3);
             if (levelAdd == 7) {
-                world.getBlockTicks().scheduleTick(pos, state.getBlock(), 20);
+                world.scheduleTick(pos, state.getBlock(), 20);
             }
             return true;
         }

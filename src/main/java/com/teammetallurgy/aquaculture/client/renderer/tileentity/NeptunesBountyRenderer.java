@@ -33,7 +33,7 @@ public class NeptunesBountyRenderer extends ChestRenderer<NeptunesBountyTileEnti
 
     @SubscribeEvent
     public static void onTextureStitch(TextureStitchEvent.Pre event) {
-        if (event.getMap().location().equals(Sheets.CHEST_SHEET)) {
+        if (event.getAtlas().location().equals(Sheets.CHEST_SHEET)) {
             event.addSprite(NEPTUNES_BOUNTY);
         }
     }
