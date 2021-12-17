@@ -31,7 +31,9 @@ public final class AquaSounds {
 
     private static SoundEvent registerSound(String name) {
         ResourceLocation location = new ResourceLocation("aquaculture", name);
-        return (SoundEvent)(new SoundEvent(location)).setRegistryName(location);
+        SoundEvent soundEvent = new SoundEvent(location);
+        soundEvent.setRegistryName(location);
+        return soundEvent;
     }
 
     @SubscribeEvent
