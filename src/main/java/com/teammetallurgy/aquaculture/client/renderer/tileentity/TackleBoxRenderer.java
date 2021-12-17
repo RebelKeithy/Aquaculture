@@ -69,7 +69,6 @@ public class TackleBoxRenderer <T extends TackleBoxTileEntity> implements BlockE
 
             DoubleBlockCombiner.NeighborCombineResult<?> callbackWrapper = DoubleBlockCombiner.Combiner::acceptNone;
             float angle = tackleBox.getOpenNess(partialTicks);
-            //System.out.println("angle: " + angle);
             angle = 1.0F - angle;
             angle = 1.0F - angle * angle * angle;
             int brightness = ((Int2IntFunction) callbackWrapper.apply(new BrightnessCombiner())).applyAsInt(combinedLight);
