@@ -182,16 +182,9 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
 
     @Override
     public void onRemove(BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState newState, boolean isMoving) {
-        if (!state.is(newState.getBlock())) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof TackleBoxTileEntity) {
-                level.updateNeighbourForOutputSignal(pos, this);
-
-                ItemStack tackleBox = new ItemStack(this);
-                blockEntity.saveToItem(tackleBox);
-                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tackleBox);
-                super.onRemove(state, level, pos, newState, isMoving);
-            }
+        if (state.getBlock() != newState.getBlock()) {
+            level.updateNeighbourForOutputSignal(pos, this);
+            super.onRemove(state, level, pos, newState, isMoving);
         }
     }
 
@@ -199,6 +192,18 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     public void playerDestroy(@Nonnull Level level, Player player, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable BlockEntity tileEntity, @Nonnull ItemStack stack) {
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
+    }
+
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+
+        if (blockEntity instanceof TackleBoxTileEntity) {
+            ItemStack tackleBox = new ItemStack(this);
+            blockEntity.saveToItem(tackleBox);
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tackleBox);
+        }
+        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 
     @Override
