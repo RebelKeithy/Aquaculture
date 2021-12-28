@@ -31,6 +31,11 @@ public class BaitItem extends Item {
     }
 
     @Override
+    public int getBarWidth(@Nonnull ItemStack stack) {
+        return Math.round(13.0F - (float) stack.getDamageValue() * 13.0F / (float) this.durability);
+    }
+
+    @Override
     public int getBarColor(@Nonnull ItemStack stack) {
         return 16761035;
     }
