@@ -1,8 +1,8 @@
 package com.teammetallurgy.aquaculture.block.tileentity;
 
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
-import com.teammetallurgy.aquaculture.inventory.container.TackleBoxContainer;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
+import com.teammetallurgy.aquaculture.inventory.container.TackleBoxContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;

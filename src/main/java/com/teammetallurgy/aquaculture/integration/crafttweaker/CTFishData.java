@@ -1,10 +1,10 @@
-/*package com.teammetallurgy.aquaculture.integration.crafttweaker;
+package com.teammetallurgy.aquaculture.integration.crafttweaker;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.teammetallurgy.aquaculture.integration.crafttweaker.actions.AddFishDataAction;
 import com.teammetallurgy.aquaculture.integration.crafttweaker.actions.RemoveFishDataAction;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import org.openzen.zencode.java.ZenCodeType;
 
 @ZenRegister
@@ -20,4 +20,4 @@ public class CTFishData {
     public static void remove(Item fish) {
         CraftTweakerAPI.apply(new RemoveFishDataAction(fish));
     }
-}*/
+}
