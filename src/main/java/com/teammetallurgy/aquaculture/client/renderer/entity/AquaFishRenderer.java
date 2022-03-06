@@ -46,16 +46,18 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
 
     @Override
     public void render(@Nonnull AquaFishEntity fishEntity, float entityYaw, float partialTicks, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i) {
-        switch (AquaFishEntity.TYPES.get(fishEntity.getType())) {
-            case SMALL -> this.model = smallModel;
-            case LARGE -> this.model = largeModel;
-            case LONGNOSE -> this.model = longnoseModel;
-            case CATFISH -> this.model = catfishModel;
-            case JELLYFISH -> this.model = jellyfishModel;
-            case HALIBUT -> this.model = tropicalFishBModel;
-            default -> this.model = mediumModel;
+        if (fishEntity != null) {
+            switch (AquaFishEntity.TYPES.get(fishEntity.getType())) {
+                case SMALL -> this.model = smallModel;
+                case LARGE -> this.model = largeModel;
+                case LONGNOSE -> this.model = longnoseModel;
+                case CATFISH -> this.model = catfishModel;
+                case JELLYFISH -> this.model = jellyfishModel;
+                case HALIBUT -> this.model = tropicalFishBModel;
+                default -> this.model = mediumModel;
+            }
+            super.render(fishEntity, entityYaw, partialTicks, matrixStack, buffer, i);
         }
-        super.render(fishEntity, entityYaw, partialTicks, matrixStack, buffer, i);
     }
 
     @Override

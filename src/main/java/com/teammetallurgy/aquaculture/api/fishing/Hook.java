@@ -6,7 +6,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
@@ -31,9 +31,9 @@ public class Hook {
     private final int luckModifier;
     private final double doubleCatchChance;
     private final SoundEvent catchSound;
-    private final List<Tag.Named<Fluid>> fluids;
+    private final List<TagKey<Fluid>> fluids;
 
-    private Hook(String name, String modID, ChatFormatting color, int minCatchable, int maxCatchable, Vec3 weight, double durabilityChance, int luckModifier, double doubleCatchChance, SoundEvent catchSound, List<Tag.Named<Fluid>> fluids) {
+    private Hook(String name, String modID, ChatFormatting color, int minCatchable, int maxCatchable, Vec3 weight, double durabilityChance, int luckModifier, double doubleCatchChance, SoundEvent catchSound, List<TagKey<Fluid>> fluids) {
         this.name = name;
         this.modID = modID;
         this.color = color;
@@ -103,7 +103,7 @@ public class Hook {
         return this.catchSound;
     }
 
-    public List<Tag.Named<Fluid>> getFluids() {
+    public List<TagKey<Fluid>> getFluids() {
         return this.fluids;
     }
 
@@ -118,7 +118,7 @@ public class Hook {
         private int luckModifier;
         private double doubleCatchChance;
         private SoundEvent catchSound;
-        private final List<Tag.Named<Fluid>> fluids = new ArrayList<>();
+        private final List<TagKey<Fluid>> fluids = new ArrayList<>();
 
         HookBuilder() {
         }
@@ -175,7 +175,7 @@ public class Hook {
             return this;
         }
 
-        public HookBuilder setFluid(Tag.Named<Fluid> fluid) {
+        public HookBuilder setFluid(TagKey<Fluid> fluid) {
             this.fluids.add(fluid);
             return this;
         }

@@ -32,6 +32,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientHandler {
@@ -61,17 +62,17 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(AquaEntities.BOBBER, AquaBobberRenderer::new);
-        for (EntityType<AquaFishEntity> fish : FishRegistry.fishEntities) {
-            event.registerEntityRenderer(fish, (context) -> new AquaFishRenderer(context, fish.getRegistryName() != null && fish.getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
+        event.registerEntityRenderer(AquaEntities.BOBBER.get(), AquaBobberRenderer::new);
+        for (RegistryObject<EntityType<AquaFishEntity>> fish : FishRegistry.fishEntities) {
+            event.registerEntityRenderer(fish.get(), (context) -> new AquaFishRenderer(context, fish.get().getRegistryName() != null && fish.get().getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
         }
-        event.registerEntityRenderer(AquaEntities.WATER_ARROW, TippableArrowRenderer::new);
-        event.registerEntityRenderer(AquaEntities.SPECTRAL_WATER_ARROW, SpectralArrowRenderer::new);
-        event.registerEntityRenderer(AquaEntities.BOX_TURTLE, TurtleLandRenderer::new);
-        event.registerEntityRenderer(AquaEntities.ARRAU_TURTLE, TurtleLandRenderer::new);
-        event.registerEntityRenderer(AquaEntities.STARSHELL_TURTLE, TurtleLandRenderer::new);
-        for (EntityType<FishMountEntity> fishMount : FishRegistry.fishMounts) {
-            event.registerEntityRenderer(fishMount, FishMountRenderer::new);
+        event.registerEntityRenderer(AquaEntities.WATER_ARROW.get(), TippableArrowRenderer::new);
+        event.registerEntityRenderer(AquaEntities.SPECTRAL_WATER_ARROW.get(), SpectralArrowRenderer::new);
+        event.registerEntityRenderer(AquaEntities.BOX_TURTLE.get(), TurtleLandRenderer::new);
+        event.registerEntityRenderer(AquaEntities.ARRAU_TURTLE.get(), TurtleLandRenderer::new);
+        event.registerEntityRenderer(AquaEntities.STARSHELL_TURTLE.get(), TurtleLandRenderer::new);
+        for (RegistryObject<EntityType<FishMountEntity>> fishMount : FishRegistry.fishMounts) {
+            event.registerEntityRenderer(fishMount.get(), FishMountRenderer::new);
         }
     }
 

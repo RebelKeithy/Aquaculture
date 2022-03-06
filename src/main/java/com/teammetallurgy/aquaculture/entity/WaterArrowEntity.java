@@ -33,7 +33,7 @@ public class WaterArrowEntity extends Arrow {
     @Override
     @Nonnull
     public EntityType<?> getType() {
-        return AquaEntities.WATER_ARROW;
+        return AquaEntities.WATER_ARROW.get();
     }
 
     @Override

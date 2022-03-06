@@ -21,44 +21,42 @@ import java.util.function.Supplier;
 
 public class AquaBlocks {
     public static final DeferredRegister<Block> BLOCK_DEFERRED = DeferredRegister.create(Block.class, Aquaculture.MOD_ID);
-    public static final RegistryObject<Block> FARMLAND = register(new FarmlandMoistBlock(), "farmland", null);
-    public static final RegistryObject<Block> NEPTUNIUM_BLOCK = register(new Block(Block.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).strength(5.0F, 6.0F).sound(SoundType.METAL)), "neptunium_block");
-    public static final RegistryObject<Block> NEPTUNES_BOUNTY = registerWithRenderer(new NeptunesBountyBlock(), "neptunes_bounty", new Item.Properties());
-    public static final RegistryObject<Block> TACKLE_BOX = registerWithRenderer(new TackleBoxBlock(), "tackle_box", new Item.Properties());
-    public static final RegistryObject<Block> WORM_FARM = register(new WormFarmBlock(), "worm_farm");
+    public static final RegistryObject<Block> FARMLAND = register(FarmlandMoistBlock::new, "farmland", null);
+    public static final RegistryObject<Block> NEPTUNIUM_BLOCK = register(() -> new Block(Block.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).strength(5.0F, 6.0F).sound(SoundType.METAL)), "neptunium_block");
+    public static final RegistryObject<Block> NEPTUNES_BOUNTY = registerWithRenderer(NeptunesBountyBlock::new, "neptunes_bounty", new Item.Properties());
+    public static final RegistryObject<Block> TACKLE_BOX = registerWithRenderer(TackleBoxBlock::new, "tackle_box", new Item.Properties());
+    public static final RegistryObject<Block> WORM_FARM = register(WormFarmBlock::new, "worm_farm");
 
     /**
-     * Same as {@link AquaBlocks#register(Block, String, Item.Properties)}, but have group set by default
+     * Same as {@link AquaBlocks#register(Supplier, String, Item.Properties)}, but have group set by default
      */
-    public static RegistryObject<Block> register(@Nonnull Block block, @Nonnull String name) {
-        return register(block, name, new Item.Properties());
+    public static RegistryObject<Block> register(Supplier<Block> supplier, @Nonnull String name) {
+        return register(supplier, name, new Item.Properties());
     }
 
     /**
      * Registers a block with a basic BlockItem
      *
-     * @param block The block to register
-     * @param name        The name to register the block with
+     * @param supplier The block to register
+     * @param name     The name to register the block with
      * @return The Block that was registered
      */
-    public static RegistryObject<Block> register(@Nonnull Block block, @Nonnull String name, @Nullable Item.Properties properties) {
-        AquaItems.register(() -> new BlockItem(block, properties == null ? new Item.Properties() : properties.tab(Aquaculture.GROUP)), name);
-        return registerBaseBlock(() -> block, name);
+    public static RegistryObject<Block> register(Supplier<Block> supplier, @Nonnull String name, @Nullable Item.Properties properties) {
+        RegistryObject<Block> block = BLOCK_DEFERRED.register(name, supplier);
+        AquaItems.register(() -> new BlockItem(block.get(), properties == null ? new Item.Properties() : properties.tab(Aquaculture.GROUP)), name);
+        return block;
     }
 
     /**
      * Registers a block with a BlockItemWithoutLevelRenderer
      *
-     * @param block The block to register
-     * @param name        The name to register the block with
+     * @param supplier The block to register
+     * @param name     The name to register the block with
      * @return The Block that was registered
      */
-    public static RegistryObject<Block> registerWithRenderer(@Nonnull Block block, @Nonnull String name, @Nullable Item.Properties properties) {
-        AquaItems.register(() -> new BlockItemWithoutLevelRenderer(block, properties == null ? new Item.Properties() : properties.tab(Aquaculture.GROUP)), name);
-        return registerBaseBlock(() -> block, name);
-    }
-
-    public static RegistryObject<Block> registerBaseBlock(@Nonnull Supplier<Block> initializer, @Nonnull String name) {
-        return BLOCK_DEFERRED.register(name, initializer);
+    public static RegistryObject<Block> registerWithRenderer(Supplier<Block> supplier, @Nonnull String name, @Nullable Item.Properties properties) {
+        RegistryObject<Block> block = BLOCK_DEFERRED.register(name, supplier);
+        AquaItems.register(() -> new BlockItemWithoutLevelRenderer(block.get(), properties == null ? new Item.Properties() : properties.tab(Aquaculture.GROUP)), name);
+        return block;
     }
 }

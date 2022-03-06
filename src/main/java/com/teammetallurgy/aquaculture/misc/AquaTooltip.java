@@ -22,7 +22,7 @@ public class AquaTooltip {
         ItemStack stack = event.getItemStack();
         if (!stack.isEmpty()) {
             Item item = stack.getItem();
-            if (!item.getTags().isEmpty() && stack.is(AquacultureAPI.Tags.TOOLTIP)) {
+            if (stack.is(AquacultureAPI.Tags.TOOLTIP)) {
                 if (item.getRegistryName() != null) {
                     String itemIdentifier = item.getRegistryName().getPath() + ".tooltip";
                     if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT)) {

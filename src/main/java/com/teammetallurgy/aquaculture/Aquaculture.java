@@ -41,7 +41,7 @@ public class Aquaculture {
             return new ItemStack(AquaItems.IRON_FISHING_ROD.get());
         }
     };
-    public static final LootItemConditionType BIOME_TAG_CHECK = LootItemConditions.register(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.BiomeTagCheckSerializer());
+    public static LootItemConditionType BIOME_TAG_CHECK;
 
     public Aquaculture() {
         instance = this;
@@ -55,6 +55,7 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
+        BIOME_TAG_CHECK = LootItemConditions.register(new ResourceLocation(MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.BiomeTagCheckSerializer());
         FishWeightHandler.registerFishData();
         event.enqueueWork(AquaEntities::setSpawnPlacement);
         event.enqueueWork(WormFarmBlock::addCompostables);

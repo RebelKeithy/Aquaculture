@@ -49,7 +49,7 @@ public class BiomeTagPredicate {
             return false;
         } else {
             BlockPos pos = new BlockPos(x, y, z);
-            Biome biome = world.getBiome(pos);
+            Biome biome = world.getBiome(pos).value();
             ResourceLocation biomeFromRegistry = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getKey(biome);
 
             CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);

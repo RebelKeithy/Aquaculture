@@ -110,12 +110,12 @@ public class AquaItems {
     public static final RegistryObject<Item> STARSHELL_TURTLE = register(SimpleItem::new, "starshell_turtle");
 
     //Fish Mounting
-    public static final Item OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("oak_fish_mount");
-    public static final Item SPRUCE_FISH_MOUNT = AquacultureAPI.registerFishMount("spruce_fish_mount");
-    public static final Item BIRCH_FISH_MOUNT = AquacultureAPI.registerFishMount("birch_fish_mount");
-    public static final Item JUNGLE_FISH_MOUNT = AquacultureAPI.registerFishMount("jungle_fish_mount");
-    public static final Item ACACIA_FISH_MOUNT = AquacultureAPI.registerFishMount("acacia_fish_mount");
-    public static final Item DARK_OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("dark_oak_fish_mount");
+    public static final RegistryObject<Item> OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("oak_fish_mount");
+    public static final RegistryObject<Item> SPRUCE_FISH_MOUNT = AquacultureAPI.registerFishMount("spruce_fish_mount");
+    public static final RegistryObject<Item> BIRCH_FISH_MOUNT = AquacultureAPI.registerFishMount("birch_fish_mount");
+    public static final RegistryObject<Item> JUNGLE_FISH_MOUNT = AquacultureAPI.registerFishMount("jungle_fish_mount");
+    public static final RegistryObject<Item> ACACIA_FISH_MOUNT = AquacultureAPI.registerFishMount("acacia_fish_mount");
+    public static final RegistryObject<Item> DARK_OAK_FISH_MOUNT = AquacultureAPI.registerFishMount("dark_oak_fish_mount");
 
     /**
      * Registers an item
@@ -130,12 +130,12 @@ public class AquaItems {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        for (EntityType<AquaFishEntity> fishType : FishRegistry.fishEntities) { //Registers fish buckets
-            if (fishType.getRegistryName() != null) {
-                Item bucket = new AquaFishBucket(fishType, (new Item.Properties()).stacksTo(1).tab(Aquaculture.GROUP));
-                bucket.setRegistryName(fishType.getRegistryName().getPath() + "_bucket");
+        for (RegistryObject<EntityType<AquaFishEntity>> fishType : FishRegistry.fishEntities) { //Registers fish buckets
+            if (fishType.get().getRegistryName() != null) {
+                Item bucket = new AquaFishBucket(fishType.get(), (new Item.Properties()).stacksTo(1).tab(Aquaculture.GROUP));
+                bucket.setRegistryName(fishType.get().getRegistryName().getPath() + "_bucket");
                 event.getRegistry().register(bucket);
-                AquaFishEntity.BUCKETS.put(fishType, bucket);
+                AquaFishEntity.BUCKETS.put(fishType.get(), bucket);
             }
         }
     }

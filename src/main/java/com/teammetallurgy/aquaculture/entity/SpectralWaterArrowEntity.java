@@ -33,7 +33,7 @@ public class SpectralWaterArrowEntity extends SpectralArrow {
     @Override
     @Nonnull
     public EntityType<?> getType() {
-        return AquaEntities.SPECTRAL_WATER_ARROW;
+        return AquaEntities.SPECTRAL_WATER_ARROW.get();
     }
 
     @Override

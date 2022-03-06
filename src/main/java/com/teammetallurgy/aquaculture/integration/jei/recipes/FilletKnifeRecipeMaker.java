@@ -6,7 +6,7 @@ import com.teammetallurgy.aquaculture.init.AquaItems;
 import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -21,9 +21,8 @@ public class FilletKnifeRecipeMaker {
         List<ShapelessRecipe> recipes = new ArrayList<>();
 
         for (Item fish : AquacultureAPI.FISH_DATA.getFish()) {
-            Tag.Named<Item> filletKnifeTag = AquacultureAPI.Tags.FILLET_KNIFE;
-            Ingredient filletKnifes = Ingredient.of(AquaItems.WOODEN_FILLET_KNIFE.get(), AquaItems.STONE_FILLET_KNIFE.get(), AquaItems.IRON_FILLET_KNIFE.get(), AquaItems.GOLD_FILLET_KNIFE.get(), AquaItems.DIAMOND_FILLET_KNIFE.get(), AquaItems.NEPTINIUM_FILLET_KNIFE.get());
-            NonNullList<Ingredient> input = NonNullList.of(Ingredient.EMPTY, filletKnifeTag.getValues().isEmpty() ? filletKnifes : Ingredient.of(filletKnifeTag), Ingredient.of(fish));
+            TagKey<Item> filletKnifeTag = AquacultureAPI.Tags.FILLET_KNIFE;
+            NonNullList<Ingredient> input = NonNullList.of(Ingredient.EMPTY, Ingredient.of(filletKnifeTag), Ingredient.of(fish));
             if (AquacultureAPI.FISH_DATA.hasFilletAmount(fish)) {
                 ItemStack output = new ItemStack(AquaItems.FISH_FILLET.get(), AquacultureAPI.FISH_DATA.getFilletAmount(fish));
                 if (fish.getRegistryName() != null) {
