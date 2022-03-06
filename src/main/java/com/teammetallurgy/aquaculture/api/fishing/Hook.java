@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.api.fishing;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
@@ -11,17 +12,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Hook {
-    public static final ConcurrentHashMap<String, Item> HOOKS = new ConcurrentHashMap<>();
+    public static final HashMap<String, RegistryObject<HookItem>> HOOKS = new HashMap<>();
     private final String name;
     private final String modID;
-    private final Item hookItem;
+    @Nullable
+    private final RegistryObject<HookItem> hookItem;
     private final ResourceLocation texture;
     private final ChatFormatting color;
     private final int minCatchable;
@@ -47,11 +51,10 @@ public class Hook {
         this.catchSound = catchSound;
         this.texture = new ResourceLocation(modID, "textures/entity/rod/hook/" + name + "_hook" + ".png");
         if (name != null) {
-            this.hookItem = new HookItem(this).setRegistryName(new ResourceLocation(modID, name + "_hook"));
-            ForgeRegistries.ITEMS.register(this.hookItem);
+            this.hookItem = AquaItems.ITEM_DEFERRED.register(name + "_hook", () -> new HookItem(this));
             HOOKS.put(name, hookItem);
         } else {
-            this.hookItem = Items.AIR;
+            this.hookItem = null;
         }
     }
 
@@ -63,8 +66,10 @@ public class Hook {
         return this.modID;
     }
 
+    @Nonnull
     public Item getItem() {
-        return this.hookItem;
+        RegistryObject<HookItem> hookItem = this.hookItem;
+        return hookItem != null ? hookItem.get() : Items.AIR;
     }
 
     public ResourceLocation getTexture() {

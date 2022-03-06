@@ -33,7 +33,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -66,11 +65,12 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
         super(world.getPlayerByUUID(spawnPacket.getAdditionalData().readUUID()), world, 0, 0);
         FriendlyByteBuf buf = spawnPacket.getAdditionalData();
         this.luck = buf.readInt();
-        HookItem hookItem = ((HookItem) Hook.HOOKS.get(buf.readUtf()));
-        if (hookItem != null && hookItem != Items.AIR) {
-            this.hook = hookItem.getHookType();
-        } else {
+        String hookName = buf.readUtf();
+        if (hookName.isEmpty() || hookName == null) {
             this.hook = Hooks.EMPTY;
+        } else {
+            HookItem hookItem = Hook.HOOKS.get(hookName).get();
+            this.hook = hookItem.getHookType();
         }
         this.fishingLine = buf.readItem();
         this.bobber = buf.readItem();

@@ -15,6 +15,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -62,8 +63,8 @@ public class FishReadFromJson {
                     FISH_WEIGHT_MAP.put(fish, entry.getAsJsonObject().get("weight").getAsInt());
                 }
                 //Remove loot entries that does not have an entity
-                FISH_BIOME_MAP.keySet().retainAll(FishRegistry.fishEntities);
-                FISH_WEIGHT_MAP.keySet().retainAll(FishRegistry.fishEntities);
+                FISH_BIOME_MAP.keySet().retainAll(FishRegistry.fishEntities.stream().map(RegistryObject::get).toList());
+                FISH_WEIGHT_MAP.keySet().retainAll(FishRegistry.fishEntities.stream().map(RegistryObject::get).toList());
             }
         } catch (Exception e) {
             e.printStackTrace();

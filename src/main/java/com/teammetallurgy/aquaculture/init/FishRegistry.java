@@ -5,8 +5,11 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
+import com.teammetallurgy.aquaculture.item.AquaFishBucket;
 import com.teammetallurgy.aquaculture.item.FishMountItem;
+import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -17,12 +20,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.common.util.Lazy;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditions;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -33,16 +35,14 @@ import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FishRegistry {
-    public static final DeferredRegister<EntityType<?>> FISH_ENTITY_DEFERRED = DeferredRegister.create(ForgeRegistries.ENTITIES, Aquaculture.MOD_ID);
     public static List<RegistryObject<EntityType<AquaFishEntity>>> fishEntities = Lists.newArrayList();
     public static List<RegistryObject<EntityType<FishMountEntity>>> fishMounts = Lists.newArrayList();
 
     public static RegistryObject<Item> registerFishMount(@Nonnull String name) {
-        Supplier<EntityType.Builder<FishMountEntity>> fishMountBuilder = () -> EntityType.Builder.<FishMountEntity>of(FishMountEntity::new, MobCategory.MISC)
+        RegistryObject<EntityType<FishMountEntity>> fishMount = AquaEntities.ENTITY_DEFERRED.register(name, () -> EntityType.Builder.<FishMountEntity>of(FishMountEntity::new, MobCategory.MISC)
                 .sized(0.5F, 0.5F)
-                .setCustomClientFactory(FishMountEntity::new);
-        RegistryObject<EntityType<FishMountEntity>> fishMount = AquaEntities.register(name, fishMountBuilder);
-        RegistryObject<Item> fishMountItem = AquaItems.register(() -> new FishMountItem(fishMount.get()), name);
+                .setCustomClientFactory(FishMountEntity::new).build(Aquaculture.MOD_ID + ":" + name));
+        RegistryObject<Item> fishMountItem = AquaItems.register(() -> new FishMountItem(fishMount), name);
         fishMounts.add(fishMount);
         return fishMountItem;
     }
@@ -61,10 +61,13 @@ public class FishRegistry {
      * @param name     The fish name
      * @return The fish Item that was registered
      */
-    public static RegistryObject<Item> register(@Nonnull Supplier<Item> initializer, @Nonnull String name, FishType fishSize) {
-        RegistryObject<EntityType<AquaFishEntity>> fish = FISH_ENTITY_DEFERRED.register(name, () -> EntityType.Builder.of(AquaFishEntity::new, MobCategory.WATER_AMBIENT).sized(fishSize.getWidth(), fishSize.getHeight()).build(Aquaculture.MOD_ID + ":" + name));
-        AquaFishEntity.TYPES.put(fish.get(), fishSize);
+    public static RegistryObject<Item> register(@Nonnull Supplier<Item> initializer, @Nonnull String name, FishType fishType) {
+        RegistryObject<EntityType<AquaFishEntity>> fish = AquaEntities.ENTITY_DEFERRED.register(name, () -> EntityType.Builder.<AquaFishEntity>of((f, w) -> new AquaFishEntity(f, w, fishType), MobCategory.WATER_AMBIENT).sized(fishType.getWidth(), fishType.getHeight()).build(Aquaculture.MOD_ID + ":" + name));
         fishEntities.add(fish);
+
+        //Registers fish buckets
+        RegistryObject<AquaFishBucket> bucket = AquaItems.ITEM_DEFERRED.register(name + "_bucket", () -> new AquaFishBucket(fish, (new Item.Properties()).stacksTo(1).tab(Aquaculture.GROUP)));
+
         return AquaItems.register(initializer, name);
     }
 
@@ -73,6 +76,7 @@ public class FishRegistry {
         for (RegistryObject<EntityType<AquaFishEntity>> entityType : fishEntities) {
             SpawnPlacements.register(entityType.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
         }
+        Aquaculture.BIOME_TAG_CHECK = LootItemConditions.register(new ResourceLocation(Aquaculture.MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.BiomeTagCheckSerializer());
     }
 
     @SubscribeEvent

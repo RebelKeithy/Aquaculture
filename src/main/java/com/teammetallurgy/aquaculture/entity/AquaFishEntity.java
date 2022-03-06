@@ -4,6 +4,7 @@ import com.teammetallurgy.aquaculture.entity.ai.goal.FollowTypeSchoolLeaderGoal;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.ai.goal.FollowFlockLeaderGoal;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -22,18 +22,22 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
 public class AquaFishEntity extends AbstractSchoolingFish {
-    public static HashMap<EntityType<AquaFishEntity>, Item> BUCKETS = new HashMap<>();
-    public static HashMap<EntityType<AquaFishEntity>, FishType> TYPES = new HashMap<>();
+    private final FishType fishType;
 
-    public AquaFishEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level world) {
+    public AquaFishEntity(EntityType<? extends AbstractSchoolingFish> entityType, Level world, FishType fishType) {
         super(entityType, world);
+        this.fishType = fishType;
+    }
+
+    public FishType getFishType() {
+        return this.fishType;
     }
 
     @Override
@@ -56,13 +60,13 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        return new ItemStack(BUCKETS.get(this.getType()));
+        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.getType().getRegistryName().toString() + "_bucket")));
     }
 
     @Override
     @Nonnull
     protected SoundEvent getFlopSound() {
-        if (AquaFishEntity.TYPES.get(this.getType()) == FishType.JELLYFISH) {
+        if (this.getFishType() == FishType.JELLYFISH) {
             return AquaSounds.JELLYFISH_FLOP;
         }
         return AquaSounds.FISH_FLOP;

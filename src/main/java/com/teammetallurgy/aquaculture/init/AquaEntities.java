@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.init;
 
-import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.entity.SpectralWaterArrowEntity;
@@ -22,20 +21,18 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
+import org.apache.commons.compress.utils.Lists;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-@ObjectHolder(Aquaculture.MOD_ID)
 public class AquaEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_DEFERRED = DeferredRegister.create(ForgeRegistries.ENTITIES, Aquaculture.MOD_ID);
-    private static final List<EntityType<? extends Mob>> MOBS = Lists.newArrayList();
+    private static final List<String> MOB_NAMES = Lists.newArrayList();
     public static final RegistryObject<EntityType<AquaFishingBobberEntity>> BOBBER = register("bobber", () -> EntityType.Builder.<AquaFishingBobberEntity>createNothing(MobCategory.MISC)
             .noSave()
             .noSummon()
@@ -65,10 +62,9 @@ public class AquaEntities {
 
     private static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String name, int min, int max, int weight, int eggPrimary, int eggSecondary, List<? extends String> include, List<? extends String> exclude, Supplier<EntityType.Builder<T>> builder) {
         RegistryObject<EntityType<T>> entityType = register(name, builder);
-        Item spawnEgg = new ForgeSpawnEggItem(entityType, eggPrimary, eggSecondary, (new Item.Properties()).tab(CreativeModeTab.TAB_MISC));
-        AquaItems.register(() -> spawnEgg, name + "_spawn_egg");
+        AquaItems.register(() -> new ForgeSpawnEggItem(entityType, eggPrimary, eggSecondary, (new Item.Properties()).tab(CreativeModeTab.TAB_MISC)), name + "_spawn_egg");
         new AquaConfig.Spawn(AquaConfig.BUILDER, name, min, max, weight, include, exclude);
-        MOBS.add(entityType.get());
+        MOB_NAMES.add(name);
         return entityType;
     }
 
@@ -91,10 +87,9 @@ public class AquaEntities {
     }
 
     public static void addEntitySpawns(BiomeLoadingEvent event) {
-        for (EntityType<?> entityType : MOBS) {
-            String name = Objects.requireNonNull(entityType.getRegistryName()).getPath();
+        for (String name : MOB_NAMES) {
             String subCategory = Helper.getSubConfig(AquaConfig.Spawn.SPAWN_OPTIONS, name);
-            BiomeDictionaryHelper.addSpawn(entityType, Helper.get(subCategory, "min"), Helper.get(subCategory, "max"), Helper.get(subCategory, "weight"), Helper.get(subCategory, "include"), Helper.get(subCategory, "exclude"), event);
+            BiomeDictionaryHelper.addSpawn(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(Aquaculture.MOD_ID, name)), Helper.get(subCategory, "min"), Helper.get(subCategory, "max"), Helper.get(subCategory, "weight"), Helper.get(subCategory, "include"), Helper.get(subCategory, "exclude"), event);
         }
     }
 }

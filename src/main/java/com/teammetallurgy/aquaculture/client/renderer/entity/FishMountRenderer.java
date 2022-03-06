@@ -77,7 +77,7 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
             double depth = 0.42D;
             if (fish instanceof Pufferfish) {
                 depth += 0.09D;
-            } else if (fish instanceof AquaFishEntity && AquaFishEntity.TYPES.get(fish.getType()).equals(FishType.LONGNOSE)) {
+            } else if (fish instanceof AquaFishEntity && ((AquaFishEntity) fish).getFishType().equals(FishType.LONGNOSE)) {
                 x = -0.1F;
                 y = -0.18D;
             }
