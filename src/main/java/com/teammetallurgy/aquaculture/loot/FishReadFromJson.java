@@ -108,32 +108,37 @@ public class FishReadFromJson {
             //Biome debug
             if (!FISH_BIOME_MAP.isEmpty()) {
                 for (EntityType<?> fish : FISH_BIOME_MAP.keySet()) {
-                    if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
-                        List<String> strings = new ArrayList<>();
-                        for (ResourceLocation biome : FISH_BIOME_MAP.get(fish)) {
-                            if (biome != null) {
-                                strings.add(biome.getPath());
+                    if (fish != null) {
+                        if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
+                            List<String> strings = new ArrayList<>();
+                            for (ResourceLocation biome : FISH_BIOME_MAP.get(fish)) {
+                                if (biome != null) {
+                                    strings.add(biome.getPath());
+                                }
                             }
+                            Aquaculture.LOG.info(fish.getRegistryName() + " Biomes: " + strings);
                         }
-                        Aquaculture.LOG.info(fish.getRegistryName() + " Biomes: " + strings);
-                    }
 
-                    int weight = FISH_WEIGHT_MAP.get(fish) / 3;
-                    int maxGroupSize = Mth.clamp((FISH_WEIGHT_MAP.get(fish) / 10), 1, 8);
-                    if (weight < 1) weight = 1;
-                    if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
-                        Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
-                    }
-                    ResourceLocation name = event.getName();
-                    if (name != null) {
-                        for (ResourceLocation biome : FISH_BIOME_MAP.get(fish)) {
-                            if (name.equals(biome)) {
-                                event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(fish, weight, 1, maxGroupSize));
+
+                        if (FISH_WEIGHT_MAP.get(fish) != null) {
+                            int weight = FISH_WEIGHT_MAP.get(fish) / 3;
+                            int maxGroupSize = Mth.clamp((FISH_WEIGHT_MAP.get(fish) / 10), 1, 8);
+                            if (weight < 1) weight = 1;
+                            if (AquaConfig.BASIC_OPTIONS.debugMode.get() && !hasRunFirstTime) {
+                                Aquaculture.LOG.info(fish.getRegistryName() + " spawn debug = loottable weight: " + FISH_WEIGHT_MAP.get(fish) + " | weight : " + weight + " | maxGroupSize: " + maxGroupSize);
+                            }
+                            ResourceLocation name = event.getName();
+                            if (name != null) {
+                                for (ResourceLocation biome : FISH_BIOME_MAP.get(fish)) {
+                                    if (name.equals(biome)) {
+                                        event.getSpawns().getSpawner(MobCategory.WATER_AMBIENT).add(new MobSpawnSettings.SpawnerData(fish, weight, 1, maxGroupSize));
+                                    }
+                                }
                             }
                         }
                     }
+                    hasRunFirstTime = true;
                 }
-                hasRunFirstTime = true;
             }
         }
     }
