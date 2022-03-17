@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.init;
 
+import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import com.teammetallurgy.aquaculture.entity.SpectralWaterArrowEntity;
@@ -22,7 +23,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.apache.commons.compress.utils.Lists;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
