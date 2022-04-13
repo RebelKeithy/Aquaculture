@@ -31,7 +31,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
 
     public AquaFishRenderer(EntityRendererProvider.Context context, boolean isJellyfish) {
         super(context, new FishMediumModel<>(context.bakeLayer(ClientHandler.MEDIUM_MODEL)), 0.35F);
-        this.tropicalFishBModel = new TropicalFishModelB<>(context.bakeLayer(ModelLayers.TROPICAL_FISH_SMALL));
+        this.tropicalFishBModel = new TropicalFishModelB<>(context.bakeLayer(ModelLayers.TROPICAL_FISH_LARGE));
         this.smallModel = new FishSmallModel<>(context.bakeLayer(ClientHandler.SMALL_MODEL));
         this.mediumModel = new FishMediumModel<>(context.bakeLayer(ClientHandler.MEDIUM_MODEL));
         this.largeModel = new FishLargeModel<>(context.bakeLayer(ClientHandler.LARGE_MODEL));
