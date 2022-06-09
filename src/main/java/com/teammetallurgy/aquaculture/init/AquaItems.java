@@ -9,13 +9,14 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class AquaItems {
-    public static final DeferredRegister<Item> ITEM_DEFERRED = DeferredRegister.create(Item.class, Aquaculture.MOD_ID);
+    public static final DeferredRegister<Item> ITEM_DEFERRED = DeferredRegister.create(ForgeRegistries.ITEMS, Aquaculture.MOD_ID);
 
     //Fishing
     public static final RegistryObject<Item> IRON_FISHING_ROD = register(() -> new AquaFishingRodItem(Tiers.IRON, new Item.Properties().defaultDurability(125).tab(Aquaculture.GROUP)), "iron_fishing_rod");

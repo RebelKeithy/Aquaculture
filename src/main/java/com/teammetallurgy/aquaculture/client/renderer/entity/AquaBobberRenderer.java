@@ -104,7 +104,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             float anglerEye;
             double fov;
             if ((this.entityRenderDispatcher.options == null || this.entityRenderDispatcher.options.getCameraType().isFirstPerson()) && angler == Minecraft.getInstance().player) {
-                fov = 960.0D / this.entityRenderDispatcher.options.fov;
+                fov = 960.0D / this.entityRenderDispatcher.options.fov().get();
                 Vec3 rod = this.entityRenderDispatcher.camera.getNearPlane().getPointOnPlane((float) hand * 0.525F, -0.1F);
                 rod = rod.scale(fov);
                 rod = rod.yRot(swingProgressSqrt * 0.5F);

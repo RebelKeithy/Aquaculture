@@ -8,6 +8,7 @@ import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -108,7 +109,7 @@ public class FishFilletRecipe extends CustomRecipe {
             if (stack.is(AquacultureAPI.Tags.FILLET_KNIFE)) {
                 ItemStack knife = stack.copy();
                 if (!isKnifeNeptunium(knife.getItem())) {
-                    if (knife.hurt(1, new Random(), null)) {
+                    if (knife.hurt(1, RandomSource.create(), null)) {
                         knife.shrink(1);
                     }
                 }

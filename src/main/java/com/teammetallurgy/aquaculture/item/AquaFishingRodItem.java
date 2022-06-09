@@ -10,7 +10,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -87,7 +86,7 @@ public class AquaFishingRodItem extends FishingRodItem {
             }
             player.swing(hand);
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.random.nextFloat() * 0.4F + 0.8F));
-            level.gameEvent(player, GameEvent.FISHING_ROD_REEL_IN, player);
+            player.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
         } else {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.random.nextFloat() * 0.4F + 0.8F));
             if (!level.isClientSide) {
@@ -106,7 +105,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 level.addFreshEntity(new AquaFishingBobberEntity(player, level, luck, lureSpeed, hook, getFishingLine(heldStack), getBobber(heldStack), heldStack));
             }
             player.awardStat(Stats.ITEM_USED.get(this));
-            level.gameEvent(player, GameEvent.FISHING_ROD_CAST, player);
+            player.gameEvent(GameEvent.ITEM_INTERACT_START);
         }
         return InteractionResultHolder.sidedSuccess(heldStack, level.isClientSide());
     }
@@ -164,13 +163,13 @@ public class AquaFishingRodItem extends FishingRodItem {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level level, @Nonnull List<Component> tooltips, @Nonnull TooltipFlag tooltipFlag) {
         if (this.getDamage(stack) >= this.getMaxDamage(stack)) {
-            MutableComponent broken = new TranslatableComponent("aquaculture.fishing_rod.broken");
+            MutableComponent broken = Component.translatable("aquaculture.fishing_rod.broken");
             tooltips.add(broken.withStyle(broken.getStyle().withItalic(true).withColor(ChatFormatting.GRAY)));
         }
 
         Hook hook = getHookType(stack);
         if (hook != Hooks.EMPTY) {
-            MutableComponent hookColor = new TranslatableComponent(hook.getItem().getDescriptionId());
+            MutableComponent hookColor = Component.translatable(hook.getItem().getDescriptionId());
             tooltips.add(hookColor.withStyle(hookColor.getStyle().withColor(hook.getColor())));
         }
         super.appendHoverText(stack, level, tooltips, tooltipFlag);

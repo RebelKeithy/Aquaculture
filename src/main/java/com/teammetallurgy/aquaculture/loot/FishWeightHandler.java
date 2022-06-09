@@ -6,8 +6,8 @@ import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -49,7 +49,7 @@ public class FishWeightHandler {
         ItemStack stack = event.getItemStack();
         if (!stack.isEmpty() && stack != null && stack.hasTag() && stack.getTag() != null) { //Keep stack null check, in case of other mods is doing bad things
             if (stack.getTag().contains("fishSize")) {
-                MutableComponent fishWeightString = new TranslatableComponent("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize")));
+                MutableComponent fishWeightString = Component.translatable("aquaculture.fishWeight." + StringUtils.toLowerCase(stack.getTag().getString("fishSize")));
                 event.getToolTip().add(fishWeightString.withStyle(fishWeightString.getStyle().withItalic(true).withColor(ChatFormatting.AQUA)));
             }
             if (stack.getTag().contains("fishWeight")) {
@@ -60,10 +60,10 @@ public class FishWeightHandler {
                 BigDecimal bd = new BigDecimal(weight);
                 bd = bd.round(new MathContext(3));
                 if (bd.doubleValue() > 999) {
-                    MutableComponent doubleWeight = new TranslatableComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb);
+                    MutableComponent doubleWeight = Component.translatable("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb);
                     event.getToolTip().add(doubleWeight.withStyle(doubleWeight.getStyle().withItalic(true).withColor(ChatFormatting.GRAY)));
                 } else {
-                    MutableComponent decimalWeight = new TranslatableComponent("aquaculture.fishWeight.weight", bd + lb);
+                    MutableComponent decimalWeight = Component.translatable("aquaculture.fishWeight.weight", bd + lb);
                     event.getToolTip().add(decimalWeight.withStyle(decimalWeight.getStyle().withItalic(true).withColor(ChatFormatting.GRAY)));
                 }
             }

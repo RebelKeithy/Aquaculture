@@ -141,7 +141,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         } else if (!source.isExplosion() && !this.getDisplayedItem().isEmpty()) {
             if (!this.level.isClientSide) {
                 this.dropItemOrSelf(source.getEntity(), false);
-                this.playSound(AquaSounds.FISH_MOUNT_REMOVED, 1.0F, 1.0F);
+                this.playSound(AquaSounds.FISH_MOUNT_REMOVED.get(), 1.0F, 1.0F);
             }
             return true;
         } else {
@@ -169,13 +169,13 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
     @Override
     public void dropItem(@Nullable Entity brokenEntity) {
-        this.playSound(AquaSounds.FISH_MOUNT_BROKEN, 1.0F, 1.0F);
+        this.playSound(AquaSounds.FISH_MOUNT_BROKEN.get(), 1.0F, 1.0F);
         this.dropItemOrSelf(brokenEntity, true);
     }
 
     @Override
     public void playPlacementSound() {
-        this.playSound(AquaSounds.FISH_MOUNT_PLACED, 1.0F, 1.0F);
+        this.playSound(AquaSounds.FISH_MOUNT_PLACED.get(), 1.0F, 1.0F);
     }
 
     private void dropItemOrSelf(@Nullable Entity entity, boolean shouldDropSelf) {
@@ -187,9 +187,8 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         } else {
             ItemStack displayStack = this.getDisplayedItem();
             this.setDisplayedItem(ItemStack.EMPTY);
-            if (entity instanceof Player) {
-                Player playerentity = (Player) entity;
-                if (playerentity.getAbilities().instabuild) {
+            if (entity instanceof Player player) {
+                if (player.getAbilities().instabuild) {
                     this.setDisplayedItem(ItemStack.EMPTY);
                     return;
                 }
@@ -209,8 +208,8 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     private Item getItem() {
-        ResourceLocation location = this.getType().getRegistryName();
-        if (ForgeRegistries.ITEMS.containsKey(location) && location != null) {
+        ResourceLocation location = new ResourceLocation(this.getType().getDescriptionId());
+        if (ForgeRegistries.ITEMS.containsKey(location)) {
             return ForgeRegistries.ITEMS.getValue(location);
         }
         return Items.AIR;
@@ -233,7 +232,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
         this.getEntityData().set(ITEM, stack);
         if (!stack.isEmpty()) {
-            this.playSound(AquaSounds.FISH_MOUNT_ADD_ITEM, 1.0F, 1.0F);
+            this.playSound(AquaSounds.FISH_MOUNT_ADD_ITEM.get(), 1.0F, 1.0F);
         }
 
         if (shouldUpdate && this.pos != null) {
@@ -253,7 +252,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         if (key.equals(ITEM)) {
             ItemStack displayStack = this.getDisplayedItem();
             if (displayStack != null && !displayStack.isEmpty()) {
-                EntityType entityType = ForgeRegistries.ENTITIES.getValue(displayStack.getItem().getRegistryName());
+                EntityType entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(displayStack.getItem().getDescriptionId()));
                 if (entityType != null && entityType != EntityType.PIG) {
                     this.entity = entityType.create(this.level);
                 }
@@ -303,7 +302,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         if (!this.level.isClientSide) {
             if (this.getDisplayedItem().isEmpty()) {
                 Item heldItem = heldStack.getItem();
-                EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(heldItem.getRegistryName());
+                EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(heldItem.getDescriptionId()));
                 if (entityType != EntityType.PIG && AquacultureAPI.FISH_DATA.getFish().contains(heldItem)) {
                     this.setDisplayedItem(heldStack);
                     if (!player.getAbilities().instabuild) {
@@ -339,7 +338,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
-        buffer.writeResourceLocation(this.getType().getRegistryName());
+        buffer.writeResourceLocation(new ResourceLocation(this.getType().getDescriptionId()));
     }
 
     @Override

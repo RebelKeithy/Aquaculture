@@ -17,7 +17,6 @@ import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -60,8 +59,9 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
 
         matrixStack.pushPose();
         matrixStack.translate(-0.5D, -0.5D, -0.5D);
-        if (fishMount.getType().getRegistryName() != null) {
-            ModelResourceLocation location = new ModelResourceLocation(fishMount.getType().getRegistryName(), ""); //Calling this instead of the fields for mod support'
+        ResourceLocation id = new ResourceLocation(fishMount.getType().getDescriptionId());
+        if (id != null) {
+            ModelResourceLocation location = new ModelResourceLocation(id, ""); //Calling this instead of the fields for mod support'
             rendererDispatcher.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()), null, manager.getModel(location), 1.0F, 1.0F, 1.0F, i, OverlayTexture.NO_OVERLAY);
         }
         matrixStack.popPose();
@@ -128,9 +128,9 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
             matrixStack.pushPose();
             matrixStack.translate(0.0D, -0.25D, 0.0D); //Adjust weight label height
             if (bd.doubleValue() > 999) {
-                super.renderNameTag(fishMount, new TranslatableComponent("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), matrixStack, buffer, i - 100);
+                super.renderNameTag(fishMount, Component.translatable("aquaculture.fishWeight.weight", df.format((int) bd.doubleValue()) + lb), matrixStack, buffer, i - 100);
             } else {
-                super.renderNameTag(fishMount, new TranslatableComponent("aquaculture.fishWeight.weight", bd + lb), matrixStack, buffer, i);
+                super.renderNameTag(fishMount, Component.translatable("aquaculture.fishWeight.weight", bd + lb), matrixStack, buffer, i);
             }
             matrixStack.popPose();
         }

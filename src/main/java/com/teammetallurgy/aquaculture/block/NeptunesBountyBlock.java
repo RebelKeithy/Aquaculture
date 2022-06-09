@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -63,7 +62,7 @@ public class NeptunesBountyBlock extends ChestBlock {
         CompoundTag tag = stack.getTagElement("BlockEntityTag");
         if (tag != null) {
             if (tag.contains("Items", 9)) {
-                tooltip.add(new TextComponent("???????").withStyle(ChatFormatting.ITALIC));
+                tooltip.add(Component.literal("???????").withStyle(ChatFormatting.ITALIC));
             }
         }
     }

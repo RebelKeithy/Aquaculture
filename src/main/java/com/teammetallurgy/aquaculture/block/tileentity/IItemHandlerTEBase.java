@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -75,7 +74,7 @@ public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable
     @Override
     @Nonnull
     public Component getName() {
-        return this.customName != null ? this.customName : new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
+        return this.customName != null ? this.customName : Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
 
     @Override

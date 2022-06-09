@@ -3,7 +3,6 @@ package com.teammetallurgy.aquaculture.block.tileentity;
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -18,6 +17,6 @@ public class NeptunesBountyTileEntity extends ChestBlockEntity {
     @Override
     @Nonnull
     public Component getDefaultName() {
-        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
+        return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
 }

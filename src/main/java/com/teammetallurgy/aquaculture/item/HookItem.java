@@ -6,7 +6,6 @@ import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,10 +37,10 @@ public class HookItem extends Item {
         Hook hook = getHookType();
         if (hook != Hooks.EMPTY && hook.getFluids().contains(FluidTags.LAVA)) {
             if (hook.getFluids().contains(FluidTags.WATER)) {
-                MutableComponent universal = new TranslatableComponent("aquaculture.universal");
+                MutableComponent universal = Component.translatable("aquaculture.universal");
                 tooltips.add(universal.withStyle(universal.getStyle().withColor(ChatFormatting.BOLD)));
             } else {
-                MutableComponent lava = new TranslatableComponent(Blocks.LAVA.getDescriptionId());
+                MutableComponent lava = Component.translatable(Blocks.LAVA.getDescriptionId());
                 tooltips.add(lava.withStyle(lava.getStyle().withColor(ChatFormatting.RED)));
             }
         }

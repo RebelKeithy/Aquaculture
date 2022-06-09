@@ -7,7 +7,6 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -60,7 +59,7 @@ public class ItemFilletKnife extends SwordItem {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level world, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag tooltipFlag) {
         if (this.getTier() == AquacultureAPI.MATS.NEPTUNIUM) {
-            MutableComponent unbreakable = new TranslatableComponent("aquaculture.unbreakable");
+            MutableComponent unbreakable = Component.translatable("aquaculture.unbreakable");
             tooltip.add(unbreakable.withStyle(unbreakable.getStyle().withColor(ChatFormatting.DARK_GRAY).withBold(true)));
         }
         super.appendHoverText(stack, world, tooltip, tooltipFlag);

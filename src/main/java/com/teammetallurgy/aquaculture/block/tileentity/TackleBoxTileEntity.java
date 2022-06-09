@@ -25,12 +25,12 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements MenuProvi
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         @Override
         protected void onOpen(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state) {
-            TackleBoxTileEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_OPEN);
+            TackleBoxTileEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_OPEN.get());
         }
 
         @Override
         protected void onClose(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state) {
-            TackleBoxTileEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_CLOSE);
+            TackleBoxTileEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_CLOSE.get());
         }
 
         @Override

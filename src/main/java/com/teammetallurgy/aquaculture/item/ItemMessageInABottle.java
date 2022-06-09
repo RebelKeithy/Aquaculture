@@ -4,7 +4,7 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.Util;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -26,10 +26,10 @@ public class ItemMessageInABottle extends Item {
     @Nonnull
     public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack heldStack = player.getItemInHand(hand);
-        world.playSound(null, player.getX(), player.getY(), player.getZ(), AquaSounds.BOTTLE_OPEN, SoundSource.PLAYERS, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
+        world.playSound(null, player.getX(), player.getY(), player.getZ(), AquaSounds.BOTTLE_OPEN.get(), SoundSource.PLAYERS, 0.5F, 0.4F / (world.random.nextFloat() * 0.4F + 0.8F));
 
         if (player instanceof ServerPlayer) {
-            player.sendMessage(new TranslatableComponent("aquaculture.message" + world.random.nextInt(AquaConfig.BASIC_OPTIONS.messageInABottleAmount.get() + 1)), Util.NIL_UUID);
+            player.displayClientMessage(Component.translatable("aquaculture.message" + world.random.nextInt(AquaConfig.BASIC_OPTIONS.messageInABottleAmount.get() + 1)), true);
         }
         heldStack.shrink(1);
 

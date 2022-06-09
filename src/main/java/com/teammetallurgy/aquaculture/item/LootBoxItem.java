@@ -2,7 +2,7 @@ package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,7 +39,7 @@ public class LootBoxItem extends Item {
             List<ItemStack> loot = worldServer.getServer().getLootTables().get(this.lootTable).getRandomItems(builder.create(LootContextParamSets.EMPTY));
             if (!loot.isEmpty()) {
                 ItemStack lootStack = loot.get(0);
-                player.displayClientMessage(new TranslatableComponent("aquaculture.loot.open", lootStack.getHoverName()).withStyle(ChatFormatting.YELLOW), true);
+                player.displayClientMessage(Component.translatable("aquaculture.loot.open", lootStack.getHoverName()).withStyle(ChatFormatting.YELLOW), true);
                 this.giveItem(player, lootStack);
                 heldStack.shrink(1);
                 return new InteractionResultHolder<>(InteractionResult.SUCCESS, heldStack);

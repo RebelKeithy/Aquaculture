@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.init;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.item.crafting.BrewingNBT;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -8,21 +7,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
 
 import static net.minecraft.world.item.alchemy.PotionUtils.setPotion;
 
-@Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AquaRecipes {
 
-    @SubscribeEvent
-    public static void registerBrewingRecipes(RegistryEvent.Register<RecipeSerializer<?>> event) {
+    public static void registerBrewingRecipes() {
         addBrewingRecipeWithSubPotions(AquaItems.JELLYFISH.get(), Potions.POISON);
         addBrewingRecipeWithSubPotions(AquaItems.LEECH.get(), Potions.HEALING);
     }

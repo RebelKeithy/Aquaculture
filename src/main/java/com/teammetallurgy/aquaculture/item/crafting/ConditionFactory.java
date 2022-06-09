@@ -4,19 +4,18 @@ import com.google.gson.JsonObject;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.RegisterEvent;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ConditionFactory {
 
     @SubscribeEvent
-    public static void registerConditions(RegistryEvent.Register<RecipeSerializer<?>> event) {
+    public static void registerConditions(RegisterEvent event) {
         CraftingHelper.register(NeptuniumItems.Serializer.INSTANCE);
         CraftingHelper.register(NeptuniumArmor.Serializer.INSTANCE);
     }
@@ -31,7 +30,7 @@ public class ConditionFactory {
         }
 
         @Override
-        public boolean test() {
+        public boolean test(IContext context) {
             return AquaConfig.NEPTUNIUM_OPTIONS.enableNeptuniumItems.get();
         }
 
@@ -40,7 +39,7 @@ public class ConditionFactory {
 
             @Override
             public void write(JsonObject json, NeptuniumItems value) {
-                json.addProperty("value", value.test());
+                json.addProperty("value", value.test(IContext.EMPTY));
             }
 
             @Override
@@ -65,7 +64,7 @@ public class ConditionFactory {
         }
 
         @Override
-        public boolean test() {
+        public boolean test(IContext context) {
             return AquaConfig.NEPTUNIUM_OPTIONS.enableNeptuniumArmor.get();
         }
 
@@ -74,7 +73,7 @@ public class ConditionFactory {
 
             @Override
             public void write(JsonObject json, NeptuniumArmor value) {
-                json.addProperty("value", value.test());
+                json.addProperty("value", value.test(IContext.EMPTY));
             }
 
             @Override

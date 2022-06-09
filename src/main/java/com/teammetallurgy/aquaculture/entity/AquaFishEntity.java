@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -60,31 +61,31 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.getType().getRegistryName().toString() + "_bucket")));
+        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.getType().getDescriptionId() + "_bucket")));
     }
 
     @Override
     @Nonnull
     protected SoundEvent getFlopSound() {
         if (this.getFishType() == FishType.JELLYFISH) {
-            return AquaSounds.JELLYFISH_FLOP;
+            return AquaSounds.JELLYFISH_FLOP.get();
         }
-        return AquaSounds.FISH_FLOP;
+        return AquaSounds.FISH_FLOP.get();
     }
     
     @Override
     protected SoundEvent getAmbientSound() {
-        return AquaSounds.FISH_AMBIENT;
+        return AquaSounds.FISH_AMBIENT.get();
     }
     
     @Override
     protected SoundEvent getDeathSound() {
-        return AquaSounds.FISH_DEATH;
+        return AquaSounds.FISH_DEATH.get();
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSource) {
-        return AquaSounds.FISH_HURT;
+        return AquaSounds.FISH_HURT.get();
     }
 
     @Override
@@ -96,10 +97,10 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     public void playerTouch(@Nonnull Player player) {
         super.playerTouch(player);
-        if (Objects.equals(this.getType().getRegistryName(), AquaItems.JELLYFISH.get().getRegistryName())) {
+        if (Objects.equals(this.getType().toString(), AquaItems.JELLYFISH.get().toString())) {
             if (this.isAlive()) {
                 if (this.distanceToSqr(player) < 1.0D && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
-                    this.playSound(AquaSounds.JELLYFISH_COLLIDE, 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+                    this.playSound(AquaSounds.JELLYFISH_COLLIDE.get(), 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                     this.doEnchantDamageEffects(this, player);
                 }
             }
@@ -113,7 +114,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
         }
     }
 
-    public static boolean canSpawnHere(EntityType<? extends AbstractFish> fish, LevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
+    public static boolean canSpawnHere(EntityType<? extends AbstractFish> fish, LevelAccessor world, MobSpawnType spawnReason, BlockPos pos, RandomSource random) {
         int seaLevel = world.getSeaLevel();
         int minY = seaLevel - 13;
         boolean isAllNeighborsSource = isSourceBlock(world, pos.north()) && isSourceBlock(world, pos.south()) && isSourceBlock(world, pos.west()) && isSourceBlock(world, pos.east());

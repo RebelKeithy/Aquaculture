@@ -1,7 +1,6 @@
 package com.teammetallurgy.aquaculture.misc;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -65,8 +64,8 @@ public class AquaConfig {
             this.min = builder.defineInRange("min", min, 0, 64);
             this.max = builder.defineInRange("max", max, 0, 64);
             this.weight = builder.defineInRange("weight", weight, 0, 100);
-            this.include = builder.defineList("include", include, o -> o instanceof String && (o.equals("") || BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(o.toString()))));
-            this.exclude = builder.defineList("exclude", exclude, o -> o instanceof String && (o.equals("") || BiomeDictionary.Type.getAll().contains(BiomeDictionaryHelper.getType(o.toString()))));
+            this.include = builder.defineList("include", include, o -> o instanceof String && (o.equals("")));
+            this.exclude = builder.defineList("exclude", exclude, o -> o instanceof String && (o.equals("")));
             builder.pop(2);
         }
     }

@@ -64,7 +64,7 @@ public class ClientHandler {
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(AquaEntities.BOBBER.get(), AquaBobberRenderer::new);
         for (RegistryObject<EntityType<AquaFishEntity>> fish : FishRegistry.fishEntities) {
-            event.registerEntityRenderer(fish.get(), (context) -> new AquaFishRenderer(context, fish.get().getRegistryName() != null && fish.get().getRegistryName().equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
+            event.registerEntityRenderer(fish.get(), (context) -> new AquaFishRenderer(context, fish.get().getDescription().getString().equals("jellyfish")));
         }
         event.registerEntityRenderer(AquaEntities.WATER_ARROW.get(), TippableArrowRenderer::new);
         event.registerEntityRenderer(AquaEntities.SPECTRAL_WATER_ARROW.get(), SpectralArrowRenderer::new);
