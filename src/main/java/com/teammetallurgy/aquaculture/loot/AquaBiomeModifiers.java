@@ -57,28 +57,19 @@ public class AquaBiomeModifiers {
                 if (biome.tags().noneMatch(BiomeTagPredicate.INVALID_TYPES::contains)) {
                     if (this.includeBiomes.stream().findAny().isEmpty() && !this.excludeBiomes.stream().findAny().isEmpty()) { //Add all tags, when only excluding biomes
                         if (!this.excludeBiomes.stream().map(holders -> holders.stream().map(Holder::getTagKeys)).collect(Collectors.toList()).contains(biome)) { //TODO Check if exclude only works
-                            if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
-                                Aquaculture.LOG.info("Fish: " + ForgeRegistries.ENTITIES.getKey(spawn.type));
-                                Aquaculture.LOG.info("Exclude only. Valid biome included: " + biome.unwrapKey().get().location());
-                            }
+                            debugOutput(biome, "Exclude only. Valid biome included");
                             builder.getMobSpawnSettings().addSpawn(this.spawn.type.getCategory(), this.spawn);
                         }
                     } else if (this.andIncludeBiomes.stream().findAny().isPresent()) { //TODO Figure out a way to get andIncludeBiomes to work at the same time
                         for (HolderSet<Biome> include : this.includeBiomes) {
                             if (!include.contains(biome)) return;
                         }
-                        if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
-                            Aquaculture.LOG.info("Fish: " + ForgeRegistries.ENTITIES.getKey(spawn.type));
-                            Aquaculture.LOG.info("And Include: " + biome.unwrapKey().get().location());
-                        }
+                        debugOutput(biome, "And Include");
                         builder.getMobSpawnSettings().addSpawn(this.spawn.type.getCategory(), this.spawn);
                     } else { //TODO Check if this works
                         for (HolderSet<Biome> exclude : this.excludeBiomes) {
                             if (exclude.contains(biome)) {
-                                if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
-                                    Aquaculture.LOG.info("Fish: " + ForgeRegistries.ENTITIES.getKey(spawn.type));
-                                    Aquaculture.LOG.info("Exclude: " + biome.unwrapKey().get().location());
-                                }
+                                debugOutput(biome, "Exclude");
                                 return;
                             }
                         }
@@ -87,13 +78,17 @@ public class AquaBiomeModifiers {
                                 return;
                             }
                         }
-                        if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
-                            Aquaculture.LOG.info("Fish: " + ForgeRegistries.ENTITIES.getKey(spawn.type));
-                            Aquaculture.LOG.info("Normal: " + biome.unwrapKey().get().location());
-                        }
+                        debugOutput(biome, "Normal");
                         builder.getMobSpawnSettings().addSpawn(this.spawn.type.getCategory(), this.spawn);
                     }
                 }
+            }
+        }
+
+        private void debugOutput(Holder<Biome> biomeHolder, String s) {
+            if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
+                Aquaculture.LOG.info("Fish: " + ForgeRegistries.ENTITIES.getKey(spawn.type));
+                Aquaculture.LOG.info(s + ": " + biomeHolder.unwrapKey().get().location());
             }
         }
 
