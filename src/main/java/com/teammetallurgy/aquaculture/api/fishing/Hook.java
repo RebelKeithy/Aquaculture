@@ -19,6 +19,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Hook {
     public static final HashMap<String, RegistryObject<HookItem>> HOOKS = new HashMap<>();
@@ -34,10 +35,10 @@ public class Hook {
     private final double durabilityChance;
     private final int luckModifier;
     private final double doubleCatchChance;
-    private final SoundEvent catchSound;
+    private final Supplier<SoundEvent> catchSound;
     private final List<TagKey<Fluid>> fluids;
 
-    private Hook(String name, String modID, ChatFormatting color, int minCatchable, int maxCatchable, Vec3 weight, double durabilityChance, int luckModifier, double doubleCatchChance, SoundEvent catchSound, List<TagKey<Fluid>> fluids) {
+    private Hook(String name, String modID, ChatFormatting color, int minCatchable, int maxCatchable, Vec3 weight, double durabilityChance, int luckModifier, double doubleCatchChance, Supplier<SoundEvent> catchSound, List<TagKey<Fluid>> fluids) {
         this.name = name;
         this.modID = modID;
         this.color = color;
@@ -105,7 +106,7 @@ public class Hook {
     }
 
     public SoundEvent getCatchSound() {
-        return this.catchSound;
+        return this.catchSound.get();
     }
 
     public List<TagKey<Fluid>> getFluids() {
@@ -122,7 +123,7 @@ public class Hook {
         private double durabilityChance;
         private int luckModifier;
         private double doubleCatchChance;
-        private SoundEvent catchSound;
+        private Supplier<SoundEvent> catchSound;
         private final List<TagKey<Fluid>> fluids = new ArrayList<>();
 
         HookBuilder() {
@@ -175,7 +176,7 @@ public class Hook {
             return this;
         }
 
-        public HookBuilder setCatchSound(SoundEvent catchSound) {
+        public HookBuilder setCatchSound(Supplier<SoundEvent> catchSound) {
             this.catchSound = catchSound;
             return this;
         }

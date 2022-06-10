@@ -23,7 +23,7 @@ public class AquaTooltip {
         if (!stack.isEmpty()) {
             Item item = stack.getItem();
             if (stack.is(AquacultureAPI.Tags.TOOLTIP)) {
-                String itemIdentifier = item.getDescriptionId() + ".tooltip";
+                String itemIdentifier = StackHelper.nameFromDescriptionID(item.getDescriptionId()) + ".tooltip";
                 if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT)) {
                     event.getToolTip().add(Component.translatable(Aquaculture.MOD_ID + "." + itemIdentifier + ".desc").withStyle(ChatFormatting.AQUA));
                 } else {

@@ -13,6 +13,7 @@ import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.init.*;
 import com.teammetallurgy.aquaculture.item.DyeableItem;
+import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -64,7 +65,7 @@ public class ClientHandler {
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(AquaEntities.BOBBER.get(), AquaBobberRenderer::new);
         for (RegistryObject<EntityType<AquaFishEntity>> fish : FishRegistry.fishEntities) {
-            event.registerEntityRenderer(fish.get(), (context) -> new AquaFishRenderer(context, fish.get().getDescription().getString().equals("jellyfish")));
+            event.registerEntityRenderer(fish.get(), (context) -> new AquaFishRenderer(context, StackHelper.nameFromDescriptionID(fish.get().getDescriptionId()).equals("jellyfish")));
         }
         event.registerEntityRenderer(AquaEntities.WATER_ARROW.get(), TippableArrowRenderer::new);
         event.registerEntityRenderer(AquaEntities.SPECTRAL_WATER_ARROW.get(), SpectralArrowRenderer::new);

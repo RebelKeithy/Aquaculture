@@ -8,6 +8,7 @@ import com.teammetallurgy.aquaculture.client.renderer.entity.layers.JellyfishLay
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.*;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
+import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.TropicalFishModelB;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -64,9 +65,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     @Override
     @Nonnull
     public ResourceLocation getTextureLocation(@Nonnull AquaFishEntity fishEntity) {
-        Component location = fishEntity.getType().getDescription();
-        if (location != null) {
-            return new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/fish/" + location.getString() + ".png");
+        String string = StackHelper.nameFromDescriptionID(fishEntity.getType().getDescriptionId());
+        if (!string.isEmpty()) {
+            return new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/fish/" + string + ".png");
         }
         return DEFAULT_LOCATION;
     }
@@ -107,9 +108,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
 
     @Override
     protected void scale(AquaFishEntity fishEntity, @Nonnull PoseStack matrixStack, float partialTickTime) {
-        Component component = fishEntity.getType().getDescription();
+        String string = StackHelper.nameFromDescriptionID(fishEntity.getType().getDescriptionId());
         float scale = 0.0F;
-        switch (component.getString()) {
+        switch (string) {
             case "minnow" -> scale = 0.5F;
             case "synodontis" -> scale = 0.8F;
             case "brown_trout", "piranha" -> scale = 0.9F;

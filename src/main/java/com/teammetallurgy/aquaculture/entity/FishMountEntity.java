@@ -1,7 +1,9 @@
 package com.teammetallurgy.aquaculture.entity;
 
+import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
+import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -110,19 +112,20 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
             double z1 = this.getWidth() / 32.0D;
             double z2 = this.getWidth() / 32.0D;
             switch (this.direction.getAxis()) {
-                case X:
+                case X -> {
                     x1 = (this.direction.getStepX() < 0 ? 3.0D : 1.0D) / 32.0D;
                     x2 = (this.direction.getStepX() > 0 ? 3.0D : 1.0D) / 32.0D;
-                    break;
-                case Y:
+                }
+                case Y -> {
                     y1 = (this.direction.getStepY() < 0 ? 3.0D : 1.0D) / 32.0D;
                     y2 = (this.direction.getStepY() > 0 ? 3.0D : 1.0D) / 32.0D;
                     z1 = 8.0D / 32.0D;
                     z2 = 8.0D / 32.0D;
-                    break;
-                case Z:
+                }
+                case Z -> {
                     z1 = (this.direction.getStepZ() < 0 ? 3.0D : 1.0D) / 32.0D;
                     z2 = (this.direction.getStepZ() > 0 ? 3.0D : 1.0D) / 32.0D;
+                }
             }
             this.setBoundingBox(new AABB(posX - x1, posY - y1, posZ - z1, posX + x2, posY + y2, posZ + z2));
         }
@@ -208,7 +211,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     private Item getItem() {
-        ResourceLocation location = new ResourceLocation(this.getType().getDescriptionId());
+        ResourceLocation location = new ResourceLocation(this.getType().getDescriptionId().replace("entity.", "").replace(".", ":"));
         if (ForgeRegistries.ITEMS.containsKey(location)) {
             return ForgeRegistries.ITEMS.getValue(location);
         }
@@ -252,7 +255,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         if (key.equals(ITEM)) {
             ItemStack displayStack = this.getDisplayedItem();
             if (displayStack != null && !displayStack.isEmpty()) {
-                EntityType entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(displayStack.getItem().getDescriptionId()));
+                EntityType entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(displayStack.getItem().getDescriptionId().replace("item.", "").replace(".", ":")));
                 if (entityType != null && entityType != EntityType.PIG) {
                     this.entity = entityType.create(this.level);
                 }
@@ -263,7 +266,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@Nonnull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         if (!this.getDisplayedItem().isEmpty()) {
             compound.put("Item", this.getDisplayedItem().save(new CompoundTag()));
@@ -273,7 +276,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@Nonnull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         CompoundTag nbt = compound.getCompound("Item");
         if (nbt != null && !nbt.isEmpty()) {
@@ -302,7 +305,8 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         if (!this.level.isClientSide) {
             if (this.getDisplayedItem().isEmpty()) {
                 Item heldItem = heldStack.getItem();
-                EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(heldItem.getDescriptionId()));
+                String id = heldItem.getDescriptionId().replace("item.", "").replace(".", ":");
+                EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
                 if (entityType != EntityType.PIG && AquacultureAPI.FISH_DATA.getFish().contains(heldItem)) {
                     this.setDisplayedItem(heldStack);
                     if (!player.getAbilities().instabuild) {
@@ -338,7 +342,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
-        buffer.writeResourceLocation(new ResourceLocation(this.getType().getDescriptionId()));
+        buffer.writeResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, StackHelper.nameFromDescriptionID(this.getType().getDescriptionId())));
     }
 
     @Override

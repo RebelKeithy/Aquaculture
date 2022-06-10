@@ -49,7 +49,6 @@ public class Aquaculture {
 
     public Aquaculture() {
         instance = this;
-        BIOME_TAG_CHECK = LootItemConditions.register(new ResourceLocation(Aquaculture.MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.BiomeTagCheckSerializer());
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
@@ -59,7 +58,7 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
-        FishWeightHandler.registerFishData();
+        event.enqueueWork(FishWeightHandler::registerFishData);
         event.enqueueWork(AquaEntities::setSpawnPlacement);
         event.enqueueWork(WormFarmBlock::addCompostables);
         event.enqueueWork(AquaRecipes::registerBrewingRecipes);

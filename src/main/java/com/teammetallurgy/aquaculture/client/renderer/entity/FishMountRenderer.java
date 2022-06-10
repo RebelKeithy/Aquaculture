@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
+import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
@@ -59,9 +60,9 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
 
         matrixStack.pushPose();
         matrixStack.translate(-0.5D, -0.5D, -0.5D);
-        ResourceLocation id = new ResourceLocation(fishMount.getType().getDescriptionId());
-        if (id != null) {
-            ModelResourceLocation location = new ModelResourceLocation(id, ""); //Calling this instead of the fields for mod support'
+        String id = StackHelper.nameFromDescriptionID(fishMount.getType().getDescriptionId());
+        if (!id.isEmpty()) {
+            ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, id), ""); //Calling this instead of the fields for mod support'
             rendererDispatcher.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()), null, manager.getModel(location), 1.0F, 1.0F, 1.0F, i, OverlayTexture.NO_OVERLAY);
         }
         matrixStack.popPose();

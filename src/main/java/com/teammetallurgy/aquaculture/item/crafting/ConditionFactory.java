@@ -9,6 +9,7 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -16,8 +17,10 @@ public class ConditionFactory {
 
     @SubscribeEvent
     public static void registerConditions(RegisterEvent event) {
-        CraftingHelper.register(NeptuniumItems.Serializer.INSTANCE);
-        CraftingHelper.register(NeptuniumArmor.Serializer.INSTANCE);
+        if (event.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) {
+            CraftingHelper.register(NeptuniumItems.Serializer.INSTANCE);
+            CraftingHelper.register(NeptuniumArmor.Serializer.INSTANCE);
+        }
     }
 
     public static class NeptuniumItems implements ICondition {
