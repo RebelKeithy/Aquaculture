@@ -35,8 +35,6 @@
   "_comment": "Food",
   "item.aquaculture.fish_fillet_raw": "Rohes Fischfilet",
   "item.aquaculture.fish_fillet_cooked": "Gekochtes Fischfilet",
-  "item.aquaculture.frog_legs_raw": "Froschschenkel",
-  "item.aquaculture.frog_legs_cooked": "Gekochte Froschschenkel",
   "item.aquaculture.turtle_soup": "Schildkrötensuppe",
   "item.aquaculture.sushi": "Sushi",
 
@@ -106,7 +104,6 @@
   "item.aquaculture.jellyfish": "Qualle",
   "item.aquaculture.red_grouper": "Roter Zackenbarsch",
   "item.aquaculture.tuna": "Thunfisch",
-  "item.aquaculture.frog": "Frosch",
   "item.aquaculture.leech": "Blutegel",
   "item.aquaculture.box_turtle": "Dosenschildkröte",
   "item.aquaculture.arrau_turtle": "Arrau-Schildkröte",

@@ -14,7 +14,6 @@ public class AquaConfig {
 
     public static class BasicOptions {
         static final String BASIC_OPTIONS = "basic options";
-        public ForgeConfigSpec.BooleanValue enableFishSpawning;
         public ForgeConfigSpec.BooleanValue randomWeight;
         public ForgeConfigSpec.BooleanValue compostableFish;
         public ForgeConfigSpec.BooleanValue aqFishToBreedCats;
@@ -24,7 +23,6 @@ public class AquaConfig {
 
         BasicOptions(ForgeConfigSpec.Builder builder) {
             builder.push(BASIC_OPTIONS);
-            enableFishSpawning = builder.comment("Enable fish mob spawning? Weight & biomes can be modified in the Aquaculture fish loot table").define("Enable fish spawning?", true);
             randomWeight = builder.define("Enable weight for fish? Useful for fishing competitions", false);
             compostableFish = builder.define("Should fish be added as compostables for the composter/worm farm? (Based on fish, or weight if enabled)", true);
             aqFishToBreedCats = builder.define("Should Aquaculture fish be able to be used to breed cats & ocelots?", true);
@@ -47,26 +45,6 @@ public class AquaConfig {
             enableNeptuniumArmor = builder.define("Enable recipes for Neptunium armor?", true);
             addNeptunesBountyToLoot = builder.comment("Should Neptune's bounty be added as fishing loot? Very rare.").define("Add Neptune's Bounty as loot?", true);
             builder.pop();
-        }
-    }
-
-    public static class Spawn {
-        public static final String SPAWN_OPTIONS = "spawn options";
-        public final ForgeConfigSpec.IntValue min;
-        public final ForgeConfigSpec.IntValue max;
-        public final ForgeConfigSpec.IntValue weight;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> include;
-        public final ForgeConfigSpec.ConfigValue<List<? extends String>> exclude;
-
-        public Spawn(ForgeConfigSpec.Builder builder, String name, int min, int max, int weight, List<? extends String> include, List<? extends String> exclude) {
-            builder.push(SPAWN_OPTIONS);
-            builder.push(name);
-            this.min = builder.defineInRange("min", min, 0, 64);
-            this.max = builder.defineInRange("max", max, 0, 64);
-            this.weight = builder.defineInRange("weight", weight, 0, 100);
-            this.include = builder.defineList("include", include, o -> o instanceof String && (o.equals("")));
-            this.exclude = builder.defineList("exclude", exclude, o -> o instanceof String && (o.equals("")));
-            builder.pop(2);
         }
     }
 

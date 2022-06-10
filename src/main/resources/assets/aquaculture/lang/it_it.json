@@ -35,8 +35,6 @@
   "_comment": "Cibo",
   "item.aquaculture.fish_fillet_raw": "Filetto di pesce crudo",
   "item.aquaculture.fish_fillet_cooked": "Filetto di pesce cotto",
-  "item.aquaculture.frog_legs_raw": "Zampe di rana",
-  "item.aquaculture.frog_legs_cooked": "Zampe di rana cotte",
   "item.aquaculture.turtle_soup": "Zuppa di tartaruga",
   "item.aquaculture.sushi": "Sushi",
 
@@ -106,7 +104,6 @@
   "item.aquaculture.jellyfish": "Medusa",
   "item.aquaculture.red_grouper": "Cernia rossa",
   "item.aquaculture.tuna": "Tonno",
-  "item.aquaculture.frog": "Rana",
   "item.aquaculture.leech": "Sanguisuga",
   "item.aquaculture.box_turtle": "Tartaruga scatola",
   "item.aquaculture.arrau_turtle": "Tartaruga Arrau",

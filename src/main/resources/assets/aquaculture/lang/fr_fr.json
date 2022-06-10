@@ -35,8 +35,6 @@
   "_comment": "Food",
   "item.aquaculture.fish_fillet_raw": "Filet de poisson cru",
   "item.aquaculture.fish_fillet_cooked": "Filet de poisson cuit",
-  "item.aquaculture.frog_legs_raw": "Cuisses de grenouille",
-  "item.aquaculture.frog_legs_cooked": "Cuisses de grenouille rôties",
   "item.aquaculture.turtle_soup": "Soupe de tortue",
   "item.aquaculture.sushi": "Sushi",
 
@@ -106,7 +104,6 @@
   "item.aquaculture.jellyfish": "Méduse",
   "item.aquaculture.red_grouper": "Mérou",
   "item.aquaculture.tuna": "Thon",
-  "item.aquaculture.frog": "Grenouille",
   "item.aquaculture.leech": "Sangsue",
   "item.aquaculture.box_turtle": "Tortue terrapène",
   "item.aquaculture.arrau_turtle": "Tortue tartaruga",

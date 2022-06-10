@@ -35,8 +35,6 @@
     "_comment": "Food",
     "item.aquaculture.fish_fillet_raw": "Сырое филе рыбы",
     "item.aquaculture.fish_fillet_cooked": "Приготовленное филе рыбы",
-    "item.aquaculture.frog_legs_raw": "Лягушачьи ножки",
-    "item.aquaculture.frog_legs_cooked": "Приготовленные лягушачьи ножки",
     "item.aquaculture.turtle_soup": "Суп из черепахи",
     "item.aquaculture.sushi": "Суши",
 
@@ -106,7 +104,6 @@
     "item.aquaculture.jellyfish": "Медуза",
     "item.aquaculture.red_grouper": "Красный группер",
     "item.aquaculture.tuna": "Тунец",
-    "item.aquaculture.frog": "Лягушка",
     "item.aquaculture.leech": "Пиявка",
     "item.aquaculture.box_turtle": "Коробчатая черепаха",
     "item.aquaculture.arrau_turtle": "Амазонская черепаха",

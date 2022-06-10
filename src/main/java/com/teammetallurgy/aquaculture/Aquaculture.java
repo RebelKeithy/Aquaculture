@@ -4,21 +4,19 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
+import com.teammetallurgy.aquaculture.loot.AquaBiomeModifiers;
+import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.init.*;
 import com.teammetallurgy.aquaculture.item.crafting.FishFilletRecipe;
-import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
-import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import cpw.mods.modlauncher.Environment;
 import cpw.mods.modlauncher.Launcher;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditions;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -55,6 +53,9 @@ public class Aquaculture {
         this.registerDeferredRegistries(modBus);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
         AquacultureAPI.Tags.init();
+
+        AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register("mob_spawn", AquaBiomeModifiers.MobSpawnBiomeModifier::makeCodec);
+        AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register("fish_spawn", AquaBiomeModifiers.FishSpawnBiomeModifier::makeCodec);
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
@@ -70,9 +71,6 @@ public class Aquaculture {
         if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
             event.enqueueWork(FishRegistry::addCatBreeding);
         }
-        if (AquaConfig.BASIC_OPTIONS.enableFishSpawning.get()) {
-            //FishReadFromJson.read(); //TODO
-        }
     }
 
     private void setupClient(FMLClientSetupEvent event) {
@@ -87,5 +85,6 @@ public class Aquaculture {
         AquaSounds.SOUND_EVENT_DEFERRED.register(modBus);
         AquaGuis.MENU_DEFERRED.register(modBus);
         FishFilletRecipe.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
+        AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register(modBus);
     }
 }

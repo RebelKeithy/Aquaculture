@@ -42,14 +42,15 @@ public class AquacultureAPI {
         public static final TagKey<Item> TURTLE_EDIBLE = tag(Aquaculture.MOD_ID, "turtle_edible");
         public static final TagKey<Item> TOOLTIP = tag(Aquaculture.MOD_ID, "tooltip");
 
-        public static final TagKey<Biome> TWILIGHT = biomeTag("twilight");
+        public static final TagKey<Biome> TWILIGHT = biomeTag("forge","is_twilight");
+        public static final TagKey<Biome> EMPTY = biomeTag("aquaculture","is_twilight");
 
         public static TagKey<Item> tag(String modID, String name) {
             return ItemTags.create(new ResourceLocation(modID, name));
         }
 
-        public static TagKey<Biome> biomeTag(String name) {
-            return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Aquaculture.MOD_ID, name));
+        public static TagKey<Biome> biomeTag(String modID, String name) {
+            return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(modID, name));
         }
 
         public static void init() {

@@ -5,11 +5,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
-import com.teammetallurgy.aquaculture.Aquaculture;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 public class BiomeTagPredicate {
     private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, Lists.newArrayList(), Lists.newArrayList(), false);
     private static final HashMap<CheckType, List<ResourceLocation>> CACHE = new HashMap<>();
-    private static final List<TagKey<Biome>> INVALID_TYPES = Arrays.asList(BiomeTags.IS_NETHER, BiomeTags.IS_END);
+    public static final List<TagKey<Biome>> INVALID_TYPES = Arrays.asList(BiomeTags.IS_NETHER, BiomeTags.IS_END);
     private final MinMaxBounds.Doubles x;
     private final MinMaxBounds.Doubles y;
     private final MinMaxBounds.Doubles z;
@@ -69,10 +67,10 @@ public class BiomeTagPredicate {
     }
 
     //TODO
-    public static List<ResourceLocation> getValidBiomes(ServerLevel serverLevel, List<TagKey<Biome>> includeList, List<TagKey<Biome>> excludeList, boolean and) { //Can't add biome as a parameter, since this is called elsewhere where world is not available
+    public static List<ResourceLocation> getValidBiomes(ServerLevel serverLevel, List<TagKey<Biome>> includeList, List<TagKey<Biome>> excludeList, boolean and) {
         List<ResourceLocation> biomes = Lists.newArrayList();
 
-        if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all BiomeDictionary tags, when only excluding biomes
+        if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all tags, when only excluding biomes
             Optional<? extends Registry<Biome>> biomeRegistry = serverLevel.registryAccess().registry(Registry.BIOME_REGISTRY);
             if (biomeRegistry.isPresent()) {
                 Set<TagKey<Biome>> validTypes = biomeRegistry.get().getTagNames().collect(Collectors.toSet());

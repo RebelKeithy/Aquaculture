@@ -35,8 +35,6 @@
   "_comment": "Food",
   "item.aquaculture.fish_fillet_raw":"Filete de pescado crudo",
   "item.aquaculture.fish_fillet_cooked":"Filete de pescado cocinado",
-  "item.aquaculture.frog_legs_raw":"Patas de rana",
-  "item.aquaculture.frog_legs_cooked":"Patas de rana cocinadas",
   "item.aquaculture.turtle_soup":"Guiso de tortuga",
   "item.aquaculture.sushi":"Sushi",
   
@@ -106,7 +104,6 @@
   "item.aquaculture.jellyfish":"Medusa",
   "item.aquaculture.red_grouper":"Mero rojo",
   "item.aquaculture.tuna":"Atún",
-  "item.aquaculture.frog":"Rana",
   "item.aquaculture.leech":"Sanguijuela",
   "item.aquaculture.box_turtle":"Tortuga de caja",
   "item.aquaculture.arrau_turtle":"Tortuga arrau",

@@ -62,8 +62,6 @@ public class AquaItems {
     // Food
     public static final RegistryObject<Item> FISH_FILLET = register(() -> new Item(new Item.Properties().tab(Aquaculture.GROUP).food(AquaFoods.FISH_RAW)), "fish_fillet_raw");
     public static final RegistryObject<Item> COOKED_FILLET = register(() -> new Item(new Item.Properties().tab(Aquaculture.GROUP).food(AquaFoods.FISH_FILLET)), "fish_fillet_cooked");
-    public static final RegistryObject<Item> FROG_LEGS = register(() -> new Item(new Item.Properties().tab(Aquaculture.GROUP).food(AquaFoods.FISH_RAW)), "frog_legs_raw");
-    public static final RegistryObject<Item> COOKED_FROG_LEGS = register(() -> new Item(new Item.Properties().tab(Aquaculture.GROUP).food(AquaFoods.FROG_LEGS)), "frog_legs_cooked");
     public static final RegistryObject<Item> TURTLE_SOUP = register(() -> new BowlFoodItem(new Item.Properties().stacksTo(1).tab(Aquaculture.GROUP).food(Foods.MUSHROOM_STEW)), "turtle_soup");
     public static final RegistryObject<Item> SUSHI = register(() -> new Item(new Item.Properties().tab(Aquaculture.GROUP).food(AquaFoods.SUSHI)), "sushi");
 
@@ -97,7 +95,6 @@ public class AquaItems {
     public static final RegistryObject<Item> JELLYFISH = FishRegistry.register(SimpleItem::new, "jellyfish", FishType.JELLYFISH);
     public static final RegistryObject<Item> RED_GROUPER = FishRegistry.register(FishItem::new, "red_grouper");
     public static final RegistryObject<Item> TUNA = FishRegistry.register(FishItem::new, "tuna", FishType.LARGE);
-    public static final RegistryObject<Item> FROG = register(SimpleItem::new, "frog");
     public static final RegistryObject<Item> LEECH = register(() -> AquacultureAPI.createBait(35, 1, Aquaculture.GROUP), "leech");
     public static final RegistryObject<Item> GOLDFISH = register(SimpleItem::new, "goldfish");
     public static final RegistryObject<Item> BOX_TURTLE = register(SimpleItem::new, "box_turtle");
