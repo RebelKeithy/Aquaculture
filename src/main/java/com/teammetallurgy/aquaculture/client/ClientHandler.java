@@ -33,6 +33,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ForgeModelBakery;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -65,7 +66,7 @@ public class ClientHandler {
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(AquaEntities.BOBBER.get(), AquaBobberRenderer::new);
         for (RegistryObject<EntityType<AquaFishEntity>> fish : FishRegistry.fishEntities) {
-            event.registerEntityRenderer(fish.get(), (context) -> new AquaFishRenderer(context, StackHelper.nameFromDescriptionID(fish.get().getDescriptionId()).equals("jellyfish")));
+            event.registerEntityRenderer(fish.get(), (context) -> new AquaFishRenderer(context, ForgeRegistries.ENTITIES.getKey(fish.get()).equals(new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))));
         }
         event.registerEntityRenderer(AquaEntities.WATER_ARROW.get(), TippableArrowRenderer::new);
         event.registerEntityRenderer(AquaEntities.SPECTRAL_WATER_ARROW.get(), SpectralArrowRenderer::new);

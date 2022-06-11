@@ -49,8 +49,4 @@ public class StackHelper {
     public static Ingredient ingredientFromStackList(List<ItemStack> stackList) {
         return Ingredient.fromValues(stackList.stream().map(Ingredient.ItemValue::new));
     }
-
-    public static String nameFromDescriptionID(String descriptionID) {
-        return descriptionID.replace("item.aquaculture.", "".replace("block.aquaculture.", "")).replace("entity.aquaculture.", "");
-    }
 }

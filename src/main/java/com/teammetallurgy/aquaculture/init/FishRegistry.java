@@ -88,7 +88,7 @@ public class FishRegistry {
             Ingredient catBreedingItems = Cat.TEMPT_INGREDIENT;
             Ingredient ocelotBreedingItems = Ocelot.TEMPT_INGREDIENT;
             List<ItemStack> aquaFish = new ArrayList<>();
-            fishEntities.forEach(f -> aquaFish.add(new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Aquaculture.MOD_ID, StackHelper.nameFromDescriptionID(f.get().getDescriptionId()))))));
+            fishEntities.forEach(f -> aquaFish.add(new ItemStack(ForgeRegistries.ITEMS.getValue(ForgeRegistries.ENTITIES.getKey(f.get())))));
             aquaFish.removeIf(p -> p.getItem().equals(AquaItems.JELLYFISH.get()));
 
             Cat.TEMPT_INGREDIENT = StackHelper.mergeIngredient(catBreedingItems, StackHelper.ingredientFromStackList(aquaFish));

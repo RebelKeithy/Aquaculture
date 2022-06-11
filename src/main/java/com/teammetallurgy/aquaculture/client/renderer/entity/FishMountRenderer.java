@@ -25,6 +25,8 @@ import net.minecraft.world.entity.animal.Pufferfish;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.math.BigDecimal;
@@ -60,9 +62,9 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
 
         matrixStack.pushPose();
         matrixStack.translate(-0.5D, -0.5D, -0.5D);
-        String id = StackHelper.nameFromDescriptionID(fishMount.getType().getDescriptionId());
-        if (!id.isEmpty()) {
-            ModelResourceLocation location = new ModelResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, id), ""); //Calling this instead of the fields for mod support'
+        ResourceLocation id = ForgeRegistries.ENTITIES.getKey(fishMount.getType());
+        if (id != null) {
+            ModelResourceLocation location = new ModelResourceLocation(id, ""); //Calling this instead of the fields for mod support'
             rendererDispatcher.getModelRenderer().renderModel(matrixStack.last(), buffer.getBuffer(Sheets.solidBlockSheet()), null, manager.getModel(location), 1.0F, 1.0F, 1.0F, i, OverlayTexture.NO_OVERLAY);
         }
         matrixStack.popPose();

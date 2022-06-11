@@ -41,6 +41,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public class FishMountEntity extends HangingEntity implements IEntityAdditionalSpawnData {
     private static final Logger PRIVATE_LOGGER = LogManager.getLogger();
@@ -211,8 +212,8 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     private Item getItem() {
-        ResourceLocation location = new ResourceLocation(this.getType().getDescriptionId().replace("entity.", "").replace(".", ":"));
-        if (ForgeRegistries.ITEMS.containsKey(location)) {
+        ResourceLocation location = ForgeRegistries.ENTITIES.getKey(this.getType());
+        if (ForgeRegistries.ITEMS.containsKey(location) && location != null) {
             return ForgeRegistries.ITEMS.getValue(location);
         }
         return Items.AIR;
@@ -255,7 +256,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         if (key.equals(ITEM)) {
             ItemStack displayStack = this.getDisplayedItem();
             if (displayStack != null && !displayStack.isEmpty()) {
-                EntityType entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(displayStack.getItem().getDescriptionId().replace("item.", "").replace(".", ":")));
+                EntityType entityType = ForgeRegistries.ENTITIES.getValue(ForgeRegistries.ITEMS.getKey(displayStack.getItem()));
                 if (entityType != null && entityType != EntityType.PIG) {
                     this.entity = entityType.create(this.level);
                 }
@@ -305,8 +306,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         if (!this.level.isClientSide) {
             if (this.getDisplayedItem().isEmpty()) {
                 Item heldItem = heldStack.getItem();
-                String id = heldItem.getDescriptionId().replace("item.", "").replace(".", ":");
-                EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
+                EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(ForgeRegistries.ITEMS.getKey(heldItem));
                 if (entityType != EntityType.PIG && AquacultureAPI.FISH_DATA.getFish().contains(heldItem)) {
                     this.setDisplayedItem(heldStack);
                     if (!player.getAbilities().instabuild) {
@@ -342,7 +342,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
-        buffer.writeResourceLocation(new ResourceLocation(Aquaculture.MOD_ID, StackHelper.nameFromDescriptionID(this.getType().getDescriptionId())));
+        buffer.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.ENTITIES.getKey(this.getType())));
     }
 
     @Override

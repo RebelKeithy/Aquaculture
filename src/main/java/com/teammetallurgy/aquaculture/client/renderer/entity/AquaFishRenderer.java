@@ -18,6 +18,8 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
@@ -65,9 +67,9 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     @Override
     @Nonnull
     public ResourceLocation getTextureLocation(@Nonnull AquaFishEntity fishEntity) {
-        String string = StackHelper.nameFromDescriptionID(fishEntity.getType().getDescriptionId());
-        if (!string.isEmpty()) {
-            return new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/fish/" + string + ".png");
+        ResourceLocation location = ForgeRegistries.ENTITIES.getKey(fishEntity.getType());
+        if (location != null) {
+            return new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/fish/" + location.getPath() + ".png");
         }
         return DEFAULT_LOCATION;
     }
@@ -108,15 +110,17 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
 
     @Override
     protected void scale(AquaFishEntity fishEntity, @Nonnull PoseStack matrixStack, float partialTickTime) {
-        String string = StackHelper.nameFromDescriptionID(fishEntity.getType().getDescriptionId());
+        ResourceLocation location = ForgeRegistries.ENTITIES.getKey(fishEntity.getType());
         float scale = 0.0F;
-        switch (string) {
-            case "minnow" -> scale = 0.5F;
-            case "synodontis" -> scale = 0.8F;
-            case "brown_trout", "piranha" -> scale = 0.9F;
-            case "pollock" -> scale = 1.1F;
-            case "atlantic_cod", "blackfish", "catfish", "tambaqui" -> scale = 1.2F;
-            case "pacific_halibut", "atlantic_halibut", "capitaine", "largemouth_bass", "gar", "arapaima", "tuna" -> scale = 1.4F;
+        if (location != null) {
+            switch (location.getPath()) {
+                case "minnow" -> scale = 0.5F;
+                case "synodontis" -> scale = 0.8F;
+                case "brown_trout", "piranha" -> scale = 0.9F;
+                case "pollock" -> scale = 1.1F;
+                case "atlantic_cod", "blackfish", "catfish", "tambaqui" -> scale = 1.2F;
+                case "pacific_halibut", "atlantic_halibut", "capitaine", "largemouth_bass", "gar", "arapaima", "tuna" -> scale = 1.4F;
+            }
         }
         if (scale > 0) {
             matrixStack.pushPose();

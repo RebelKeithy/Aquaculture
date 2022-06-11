@@ -2,9 +2,7 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.ai.goal.FollowTypeSchoolLeaderGoal;
-import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
-import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -29,7 +27,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.Random;
 
 public class AquaFishEntity extends AbstractSchoolingFish {
     private final FishType fishType;
@@ -63,7 +60,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Aquaculture.MOD_ID, StackHelper.nameFromDescriptionID(this.getType().getDescriptionId()) + "_bucket")));
+        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ForgeRegistries.ENTITIES.getKey(this.getType()).toString() + "_bucket")));
     }
 
     @Override
@@ -99,7 +96,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     public void playerTouch(@Nonnull Player player) {
         super.playerTouch(player);
-        if (Objects.equals(StackHelper.nameFromDescriptionID(this.getType().getDescriptionId()), StackHelper.nameFromDescriptionID(AquaItems.JELLYFISH.get().getDescriptionId()))) {
+        if (Objects.equals(ForgeRegistries.ENTITIES.getKey(this.getType()), new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))) {
             if (this.isAlive()) {
                 if (this.distanceToSqr(player) < 1.0D && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
                     this.playSound(AquaSounds.JELLYFISH_COLLIDE.get(), 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
