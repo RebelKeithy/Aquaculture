@@ -16,13 +16,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AquaBiomeModifiers {
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS_DEFERRED = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
 
-    public record MobSpawnBiomeModifier(HolderSet<Biome> includeList, HolderSet<Biome> excludeList,
-                                        MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
+    public record MobSpawnBiomeModifier(HolderSet<Biome> includeList, HolderSet<Biome> excludeList, MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
         private static final RegistryObject<Codec<? extends BiomeModifier>> SERIALIZER = RegistryObject.create(new ResourceLocation(Aquaculture.MOD_ID, "mob_spawn_serializer"), ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
 
         @Override
@@ -46,40 +44,39 @@ public class AquaBiomeModifiers {
         }
     }
 
-    public record FishSpawnBiomeModifier(List<HolderSet<Biome>> includeBiomes, List<HolderSet<Biome>> excludeBiomes,
-                                         List<HolderSet<Biome>> andIncludeBiomes,
-                                         MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
+    public record FishSpawnBiomeModifier(List<HolderSet<Biome>> includeBiomes, List<HolderSet<Biome>> excludeBiomes, boolean and, MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
         private static final RegistryObject<Codec<? extends BiomeModifier>> SERIALIZER = RegistryObject.create(new ResourceLocation(Aquaculture.MOD_ID, "fish_spawn_serializer"), ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
 
         @Override
         public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
             if (phase == Phase.ADD) {
                 if (biome.tags().noneMatch(BiomeTagPredicate.INVALID_TYPES::contains)) {
-                    if (this.includeBiomes.stream().findAny().isEmpty() && !this.excludeBiomes.stream().findAny().isEmpty()) { //Add all tags, when only excluding biomes
-                        if (!this.excludeBiomes.stream().map(holders -> holders.stream().map(Holder::getTagKeys)).collect(Collectors.toList()).contains(biome)) { //TODO Check if exclude only works
-                            debugOutput(biome, "Exclude only. Valid biome included");
-                            builder.getMobSpawnSettings().addSpawn(this.spawn.type.getCategory(), this.spawn);
+                    if (this.includeBiomes.stream().findAny().get().stream().findAny().isEmpty() && !this.excludeBiomes.isEmpty()) {
+                        for (HolderSet<Biome> exclude : this.excludeBiomes) {
+                            if (exclude.contains(biome)) {
+                                return;
+                            }
                         }
-                    } else if (this.andIncludeBiomes.stream().findAny().isPresent()) { //TODO Figure out a way to get andIncludeBiomes to work at the same time
+                        debugOutput(biome, "Exclude only. Valid biome included");
+                        builder.getMobSpawnSettings().addSpawn(this.spawn.type.getCategory(), this.spawn);
+                    } else if (this.and) {
                         for (HolderSet<Biome> include : this.includeBiomes) {
                             if (!include.contains(biome)) return;
                         }
                         debugOutput(biome, "And Include");
                         builder.getMobSpawnSettings().addSpawn(this.spawn.type.getCategory(), this.spawn);
-                    } else { //TODO Check if this works
+                    } else {
                         for (HolderSet<Biome> exclude : this.excludeBiomes) {
                             if (exclude.contains(biome)) {
-                                debugOutput(biome, "Exclude");
                                 return;
                             }
                         }
                         for (HolderSet<Biome> include : this.includeBiomes) {
-                            if (!include.contains(biome)) {
-                                return;
+                            if (include.contains(biome)) {
+                                debugOutput(biome, "Normal");
+                                builder.getMobSpawnSettings().addSpawn(this.spawn.type.getCategory(), this.spawn);
                             }
                         }
-                        debugOutput(biome, "Normal");
-                        builder.getMobSpawnSettings().addSpawn(this.spawn.type.getCategory(), this.spawn);
                     }
                 }
             }
@@ -101,7 +98,7 @@ public class AquaBiomeModifiers {
             return RecordCodecBuilder.create(builder -> builder.group(
                     Biome.LIST_CODEC.listOf().fieldOf("includeBiomes").forGetter(FishSpawnBiomeModifier::includeBiomes),
                     Biome.LIST_CODEC.listOf().fieldOf("excludeBiomes").forGetter(FishSpawnBiomeModifier::excludeBiomes),
-                    Biome.LIST_CODEC.listOf().fieldOf("andIncludeBiomes").forGetter(FishSpawnBiomeModifier::andIncludeBiomes),
+                    Codec.BOOL.fieldOf("and").forGetter(FishSpawnBiomeModifier::and),
                     MobSpawnSettings.SpawnerData.CODEC.fieldOf("spawn").forGetter(FishSpawnBiomeModifier::spawn)
             ).apply(builder, FishSpawnBiomeModifier::new));
         }
