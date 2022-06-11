@@ -42,7 +42,7 @@ public class AquacultureAPI {
         public static final TagKey<Item> TURTLE_EDIBLE = tag(Aquaculture.MOD_ID, "turtle_edible");
         public static final TagKey<Item> TOOLTIP = tag(Aquaculture.MOD_ID, "tooltip");
 
-        public static final TagKey<Biome> TWILIGHT = biomeTag("forge","is_twilight");
+        public static final TagKey<Biome> IS_TWILIGHT = biomeTag("forge","is_twilight");
         public static final TagKey<Biome> EMPTY = biomeTag("aquaculture","is_twilight");
 
         public static TagKey<Item> tag(String modID, String name) {
