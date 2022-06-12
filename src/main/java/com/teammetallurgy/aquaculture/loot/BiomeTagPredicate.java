@@ -17,7 +17,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class BiomeTagPredicate {
     private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, Lists.newArrayList(), Lists.newArrayList(), false);
-    private static final HashMap<CheckType, List<ResourceLocation>> CACHE = new HashMap<>();
+    private static final HashMap<CheckType, List<Holder<Biome>>> CACHE = new HashMap<>();
     public static final List<TagKey<Biome>> INVALID_TYPES = Arrays.asList(BiomeTags.IS_NETHER, BiomeTags.IS_END, Tags.Biomes.IS_VOID);
     private final MinMaxBounds.Doubles x;
     private final MinMaxBounds.Doubles y;
@@ -52,21 +51,24 @@ public class BiomeTagPredicate {
             return false;
         } else {
             BlockPos pos = new BlockPos(x, y, z);
-            Biome biome = serverLevel.getBiome(pos).value();
-            Registry<Biome> biomeRegistry = serverLevel.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
-            Optional<ResourceKey<Biome>> resourceKey = biomeRegistry.getResourceKey(biome);
-            if (resourceKey.isPresent()) {
-                Optional<Holder<Biome>> biomeHolder = biomeRegistry.getHolder(resourceKey.get());
-                if (biomeHolder.isPresent()) {
-                    CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
+            if (serverLevel.isLoaded(pos)) {
+                Biome biome = serverLevel.getBiome(pos).value();
+                Registry<Biome> biomeRegistry = serverLevel.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
+                Optional<ResourceKey<Biome>> resourceKey = biomeRegistry.getResourceKey(biome);
 
-                    List<Holder<Biome>> validBiomes = getValidBiomes(serverLevel, checkType);
-                    /*List<ResourceLocation> validBiomes = CACHE.get(checkType); //TODO Uncomment. Temporarily commented out for easier debugging. Might need fixing too
-                    if (validBiomes == null) {
-                        validBiomes = getValidBiomes(serverLevel, checkType);
-                        CACHE.put(checkType, validBiomes);
-                    }*/
-                    return validBiomes.contains(biomeHolder.get());
+                System.out.println(biomeRegistry.getKey(biome));
+                if (resourceKey.isPresent()) {
+                    Optional<Holder<Biome>> biomeHolder = biomeRegistry.getHolder(resourceKey.get());
+                    if (biomeHolder.isPresent()) {
+                        CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
+
+                        List<Holder<Biome>> validBiomes = CACHE.get(checkType);
+                        if (validBiomes == null) {
+                            validBiomes = getValidBiomes(serverLevel, checkType);
+                            CACHE.put(checkType, validBiomes);
+                        }
+                        return validBiomes.contains(biomeHolder.get());
+                    }
                 }
             }
             return false;
@@ -117,9 +119,9 @@ public class BiomeTagPredicate {
                 }
             }
         }
-        for (Holder<Biome> biomeHolder : biomes) {
+        /*for (Holder<Biome> biomeHolder : biomes) {
             System.out.println(biomeHolder.unwrapKey().get());
-        }
+        }*/
         return biomes;
     }
 
@@ -219,10 +221,8 @@ public class BiomeTagPredicate {
         public static CheckType getOrCreate(List<TagKey<Biome>> include, List<TagKey<Biome>> exclude, boolean and) {
             CheckType checkType = BY_NAME.get(Objects.hash(include, exclude, and));
             if (checkType == null) {
-                //System.out.println("Check type null");
                 checkType = new CheckType(include, exclude, and);
             }
-            //checkType.include.forEach(System.out::println);
             return checkType;
         }
 
