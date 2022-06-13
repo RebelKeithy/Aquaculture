@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.item.crafting;
 
-import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
@@ -22,8 +21,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class FishFilletRecipe extends CustomRecipe {
     public static final DeferredRegister<RecipeSerializer<?>> IRECIPE_SERIALIZERS_DEFERRED = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Aquaculture.MOD_ID);
@@ -42,7 +41,7 @@ public class FishFilletRecipe extends CustomRecipe {
     @Override
     public boolean matches(@Nonnull CraftingContainer craftingInventory, @Nonnull Level world) {
         ItemStack stack = ItemStack.EMPTY;
-        List<ItemStack> list = Lists.newArrayList();
+        List<ItemStack> list = new ArrayList<>();
 
         for (int i = 0; i < craftingInventory.getContainerSize(); ++i) {
             ItemStack slotStack = craftingInventory.getItem(i);

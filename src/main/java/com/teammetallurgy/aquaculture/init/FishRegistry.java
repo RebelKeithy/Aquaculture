@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.init;
 
-import com.google.common.collect.Lists;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
@@ -33,8 +32,8 @@ import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FishRegistry {
-    public static List<RegistryObject<EntityType<AquaFishEntity>>> fishEntities = Lists.newArrayList();
-    public static List<RegistryObject<EntityType<FishMountEntity>>> fishMounts = Lists.newArrayList();
+    public static List<RegistryObject<EntityType<AquaFishEntity>>> fishEntities = new ArrayList<>();
+    public static List<RegistryObject<EntityType<FishMountEntity>>> fishMounts = new ArrayList<>();
 
     public static RegistryObject<Item> registerFishMount(@Nonnull String name) {
         RegistryObject<EntityType<FishMountEntity>> fishMount = AquaEntities.ENTITY_DEFERRED.register(name, () -> EntityType.Builder.<FishMountEntity>of(FishMountEntity::new, MobCategory.MISC)

@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.loot;
 
-import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
@@ -19,14 +18,13 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class BiomeTagPredicate {
-    private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, Lists.newArrayList(), Lists.newArrayList(), false);
+    private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, new ArrayList<>(), new ArrayList<>(), false);
     private static final HashMap<CheckType, List<Holder<Biome>>> CACHE = new HashMap<>();
     public static final List<TagKey<Biome>> INVALID_TYPES = Arrays.asList(BiomeTags.IS_NETHER, BiomeTags.IS_END, Tags.Biomes.IS_VOID);
     private final MinMaxBounds.Doubles x;
@@ -43,6 +41,9 @@ public class BiomeTagPredicate {
         this.include = include;
         this.exclude = exclude;
         this.and = and;
+        include.forEach(t -> {
+            System.out.println("CONSTRUCTOR : " + t);
+        });
     }
 
     public boolean test(ServerLevel serverLevel, float x, float y, float z) {
@@ -65,7 +66,7 @@ public class BiomeTagPredicate {
                     if (biomeHolder.isPresent()) {
                         CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
 
-                        CACHE.clear();
+                        CACHE.clear(); //TODO Remove when everything is fully working
                         List<Holder<Biome>> validBiomes = CACHE.get(checkType);
                         if (validBiomes == null) {
                             validBiomes = getValidBiomes(serverLevel, checkType);
@@ -89,12 +90,7 @@ public class BiomeTagPredicate {
     }
 
     public static List<Holder<Biome>> getValidBiomes(ServerLevel serverLevel, List<TagKey<Biome>> includeList, List<TagKey<Biome>> excludeList, boolean and) {
-        for (TagKey<Biome> test : includeList) {
-            System.out.println("TEST: " + test);
-        }
-
-
-        List<Holder<Biome>> biomes = Lists.newArrayList();
+        List<Holder<Biome>> biomes = new ArrayList<>();
         Optional<? extends Registry<Biome>> optionalBiomeRegistry = serverLevel.registryAccess().registry(Registry.BIOME_REGISTRY);
         if (optionalBiomeRegistry.isPresent()) {
             Registry<Biome> biomeRegistry = optionalBiomeRegistry.get();
@@ -106,24 +102,22 @@ public class BiomeTagPredicate {
             }
 
             if (!includeList.isEmpty()) {
-                List<Holder<Biome>> addBiomes = Lists.newArrayList();
+                List<Holder<Biome>> addBiomes = new ArrayList<>();
                 for (TagKey<Biome> tagKey : includeList) {
                     getBiomeFromTag(biomeRegistry, tagKey).forEach(addBiomes::add);
                 }
 
-                if (and) {
-                    for (TagKey<Biome> tagKey : includeList) {
-                        List<Holder<Biome>> tagKeyList = Lists.newArrayList();
+                if (and) { //TODO
+                    /*for (TagKey<Biome> tagKey : includeList) {
+                        List<Holder<Biome>> tagKeyList = new ArrayList<>();
                         getBiomeFromTag(biomeRegistry, tagKey).forEach(tagKeyList::add);
 
                         //tagKeyList.forEach(b -> System.out.println("tag key list: " + biomeRegistry.getKey(b.value())));
                         addBiomes.removeIf(biomeHolder -> !tagKeyList.contains(biomeHolder));
-                    }
-                    //addBiomes.forEach(b -> System.out.println("Add biomes: " + biomeRegistry.getKey(b.value())));
+                    }*/
                 }
 
                 if (includeList.stream().noneMatch(INVALID_TYPES::contains)) { //Exclude invalid tags, as long as they're not specified in include
-                    System.out.println("INVALID TYPES");
                     excludeList.addAll(INVALID_TYPES);
                 }
                 for (Holder<Biome> addBiome : addBiomes) {
@@ -140,9 +134,6 @@ public class BiomeTagPredicate {
                     });
                 }
             }
-            getBiomeFromTag(biomeRegistry, BiomeTags.IS_OCEAN).forEach(biomeHolder -> {
-                System.out.println("TEST SHIT: " + biomeRegistry.getKey(biomeHolder.get()));
-            });
         }
         return biomes;
     }
@@ -185,7 +176,7 @@ public class BiomeTagPredicate {
             MinMaxBounds.Doubles x = MinMaxBounds.Doubles.fromJson(position.get("x"));
             MinMaxBounds.Doubles y = MinMaxBounds.Doubles.fromJson(position.get("y"));
             MinMaxBounds.Doubles z = MinMaxBounds.Doubles.fromJson(position.get("z"));
-            List<TagKey<Biome>> include = Lists.newArrayList();
+            List<TagKey<Biome>> include = new ArrayList<>();
             if (location.has("include")) {
                 JsonArray includeArray = GsonHelper.getAsJsonArray(location, "include");
                 for (int entry = 0; entry < includeArray.size(); entry++) {
@@ -195,7 +186,7 @@ public class BiomeTagPredicate {
                 }
             }
 
-            List<TagKey<Biome>> exclude = Lists.newArrayList();
+            List<TagKey<Biome>> exclude = new ArrayList<>();
             if (location.has("exclude")) {
                 JsonArray excludeArray = GsonHelper.getAsJsonArray(location, "exclude");
                 for (int entry = 0; entry < excludeArray.size(); entry++) {
