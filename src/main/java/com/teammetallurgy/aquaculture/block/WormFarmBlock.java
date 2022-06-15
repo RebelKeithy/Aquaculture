@@ -30,7 +30,6 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class WormFarmBlock extends ComposterBlock {
 

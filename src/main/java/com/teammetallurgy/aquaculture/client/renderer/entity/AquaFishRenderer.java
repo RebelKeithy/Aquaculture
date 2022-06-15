@@ -8,18 +8,15 @@ import com.teammetallurgy.aquaculture.client.renderer.entity.layers.JellyfishLay
 import com.teammetallurgy.aquaculture.client.renderer.entity.model.*;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
-import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.TropicalFishModelB;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 

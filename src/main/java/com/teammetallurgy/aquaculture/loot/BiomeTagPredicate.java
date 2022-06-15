@@ -4,8 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
-import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -66,11 +64,6 @@ public class BiomeTagPredicate {
                         if (validBiomes == null) {
                             validBiomes = getValidBiomes(serverLevel, checkType);
                             CACHE.put(checkType, validBiomes);
-                        }
-                        if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
-                            if (validBiomes.contains(biomeHolder.get())) {
-                                validBiomes.forEach(v -> Aquaculture.LOG.info("Valid Biome: " + biomeRegistry.getKey(v.get())));
-                            }
                         }
                         return validBiomes.contains(biomeHolder.get());
                     }

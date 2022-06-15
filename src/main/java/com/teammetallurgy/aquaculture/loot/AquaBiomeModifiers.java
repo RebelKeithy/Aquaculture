@@ -20,7 +20,8 @@ import java.util.List;
 public class AquaBiomeModifiers {
     public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS_DEFERRED = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
 
-    public record MobSpawnBiomeModifier(HolderSet<Biome> includeList, HolderSet<Biome> excludeList, MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
+    public record MobSpawnBiomeModifier(HolderSet<Biome> includeList, HolderSet<Biome> excludeList,
+                                        MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
         private static final RegistryObject<Codec<? extends BiomeModifier>> SERIALIZER = RegistryObject.create(new ResourceLocation(Aquaculture.MOD_ID, "mob_spawn_serializer"), ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
 
         @Override
@@ -44,7 +45,8 @@ public class AquaBiomeModifiers {
         }
     }
 
-    public record FishSpawnBiomeModifier(List<HolderSet<Biome>> includeBiomes, List<HolderSet<Biome>> excludeBiomes, boolean and, MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
+    public record FishSpawnBiomeModifier(List<HolderSet<Biome>> includeBiomes, List<HolderSet<Biome>> excludeBiomes,
+                                         boolean and, MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
         private static final RegistryObject<Codec<? extends BiomeModifier>> SERIALIZER = RegistryObject.create(new ResourceLocation(Aquaculture.MOD_ID, "fish_spawn_serializer"), ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
 
         @Override
@@ -83,10 +85,10 @@ public class AquaBiomeModifiers {
         }
 
         private void debugOutput(Holder<Biome> biomeHolder, String s) {
-            /*if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
+            if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
                 Aquaculture.LOG.info("Fish: " + ForgeRegistries.ENTITIES.getKey(spawn.type));
                 Aquaculture.LOG.info(s + ": " + biomeHolder.unwrapKey().get().location());
-            }*/
+            }
         }
 
         @Override
