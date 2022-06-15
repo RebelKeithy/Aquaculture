@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class BiomeTagPredicate {
     private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, new ArrayList<>(), new ArrayList<>(), false);
-    private static final HashMap<CheckType, List<Holder<Biome>>> CACHE = new HashMap<>();
+    private static final HashMap<CheckType, Set<Holder<Biome>>> CACHE = new HashMap<>();
     public static final List<TagKey<Biome>> INVALID_TYPES = Arrays.asList(BiomeTags.IS_NETHER, BiomeTags.IS_END, Tags.Biomes.IS_VOID);
     private final MinMaxBounds.Doubles x;
     private final MinMaxBounds.Doubles y;
@@ -41,9 +41,6 @@ public class BiomeTagPredicate {
         this.include = include;
         this.exclude = exclude;
         this.and = and;
-        include.forEach(t -> {
-            System.out.println("CONSTRUCTOR : " + t);
-        });
     }
 
     public boolean test(ServerLevel serverLevel, float x, float y, float z) {
@@ -60,14 +57,12 @@ public class BiomeTagPredicate {
                 Registry<Biome> biomeRegistry = serverLevel.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
                 Optional<ResourceKey<Biome>> resourceKey = biomeRegistry.getResourceKey(biome);
 
-                //System.out.println(biomeRegistry.getKey(biome));
                 if (resourceKey.isPresent()) {
                     Optional<Holder<Biome>> biomeHolder = biomeRegistry.getHolder(resourceKey.get());
                     if (biomeHolder.isPresent()) {
                         CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
 
-                        CACHE.clear(); //TODO Remove when everything is fully working
-                        List<Holder<Biome>> validBiomes = CACHE.get(checkType);
+                        Set<Holder<Biome>> validBiomes = CACHE.get(checkType);
                         if (validBiomes == null) {
                             validBiomes = getValidBiomes(serverLevel, checkType);
                             CACHE.put(checkType, validBiomes);
@@ -85,53 +80,43 @@ public class BiomeTagPredicate {
         }
     }
 
-    public static List<Holder<Biome>> getValidBiomes(ServerLevel serverLevel, CheckType checkType) {
+    public static Set<Holder<Biome>> getValidBiomes(ServerLevel serverLevel, CheckType checkType) {
         return getValidBiomes(serverLevel, checkType.getInclude(), checkType.getExclude(), checkType.isAnd());
     }
 
-    public static List<Holder<Biome>> getValidBiomes(ServerLevel serverLevel, List<TagKey<Biome>> includeList, List<TagKey<Biome>> excludeList, boolean and) {
-        List<Holder<Biome>> biomes = new ArrayList<>();
+    public static Set<Holder<Biome>> getValidBiomes(ServerLevel serverLevel, List<TagKey<Biome>> includeList, List<TagKey<Biome>> excludeList, boolean and) {
+        Set<Holder<Biome>> biomes = new HashSet<>();
         Optional<? extends Registry<Biome>> optionalBiomeRegistry = serverLevel.registryAccess().registry(Registry.BIOME_REGISTRY);
         if (optionalBiomeRegistry.isPresent()) {
             Registry<Biome> biomeRegistry = optionalBiomeRegistry.get();
 
             if (includeList.isEmpty() && !excludeList.isEmpty()) { //Add all tags, when only excluding biomes
-                System.out.println("EXCLUDE ONLY");
                 includeList.addAll(biomeRegistry.getTagNames().collect(Collectors.toSet()));
                 excludeList.addAll(INVALID_TYPES);
             }
 
-            if (!includeList.isEmpty()) {
-                List<Holder<Biome>> addBiomes = new ArrayList<>();
+            if (and) {
                 for (TagKey<Biome> tagKey : includeList) {
-                    getBiomeFromTag(biomeRegistry, tagKey).forEach(addBiomes::add);
-                }
+                    getBiomeFromTag(biomeRegistry, tagKey).forEach(a -> {
+                        List<TagKey<Biome>> tags = a.getTagKeys().collect(Collectors.toList());
+                        int beforeTagCount = tags.size();
+                        tags.removeAll(includeList);
+                        int afterTagCount = tags.size();
 
-                if (and) { //TODO
-                    /*for (TagKey<Biome> tagKey : includeList) {
-                        List<Holder<Biome>> tagKeyList = new ArrayList<>();
-                        getBiomeFromTag(biomeRegistry, tagKey).forEach(tagKeyList::add);
-
-                        //tagKeyList.forEach(b -> System.out.println("tag key list: " + biomeRegistry.getKey(b.value())));
-                        addBiomes.removeIf(biomeHolder -> !tagKeyList.contains(biomeHolder));
-                    }*/
+                        if (beforeTagCount - afterTagCount == includeList.size()) {
+                            biomes.add(a);
+                        }
+                    });
                 }
-
-                if (includeList.stream().noneMatch(INVALID_TYPES::contains)) { //Exclude invalid tags, as long as they're not specified in include
-                    excludeList.addAll(INVALID_TYPES);
-                }
-                for (Holder<Biome> addBiome : addBiomes) {
-                    if (!biomes.contains(addBiome)) {
-                        biomes.add(addBiome);
-                    }
+            } else {
+                for (TagKey<Biome> tagKey : includeList) {
+                    getBiomeFromTag(biomeRegistry, tagKey).forEach(biomes::add);
                 }
             }
+
             if (!excludeList.isEmpty()) {
                 for (TagKey<Biome> tagKey : excludeList) {
-                    getBiomeFromTag(biomeRegistry, tagKey).forEach(b -> {
-                        System.out.println("Exclude: " + biomeRegistry.getKey(b.value()));
-                        biomes.remove(b);
-                    });
+                    getBiomeFromTag(biomeRegistry, tagKey).forEach(biomes::remove);
                 }
             }
         }
