@@ -106,7 +106,7 @@ public class Hook {
     }
 
     public SoundEvent getCatchSound() {
-        return this.catchSound.get();
+        return this.catchSound != null ? this.catchSound.get() : null;
     }
 
     public List<TagKey<Fluid>> getFluids() {
