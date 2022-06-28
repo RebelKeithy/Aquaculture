@@ -21,6 +21,7 @@ import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nonnull;
 
@@ -88,7 +89,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
 
             int hand = angler.getMainArm() == HumanoidArm.RIGHT ? 1 : -1;
             ItemStack heldMain = angler.getMainHandItem();
-            if (!(heldMain.getItem() instanceof FishingRodItem)) {
+            if (!heldMain.canPerformAction(ToolActions.FISHING_ROD_CAST)) {
                 hand = -hand;
             }
 

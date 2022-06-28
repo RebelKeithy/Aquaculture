@@ -1,4 +1,3 @@
-/*
 package com.teammetallurgy.aquaculture.integration.jei;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
@@ -6,7 +5,7 @@ import com.teammetallurgy.aquaculture.integration.jei.recipes.FilletKnifeRecipeM
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaRecipeCategoryUid;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.resources.ResourceLocation;
 
@@ -24,7 +23,7 @@ public class JEIIntegration implements IModPlugin {
     @Override
     public void registerRecipes(@Nonnull IRecipeRegistration registration) {
         if (AquaConfig.BASIC_OPTIONS.showFilletRecipesInJEI.get()) {
-            registration.addRecipes(FilletKnifeRecipeMaker.createFilletKnifeRecipes(), VanillaRecipeCategoryUid.CRAFTING);
+            registration.addRecipes(RecipeTypes.CRAFTING, FilletKnifeRecipeMaker.createFilletKnifeRecipes());
         }
     }
-}*/
+}

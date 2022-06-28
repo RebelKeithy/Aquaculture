@@ -31,7 +31,6 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
-import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
@@ -42,6 +41,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.items.ItemStackHandler;
@@ -204,8 +204,8 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
     protected boolean shouldStopFishing(Player player) {
         ItemStack mainHand = player.getMainHandItem();
         ItemStack offHand = player.getOffhandItem();
-        boolean isMainHandRod = mainHand.getItem() instanceof FishingRodItem;
-        boolean isOffHandRod = mainHand.getItem() instanceof FishingRodItem;
+        boolean isMainHandRod = mainHand.canPerformAction(ToolActions.FISHING_ROD_CAST);
+        boolean isOffHandRod = offHand.canPerformAction(ToolActions.FISHING_ROD_CAST);
         if (!player.isRemoved() && player.isAlive() && (isMainHandRod || isOffHandRod) && !(this.distanceToSqr(player) > 1024.0D)) {
             return false;
         } else {
