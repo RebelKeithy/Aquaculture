@@ -70,7 +70,7 @@ public class FishRegistry {
 
     @SubscribeEvent
     public static void registerFishies(RegisterEvent event) {
-        if (event.getRegistryKey().equals(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS)) {
+        if (event.getRegistryKey().equals(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS)) {
             Aquaculture.BIOME_TAG_CHECK = LootItemConditions.register(new ResourceLocation(Aquaculture.MOD_ID, "biome_tag_check").toString(), new BiomeTagCheck.BiomeTagCheckSerializer());
         }
     }
@@ -87,7 +87,7 @@ public class FishRegistry {
             Ingredient catBreedingItems = Cat.TEMPT_INGREDIENT;
             Ingredient ocelotBreedingItems = Ocelot.TEMPT_INGREDIENT;
             List<ItemStack> aquaFish = new ArrayList<>();
-            fishEntities.forEach(f -> aquaFish.add(new ItemStack(ForgeRegistries.ITEMS.getValue(ForgeRegistries.ENTITIES.getKey(f.get())))));
+            fishEntities.forEach(f -> aquaFish.add(new ItemStack(ForgeRegistries.ITEMS.getValue(ForgeRegistries.ENTITY_TYPES.getKey(f.get())))));
             aquaFish.removeIf(p -> p.getItem().equals(AquaItems.JELLYFISH.get()));
 
             Cat.TEMPT_INGREDIENT = StackHelper.mergeIngredient(catBreedingItems, StackHelper.ingredientFromStackList(aquaFish));

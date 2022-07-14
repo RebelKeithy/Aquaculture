@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class AquaGuis {
-    public static final DeferredRegister<MenuType<?>> MENU_DEFERRED = DeferredRegister.create(ForgeRegistries.CONTAINERS, Aquaculture.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> MENU_DEFERRED = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Aquaculture.MOD_ID);
     public static final RegistryObject<MenuType<TackleBoxContainer>> TACKLE_BOX = register(() -> IForgeMenuType.create((windowID, inv, data) -> {
         BlockPos pos = data.readBlockPos();
         return new TackleBoxContainer(windowID, pos, inv);

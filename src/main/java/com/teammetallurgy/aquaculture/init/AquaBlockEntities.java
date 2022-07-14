@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class AquaBlockEntities {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_DEFERRED = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Aquaculture.MOD_ID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_DEFERRED = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Aquaculture.MOD_ID);
     public static final RegistryObject<BlockEntityType<NeptunesBountyTileEntity>> NEPTUNES_BOUNTY = register("neptunes_bounty", () -> BlockEntityType.Builder.of(NeptunesBountyTileEntity::new, AquaBlocks.NEPTUNES_BOUNTY.get()));
     public static final RegistryObject<BlockEntityType<TackleBoxTileEntity>> TACKLE_BOX = register("tackle_box", () -> BlockEntityType.Builder.of(TackleBoxTileEntity::new, AquaBlocks.TACKLE_BOX.get()));
 

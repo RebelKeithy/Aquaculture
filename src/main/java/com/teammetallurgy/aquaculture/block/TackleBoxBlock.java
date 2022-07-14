@@ -103,7 +103,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
                         world.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.6F, 0.8F);
                     }
                 } else {
-                    NetworkHooks.openGui(serverPlayer, container, pos);
+                    NetworkHooks.openScreen(serverPlayer, container, pos);
                 }
             }
             return InteractionResult.SUCCESS;

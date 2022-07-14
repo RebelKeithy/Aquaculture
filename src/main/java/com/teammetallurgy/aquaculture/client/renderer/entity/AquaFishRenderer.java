@@ -64,7 +64,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
     @Override
     @Nonnull
     public ResourceLocation getTextureLocation(@Nonnull AquaFishEntity fishEntity) {
-        ResourceLocation location = ForgeRegistries.ENTITIES.getKey(fishEntity.getType());
+        ResourceLocation location = ForgeRegistries.ENTITY_TYPES.getKey(fishEntity.getType());
         if (location != null) {
             return new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/fish/" + location.getPath() + ".png");
         }
@@ -107,7 +107,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
 
     @Override
     protected void scale(AquaFishEntity fishEntity, @Nonnull PoseStack matrixStack, float partialTickTime) {
-        ResourceLocation location = ForgeRegistries.ENTITIES.getKey(fishEntity.getType());
+        ResourceLocation location = ForgeRegistries.ENTITY_TYPES.getKey(fishEntity.getType());
         float scale = 0.0F;
         if (location != null) {
             switch (location.getPath()) {

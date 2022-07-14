@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AquaEntities {
-    public static final DeferredRegister<EntityType<?>> ENTITY_DEFERRED = DeferredRegister.create(ForgeRegistries.ENTITIES, Aquaculture.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_DEFERRED = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Aquaculture.MOD_ID);
     public static final RegistryObject<EntityType<AquaFishingBobberEntity>> BOBBER = register("bobber", () -> EntityType.Builder.<AquaFishingBobberEntity>createNothing(MobCategory.MISC)
             .noSave()
             .noSummon()

@@ -60,7 +60,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ForgeRegistries.ENTITIES.getKey(this.getType()).toString() + "_bucket")));
+        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ForgeRegistries.ENTITY_TYPES.getKey(this.getType()).toString() + "_bucket")));
     }
 
     @Override
@@ -96,7 +96,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     public void playerTouch(@Nonnull Player player) {
         super.playerTouch(player);
-        if (Objects.equals(ForgeRegistries.ENTITIES.getKey(this.getType()), new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))) {
+        if (Objects.equals(ForgeRegistries.ENTITY_TYPES.getKey(this.getType()), new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))) {
             if (this.isAlive()) {
                 if (this.distanceToSqr(player) < 1.0D && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
                     this.playSound(AquaSounds.JELLYFISH_COLLIDE.get(), 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
