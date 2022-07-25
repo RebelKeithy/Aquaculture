@@ -74,7 +74,7 @@ public class Aquaculture {
     }
 
     private void setupClient(FMLClientSetupEvent event) {
-        ClientHandler.setupClient();
+        event.enqueueWork(ClientHandler::setupClient);
     }
 
     public void registerDeferredRegistries(IEventBus modBus) {
