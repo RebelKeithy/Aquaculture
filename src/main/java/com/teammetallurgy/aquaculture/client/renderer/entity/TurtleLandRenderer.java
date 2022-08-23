@@ -23,9 +23,9 @@ public class TurtleLandRenderer extends MobRenderer<TurtleLandEntity, TurtleLand
     @Override
     @Nonnull
     public ResourceLocation getTextureLocation(@Nonnull TurtleLandEntity turtle) {
-        if (AquaEntities.ARRAU_TURTLE.equals(turtle.getType())) {
+        if (AquaEntities.ARRAU_TURTLE.get().equals(turtle.getType())) {
             return ARRAU_TURTLE;
-        } else if (AquaEntities.STARSHELL_TURTLE.equals(turtle.getType())) {
+        } else if (AquaEntities.STARSHELL_TURTLE.get().equals(turtle.getType())) {
             return STARSHELL_TURTLE;
         } else {
             return BOX_TURTLE;
