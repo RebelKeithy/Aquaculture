@@ -7,6 +7,6 @@
     "maxCount": 1
   },
   "includeBiomes": ["#aquaculture:empty"],
-  "excludeBiomes": ["#minecraft:is_ocean", "#forge:is_beach"],
+  "excludeBiomes": ["#minecraft:is_ocean", "#minecraft:is_beach"],
   "and": false
 }
