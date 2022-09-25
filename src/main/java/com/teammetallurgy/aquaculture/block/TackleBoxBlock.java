@@ -1,6 +1,6 @@
 package com.teammetallurgy.aquaculture.block;
 
-import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
+import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.core.BlockPos;
@@ -41,6 +41,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.network.NetworkHooks;
@@ -62,7 +64,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
 
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-        return new TackleBoxTileEntity(pos, state);
+        return new TackleBoxBlockEntity(pos, state);
     }
 
     @Override
@@ -122,8 +124,8 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     public void setPlacedBy(@Nonnull Level world, @Nonnull BlockPos pos, @Nonnull BlockState state, LivingEntity placer, @Nonnull ItemStack stack) {
         if (stack.hasCustomHoverName()) {
             BlockEntity tileentity = world.getBlockEntity(pos);
-            if (tileentity instanceof TackleBoxTileEntity) {
-                ((TackleBoxTileEntity) tileentity).setCustomName(stack.getHoverName());
+            if (tileentity instanceof TackleBoxBlockEntity) {
+                ((TackleBoxBlockEntity) tileentity).setCustomName(stack.getHoverName());
             }
         }
     }
@@ -151,8 +153,8 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     @Override
     public int getAnalogOutputSignal(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos) {
         BlockEntity tileEntity = world.getBlockEntity(pos);
-        if (tileEntity instanceof TackleBoxTileEntity) {
-            Optional<Integer> redstone = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
+        if (tileEntity instanceof TackleBoxBlockEntity) {
+            Optional<Integer> redstone = tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
             return redstone.orElse(0);
         }
         return 0;
@@ -198,7 +200,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
 
-        if (blockEntity instanceof TackleBoxTileEntity) {
+        if (blockEntity instanceof TackleBoxBlockEntity) {
             ItemStack tackleBox = new ItemStack(this);
             blockEntity.saveToItem(tackleBox);
             Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), tackleBox);
@@ -226,21 +228,21 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     private void dropInventory(Level level, BlockPos pos) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity != null) {
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> StackHelper.dropInventory(level, pos, handler));
+            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(handler -> StackHelper.dropInventory(level, pos, handler));
         }
     }
 
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> blockEntityType) {
-        return level.isClientSide ? createTickerHelper(blockEntityType, AquaBlockEntities.TACKLE_BOX.get(), TackleBoxTileEntity::lidAnimateTick) : null;
+        return level.isClientSide ? createTickerHelper(blockEntityType, AquaBlockEntities.TACKLE_BOX.get(), TackleBoxBlockEntity::lidAnimateTick) : null;
     }
 
     @Override
     public void tick(@Nonnull BlockState state, ServerLevel serverLevel, @Nonnull BlockPos pos, @Nonnull RandomSource rand) {
         BlockEntity blockEntity = serverLevel.getBlockEntity(pos);
-        if (blockEntity instanceof TackleBoxTileEntity) {
-            ((TackleBoxTileEntity) blockEntity).recheckOpen();
+        if (blockEntity instanceof TackleBoxBlockEntity) {
+            ((TackleBoxBlockEntity) blockEntity).recheckOpen();
         }
     }
 }

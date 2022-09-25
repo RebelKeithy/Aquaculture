@@ -1,41 +1,53 @@
-package com.teammetallurgy.aquaculture.block.tileentity;
+package com.teammetallurgy.aquaculture.block.blockentity;
 
+import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
 import com.teammetallurgy.aquaculture.inventory.container.TackleBoxContainer;
+import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
+import com.teammetallurgy.aquaculture.item.BaitItem;
+import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.ChestLidController;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TackleBoxTileEntity extends IItemHandlerTEBase implements MenuProvider {
+public class TackleBoxBlockEntity extends IItemHandlerBEBase implements MenuProvider {
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         @Override
         protected void onOpen(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state) {
-            TackleBoxTileEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_OPEN.get());
+            TackleBoxBlockEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_OPEN.get());
         }
 
         @Override
         protected void onClose(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state) {
-            TackleBoxTileEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_CLOSE.get());
+            TackleBoxBlockEntity.playSound(level, pos, state, AquaSounds.TACKLE_BOX_CLOSE.get());
         }
 
         @Override
         protected void openerCountChanged(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, int i, int i1) {
-            TackleBoxTileEntity.this.signalOpenCount(level, pos, state, i, i1);
+            TackleBoxBlockEntity.this.signalOpenCount(level, pos, state, i, i1);
         }
 
         @Override
@@ -45,7 +57,7 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements MenuProvi
     };
     private final ChestLidController lidController = new ChestLidController();
 
-    public TackleBoxTileEntity(BlockPos pos, BlockState state) {
+    public TackleBoxBlockEntity(BlockPos pos, BlockState state) {
         super(AquaBlockEntities.TACKLE_BOX.get(), pos, state);
     }
 
@@ -58,7 +70,24 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements MenuProvi
                 super.onContentsChanged(slot);
                 setChanged();
             }
+
+            @Override
+            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                Item item = stack.getItem();
+                if (slot == 0) {
+                 return item instanceof AquaFishingRodItem;
+                } else {
+                    return canBePutInTackleBox(stack);
+                }
+            }
         };
+    }
+
+    public static boolean canBePutInTackleBox(@Nonnull ItemStack stack) {
+        Item item = stack.getItem();
+        boolean isDyeable = item instanceof DyeableLeatherItem;
+        return stack.is(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem ||
+                stack.is(AquacultureAPI.Tags.FISHING_LINE) && isDyeable || stack.is(AquacultureAPI.Tags.BOBBER) && isDyeable;
     }
 
     @Nullable
@@ -67,7 +96,7 @@ public class TackleBoxTileEntity extends IItemHandlerTEBase implements MenuProvi
         return new TackleBoxContainer(windowID, worldPosition, playerInventory);
     }
 
-    public static void lidAnimateTick(Level level, BlockPos pos, BlockState state, TackleBoxTileEntity tackleBox) {
+    public static void lidAnimateTick(Level level, BlockPos pos, BlockState state, TackleBoxBlockEntity tackleBox) {
         tackleBox.lidController.tickLid();
     }
 

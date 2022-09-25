@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.block.tileentity;
+package com.teammetallurgy.aquaculture.block.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -17,11 +18,11 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable {
+public abstract class IItemHandlerBEBase extends BlockEntity implements Nameable {
     private Component customName;
     private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createItemHandler);
 
-    public IItemHandlerTEBase(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
+    public IItemHandlerBEBase(BlockEntityType<?> tileEntityType, BlockPos pos, BlockState state) {
         super(tileEntityType, pos, state);
     }
 
@@ -53,7 +54,7 @@ public abstract class IItemHandlerTEBase extends BlockEntity implements Nameable
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (!this.remove && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (!this.remove && cap == ForgeCapabilities.ITEM_HANDLER) {
             return handler.cast();
         }
         return super.getCapability(cap, side);

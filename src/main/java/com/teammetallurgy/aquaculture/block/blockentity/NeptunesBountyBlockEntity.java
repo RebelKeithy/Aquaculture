@@ -1,4 +1,4 @@
-package com.teammetallurgy.aquaculture.block.tileentity;
+package com.teammetallurgy.aquaculture.block.blockentity;
 
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -8,9 +8,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
 
-public class NeptunesBountyTileEntity extends ChestBlockEntity {
+public class NeptunesBountyBlockEntity extends ChestBlockEntity {
 
-    public NeptunesBountyTileEntity(BlockPos pos, BlockState state) {
+    public NeptunesBountyBlockEntity(BlockPos pos, BlockState state) {
         super(AquaBlockEntities.NEPTUNES_BOUNTY.get(), pos, state);
     }
 

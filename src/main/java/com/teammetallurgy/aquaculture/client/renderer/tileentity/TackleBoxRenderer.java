@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
-import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
+import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nonnull;
 
-public class TackleBoxRenderer <T extends TackleBoxTileEntity> implements BlockEntityRenderer<T> {
+public class TackleBoxRenderer <T extends TackleBoxBlockEntity> implements BlockEntityRenderer<T> {
     private static final ResourceLocation TACKLE_BOX_TEXTURE = new ResourceLocation(Aquaculture.MOD_ID, "textures/entity/tileentity/tackle_box.png");
     private static final RenderType TACKLE_BOX_RENDER = RenderType.entityCutout(TACKLE_BOX_TEXTURE);
     private final ModelPart base;

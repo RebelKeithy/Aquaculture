@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.inventory.container;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
-import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
+import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import com.teammetallurgy.aquaculture.init.AquaGuis;
 import com.teammetallurgy.aquaculture.inventory.container.slot.SlotFishingRod;
@@ -16,16 +16,15 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.DyeableLeatherItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class TackleBoxContainer extends AbstractContainerMenu {
-    public TackleBoxTileEntity tackleBox;
+    public TackleBoxBlockEntity tackleBox;
     private int rows = 4;
     private int collumns = 4;
     public Slot slotHook;
@@ -35,10 +34,10 @@ public class TackleBoxContainer extends AbstractContainerMenu {
 
     public TackleBoxContainer(int windowID, BlockPos pos, Inventory playerInventory) {
         super(AquaGuis.TACKLE_BOX.get(), windowID);
-        this.tackleBox = (TackleBoxTileEntity) playerInventory.player.level.getBlockEntity(pos);
+        this.tackleBox = (TackleBoxBlockEntity) playerInventory.player.level.getBlockEntity(pos);
         if (this.tackleBox != null) {
             this.tackleBox.startOpen(playerInventory.player);
-            this.tackleBox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+            this.tackleBox.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
                 SlotFishingRod fishingRod = (SlotFishingRod) addSlot(new SlotFishingRod(handler, 0, 117, 21));
                 this.slotHook = this.addSlot(new SlotHidable(fishingRod, 0, 106, 44) {
                     @Override
@@ -78,10 +77,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
                         this.addSlot(new SlotItemHandler(handler, 1 + row + column * collumns, 8 + row * 18, 8 + column * 18) {
                             @Override
                             public boolean mayPlace(@Nonnull ItemStack stack) {
-                                Item item = stack.getItem();
-                                boolean isDyeable = item instanceof DyeableLeatherItem;
-                                return stack.is(AquacultureAPI.Tags.TACKLE_BOX) || item instanceof HookItem || item instanceof BaitItem ||
-                                        stack.is(AquacultureAPI.Tags.FISHING_LINE) && isDyeable || stack.is(AquacultureAPI.Tags.BOBBER) && isDyeable;
+                                return TackleBoxBlockEntity.canBePutInTackleBox(stack);
                             }
                         });
                     }

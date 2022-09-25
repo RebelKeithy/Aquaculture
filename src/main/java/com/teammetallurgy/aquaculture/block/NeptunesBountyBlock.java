@@ -1,6 +1,6 @@
 package com.teammetallurgy.aquaculture.block;
 
-import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
+import com.teammetallurgy.aquaculture.block.blockentity.NeptunesBountyBlockEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -37,7 +37,7 @@ public class NeptunesBountyBlock extends ChestBlock {
 
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-        return new NeptunesBountyTileEntity(pos, state);
+        return new NeptunesBountyBlockEntity(pos, state);
     }
 
     @Override

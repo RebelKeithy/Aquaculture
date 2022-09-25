@@ -3,8 +3,8 @@ package com.teammetallurgy.aquaculture.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.teammetallurgy.aquaculture.block.NeptunesBountyBlock;
 import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
-import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
-import com.teammetallurgy.aquaculture.block.tileentity.TackleBoxTileEntity;
+import com.teammetallurgy.aquaculture.block.blockentity.NeptunesBountyBlockEntity;
+import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -33,9 +33,9 @@ public class AquaItemRenderer extends BlockEntityWithoutLevelRenderer {
         if (item instanceof BlockItem) {
             Block block = ((BlockItem) item).getBlock();
             if (block instanceof TackleBoxBlock) {
-                mc.getBlockEntityRenderDispatcher().renderItem(new TackleBoxTileEntity(BlockPos.ZERO, AquaBlocks.TACKLE_BOX.get().defaultBlockState()), matrixStack, buffer, i, i1);
+                mc.getBlockEntityRenderDispatcher().renderItem(new TackleBoxBlockEntity(BlockPos.ZERO, AquaBlocks.TACKLE_BOX.get().defaultBlockState()), matrixStack, buffer, i, i1);
             } else if (block instanceof NeptunesBountyBlock) {
-                mc.getBlockEntityRenderDispatcher().renderItem(new NeptunesBountyTileEntity(BlockPos.ZERO, AquaBlocks.NEPTUNES_BOUNTY.get().defaultBlockState()), matrixStack, buffer, i, i1);
+                mc.getBlockEntityRenderDispatcher().renderItem(new NeptunesBountyBlockEntity(BlockPos.ZERO, AquaBlocks.NEPTUNES_BOUNTY.get().defaultBlockState()), matrixStack, buffer, i, i1);
             }
         }
     }

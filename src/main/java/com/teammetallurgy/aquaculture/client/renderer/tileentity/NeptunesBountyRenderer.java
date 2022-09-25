@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.client.renderer.tileentity;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.block.tileentity.NeptunesBountyTileEntity;
+import com.teammetallurgy.aquaculture.block.blockentity.NeptunesBountyBlockEntity;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.ChestRenderer;
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import javax.annotation.Nonnull;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class NeptunesBountyRenderer extends ChestRenderer<NeptunesBountyTileEntity> {
+public class NeptunesBountyRenderer extends ChestRenderer<NeptunesBountyBlockEntity> {
     public static NeptunesBountyRenderer instance;
     private static final ResourceLocation NEPTUNES_BOUNTY = new ResourceLocation(Aquaculture.MOD_ID, "entity/tileentity/neptunes_bounty");
 
@@ -27,7 +27,7 @@ public class NeptunesBountyRenderer extends ChestRenderer<NeptunesBountyTileEnti
 
     @Override
     @Nonnull
-    protected Material getMaterial(@Nonnull NeptunesBountyTileEntity tileEntity, @Nonnull ChestType chestType) {
+    protected Material getMaterial(@Nonnull NeptunesBountyBlockEntity tileEntity, @Nonnull ChestType chestType) {
         return new Material(Sheets.CHEST_SHEET, NEPTUNES_BOUNTY);
     }
 
