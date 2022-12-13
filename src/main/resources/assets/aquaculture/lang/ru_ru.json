@@ -281,7 +281,7 @@
     "aquaculture.soul_sand_hook.tooltip.title": "Привлекательный",
     "aquaculture.soul_sand_hook.tooltip.desc": "Даёт больше времени, чтобы подсечь рыбу",
     "aquaculture.obsidian_note_hook.tooltip.title": "Сигнал поклёвки",
-    "aquaculture.obsidian_note_hook.tooltip.desc": "Проигрывает сигнал, когда рыба приближается"
+    "aquaculture.obsidian_note_hook.tooltip.desc": "Проигрывает сигнал, когда рыба приближается",
 
     "_comment": "Subtitle",
     "aquaculture.subtitles.tackle_box_open": "Ящик снастей открывается",
