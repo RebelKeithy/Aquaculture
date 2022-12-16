@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -27,7 +28,7 @@ public class ItemFilletKnife extends SwordItem {
     private final Multimap<Attribute, AttributeModifier> attributes;
 
     public ItemFilletKnife(Tier material) {
-        super(material, 0, 0.0F, new Item.Properties().tab(Aquaculture.GROUP).defaultDurability(material == AquacultureAPI.MATS.NEPTUNIUM ? -1 : (int) (material.getUses() * 0.75F))); //Setting values to 0, since overriding vanilla behaviour anyways
+        super(material, 0, 0.0F, new Item.Properties().defaultDurability(material == AquacultureAPI.MATS.NEPTUNIUM ? -1 : (int) (material.getUses() * 0.75F))); //Setting values to 0, since overriding vanilla behaviour anyways
         this.attackDamage = material.getAttackDamageBonus() / 2;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();

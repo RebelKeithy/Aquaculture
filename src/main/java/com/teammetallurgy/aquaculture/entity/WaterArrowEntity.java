@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.entity;
 
 import com.teammetallurgy.aquaculture.init.AquaEntities;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -38,7 +39,7 @@ public class WaterArrowEntity extends Arrow {
 
     @Override
     @Nonnull
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

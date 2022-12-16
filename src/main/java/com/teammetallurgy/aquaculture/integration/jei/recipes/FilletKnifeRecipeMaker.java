@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
@@ -30,7 +31,7 @@ public class FilletKnifeRecipeMaker {
                 ResourceLocation itemID = ForgeRegistries.ITEMS.getKey(fish);
                 if (itemID != null) {
                     ResourceLocation id = new ResourceLocation(Aquaculture.MOD_ID, "fish_fillet." + itemID.getPath());
-                    recipes.add(new ShapelessRecipe(id, RecipeTypes.CRAFTING.getUid().getPath(), output, input));
+                    recipes.add(new ShapelessRecipe(id, RecipeTypes.CRAFTING.getUid().getPath(), CraftingBookCategory.MISC, output, input));
                 }
             }
         }

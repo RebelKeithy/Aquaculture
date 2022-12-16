@@ -8,6 +8,7 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -52,11 +53,11 @@ public class BiomeTagPredicate {
             BlockPos pos = new BlockPos(x, y, z);
             if (serverLevel.isLoaded(pos)) {
                 Biome biome = serverLevel.getBiome(pos).value();
-                Registry<Biome> biomeRegistry = serverLevel.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
+                Registry<Biome> biomeRegistry = serverLevel.registryAccess().registryOrThrow(Registries.BIOME);
                 Optional<ResourceKey<Biome>> resourceKey = biomeRegistry.getResourceKey(biome);
 
                 if (resourceKey.isPresent()) {
-                    Optional<Holder<Biome>> biomeHolder = biomeRegistry.getHolder(resourceKey.get());
+                    Optional<Holder.Reference<Biome>> biomeHolder = biomeRegistry.getHolder(resourceKey.get());
                     if (biomeHolder.isPresent()) {
                         CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
 
@@ -79,7 +80,7 @@ public class BiomeTagPredicate {
 
     public static Set<Holder<Biome>> getValidBiomes(ServerLevel serverLevel, List<TagKey<Biome>> includeList, List<TagKey<Biome>> excludeList, boolean and) {
         Set<Holder<Biome>> biomes = new HashSet<>();
-        Optional<? extends Registry<Biome>> optionalBiomeRegistry = serverLevel.registryAccess().registry(Registry.BIOME_REGISTRY);
+        Optional<? extends Registry<Biome>> optionalBiomeRegistry = serverLevel.registryAccess().registry(Registries.BIOME);
         if (optionalBiomeRegistry.isPresent()) {
             Registry<Biome> biomeRegistry = optionalBiomeRegistry.get();
 
@@ -159,7 +160,7 @@ public class BiomeTagPredicate {
                 JsonArray includeArray = GsonHelper.getAsJsonArray(location, "include");
                 for (int entry = 0; entry < includeArray.size(); entry++) {
                     String name = includeArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
-                    TagKey<Biome> type = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(name));
+                    TagKey<Biome> type = TagKey.create(Registries.BIOME, new ResourceLocation(name));
                     include.add(type);
                 }
             }
@@ -169,7 +170,7 @@ public class BiomeTagPredicate {
                 JsonArray excludeArray = GsonHelper.getAsJsonArray(location, "exclude");
                 for (int entry = 0; entry < excludeArray.size(); entry++) {
                     String name = excludeArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
-                    TagKey<Biome> type = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(name));
+                    TagKey<Biome> type = TagKey.create(Registries.BIOME, new ResourceLocation(name));
                     exclude.add(type);
                 }
             }

@@ -2,9 +2,7 @@ package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
 import net.minecraft.client.Minecraft;
@@ -22,6 +20,8 @@ import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ToolActions;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 import javax.annotation.Nonnull;
 
@@ -47,7 +47,7 @@ public class AquaBobberRenderer extends EntityRenderer<AquaFishingBobberEntity> 
             poseStack.pushPose(); //Start Hook/Bobber rendering
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-            poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
             PoseStack.Pose bobberMatrix = poseStack.last();
             Matrix4f posMatrix = bobberMatrix.pose();
             Matrix3f matrix3f = bobberMatrix.normal();

@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +24,7 @@ public class LootBoxItem extends Item {
     private final ResourceLocation lootTable;
 
     public LootBoxItem(ResourceLocation lootTable) {
-        super(new Item.Properties().tab(Aquaculture.GROUP));
+        super(new Item.Properties());
         this.lootTable = lootTable;
     }
 
@@ -33,10 +34,9 @@ public class LootBoxItem extends Item {
         ItemStack heldStack = player.getItemInHand(hand);
         if (world.isClientSide || this.lootTable == null) return new InteractionResultHolder<>(InteractionResult.FAIL, heldStack);
 
-        if (world instanceof ServerLevel) {
-            ServerLevel worldServer = (ServerLevel) world;
-            LootContext.Builder builder = new LootContext.Builder(worldServer);
-            List<ItemStack> loot = worldServer.getServer().getLootTables().get(this.lootTable).getRandomItems(builder.create(LootContextParamSets.EMPTY));
+        if (world instanceof ServerLevel serverLevel) {
+            LootContext.Builder builder = new LootContext.Builder(serverLevel);
+            List<ItemStack> loot = serverLevel.getServer().getLootTables().get(this.lootTable).getRandomItems(builder.create(LootContextParamSets.EMPTY));
             if (!loot.isEmpty()) {
                 ItemStack lootStack = loot.get(0);
                 player.displayClientMessage(Component.translatable("aquaculture.loot.open", lootStack.getHoverName()).withStyle(ChatFormatting.YELLOW), true);

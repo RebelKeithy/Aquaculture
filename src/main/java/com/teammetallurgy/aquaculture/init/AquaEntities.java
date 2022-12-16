@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -48,7 +49,9 @@ public class AquaEntities {
 
     private static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String name, int eggPrimary, int eggSecondary, Supplier<EntityType.Builder<T>> builder) {
         RegistryObject<EntityType<T>> entityType = register(name, builder);
-        AquaItems.register(() -> new ForgeSpawnEggItem(entityType, eggPrimary, eggSecondary, (new Item.Properties()).tab(CreativeModeTab.TAB_MISC)), name + "_spawn_egg");
+        ForgeSpawnEggItem spawnEggItem = new ForgeSpawnEggItem(entityType, eggPrimary, eggSecondary, new Item.Properties());
+        AquaItems.register(() -> spawnEggItem, "_spawn_egg");
+        AquaItems.SPAWN_EGGS.add(new ItemStack(spawnEggItem));
         return entityType;
     }
 

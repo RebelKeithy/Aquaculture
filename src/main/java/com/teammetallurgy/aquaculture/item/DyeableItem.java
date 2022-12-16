@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
@@ -12,7 +13,7 @@ public class DyeableItem extends Item implements DyeableLeatherItem {
     private final int defaultColor;
 
     public DyeableItem(int defaultColor) {
-        super(new Item.Properties().tab(Aquaculture.GROUP));
+        super(new Item.Properties());
         this.defaultColor = defaultColor;
     }
 

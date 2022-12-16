@@ -2,7 +2,7 @@ package com.teammetallurgy.aquaculture.client.renderer.tileentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.block.TackleBoxBlock;
 import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
@@ -62,10 +62,10 @@ public class TackleBoxRenderer <T extends TackleBoxBlockEntity> implements Block
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 0.5D, 0.5D);
             float facing = state.getValue(TackleBoxBlock.FACING).toYRot();
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(-facing));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(-facing));
             matrixStack.translate(-0.5D, -0.5D, -0.5D);
             matrixStack.translate(0.0625F, 1.125F, 0.5F); //Translate
-            matrixStack.mulPose(Vector3f.XN.rotationDegrees(-180)); //Flip
+            matrixStack.mulPose(Axis.XN.rotationDegrees(-180)); //Flip
 
             DoubleBlockCombiner.NeighborCombineResult<?> callbackWrapper = DoubleBlockCombiner.Combiner::acceptNone;
             float angle = tackleBox.getOpenNess(partialTicks);

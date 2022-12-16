@@ -3,6 +3,7 @@ package com.teammetallurgy.aquaculture.item.neptunium;
 import com.mojang.datafixers.util.Pair;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaBlocks;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -11,6 +12,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -22,7 +24,7 @@ import java.util.function.Predicate;
 public class NeptuniumHoe extends HoeItem {
 
     public NeptuniumHoe(Tier tier, int damage, float speed) {
-        super(tier, damage, speed, new Item.Properties().tab(Aquaculture.GROUP));
+        super(tier, damage, speed, new Item.Properties());
     }
 
     @Override

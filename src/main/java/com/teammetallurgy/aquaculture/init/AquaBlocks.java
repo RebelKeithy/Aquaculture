@@ -44,7 +44,13 @@ public class AquaBlocks {
      */
     public static RegistryObject<Block> register(Supplier<Block> supplier, @Nonnull String name, @Nullable Item.Properties properties) {
         RegistryObject<Block> block = BLOCK_DEFERRED.register(name, supplier);
-        AquaItems.register(() -> new BlockItem(block.get(), properties == null ? new Item.Properties() : properties.tab(Aquaculture.GROUP)), name);
+
+        if (properties == null) {
+            AquaItems.register(() -> new BlockItem(block.get(), new Item.Properties()), name);
+        } else {
+            AquaItems.registerWithTab(() -> new BlockItem(block.get(), properties), name);
+        }
+
         return block;
     }
 
@@ -57,7 +63,13 @@ public class AquaBlocks {
      */
     public static RegistryObject<Block> registerWithRenderer(Supplier<Block> supplier, @Nonnull String name, @Nullable Item.Properties properties) {
         RegistryObject<Block> block = BLOCK_DEFERRED.register(name, supplier);
-        AquaItems.register(() -> new BlockItemWithoutLevelRenderer(block.get(), properties == null ? new Item.Properties() : properties.tab(Aquaculture.GROUP)), name);
+
+        if (properties == null) {
+            AquaItems.register(() -> new BlockItemWithoutLevelRenderer(block.get(), new Item.Properties()), name);
+        } else {
+            AquaItems.registerWithTab(() -> new BlockItemWithoutLevelRenderer(block.get(), properties), name);
+        }
+
         return block;
     }
 }

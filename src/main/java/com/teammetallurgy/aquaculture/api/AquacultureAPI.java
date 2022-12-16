@@ -5,6 +5,7 @@ import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.item.BaitItem;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -50,7 +51,7 @@ public class AquacultureAPI {
         }
 
         public static TagKey<Biome> biomeTag(String modID, String name) {
-            return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(modID, name));
+            return TagKey.create(Registries.BIOME, new ResourceLocation(modID, name));
         }
 
         public static void init() {

@@ -12,9 +12,10 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,10 +27,10 @@ import java.util.List;
 
 public class FishFilletRecipe extends CustomRecipe {
     public static final DeferredRegister<RecipeSerializer<?>> IRECIPE_SERIALIZERS_DEFERRED = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Aquaculture.MOD_ID);
-    private static final RegistryObject<RecipeSerializer<?>> FISH_FILLET_SERIALIZER = registerRecipeSerializer("crafting_special_fish_fillet", new SimpleRecipeSerializer<>(FishFilletRecipe::new));
+    private static final RegistryObject<RecipeSerializer<?>> FISH_FILLET_SERIALIZER = registerRecipeSerializer("crafting_special_fish_fillet", new SimpleCraftingRecipeSerializer<>(FishFilletRecipe::new));
 
-    private FishFilletRecipe(ResourceLocation location) {
-        super(location);
+    private FishFilletRecipe(ResourceLocation location, CraftingBookCategory craftingBookCategory) {
+        super(location, craftingBookCategory);
     }
 
     @Override

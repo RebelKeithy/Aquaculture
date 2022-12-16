@@ -29,7 +29,7 @@ public class NeptuniumArmor extends ArmorItem {
     private String texture;
 
     public NeptuniumArmor(ArmorMaterial armorMaterial, EquipmentSlot equipmentSlot) {
-        super(armorMaterial, equipmentSlot, new Item.Properties().tab(Aquaculture.GROUP));
+        super(armorMaterial, equipmentSlot, new Item.Properties());
     }
 
     @Override

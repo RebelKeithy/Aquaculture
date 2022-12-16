@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.network.chat.Component;
@@ -18,7 +19,7 @@ import javax.annotation.Nonnull;
 public class ItemMessageInABottle extends Item {
 
     public ItemMessageInABottle() {
-        super(new Item.Properties().tab(Aquaculture.GROUP));
+        super(new Item.Properties());
     }
 
     @Override

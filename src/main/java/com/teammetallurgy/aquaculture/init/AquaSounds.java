@@ -30,6 +30,6 @@ public final class AquaSounds {
 
     private static RegistryObject<SoundEvent> registerSound(String name) {
         ResourceLocation resourceLocation = new ResourceLocation(Aquaculture.MOD_ID, name);
-        return SOUND_EVENT_DEFERRED.register(name, () -> new SoundEvent(resourceLocation));
+        return SOUND_EVENT_DEFERRED.register(name, () -> SoundEvent.createVariableRangeEvent(resourceLocation));
     }
 }

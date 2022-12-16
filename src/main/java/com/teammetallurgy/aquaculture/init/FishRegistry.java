@@ -39,7 +39,7 @@ public class FishRegistry {
         RegistryObject<EntityType<FishMountEntity>> fishMount = AquaEntities.ENTITY_DEFERRED.register(name, () -> EntityType.Builder.<FishMountEntity>of(FishMountEntity::new, MobCategory.MISC)
                 .sized(0.5F, 0.5F)
                 .setCustomClientFactory(FishMountEntity::new).build(Aquaculture.MOD_ID + ":" + name));
-        RegistryObject<Item> fishMountItem = AquaItems.register(() -> new FishMountItem(fishMount), name);
+        RegistryObject<Item> fishMountItem = AquaItems.registerWithTab(() -> new FishMountItem(fishMount), name);
         fishMounts.add(fishMount);
         return fishMountItem;
     }
@@ -63,9 +63,9 @@ public class FishRegistry {
         fishEntities.add(fish);
 
         //Registers fish buckets
-        RegistryObject<AquaFishBucket> bucket = AquaItems.ITEM_DEFERRED.register(name + "_bucket", () -> new AquaFishBucket(fish, (new Item.Properties()).stacksTo(1).tab(Aquaculture.GROUP)));
+        RegistryObject<AquaFishBucket> bucket = AquaItems.ITEM_DEFERRED.register(name + "_bucket", () -> new AquaFishBucket(fish, (new Item.Properties()).stacksTo(1)));
 
-        return AquaItems.register(initializer, name);
+        return AquaItems.registerWithTab(initializer, name);
     }
 
     @SubscribeEvent

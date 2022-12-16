@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
@@ -53,8 +53,8 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
         matrixStack.translate(-pos.x(), -pos.y(), -pos.z());
         double multiplier = 0.46875D;
         matrixStack.translate((double) direction.getStepX() * multiplier, (double) direction.getStepY() * multiplier, (double) direction.getStepZ() * multiplier);
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(fishMount.getXRot()));
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - fishMount.getYRot()));
+        matrixStack.mulPose(Axis.XP.rotationDegrees(fishMount.getXRot()));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F - fishMount.getYRot()));
         BlockRenderDispatcher rendererDispatcher = this.mc.getBlockRenderer();
         ModelManager manager = rendererDispatcher.getBlockModelShaper().getModelManager();
 
@@ -84,8 +84,8 @@ public class FishMountRenderer extends EntityRenderer<FishMountEntity> {
             }
             fish.setNoAi(true);
             matrixStack.translate(x, y, depth);
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
+            matrixStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
             this.mc.getEntityRenderDispatcher().render(fish, 0.0F, 0.0F, 0.0F, 0.0F, 0, matrixStack, buffer, i);
         }
     }

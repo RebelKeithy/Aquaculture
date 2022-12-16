@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.item.neptunium;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -16,13 +17,12 @@ import javax.annotation.Nonnull;
 public class NeptuniumShovel extends ShovelItem {
 
     public NeptuniumShovel(Tier tier, float damage, float speed) {
-        super(tier, damage, speed, new Item.Properties().tab(Aquaculture.GROUP));
+        super(tier, damage, speed, new Item.Properties());
     }
 
     @Override
     public void inventoryTick(@Nonnull ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
-        if (entity instanceof Player && stack.getItem() == this) {
-            Player player = (Player) entity;
+        if (entity instanceof Player player && stack.getItem() == this) {
             stack.getOrCreateTag().putBoolean("inWater", player.isEyeInFluid(FluidTags.WATER));
         }
     }

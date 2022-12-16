@@ -56,9 +56,9 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:${jei_version}")
     //compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-1.18.1:${ct_version}")
 }
 
@@ -104,5 +104,5 @@ String getBuildNumber() {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    options.encoding = 'UTF-8'
 }

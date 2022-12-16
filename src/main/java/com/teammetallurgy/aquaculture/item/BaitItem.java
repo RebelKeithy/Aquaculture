@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.item;
 
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -7,11 +8,11 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nonnull;
 
 public class BaitItem extends Item {
-    private int lureSpeedModifier;
-    private int durability;
+    private final int lureSpeedModifier;
+    private final int durability;
 
     public BaitItem(int durability, int lureSpeedModifier, CreativeModeTab group) {
-        super(new Item.Properties().tab(group).setNoRepair());
+        super(new Item.Properties().setNoRepair());
         this.lureSpeedModifier = lureSpeedModifier;
         this.durability = durability;
     }

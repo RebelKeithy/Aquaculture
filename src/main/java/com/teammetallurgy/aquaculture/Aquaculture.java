@@ -11,13 +11,18 @@ import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import cpw.mods.modlauncher.Environment;
 import cpw.mods.modlauncher.Launcher;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -28,21 +33,13 @@ import net.minecraftforge.registries.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nonnull;
-
 @Mod(value = Aquaculture.MOD_ID)
 public class Aquaculture {
     public static Aquaculture instance;
     public static final boolean IS_DEV = Launcher.INSTANCE.environment().getProperty(Environment.Keys.VERSION.get()).filter(v -> v.equals("MOD_DEV")).isPresent();
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
-    public static final CreativeModeTab GROUP = new CreativeModeTab(Aquaculture.MOD_ID) {
-        @Override
-        @Nonnull
-        public ItemStack makeIcon() {
-            return new ItemStack(AquaItems.IRON_FISHING_ROD.get());
-        }
-    };
+    public static CreativeModeTab GROUP;
     public static LootItemConditionType BIOME_TAG_CHECK;
 
     public Aquaculture() {
@@ -50,6 +47,8 @@ public class Aquaculture {
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
+        modBus.addListener(this::registerTabs);
+        modBus.addListener(this::addItemsToTabs);
         this.registerDeferredRegistries(modBus);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
         AquacultureAPI.Tags.init();
@@ -86,5 +85,21 @@ public class Aquaculture {
         AquaGuis.MENU_DEFERRED.register(modBus);
         FishFilletRecipe.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
         AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register(modBus);
+    }
+
+    private void registerTabs(CreativeModeTabEvent.Register event) {
+        GROUP = event.registerCreativeModeTab(new ResourceLocation(MOD_ID, "tab"), builder -> builder
+                .icon(() -> new ItemStack(AquaItems.IRON_FISHING_ROD.get()))
+                .title(Component.translatable("tabs." + MOD_ID + ".tab"))
+                .displayItems((featureFlagSet, tabOutput, hasOp) -> {
+                    AquaItems.ITEMS_FOR_TAB_LIST.forEach(registryObject -> tabOutput.accept(new ItemStack(registryObject.get())));
+                })
+        );
+    }
+
+    private void addItemsToTabs(CreativeModeTabEvent.BuildContents event) {
+        if (event.getTab() == CreativeModeTabs.SPAWN_EGGS) {
+            event.acceptAll(AquaItems.SPAWN_EGGS);
+        }
     }
 }

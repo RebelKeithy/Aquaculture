@@ -2,6 +2,7 @@ package com.teammetallurgy.aquaculture.item;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +22,7 @@ public class FishMountItem extends HangingEntityItem {
     private final Supplier<EntityType<FishMountEntity>> fishMount;
 
     public FishMountItem(Supplier<EntityType<FishMountEntity>> entityType) {
-        super(null, new Item.Properties().tab(Aquaculture.GROUP));
+        super(null, new Item.Properties());
         this.fishMount = entityType;
     }
 

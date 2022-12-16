@@ -14,8 +14,10 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -121,7 +123,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
 
     @Override
     @Nonnull
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -147,7 +149,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                         lootEntries.add(new ItemStack(AquaItems.FISH_BONES.get()));
                     } else {
                         if (!this.level.isEmptyBlock(this.blockPosition()) && (this.level.getFluidState(this.blockPosition()).isSource())) {
-                            ResourceLocation biomeFromRegistry = this.level.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getKey(this.level.getBiome(this.blockPosition()).value());
+                            ResourceLocation biomeFromRegistry = this.level.registryAccess().registryOrThrow(Registries.BIOME).getKey(this.level.getBiome(this.blockPosition()).value());
                             if (biomeFromRegistry != null) {
                                 Aquaculture.LOG.error("Loot was empty in Biome: " + biomeFromRegistry + ". Please report on Github");
                             }

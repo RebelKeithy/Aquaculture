@@ -1,7 +1,7 @@
 package com.teammetallurgy.aquaculture.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.client.renderer.entity.layers.JellyfishLayer;
@@ -86,7 +86,7 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
             }
             float fishRotation = fishType == FishType.LONGNOSE ? salmonRotation * 4.3F * Mth.sin(salmonMultiplier * 0.6F * ageInTicks) : 4.3F * Mth.sin(0.6F * ageInTicks);
 
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(fishRotation));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(fishRotation));
             if (fishType == FishType.LONGNOSE) {
                 matrixStack.translate(0.0F, 0.0F, -0.4F);
             }
@@ -96,11 +96,11 @@ public class AquaFishRenderer extends MobRenderer<AquaFishEntity, EntityModel<Aq
                 } else {
                     matrixStack.translate(0.2F, 0.1F, 0.0F);
                 }
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90));
+                matrixStack.mulPose(Axis.ZP.rotationDegrees(90));
             }
             if (fishType == FishType.HALIBUT) {
                 matrixStack.translate(-0.4F, 0.1F, 0.0F);
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(-90));
+                matrixStack.mulPose(Axis.ZP.rotationDegrees(-90));
             }
         }
     }
