@@ -49,9 +49,8 @@ public class AquaEntities {
 
     private static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String name, int eggPrimary, int eggSecondary, Supplier<EntityType.Builder<T>> builder) {
         RegistryObject<EntityType<T>> entityType = register(name, builder);
-        ForgeSpawnEggItem spawnEggItem = new ForgeSpawnEggItem(entityType, eggPrimary, eggSecondary, new Item.Properties());
-        AquaItems.register(() -> spawnEggItem, "_spawn_egg");
-        AquaItems.SPAWN_EGGS.add(new ItemStack(spawnEggItem));
+        RegistryObject<Item> spawnEggItem = AquaItems.register(() -> new ForgeSpawnEggItem(entityType, eggPrimary, eggSecondary, new Item.Properties()), name + "_spawn_egg");
+        AquaItems.SPAWN_EGGS.add(spawnEggItem);
         return entityType;
     }
 

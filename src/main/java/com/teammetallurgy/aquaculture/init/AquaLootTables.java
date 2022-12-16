@@ -47,12 +47,16 @@ public class AquaLootTables {
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
+        System.out.println("Loot table load");
         if (name.equals(BuiltInLootTables.FISHING)) {
+            System.out.println("FISHING");
             LootPool pool = event.getTable().getPool("main");
             if (pool != null) {
+                System.out.println("I GOT CALLED");
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.NEPTUNIUM_OPTIONS.addNeptunesBountyToLoot.get()) {
+                    System.out.println("NEPTUUUUUUNIUM");
                     LootPoolEntryContainer neptuniumEntry = LootTableReference.lootTableReference(NEPTUNIUM).setWeight(1).setQuality(2).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(true)))).build();
                     addEntry(pool, neptuniumEntry);
                 }

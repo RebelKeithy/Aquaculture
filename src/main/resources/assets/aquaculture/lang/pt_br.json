@@ -1,5 +1,5 @@
 {
-  "itemGroup.aquaculture": "Aquaculture",
+  "tabs.aquaculture.tab": "Aquaculture",
 
   "_comment": "Blocks",
   "block.aquaculture.neptunium_block": "Bloco de netúnio",

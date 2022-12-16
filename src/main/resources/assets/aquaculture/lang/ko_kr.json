@@ -1,5 +1,5 @@
 {
-  "itemGroup.aquaculture": "아쿠아컬쳐",
+  "tabs.aquaculture.tab": "아쿠아컬쳐",
 
   "_comment": "블록",
   "block.aquaculture.neptunium_block": "넵투늄 블록",

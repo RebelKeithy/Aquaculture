@@ -259,6 +259,6 @@
 "item.aquaculture.turtle_soup":"海龜湯",
 "item.aquaculture.wooden_fillet_knife":"木片魚刀",
 "item.aquaculture.worm":"蚯蚓",
-"itemGroup.aquaculture":"水產養殖",
+"tabs.aquaculture.tab":"水產養殖",
 "_comment":"Tooltip"
 }

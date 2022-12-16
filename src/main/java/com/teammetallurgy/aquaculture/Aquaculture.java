@@ -47,9 +47,9 @@ public class Aquaculture {
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
+        this.registerDeferredRegistries(modBus);
         modBus.addListener(this::registerTabs);
         modBus.addListener(this::addItemsToTabs);
-        this.registerDeferredRegistries(modBus);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
         AquacultureAPI.Tags.init();
 
@@ -99,7 +99,7 @@ public class Aquaculture {
 
     private void addItemsToTabs(CreativeModeTabEvent.BuildContents event) {
         if (event.getTab() == CreativeModeTabs.SPAWN_EGGS) {
-            event.acceptAll(AquaItems.SPAWN_EGGS);
+            AquaItems.SPAWN_EGGS.forEach(registryObject -> event.accept(new ItemStack(registryObject.get())));
         }
     }
 }

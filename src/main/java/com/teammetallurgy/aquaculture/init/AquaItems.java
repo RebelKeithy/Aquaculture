@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class AquaItems {
     public static final DeferredRegister<Item> ITEM_DEFERRED = DeferredRegister.create(ForgeRegistries.ITEMS, Aquaculture.MOD_ID);
     public static final Collection<RegistryObject<Item>> ITEMS_FOR_TAB_LIST = new ArrayList<>();
-    public static final Collection<ItemStack> SPAWN_EGGS = new ArrayList<>();
+    public static final Collection<RegistryObject<Item>> SPAWN_EGGS = new ArrayList<>();
 
     //Fishing
     public static final RegistryObject<Item> IRON_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.IRON, new Item.Properties().defaultDurability(125)), "iron_fishing_rod");
