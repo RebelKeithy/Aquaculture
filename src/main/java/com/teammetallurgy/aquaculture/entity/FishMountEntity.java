@@ -322,7 +322,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     @Override
     @Nonnull
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
+        return new ClientboundAddEntityPacket(this, this.direction.get3DDataValue(), this.getPos());
     }
 
     @Override
