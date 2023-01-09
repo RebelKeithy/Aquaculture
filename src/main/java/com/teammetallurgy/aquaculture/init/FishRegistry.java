@@ -63,7 +63,8 @@ public class FishRegistry {
         fishEntities.add(fish);
 
         //Registers fish buckets
-        RegistryObject<AquaFishBucket> bucket = AquaItems.ITEM_DEFERRED.register(name + "_bucket", () -> new AquaFishBucket(fish, new Item.Properties().stacksTo(1)));
+        RegistryObject<Item> bucket = AquaItems.ITEM_DEFERRED.register(name + "_bucket", () -> new AquaFishBucket(fish, new Item.Properties().stacksTo(1)));
+        AquaItems.ITEMS_FOR_TAB_LIST.add(bucket);
 
         return AquaItems.registerWithTab(initializer, name);
     }
