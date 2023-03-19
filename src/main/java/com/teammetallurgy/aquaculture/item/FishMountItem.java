@@ -1,8 +1,6 @@
 package com.teammetallurgy.aquaculture.item;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
-import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

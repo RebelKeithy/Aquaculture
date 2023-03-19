@@ -6,7 +6,6 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.entity.FishType;
 import com.teammetallurgy.aquaculture.item.*;
 import com.teammetallurgy.aquaculture.item.neptunium.*;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,7 +15,6 @@ import net.minecraftforge.registries.RegistryObject;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Supplier;
 
 public class AquaItems {

@@ -1,7 +1,5 @@
 package com.teammetallurgy.aquaculture.item.neptunium;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

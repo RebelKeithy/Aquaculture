@@ -1,6 +1,5 @@
 package com.teammetallurgy.aquaculture.item;
 
-import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

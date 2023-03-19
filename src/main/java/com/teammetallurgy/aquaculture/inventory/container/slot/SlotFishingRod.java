@@ -3,7 +3,6 @@ package com.teammetallurgy.aquaculture.inventory.container.slot;
 import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
