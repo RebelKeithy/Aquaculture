@@ -98,7 +98,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
         super.playerTouch(player);
         if (Objects.equals(ForgeRegistries.ENTITY_TYPES.getKey(this.getType()), new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))) {
             if (this.isAlive()) {
-                if (this.distanceToSqr(player) < 1.0D && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
+                if (this.distanceToSqr(player) < 1.0D && player.hurt(this.damageSources().mobAttack(this), 0.5F)) {
                     this.playSound(AquaSounds.JELLYFISH_COLLIDE.get(), 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                     this.doEnchantDamageEffects(this, player);
                 }

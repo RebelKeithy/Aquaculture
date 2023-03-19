@@ -28,19 +28,19 @@ public class NeptuniumArmor extends ArmorItem {
     private static final AttributeModifier INCREASED_SWIM_SPEED = new AttributeModifier(UUID.fromString("d820cadc-2d19-421c-b19f-4c1f5b84a418"), "Neptunium Boots swim speed boost", 0.5D, AttributeModifier.Operation.ADDITION);
     private String texture;
 
-    public NeptuniumArmor(ArmorMaterial armorMaterial, EquipmentSlot equipmentSlot) {
-        super(armorMaterial, equipmentSlot, new Item.Properties());
+    public NeptuniumArmor(ArmorMaterial armorMaterial, ArmorItem.Type type) {
+        super(armorMaterial, type, new Item.Properties());
     }
 
     @Override
     public void onArmorTick(@Nonnull ItemStack stack, Level world, Player player) {
         AttributeInstance swimSpeed = player.getAttribute(ForgeMod.SWIM_SPEED.get());
         if (player.isEyeInFluid(FluidTags.WATER)) {
-            if (this.slot == EquipmentSlot.HEAD) {
+            if (this.type == Type.HELMET) {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20, 0, false, false, false));
-            } else if (this.slot == EquipmentSlot.CHEST) {
+            } else if (this.type == Type.CHESTPLATE) {
                 player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20, 0, false, false, false));
-            } else if (this.slot == EquipmentSlot.LEGS) {
+            } else if (this.type == Type.LEGGINGS) {
                 if (!player.isCrouching()) {
                     player.setDeltaMovement(player.getDeltaMovement().add(0, player.fallDistance, 0));
                 }

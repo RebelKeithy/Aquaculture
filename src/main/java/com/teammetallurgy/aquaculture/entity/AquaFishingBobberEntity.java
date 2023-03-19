@@ -245,14 +245,14 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
 
                 @Override
                 public boolean isInvulnerableTo(@Nonnull DamageSource source) {
-                    BlockPos spawnPos = new BlockPos(AquaFishingBobberEntity.this.getX(), AquaFishingBobberEntity.this.getY(), AquaFishingBobberEntity.this.getZ());
+                    BlockPos spawnPos = new BlockPos((int) AquaFishingBobberEntity.this.getX(), (int) AquaFishingBobberEntity.this.getY(), (int) AquaFishingBobberEntity.this.getZ());
                     return AquaFishingBobberEntity.this.isLavaHookInLava(AquaFishingBobberEntity.this, this.level, spawnPos) || super.isInvulnerableTo(source);
                 }
             };
             double x = angler.getX() - this.getX();
             double y = angler.getY() - this.getY();
             double z = angler.getZ() - this.getZ();
-            lootEntity.setDeltaMovement(x * 0.1D, (y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D) + (this.hasHook() && this.isLavaHookInLava(this, this.level, new BlockPos(x, y, z)) ? 0.2D : 0.0D), z * 0.1D);
+            lootEntity.setDeltaMovement(x * 0.1D, (y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D) + (this.hasHook() && this.isLavaHookInLava(this, this.level, new BlockPos((int) x, (int) y, (int) z)) ? 0.2D : 0.0D), z * 0.1D);
             this.level.addFreshEntity(lootEntity);
             angler.level.addFreshEntity(new ExperienceOrb(angler.level, angler.getX(), angler.getY() + 0.5D, angler.getZ() + 0.5D, this.random.nextInt(6) + 1));
             if (loot.is(ItemTags.FISHES)) {
@@ -403,7 +403,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 double x = this.getX() + (double) (sin * (float) this.timeUntilHooked * 0.1F);
                 double y = ((float) Mth.floor(this.getBoundingBox().minY) + 1.0F);
                 double z = this.getZ() + (double) (cos * (float) this.timeUntilHooked * 0.1F);
-                FluidState fluidState = serverworld.getFluidState(new BlockPos(x, y - 1.0D, z)); //Replaced BlockState checks with fluidState checks
+                FluidState fluidState = serverworld.getFluidState(new BlockPos((int) x, (int) (y - 1.0D), (int) z)); //Replaced BlockState checks with fluidState checks
                 float zOffset = sin * 0.04F; //Moved to be possible to use with both Lava & Water particles
                 float xOffset = cos * 0.04F; //Moved to be possible to use with both Lava & Water particles
                 if (fluidState.is(FluidTags.WATER)) { //Water check added
@@ -462,7 +462,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 double x = this.getX() + (double) (Mth.sin(sin) * cos * 0.1F);
                 double y = ((float) Mth.floor(this.getY()) + 1.0F);
                 double z = this.getZ() + (double) (Mth.cos(sin) * cos * 0.1F);
-                FluidState fluidState = serverworld.getFluidState(new BlockPos(x, y - 1.0D, z)); //Replaced BlockState check, with a FluidState check
+                FluidState fluidState = serverworld.getFluidState(new BlockPos((int) x, (int) (y - 1.0D), (int) z)); //Replaced BlockState check, with a FluidState check
                 if (fluidState.is(FluidTags.WATER)) { //Check tag, instead of only water block
                     serverworld.sendParticles(ParticleTypes.SPLASH, x, y, z, 2 + this.random.nextInt(2), 0.10000000149011612D, 0.0D, 0.10000000149011612D, 0.0D);
                 }

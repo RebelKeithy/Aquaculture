@@ -1,6 +1,7 @@
 package com.teammetallurgy.aquaculture.init;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
+import com.teammetallurgy.aquaculture.api.AquaArmorMaterials;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.entity.FishType;
 import com.teammetallurgy.aquaculture.item.*;
@@ -41,10 +42,10 @@ public class AquaItems {
     public static final RegistryObject<Item> NEPTUNIUM_HOE = registerWithTab(() -> new NeptuniumHoe(AquacultureAPI.MATS.NEPTUNIUM, -3, 0.2F), "neptunium_hoe");
     public static final RegistryObject<Item> NEPTUNIUM_SWORD = registerWithTab(() -> new SwordItem(AquacultureAPI.MATS.NEPTUNIUM, 3, -2.4F, new Item.Properties()), "neptunium_sword");
     public static final RegistryObject<Item> NEPTUNIUM_BOW = registerWithTab(NeptuniumBow::new, "neptunium_bow");
-    public static final RegistryObject<Item> NEPTUNIUM_HELMET = registerWithTab(() -> new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlot.HEAD).setArmorTexture("neptunium_layer_1"), "neptunium_helmet");
-    public static final RegistryObject<Item> NEPTUNIUM_PLATE = registerWithTab(() -> new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlot.CHEST).setArmorTexture("neptunium_layer_1"), "neptunium_chestplate");
-    public static final RegistryObject<Item> NEPTUNIUM_LEGS = registerWithTab(() -> new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlot.LEGS).setArmorTexture("neptunium_layer_2"), "neptunium_leggings");
-    public static final RegistryObject<Item> NEPTUNIUM_BOOTS = registerWithTab(() -> new NeptuniumArmor(AquacultureAPI.MATS.NEPTINIUM_ARMOR, EquipmentSlot.FEET).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
+    public static final RegistryObject<Item> NEPTUNIUM_HELMET = registerWithTab(() -> new NeptuniumArmor(AquaArmorMaterials.NEPTUNIUM, ArmorItem.Type.HELMET).setArmorTexture("neptunium_layer_1"), "neptunium_helmet");
+    public static final RegistryObject<Item> NEPTUNIUM_PLATE = registerWithTab(() -> new NeptuniumArmor(AquaArmorMaterials.NEPTUNIUM, ArmorItem.Type.CHESTPLATE).setArmorTexture("neptunium_layer_1"), "neptunium_chestplate");
+    public static final RegistryObject<Item> NEPTUNIUM_LEGS = registerWithTab(() -> new NeptuniumArmor(AquaArmorMaterials.NEPTUNIUM, ArmorItem.Type.LEGGINGS).setArmorTexture("neptunium_layer_2"), "neptunium_leggings");
+    public static final RegistryObject<Item> NEPTUNIUM_BOOTS = registerWithTab(() -> new NeptuniumArmor(AquaArmorMaterials.NEPTUNIUM, ArmorItem.Type.BOOTS).setArmorTexture("neptunium_layer_1"), "neptunium_boots");
 
     // Fillet Knifes
     public static final RegistryObject<Item> WOODEN_FILLET_KNIFE = registerWithTab(() -> new ItemFilletKnife(Tiers.WOOD), "wooden_fillet_knife");

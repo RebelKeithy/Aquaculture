@@ -6,6 +6,7 @@ import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -65,7 +66,7 @@ public class FishFilletRecipe extends CustomRecipe {
 
     @Override
     @Nonnull
-    public ItemStack assemble(@Nonnull CraftingContainer craftingInventory) {
+    public ItemStack assemble(@Nonnull CraftingContainer craftingInventory, RegistryAccess registryAccess) {
         ItemStack fish = ItemStack.EMPTY;
         Item knife = null;
 

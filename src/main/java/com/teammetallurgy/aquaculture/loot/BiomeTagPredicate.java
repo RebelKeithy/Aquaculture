@@ -50,7 +50,7 @@ public class BiomeTagPredicate {
         } else if (!this.z.matches(z)) {
             return false;
         } else {
-            BlockPos pos = new BlockPos(x, y, z);
+            BlockPos pos = new BlockPos((int) x, (int) y, (int) z);
             if (serverLevel.isLoaded(pos)) {
                 Biome biome = serverLevel.getBiome(pos).value();
                 Registry<Biome> biomeRegistry = serverLevel.registryAccess().registryOrThrow(Registries.BIOME);

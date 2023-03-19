@@ -91,7 +91,7 @@ public class Aquaculture {
         GROUP = event.registerCreativeModeTab(new ResourceLocation(MOD_ID, "tab"), builder -> builder
                 .icon(() -> new ItemStack(AquaItems.IRON_FISHING_ROD.get()))
                 .title(Component.translatable("tabs." + MOD_ID + ".tab"))
-                .displayItems((featureFlagSet, tabOutput, hasOp) -> {
+                .displayItems((featureFlagSet, tabOutput) -> {
                     AquaItems.ITEMS_FOR_TAB_LIST.forEach(registryObject -> tabOutput.accept(new ItemStack(registryObject.get())));
                 })
         );
