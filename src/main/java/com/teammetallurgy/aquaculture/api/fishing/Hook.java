@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class Hook {
-    public static final HashMap<String, RegistryObject<HookItem>> HOOKS = new HashMap<>();
+    public static final HashMap<String, RegistryObject<Item>> HOOKS = new HashMap<>();
     private final String name;
     private final String modID;
     @Nullable
-    private final RegistryObject<HookItem> hookItem;
+    private final RegistryObject<Item> hookItem;
     private final ResourceLocation texture;
     private final ChatFormatting color;
     private final int minCatchable;
@@ -52,7 +52,7 @@ public class Hook {
         this.catchSound = catchSound;
         this.texture = new ResourceLocation(modID, "textures/entity/rod/hook/" + name + "_hook" + ".png");
         if (name != null) {
-            this.hookItem = AquaItems.ITEM_DEFERRED.register(name + "_hook", () -> new HookItem(this));
+            this.hookItem = AquaItems.registerWithTab(() -> new HookItem(this), name + "_hook");
             HOOKS.put(name, hookItem);
         } else {
             this.hookItem = null;
@@ -69,7 +69,7 @@ public class Hook {
 
     @Nonnull
     public Item getItem() {
-        RegistryObject<HookItem> hookItem = this.hookItem;
+        RegistryObject<Item> hookItem = this.hookItem;
         return hookItem != null ? hookItem.get() : Items.AIR;
     }
 

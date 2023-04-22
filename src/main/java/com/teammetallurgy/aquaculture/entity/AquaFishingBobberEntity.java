@@ -32,6 +32,7 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
@@ -70,8 +71,8 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
         if (hookName.isEmpty() || hookName == null) {
             this.hook = Hooks.EMPTY;
         } else {
-            HookItem hookItem = Hook.HOOKS.get(hookName).get();
-            this.hook = hookItem.getHookType();
+            Item hookItem = Hook.HOOKS.get(hookName).get();
+            this.hook = ((HookItem) hookItem).getHookType();
         }
         this.fishingLine = buf.readItem();
         this.bobber = buf.readItem();
