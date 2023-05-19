@@ -40,10 +40,6 @@ public class FishData {
         return new ArrayList<>(WEIGHT_MIN.keySet());
     }
 
-    public void add(Item fish, double min, double max) {
-        this.add(fish, min, max, 1);
-    }
-
     public void add(Item fish, double min, double max, int filletAmount) {
         this.addWeight(fish, min, max);
         if (filletAmount > 0) {
