@@ -15,6 +15,7 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,15 +35,14 @@ public class NeptuniumArmor extends ArmorItem {
 
     @Override
     public void onArmorTick(@Nonnull ItemStack stack, Level world, Player player) {
-        AttributeInstance swimSpeed = player.getAttribute(ForgeMod.SWIM_SPEED.get());
-        if (player.isEyeInFluid(FluidTags.WATER)) {
+        if (player.isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
             if (this.type == Type.HELMET) {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20, 0, false, false, false));
             } else if (this.type == Type.CHESTPLATE) {
                 player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 20, 0, false, false, false));
             } else if (this.type == Type.LEGGINGS) {
-                if (!player.isCrouching()) {
-                    player.setDeltaMovement(player.getDeltaMovement().add(0, player.fallDistance, 0));
+                if (!player.isCrouching() && !player.jumping && !player.isSwimming()) {
+                    player.setDeltaMovement(Vec3.ZERO);
                 }
             }
         }
