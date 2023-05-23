@@ -51,7 +51,7 @@ public class AquaItems {
     public static final RegistryObject<Item> IRON_FILLET_KNIFE = registerWithTab(() -> new ItemFilletKnife(Tiers.IRON), "iron_fillet_knife");
     public static final RegistryObject<Item> GOLD_FILLET_KNIFE = registerWithTab(() -> new ItemFilletKnife(Tiers.GOLD), "gold_fillet_knife");
     public static final RegistryObject<Item> DIAMOND_FILLET_KNIFE = registerWithTab(() -> new ItemFilletKnife(Tiers.DIAMOND), "diamond_fillet_knife");
-    public static final RegistryObject<Item> NEPTINIUM_FILLET_KNIFE = registerWithTab(() -> new ItemFilletKnife(AquacultureAPI.MATS.NEPTUNIUM), "neptunium_fillet_knife");
+    public static final RegistryObject<Item> NEPTUNIUM_FILLET_KNIFE = registerWithTab(() -> new ItemFilletKnife(AquacultureAPI.MATS.NEPTUNIUM), "neptunium_fillet_knife");
 
     // Misc
     public static final RegistryObject<Item> DRIFTWOOD = registerWithTab(SimpleItem::new, "driftwood");
