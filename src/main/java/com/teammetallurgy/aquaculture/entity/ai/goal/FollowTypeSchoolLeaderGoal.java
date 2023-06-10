@@ -33,7 +33,7 @@ public class FollowTypeSchoolLeaderGoal extends Goal {
         } else {
             this.cooldown = this.getNewCooldown(this.taskOwner);
             Predicate<AbstractSchoolingFish> predicate = (fishEntity) -> fishEntity.getType() == this.taskOwner.getType() && (fishEntity.canBeFollowed() || !fishEntity.isFollower());
-            List<? extends AbstractSchoolingFish> schoolList = this.taskOwner.level.getEntitiesOfClass(this.taskOwner.getClass(), this.taskOwner.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), predicate);
+            List<? extends AbstractSchoolingFish> schoolList = this.taskOwner.level().getEntitiesOfClass(this.taskOwner.getClass(), this.taskOwner.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), predicate);
             AbstractSchoolingFish fishEntity = DataFixUtils.orElse(schoolList.stream().filter(AbstractSchoolingFish::canBeFollowed).findAny(), this.taskOwner);
             fishEntity.addFollowers(schoolList.stream().filter((schoolFish) -> !schoolFish.isFollower()));
             return this.taskOwner.isFollower();

@@ -1,6 +1,7 @@
 plugins {
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1+'
+    id 'idea'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -19,25 +20,33 @@ repositories {
 
 version = "${minecraft_version}-${mod_version}" + getBuildNumber()
 group = "com.teammetallurgy.aquaculture"
-archivesBaseName = "Aquaculture"
+
+base {
+    archivesName = "Aquaculture"
+}
 
 minecraft {
     mappings channel: 'official', version: project.minecraft_version
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
+	enableIdeaPrepareRuns = true
+	copyIdeResources = true
+	generateRunFolders = true
+	
     runs {
         client {
             workingDirectory project.file('run')
+			
             mods {
-                aquaculture {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
         }
         server {
             workingDirectory project.file('run')
+
             mods {
-                aquaculture {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -46,7 +55,7 @@ minecraft {
             workingDirectory project.file('run')
             args '--mod', 'aquaculture', '--all', '--output', file("src/generated/resources/"), '--existing', file("src/main/resources/")
             mods {
-                aquaculture {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
@@ -62,11 +71,20 @@ dependencies {
     //compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-1.18.1:${ct_version}")
 }
 
-jar {
-    manifest {
-        attributes([
-            "Implementation-Version": project.version
-        ])
+def resourceTargets = ['META-INF/mods.toml']
+def replaceProperties = [
+        minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+        forge_version: forge_version, forge_version_range: forge_version_range,
+        loader_version_range: loader_version_range,
+        mod_version: mod_version,
+]
+
+processResources {
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
     }
 }
 
@@ -74,7 +92,7 @@ task apiJar(type: Jar) {
 	from sourceSets.main.allSource
 	from sourceSets.main.output
     include 'com/teammetallurgy/aquaculture/api/**/*'
-    classifier = 'api'
+    archiveClassifier = 'api'
 }
 
 publishing {

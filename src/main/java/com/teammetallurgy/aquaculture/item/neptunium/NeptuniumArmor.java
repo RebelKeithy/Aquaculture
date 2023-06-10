@@ -53,7 +53,7 @@ public class NeptuniumArmor extends ArmorItem {
         if (event.phase == TickEvent.Phase.END) {
             Player player = event.player;
 
-            if (!player.level.isClientSide) {
+            if (!player.level().isClientSide) {
                 AttributeInstance swimSpeed = player.getAttribute(ForgeMod.SWIM_SPEED.get());
                 if (swimSpeed != null) {
                     if (player.isInWater() && player.getItemBySlot(EquipmentSlot.FEET).getItem() == AquaItems.NEPTUNIUM_BOOTS.get()) {

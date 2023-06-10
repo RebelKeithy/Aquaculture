@@ -59,7 +59,7 @@ public class TurtleLandEntity extends Animal {
     @Override
     @Nullable
     public AgeableMob getBreedOffspring(@Nonnull ServerLevel world, @Nonnull AgeableMob ageableMob) {
-        return (AgeableMob) this.getType().create(this.level);
+        return (AgeableMob) this.getType().create(this.level());
     }
 
     @Override
@@ -132,7 +132,7 @@ public class TurtleLandEntity extends Animal {
 
         @Override
         public boolean canContinueToUse() {
-            return this.turtle.isInWater() && this.tryTicks <= 1200 && this.isValidTarget(this.turtle.level, this.blockPos);
+            return this.turtle.isInWater() && this.tryTicks <= 1200 && this.isValidTarget(this.turtle.level(), this.blockPos);
         }
 
         @Override

@@ -34,7 +34,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
 
     public TackleBoxContainer(int windowID, BlockPos pos, Inventory playerInventory) {
         super(AquaGuis.TACKLE_BOX.get(), windowID);
-        this.tackleBox = (TackleBoxBlockEntity) playerInventory.player.level.getBlockEntity(pos);
+        this.tackleBox = (TackleBoxBlockEntity) playerInventory.player.level().getBlockEntity(pos);
         if (this.tackleBox != null) {
             this.tackleBox.startOpen(playerInventory.player);
             this.tackleBox.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
