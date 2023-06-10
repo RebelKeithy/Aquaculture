@@ -94,7 +94,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
             return false;
         } else {
             BlockState state = this.level().getBlockState(this.pos.relative(this.direction.getOpposite()));
-            return (state.getMaterial().isSolid() || this.direction.getAxis().isHorizontal() && DiodeBlock.isDiode(state)) && this.level().getEntities(this, this.getBoundingBox(), HANGING_ENTITY).isEmpty();
+            return (state.isSolid() || this.direction.getAxis().isHorizontal() && DiodeBlock.isDiode(state)) && this.level().getEntities(this, this.getBoundingBox(), HANGING_ENTITY).isEmpty();
         }
     }
 

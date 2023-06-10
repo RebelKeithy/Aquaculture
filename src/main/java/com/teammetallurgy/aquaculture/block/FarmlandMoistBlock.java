@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
@@ -15,7 +16,7 @@ import javax.annotation.Nonnull;
 public class FarmlandMoistBlock extends FarmBlock {
 
     public FarmlandMoistBlock() {
-        super(Block.Properties.of(Material.DIRT).strength(0.6F).sound(SoundType.GRAVEL));
+        super(Block.Properties.of().mapColor(MapColor.DIRT).strength(0.6F).sound(SoundType.GRAVEL));
         this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, 7));
     }
 

@@ -34,8 +34,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -56,7 +55,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     private static final VoxelShape EAST_WEST = Block.box(3.9D, 0.0D, 0.8D, 12.2D, 9.0D, 15.2D);
 
     public TackleBoxBlock() {
-        super(Block.Properties.of(Material.METAL, MaterialColor.METAL).strength(4.0F, 5.0F).sound(SoundType.METAL));
+        super(Block.Properties.of().mapColor(MapColor.METAL).strength(4.0F, 5.0F).sound(SoundType.METAL));
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 

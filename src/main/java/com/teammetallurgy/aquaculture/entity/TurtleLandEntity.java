@@ -110,7 +110,7 @@ public class TurtleLandEntity extends Animal {
                 } else {
                     this.turtle.setSpeed(0.18F);
                 }
-            } else if (this.turtle.onGround) {
+            } else if (this.turtle.onGround()) {
                 this.turtle.setSpeed(0.1F);
             }
         }

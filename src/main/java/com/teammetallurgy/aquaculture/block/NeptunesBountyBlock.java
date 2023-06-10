@@ -20,8 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,7 +31,7 @@ import java.util.List;
 public class NeptunesBountyBlock extends ChestBlock {
 
     public NeptunesBountyBlock() {
-        super(Block.Properties.of(Material.METAL, MaterialColor.METAL).strength(3.5F, 8.0F).sound(SoundType.METAL), AquaBlockEntities.NEPTUNES_BOUNTY::get);
+        super(Block.Properties.of().mapColor(MapColor.METAL).strength(3.5F, 8.0F).sound(SoundType.METAL), AquaBlockEntities.NEPTUNES_BOUNTY::get);
     }
 
     @Override

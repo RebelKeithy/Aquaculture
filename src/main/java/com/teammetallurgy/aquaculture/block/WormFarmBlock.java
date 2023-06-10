@@ -25,7 +25,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nonnull;
@@ -34,7 +35,7 @@ import javax.annotation.Nullable;
 public class WormFarmBlock extends ComposterBlock {
 
     public WormFarmBlock() {
-        super(Block.Properties.of(Material.WOOD).strength(0.6F).sound(SoundType.WOOD));
+        super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(0.6F).sound(SoundType.WOOD));
     }
 
     public static void addCompostables() {

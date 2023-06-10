@@ -38,6 +38,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -141,10 +142,9 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 level.broadcastEntityEvent(this, (byte) 31);
                 rodDamage = this.hookedIn instanceof ItemEntity ? 3 : 5;
             } else if ((this.nibble > 0 || isAdminRod) && level instanceof ServerLevel serverLevel)  {
-                LootContext.Builder builder = new LootContext.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, stack).withRandom(this.random).withLuck((float) this.luck + angler.getLuck());
-                builder.withParameter(LootContextParams.KILLER_ENTITY, angler).withParameter(LootContextParams.THIS_ENTITY, this);
+                LootParams lootParams = (new LootParams.Builder((ServerLevel)this.level())).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, stack).withParameter(LootContextParams.THIS_ENTITY, this).withParameter(LootContextParams.KILLER_ENTITY, this.getOwner()).withParameter(LootContextParams.THIS_ENTITY, this).withLuck((float)this.luck + angler.getLuck()).create(LootContextParamSets.FISHING);
 
-                List<ItemStack> lootEntries = getLoot(builder, serverLevel);
+                List<ItemStack> lootEntries = getLoot(lootParams, serverLevel);
                 if (lootEntries.isEmpty()) {
                     if (level.dimension() == Level.END) {
                         lootEntries.add(new ItemStack(AquaItems.FISH_BONES.get()));
@@ -158,7 +158,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                     }
                 }
                 if (!lootEntries.isEmpty()) {
-                    event = new ItemFishedEvent(lootEntries, this.onGround ? 2 : 1, this);
+                    event = new ItemFishedEvent(lootEntries, this.onGround() ? 2 : 1, this);
                     MinecraftForge.EVENT_BUS.post(event);
                     if (event.isCanceled()) {
                         this.discard();
@@ -169,7 +169,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                     this.spawnLoot(angler, lootEntries);
                     if (this.hasHook() && this.hook.getDoubleCatchChance() > 0) {
                         if (this.random.nextDouble() <= this.hook.getDoubleCatchChance()) {
-                            List<ItemStack> doubleLoot = getLoot(builder, serverLevel);
+                            List<ItemStack> doubleLoot = getLoot(lootParams, serverLevel);
                             if (!doubleLoot.isEmpty()) {
                                 MinecraftForge.EVENT_BUS.post(new ItemFishedEvent(doubleLoot, 0, this));
                                 this.spawnLoot(angler, doubleLoot);
@@ -193,7 +193,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                     rodDamage = 1;
                 }
             }
-            if (this.onGround) {
+            if (this.onGround()) {
                 rodDamage = 2;
             }
             this.discard();
@@ -217,7 +217,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
         }
     }
 
-    private List<ItemStack> getLoot(LootContext.Builder builder, ServerLevel serverLevel) {
+    private List<ItemStack> getLoot(LootParams lootParams, ServerLevel serverLevel) {
         ResourceLocation lootTableLocation;
         if (this.isLavaHookInLava(this, serverLevel, this.blockPosition())) {
             if (serverLevel.getLevel().dimensionType().hasCeiling()) {
@@ -228,8 +228,8 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
         } else {
             lootTableLocation = BuiltInLootTables.FISHING;
         }
-        LootTable lootTable = serverLevel.getServer().getLootTables().get(lootTableLocation);
-        return lootTable.getRandomItems(builder.create(LootContextParamSets.FISHING));
+        LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(lootTableLocation);
+        return lootTable.getRandomItems(lootParams);
     }
 
     private void spawnLoot(Player angler, List<ItemStack> lootEntries) {
@@ -254,7 +254,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
             double x = angler.getX() - this.getX();
             double y = angler.getY() - this.getY();
             double z = angler.getZ() - this.getZ();
-            lootEntity.setDeltaMovement(x * 0.1D, (y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D) + (this.hasHook() && this.isLavaHookInLava(this, this.level, new BlockPos((int) x, (int) y, (int) z)) ? 0.2D : 0.0D), z * 0.1D);
+            lootEntity.setDeltaMovement(x * 0.1D, (y * 0.1D + Math.sqrt(Math.sqrt(x * x + y * y + z * z)) * 0.08D) + (this.hasHook() && this.isLavaHookInLava(this, this.level(), new BlockPos((int) x, (int) y, (int) z)) ? 0.2D : 0.0D), z * 0.1D);
             level.addFreshEntity(lootEntity);
             angler.level().addFreshEntity(new ExperienceOrb(angler.level(), angler.getX(), angler.getY() + 0.5D, angler.getZ() + 0.5D, this.random.nextInt(6) + 1));
             if (loot.is(ItemTags.FISHES)) {
@@ -287,7 +287,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
         if (angler == null) {
             this.discard();
         } else if (this.level().isClientSide || !this.shouldStopFishing(angler)) {
-            if (this.onGround) {
+            if (this.onGround()) {
                 ++this.life;
                 if (this.life >= 1200) {
                     this.discard();
@@ -366,7 +366,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
 
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.updateRotation();
-            if (this.currentState == FishingHook.FishHookState.FLYING && (this.onGround || this.horizontalCollision)) {
+            if (this.currentState == FishingHook.FishHookState.FLYING && (this.onGround() || this.horizontalCollision)) {
                 this.setDeltaMovement(Vec3.ZERO);
             }
 
@@ -398,7 +398,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
         } else if (this.timeUntilHooked > 0) {
             this.timeUntilHooked -= delay;
             if (this.timeUntilHooked > 0) {
-                this.fishAngle = (float) ((double) this.fishAngle + this.random.nextGaussian() * 4.0D);
+                this.fishAngle += (float) this.random.triangle(0.0D, 9.188D);
                 float angle = this.fishAngle * ((float) Math.PI / 180F);
                 float sin = Mth.sin(angle);
                 float cos = Mth.cos(angle);
@@ -451,11 +451,11 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
             this.timeUntilLured -= delay;
             float angle = 0.15F;
             if (this.timeUntilLured < 20) {
-                angle = (float) ((double) angle + (double) (20 - this.timeUntilLured) * 0.05D);
+                angle = (float) ((double) angle + (double) (20 - this.timeUntilLured) * 0.05F);
             } else if (this.timeUntilLured < 40) {
-                angle = (float) ((double) angle + (double) (40 - this.timeUntilLured) * 0.02D);
+                angle = (float) ((double) angle + (double) (40 - this.timeUntilLured) * 0.02F);
             } else if (this.timeUntilLured < 60) {
-                angle = (float) ((double) angle + (double) (60 - this.timeUntilLured) * 0.01D);
+                angle = (float) ((double) angle + (double) (60 - this.timeUntilLured) * 0.01F);
             }
 
             if (this.random.nextFloat() < angle) {

@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 import javax.annotation.Nonnull;
@@ -33,8 +34,8 @@ public class LootBoxItem extends Item {
         if (world.isClientSide || this.lootTable == null) return new InteractionResultHolder<>(InteractionResult.FAIL, heldStack);
 
         if (world instanceof ServerLevel serverLevel) {
-            LootContext.Builder builder = new LootContext.Builder(serverLevel);
-            List<ItemStack> loot = serverLevel.getServer().getLootTables().get(this.lootTable).getRandomItems(builder.create(LootContextParamSets.EMPTY));
+            LootParams.Builder builder = new LootParams.Builder(serverLevel);
+            List<ItemStack> loot = serverLevel.getServer().getLootData().getLootTable(this.lootTable).getRandomItems(builder.create(LootContextParamSets.EMPTY)); //TODO Test
             if (!loot.isEmpty()) {
                 ItemStack lootStack = loot.get(0);
                 player.displayClientMessage(Component.translatable("aquaculture.loot.open", lootStack.getHoverName()).withStyle(ChatFormatting.YELLOW), true);
