@@ -35,7 +35,7 @@ public class LootBoxItem extends Item {
 
         if (world instanceof ServerLevel serverLevel) {
             LootParams.Builder builder = new LootParams.Builder(serverLevel);
-            List<ItemStack> loot = serverLevel.getServer().getLootData().getLootTable(this.lootTable).getRandomItems(builder.create(LootContextParamSets.EMPTY)); //TODO Test
+            List<ItemStack> loot = serverLevel.getServer().getLootData().getLootTable(this.lootTable).getRandomItems(builder.create(LootContextParamSets.EMPTY));
             if (!loot.isEmpty()) {
                 ItemStack lootStack = loot.get(0);
                 player.displayClientMessage(Component.translatable("aquaculture.loot.open", lootStack.getHoverName()).withStyle(ChatFormatting.YELLOW), true);

@@ -27,7 +27,7 @@ public class AquaItems {
     public static final RegistryObject<Item> GOLD_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.GOLD, new Item.Properties().defaultDurability(55)), "gold_fishing_rod");
     public static final RegistryObject<Item> DIAMOND_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(Tiers.DIAMOND, new Item.Properties().defaultDurability(450)), "diamond_fishing_rod");
     public static final RegistryObject<Item> NEPTUNIUM_FISHING_ROD = registerWithTab(() -> new AquaFishingRodItem(AquacultureAPI.MATS.NEPTUNIUM, new Item.Properties().defaultDurability(1000)), "neptunium_fishing_rod");
-    public static final RegistryObject<Item> WORM = registerWithTab(() -> AquacultureAPI.createBait(20, 1, Aquaculture.GROUP), "worm");
+    public static final RegistryObject<Item> WORM = registerWithTab(() -> AquacultureAPI.createBait(20, 1), "worm");
     public static final RegistryObject<Item> FISHING_LINE = registerWithTab(() -> new DyeableItem(0), "fishing_line");
     public static final RegistryObject<Item> BOBBER = registerWithTab(() -> new DyeableItem(13838890), "bobber");
 
@@ -88,7 +88,7 @@ public class AquaItems {
     public static final RegistryObject<Item> CARP = FishRegistry.register(FishItem::new, "carp", FishType.LARGE);
     public static final RegistryObject<Item> CATFISH = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "catfish", FishType.CATFISH);
     public static final RegistryObject<Item> GAR = FishRegistry.register(FishItem::new, "gar", FishType.LONGNOSE);
-    public static final RegistryObject<Item> MINNOW = FishRegistry.register(() -> AquacultureAPI.createBait(50, 1, Aquaculture.GROUP), "minnow", FishType.SMALL);
+    public static final RegistryObject<Item> MINNOW = FishRegistry.register(() -> AquacultureAPI.createBait(50, 1), "minnow", FishType.SMALL);
     public static final RegistryObject<Item> MUSKELLUNGE = FishRegistry.register(FishItem::new, "muskellunge", FishType.LONGNOSE);
     public static final RegistryObject<Item> PERCH = FishRegistry.register(() -> new FishItem(FishItem.SMALL_FISH_RAW), "perch", FishType.SMALL);
     public static final RegistryObject<Item> ARAPAIMA = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "arapaima", FishType.LONGNOSE);
@@ -99,7 +99,7 @@ public class AquaItems {
     public static final RegistryObject<Item> JELLYFISH = FishRegistry.register(SimpleItem::new, "jellyfish", FishType.JELLYFISH);
     public static final RegistryObject<Item> RED_GROUPER = FishRegistry.register(FishItem::new, "red_grouper");
     public static final RegistryObject<Item> TUNA = FishRegistry.register(() -> new FishItem(FishItem.LARGE_FISH_RAW), "tuna", FishType.LARGE);
-    public static final RegistryObject<Item> LEECH = registerWithTab(() -> AquacultureAPI.createBait(35, 1, Aquaculture.GROUP), "leech");
+    public static final RegistryObject<Item> LEECH = registerWithTab(() -> AquacultureAPI.createBait(35, 1), "leech");
     public static final RegistryObject<Item> GOLDFISH = registerWithTab(SimpleItem::new, "goldfish");
     public static final RegistryObject<Item> BOX_TURTLE = registerWithTab(SimpleItem::new, "box_turtle");
     public static final RegistryObject<Item> ARRAU_TURTLE = registerWithTab(SimpleItem::new, "arrau_turtle");

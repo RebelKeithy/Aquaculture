@@ -9,7 +9,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:alternative",
+              "condition": "minecraft:any_of",
               "terms": [
                 {
                   "condition": "aquaculture:biome_tag_check",
@@ -35,7 +35,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:alternative",
+              "condition": "minecraft:any_of",
               "terms": [
                 {
                   "condition": "aquaculture:biome_tag_check",
@@ -61,7 +61,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:alternative",
+              "condition": "minecraft:any_of",
               "terms": [
                 {
                   "condition": "aquaculture:biome_tag_check",
@@ -115,7 +115,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:alternative",
+              "condition": "minecraft:any_of",
               "terms": [
                 {
                   "condition": "aquaculture:biome_tag_check",
@@ -141,7 +141,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:alternative",
+              "condition": "minecraft:any_of",
               "terms": [
                 {
                   "condition": "aquaculture:biome_tag_check",
@@ -167,7 +167,7 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:alternative",
+              "condition": "minecraft:any_of",
               "terms": [
                 {
                   "condition": "aquaculture:biome_tag_check",
@@ -520,5 +520,6 @@
         }
       ]
     }
-  ]
+  ],
+  "random_sequence": "aquaculture:gameplay/fishing/fish"
 }

@@ -10,7 +10,7 @@ public class BaitItem extends Item {
     private final int lureSpeedModifier;
     private final int durability;
 
-    public BaitItem(int durability, int lureSpeedModifier, CreativeModeTab group) {
+    public BaitItem(int durability, int lureSpeedModifier) {
         super(new Item.Properties().setNoRepair());
         this.lureSpeedModifier = lureSpeedModifier;
         this.durability = durability;

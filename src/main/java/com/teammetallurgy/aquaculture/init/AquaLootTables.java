@@ -44,7 +44,7 @@ public class AquaLootTables {
         return BuiltInLootTables.register(new ResourceLocation(Aquaculture.MOD_ID, path));
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
         if (name.equals(BuiltInLootTables.FISHING)) {
@@ -58,7 +58,7 @@ public class AquaLootTables {
                 }
             }
         }
-    }
+    }*/
 
     private static LootPoolEntryContainer getInjectEntry(ResourceLocation location, int weight, int quality) {
         return LootTableReference.lootTableReference(location).setWeight(weight).setQuality(quality).build();
