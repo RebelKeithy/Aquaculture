@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:rainbow_trout",
+    "weight": 6,
+    "minCount": 2,
+    "maxCount": 4
+  },
+  "includeBiomes": ["#minecraft:is_river"],
+  "excludeBiomes": ["#forge:is_hot"],
+  "and": false
+}

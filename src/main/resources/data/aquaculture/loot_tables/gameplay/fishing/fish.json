@@ -182,6 +182,14 @@
                     "include": ["forge:is_cold", "minecraft:is_beach"],
                     "and": true
                   }
+                },
+                {
+                  "condition": "aquaculture:biome_tag_check",
+                  "predicate": {
+                    "include": ["minecraft:is_river"],
+                    "exclude": ["forge:is_hot"],
+                    "and": false
+                  }
                 }
               ]
             }
