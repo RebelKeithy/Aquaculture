@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aquaculture:iron_hook"
+    },
+    {
+      "tag": "forge:obsidian"
+    }
+  ],
+  "result": {
+    "item": "aquaculture:obsidian_hook"
+  }
+}

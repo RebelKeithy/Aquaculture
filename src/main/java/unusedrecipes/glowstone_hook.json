@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "GHG",
+    " G "
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:dusts/glowstone"
+    },
+    "H": {
+      "item": "aquaculture:iron_hook"
+    }
+  },
+  "result": {
+    "item": "aquaculture:glowstone_hook"
+  }
+}
