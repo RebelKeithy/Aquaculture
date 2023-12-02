@@ -34,10 +34,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -150,6 +150,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                         lootEntries.add(new ItemStack(AquaItems.FISH_BONES.get()));
                     } else {
                         if (!level.isEmptyBlock(this.blockPosition()) && (level.getFluidState(this.blockPosition()).isSource())) {
+                            lootEntries.add(new ItemStack(Items.COD)); //Last resort fallback, for edge-cases
                             ResourceLocation biomeFromRegistry = level.registryAccess().registryOrThrow(Registries.BIOME).getKey(level.getBiome(this.blockPosition()).value());
                             if (biomeFromRegistry != null) {
                                 Aquaculture.LOG.error("Loot was empty in Biome: " + biomeFromRegistry + ". Please report on Github");
