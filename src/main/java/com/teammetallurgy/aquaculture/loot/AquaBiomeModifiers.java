@@ -6,23 +6,20 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ModifiableBiomeInfo;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.List;
 
 public class AquaBiomeModifiers {
-    public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS_DEFERRED = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
+    public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS_DEFERRED = DeferredRegister.create(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
 
-    public record MobSpawnBiomeModifier(HolderSet<Biome> includeList, HolderSet<Biome> excludeList,
-                                        MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
-        private static final RegistryObject<Codec<? extends BiomeModifier>> SERIALIZER = RegistryObject.create(new ResourceLocation(Aquaculture.MOD_ID, "mob_spawn_serializer"), ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
+    public record MobSpawnBiomeModifier(HolderSet<Biome> includeList, HolderSet<Biome> excludeList, MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
 
         @Override
         public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
@@ -33,7 +30,7 @@ public class AquaBiomeModifiers {
 
         @Override
         public Codec<? extends BiomeModifier> codec() {
-            return SERIALIZER.get();
+            return makeCodec();
         }
 
         public static Codec<MobSpawnBiomeModifier> makeCodec() {
@@ -45,9 +42,7 @@ public class AquaBiomeModifiers {
         }
     }
 
-    public record FishSpawnBiomeModifier(List<HolderSet<Biome>> includeBiomes, List<HolderSet<Biome>> excludeBiomes,
-                                         boolean and, MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
-        private static final RegistryObject<Codec<? extends BiomeModifier>> SERIALIZER = RegistryObject.create(new ResourceLocation(Aquaculture.MOD_ID, "fish_spawn_serializer"), ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, Aquaculture.MOD_ID);
+    public record FishSpawnBiomeModifier(List<HolderSet<Biome>> includeBiomes, List<HolderSet<Biome>> excludeBiomes, boolean and, MobSpawnSettings.SpawnerData spawn) implements BiomeModifier {
 
         @Override
         public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
@@ -86,13 +81,13 @@ public class AquaBiomeModifiers {
 
         private void debugOutput(Holder<Biome> biomeHolder, String s) {
             if (AquaConfig.BASIC_OPTIONS.debugMode.get()) {
-                Aquaculture.LOG.info("Fish: " + ForgeRegistries.ENTITY_TYPES.getKey(spawn.type) + " | " + s + ": " + biomeHolder.unwrapKey().get().location());
+                Aquaculture.LOG.info("Fish: " + BuiltInRegistries.ENTITY_TYPE.getKey(spawn.type) + " | " + s + ": " + biomeHolder.unwrapKey().get().location());
             }
         }
 
         @Override
         public Codec<? extends BiomeModifier> codec() {
-            return SERIALIZER.get();
+            return makeCodec();
         }
 
         public static Codec<FishSpawnBiomeModifier> makeCodec() {

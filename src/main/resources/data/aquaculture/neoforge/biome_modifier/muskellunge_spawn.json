@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:muskellunge",
+    "weight": 3,
+    "minCount": 1,
+    "maxCount": 1
+  },
+  "includeBiomes": ["#aquaculture:empty"],
+  "excludeBiomes": ["#minecraft:is_ocean", "#minecraft:is_beach", "#neoforge:is_hot", "#neoforge:is_desert", "#minecraft:is_jungle"],
+  "and": false
+}

@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:bluegill",
+    "weight": 20,
+    "minCount": 1,
+    "maxCount": 6
+  },
+  "includeBiomes": ["#aquaculture:empty"],
+  "excludeBiomes": ["#minecraft:is_ocean", "#minecraft:is_beach", "#neoforge:is_desert", "#minecraft:is_jungle"],
+  "and": false
+}

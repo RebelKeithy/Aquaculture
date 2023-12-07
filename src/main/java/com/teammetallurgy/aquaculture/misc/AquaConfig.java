@@ -1,26 +1,26 @@
 package com.teammetallurgy.aquaculture.misc;
 
 import com.electronwill.nightconfig.core.file.FileConfig;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.io.File;
 
 public class AquaConfig {
-    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+    public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
     public static final BasicOptions BASIC_OPTIONS = new BasicOptions(BUILDER);
     public static final NeptuniumOptions NEPTUNIUM_OPTIONS = new NeptuniumOptions(BUILDER);
 
     public static class BasicOptions {
         static final String BASIC_OPTIONS = "basic options";
-        public ForgeConfigSpec.BooleanValue randomWeight;
-        public ForgeConfigSpec.BooleanValue compostableFish;
-        public ForgeConfigSpec.BooleanValue aqFishToBreedCats;
-        public ForgeConfigSpec.IntValue messageInABottleAmount;
-        public ForgeConfigSpec.BooleanValue debugMode;
-        public ForgeConfigSpec.BooleanValue showFilletRecipesInJEI;
+        public ModConfigSpec.BooleanValue randomWeight;
+        public ModConfigSpec.BooleanValue compostableFish;
+        public ModConfigSpec.BooleanValue aqFishToBreedCats;
+        public ModConfigSpec.IntValue messageInABottleAmount;
+        public ModConfigSpec.BooleanValue debugMode;
+        public ModConfigSpec.BooleanValue showFilletRecipesInJEI;
 
-        BasicOptions(ForgeConfigSpec.Builder builder) {
+        BasicOptions(ModConfigSpec.Builder builder) {
             builder.push(BASIC_OPTIONS);
             randomWeight = builder.define("Enable weight for fish? Useful for fishing competitions", false);
             compostableFish = builder.define("Should fish be added as compostables for the composter/worm farm? (Based on fish, or weight if enabled)", true);
@@ -34,11 +34,11 @@ public class AquaConfig {
 
     public static class NeptuniumOptions {
         static final String NEPTUNIUM_OPTIONS = "neptunium options";
-        public ForgeConfigSpec.BooleanValue enableNeptuniumItems;
-        public ForgeConfigSpec.BooleanValue enableNeptuniumArmor;
-        public ForgeConfigSpec.BooleanValue addNeptunesBountyToLoot;
+        public ModConfigSpec.BooleanValue enableNeptuniumItems;
+        public ModConfigSpec.BooleanValue enableNeptuniumArmor;
+        public ModConfigSpec.BooleanValue addNeptunesBountyToLoot;
 
-        NeptuniumOptions(ForgeConfigSpec.Builder builder) {
+        NeptuniumOptions(ModConfigSpec.Builder builder) {
             builder.push(NEPTUNIUM_OPTIONS);
             enableNeptuniumItems = builder.define("Enable recipes for Neptunium items?", true);
             enableNeptuniumArmor = builder.define("Enable recipes for Neptunium armor?", true);
@@ -47,7 +47,7 @@ public class AquaConfig {
         }
     }
 
-    public static ForgeConfigSpec spec = BUILDER.build();
+    public static ModConfigSpec spec = BUILDER.build();
 
     public static class Helper {
         private static final FileConfig CONFIG_FILE = FileConfig.of(new File(FMLPaths.CONFIGDIR.get().toFile(), "aquaculture-common.toml"));

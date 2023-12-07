@@ -7,10 +7,10 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:rods/wooden"
+      "tag": "neoforge:rods/wooden"
     },
     "C": {
-      "tag": "forge:cobblestone"
+      "tag": "neoforge:cobblestone"
     }	
   },
   "result": {

@@ -17,8 +17,8 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -37,7 +37,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
         this.tackleBox = (TackleBoxBlockEntity) playerInventory.player.level().getBlockEntity(pos);
         if (this.tackleBox != null) {
             this.tackleBox.startOpen(playerInventory.player);
-            this.tackleBox.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+            this.tackleBox.getCapability(Capabilities.ITEM_HANDLER).ifPresent(handler -> {
                 SlotFishingRod fishingRod = (SlotFishingRod) addSlot(new SlotFishingRod(handler, 0, 117, 21));
                 this.slotHook = this.addSlot(new SlotHidable(fishingRod, 0, 106, 44) {
                     @Override

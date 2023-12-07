@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:mob_spawn",
+  "spawn": {
+    "type": "aquaculture:starshell_turtle",
+    "weight": 6,
+    "minCount": 1,
+    "maxCount": 2
+  },
+  "includeBiomes": "#neoforge:is_twilight",
+  "excludeBiomes": "#aquaculture:empty"
+}

@@ -40,9 +40,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -151,7 +151,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     public int getAnalogOutputSignal(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos) {
         BlockEntity tileEntity = world.getBlockEntity(pos);
         if (tileEntity instanceof TackleBoxBlockEntity) {
-            Optional<Integer> redstone = tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
+            Optional<Integer> redstone = tileEntity.getCapability(Capabilities.ITEM_HANDLER, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
             return redstone.orElse(0);
         }
         return 0;
@@ -225,7 +225,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     private void dropInventory(Level level, BlockPos pos) {
         BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity != null) {
-            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(handler -> StackHelper.dropInventory(level, pos, handler));
+            tileEntity.getCapability(Capabilities.ITEM_HANDLER, null).ifPresent(handler -> StackHelper.dropInventory(level, pos, handler));
         }
     }
 

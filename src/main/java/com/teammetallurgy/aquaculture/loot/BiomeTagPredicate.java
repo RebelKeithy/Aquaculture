@@ -1,56 +1,40 @@
 package com.teammetallurgy.aquaculture.loot;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BiomeTagPredicate {
-    private static final BiomeTagPredicate ANY = new BiomeTagPredicate(MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, MinMaxBounds.Doubles.ANY, new ArrayList<>(), new ArrayList<>(), false);
+public record BiomeTagPredicate(Optional<PositionPredicate> position, Optional<List<TagKey<Biome>>> include, Optional<List<TagKey<Biome>>> exclude, Optional<Boolean> and) {
+    public static final Codec<BiomeTagPredicate> CODEC = RecordCodecBuilder.create(rb -> rb.group(
+                            ExtraCodecs.strictOptionalField(PositionPredicate.CODEC, "position").forGetter(BiomeTagPredicate::position),
+                            ExtraCodecs.strictOptionalField(Codec.list(TagKey.codec(Registries.BIOME)), "include").forGetter(BiomeTagPredicate::include),
+                            ExtraCodecs.strictOptionalField(Codec.list(TagKey.codec(Registries.BIOME)), "exclude").forGetter(BiomeTagPredicate::exclude),
+                            ExtraCodecs.strictOptionalField(Codec.BOOL, "and").forGetter(BiomeTagPredicate::and)
+                    )
+                    .apply(rb, BiomeTagPredicate::new)
+    );
     private static final HashMap<CheckType, Set<Holder<Biome>>> CACHE = new HashMap<>();
     public static final List<TagKey<Biome>> INVALID_TYPES = Arrays.asList(BiomeTags.IS_NETHER, BiomeTags.IS_END, Tags.Biomes.IS_VOID);
-    private final MinMaxBounds.Doubles x;
-    private final MinMaxBounds.Doubles y;
-    private final MinMaxBounds.Doubles z;
-    private final List<TagKey<Biome>> include;
-    private final List<TagKey<Biome>> exclude;
-    private final boolean and;
 
-    public BiomeTagPredicate(MinMaxBounds.Doubles x, MinMaxBounds.Doubles y, MinMaxBounds.Doubles z, List<TagKey<Biome>> include, List<TagKey<Biome>> exclude, boolean and) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.include = include;
-        this.exclude = exclude;
-        this.and = and;
-    }
-
-    public boolean test(ServerLevel serverLevel, float x, float y, float z) {
-        if (!this.x.matches(x)) {
+    public boolean matches(ServerLevel serverLevel, double x, double y, double z) {
+        if (this.position.isPresent() && !this.position.get().matches(x, y, z)) {
             return false;
-        } else if (!this.y.matches(y)) {
-            return false;
-        } else if (!this.z.matches(z)) {
-            return false;
-        } else {
-            BlockPos pos = new BlockPos((int) x, (int) y, (int) z);
+        } else if (this.include.isPresent() && this.exclude.isPresent() && this.and.isPresent()) {
+            BlockPos pos = BlockPos.containing(x, y, z);
             if (serverLevel.isLoaded(pos)) {
                 Biome biome = serverLevel.getBiome(pos).value();
                 Registry<Biome> biomeRegistry = serverLevel.registryAccess().registryOrThrow(Registries.BIOME);
@@ -59,7 +43,7 @@ public class BiomeTagPredicate {
                 if (resourceKey.isPresent()) {
                     Optional<Holder.Reference<Biome>> biomeHolder = biomeRegistry.getHolder(resourceKey.get());
                     if (biomeHolder.isPresent()) {
-                        CheckType checkType = CheckType.getOrCreate(this.include, this.exclude, this.and);
+                        CheckType checkType = CheckType.getOrCreate(this.include.get(), this.exclude.get(), this.and.get());
 
                         Set<Holder<Biome>> validBiomes = CACHE.get(checkType);
                         if (validBiomes == null) {
@@ -70,8 +54,8 @@ public class BiomeTagPredicate {
                     }
                 }
             }
-            return false;
         }
+        return false;
     }
 
     public static Set<Holder<Biome>> getValidBiomes(ServerLevel serverLevel, CheckType checkType) {
@@ -92,7 +76,7 @@ public class BiomeTagPredicate {
             if (and) {
                 for (TagKey<Biome> tagKey : includeList) {
                     getBiomeFromTag(biomeRegistry, tagKey).forEach(a -> {
-                        List<TagKey<Biome>> tags = a.getTagKeys().collect(Collectors.toList());
+                        List<TagKey<Biome>> tags = a.tags().collect(Collectors.toList());
                         int beforeTagCount = tags.size();
                         tags.removeAll(includeList);
                         int afterTagCount = tags.size();
@@ -121,66 +105,24 @@ public class BiomeTagPredicate {
         return biomeRegistry.getTagOrEmpty(tagKey);
     }
 
-    public JsonElement serialize() {
-        if (this == ANY) {
-            return JsonNull.INSTANCE;
-        } else {
-            JsonObject object = new JsonObject();
-            if (!this.x.isAny() || !this.y.isAny() || !this.z.isAny()) {
-                JsonObject posObj = new JsonObject();
-                posObj.add("x", this.x.serializeToJson());
-                posObj.add("y", this.y.serializeToJson());
-                posObj.add("z", this.z.serializeToJson());
-                object.add("position", posObj);
-            }
-            if (this.include != null) {
-                for (TagKey<Biome> tagKey : this.include) {
-                    object.add("include", object.getAsJsonArray(tagKey.location().toString()));
-                }
-            }
-            if (this.exclude != null) {
-                for (TagKey<Biome> tagKey : this.exclude) {
-                    object.add("exclude", object.getAsJsonArray(tagKey.location().toString()));
-                }
-            }
-            object.addProperty("add", GsonHelper.getAsBoolean(object, "add", false));
-            return object;
+    static record PositionPredicate(MinMaxBounds.Doubles x, MinMaxBounds.Doubles y, MinMaxBounds.Doubles z) {
+        public static final Codec<PositionPredicate> CODEC = RecordCodecBuilder.create(
+                p_299107_ -> p_299107_.group(
+                                ExtraCodecs.strictOptionalField(MinMaxBounds.Doubles.CODEC, "x", MinMaxBounds.Doubles.ANY).forGetter(PositionPredicate::x),
+                                ExtraCodecs.strictOptionalField(MinMaxBounds.Doubles.CODEC, "y", MinMaxBounds.Doubles.ANY).forGetter(PositionPredicate::y),
+                                ExtraCodecs.strictOptionalField(MinMaxBounds.Doubles.CODEC, "z", MinMaxBounds.Doubles.ANY).forGetter(PositionPredicate::z)
+                        )
+                        .apply(p_299107_, PositionPredicate::new)
+        );
+
+        static Optional<PositionPredicate> of(MinMaxBounds.Doubles p_298771_, MinMaxBounds.Doubles p_298418_, MinMaxBounds.Doubles p_299133_) {
+            return p_298771_.isAny() && p_298418_.isAny() && p_299133_.isAny()
+                    ? Optional.empty()
+                    : Optional.of(new PositionPredicate(p_298771_, p_298418_, p_299133_));
         }
-    }
 
-    public static BiomeTagPredicate deserialize(@Nullable JsonElement element) {
-        if (element != null && !element.isJsonNull()) {
-            JsonObject location = GsonHelper.convertToJsonObject(element, "location");
-            JsonObject position = GsonHelper.getAsJsonObject(location, "position", new JsonObject());
-            MinMaxBounds.Doubles x = MinMaxBounds.Doubles.fromJson(position.get("x"));
-            MinMaxBounds.Doubles y = MinMaxBounds.Doubles.fromJson(position.get("y"));
-            MinMaxBounds.Doubles z = MinMaxBounds.Doubles.fromJson(position.get("z"));
-            List<TagKey<Biome>> include = new ArrayList<>();
-            if (location.has("include")) {
-                JsonArray includeArray = GsonHelper.getAsJsonArray(location, "include");
-                for (int entry = 0; entry < includeArray.size(); entry++) {
-                    String name = includeArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
-                    TagKey<Biome> type = TagKey.create(Registries.BIOME, new ResourceLocation(name));
-                    include.add(type);
-                }
-            }
-
-            List<TagKey<Biome>> exclude = new ArrayList<>();
-            if (location.has("exclude")) {
-                JsonArray excludeArray = GsonHelper.getAsJsonArray(location, "exclude");
-                for (int entry = 0; entry < excludeArray.size(); entry++) {
-                    String name = excludeArray.get(entry).getAsString().toLowerCase(Locale.ROOT);
-                    TagKey<Biome> type = TagKey.create(Registries.BIOME, new ResourceLocation(name));
-                    exclude.add(type);
-                }
-            }
-            boolean and = false;
-            if (location.has("and")) {
-                and = GsonHelper.getAsBoolean(location, "and");
-            }
-            return new BiomeTagPredicate(x, y, z, include, exclude, and);
-        } else {
-            return ANY;
+        public boolean matches(double p_298782_, double p_299123_, double p_298955_) {
+            return this.x.matches(p_298782_) && this.y.matches(p_299123_) && this.z.matches(p_298955_);
         }
     }
 

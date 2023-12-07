@@ -11,12 +11,10 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
-import net.minecraftforge.event.LootTableLoadEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.LootTableLoadEvent;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +45,12 @@ public class AquaLootTables {
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
+        System.out.println("Loot table load event");
         if (name.equals(BuiltInLootTables.FISHING)) {
             LootPool pool = event.getTable().getPool("main");
+            System.out.println("Fishing loot table");
             if (pool != null) {
+                System.out.println("POOL PARTY");
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.NEPTUNIUM_OPTIONS.addNeptunesBountyToLoot.get()) {
@@ -65,25 +66,14 @@ public class AquaLootTables {
     }
 
     private static void addEntry(LootPool pool, LootPoolEntryContainer entry) {
-        try {
-            Field entries = ObfuscationReflectionHelper.findField(LootPool.class, "f_79023_");
-            entries.setAccessible(true);
+        ArrayList<LootPoolEntryContainer> newLootEntries = new ArrayList<>(pool.entries);
 
-            LootPoolEntryContainer[] lootPoolEntriesArray = (LootPoolEntryContainer[]) entries.get(pool);
-            ArrayList<LootPoolEntryContainer> newLootEntries = new ArrayList<>(List.of(lootPoolEntriesArray));
-
-            if (newLootEntries.stream().anyMatch(e -> e == entry)) {
-                throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
-            }
-
-            newLootEntries.add(entry);
-
-            LootPoolEntryContainer[] newLootEntriesArray = new LootPoolEntryContainer[newLootEntries.size()];
-            newLootEntries.toArray(newLootEntriesArray);
-            entries.set(pool, newLootEntriesArray);
-        } catch (IllegalAccessException e) {
-            Aquaculture.LOG.error("Error occurred when attempting to add a new entry, to the fishing loot table");
-            e.printStackTrace();
+        if (newLootEntries.stream().anyMatch(e -> e == entry)) {
+            throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
         }
+
+        newLootEntries.add(entry);
+
+        pool.entries.addAll(newLootEntries);
     }
 }

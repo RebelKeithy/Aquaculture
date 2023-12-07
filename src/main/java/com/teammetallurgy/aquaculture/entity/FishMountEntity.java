@@ -4,6 +4,7 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
@@ -30,11 +31,10 @@ import net.minecraft.world.level.block.DiodeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.entity.IEntityAdditionalSpawnData;
+import net.neoforged.neoforge.network.PlayMessages;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,11 +59,11 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     public FishMountEntity(PlayMessages.SpawnEntity spawnPacket, Level world) {
-        this((EntityType<? extends FishMountEntity>) ForgeRegistries.ENTITY_TYPES.getValue(spawnPacket.getAdditionalData().readResourceLocation()), world);
+        this((EntityType<? extends FishMountEntity>) BuiltInRegistries.ENTITY_TYPE.get(spawnPacket.getAdditionalData().readResourceLocation()), world);
     }
 
     @Override
-    protected float getEyeHeight(Pose pose, EntityDimensions size) {
+    protected float getEyeHeight(@Nonnull Pose pose, @Nonnull EntityDimensions size) {
         return 0.0F;
     }
 
@@ -212,9 +212,9 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
     }
 
     private Item getItem() {
-        ResourceLocation location = ForgeRegistries.ENTITY_TYPES.getKey(this.getType());
-        if (ForgeRegistries.ITEMS.containsKey(location) && location != null) {
-            return ForgeRegistries.ITEMS.getValue(location);
+        ResourceLocation location = BuiltInRegistries.ENTITY_TYPE.getKey(this.getType());
+        if (BuiltInRegistries.ITEM.containsKey(location) && location != null) {
+            return BuiltInRegistries.ITEM.get(location);
         }
         return Items.AIR;
     }
@@ -256,7 +256,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         if (key.equals(ITEM)) {
             ItemStack displayStack = this.getDisplayedItem();
             if (displayStack != null && !displayStack.isEmpty()) {
-                EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(ForgeRegistries.ITEMS.getKey(displayStack.getItem()));
+                EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(BuiltInRegistries.ITEM.getKey(displayStack.getItem()));
                 if (entityType != null && entityType != EntityType.PIG) {
                     this.entity = entityType.create(this.level());
                 }
@@ -306,7 +306,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
         if (!this.level().isClientSide) {
             if (this.getDisplayedItem().isEmpty()) {
                 Item heldItem = heldStack.getItem();
-                EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(ForgeRegistries.ITEMS.getKey(heldItem));
+                EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(BuiltInRegistries.ITEM.getKey(heldItem));
                 if (entityType != EntityType.PIG && AquacultureAPI.FISH_DATA.getFish().contains(heldItem)) {
                     this.setDisplayedItem(heldStack);
                     if (!player.getAbilities().instabuild) {
@@ -348,7 +348,7 @@ public class FishMountEntity extends HangingEntity implements IEntityAdditionalS
 
     @Override
     public void writeSpawnData(FriendlyByteBuf buffer) {
-        buffer.writeResourceLocation(Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(this.getType())));
+        buffer.writeResourceLocation(Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(this.getType())));
     }
 
     @Override

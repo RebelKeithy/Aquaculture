@@ -2,7 +2,6 @@ package com.teammetallurgy.aquaculture.item.neptunium;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaItems;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -16,10 +15,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.TickEvent;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -35,7 +34,7 @@ public class NeptuniumArmor extends ArmorItem {
 
     @Override
     public void onArmorTick(@Nonnull ItemStack stack, Level world, Player player) {
-        if (player.isEyeInFluidType(ForgeMod.WATER_TYPE.get())) {
+        if (player.isEyeInFluidType(NeoForgeMod.WATER_TYPE.value())) {
             if (this.type == Type.HELMET) {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20, 0, false, false, false));
             } else if (this.type == Type.CHESTPLATE) {
@@ -54,7 +53,7 @@ public class NeptuniumArmor extends ArmorItem {
             Player player = event.player;
 
             if (!player.level().isClientSide) {
-                AttributeInstance swimSpeed = player.getAttribute(ForgeMod.SWIM_SPEED.get());
+                AttributeInstance swimSpeed = player.getAttribute(NeoForgeMod.SWIM_SPEED.value());
                 if (swimSpeed != null) {
                     if (player.isInWater() && player.getItemBySlot(EquipmentSlot.FEET).getItem() == AquaItems.NEPTUNIUM_BOOTS.get()) {
                         if (!swimSpeed.hasModifier(INCREASED_SWIM_SPEED)) {

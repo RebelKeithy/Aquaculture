@@ -7,7 +7,7 @@ import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.misc.AquaConfig;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
@@ -18,26 +18,19 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FishFilletRecipe extends CustomRecipe {
-    public static final DeferredRegister<RecipeSerializer<?>> IRECIPE_SERIALIZERS_DEFERRED = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Aquaculture.MOD_ID);
-    private static final RegistryObject<RecipeSerializer<?>> FISH_FILLET_SERIALIZER = registerRecipeSerializer("crafting_special_fish_fillet", new SimpleCraftingRecipeSerializer<>(FishFilletRecipe::new));
+    public static final DeferredRegister<RecipeSerializer<?>> IRECIPE_SERIALIZERS_DEFERRED = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Aquaculture.MOD_ID);
+    private static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> FISH_FILLET_SERIALIZER = registerRecipeSerializer("crafting_special_fish_fillet", new SimpleCraftingRecipeSerializer<>(FishFilletRecipe::new));
 
-    private FishFilletRecipe(ResourceLocation location, CraftingBookCategory craftingBookCategory) {
-        super(location, craftingBookCategory);
-    }
-
-    @Override
-    @Nonnull
-    public ResourceLocation getId() {
-        return new ResourceLocation(Aquaculture.MOD_ID, "fish_fillet");
+    private FishFilletRecipe(CraftingBookCategory craftingBookCategory) {
+        super(craftingBookCategory);
     }
 
     @Override
@@ -135,7 +128,7 @@ public class FishFilletRecipe extends CustomRecipe {
         return width * height >= 2;
     }
 
-    public static RegistryObject<RecipeSerializer<?>> registerRecipeSerializer(String name, RecipeSerializer<?> serializer) {
+    public static DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> registerRecipeSerializer(String name, RecipeSerializer<?> serializer) {
         return IRECIPE_SERIALIZERS_DEFERRED.register(name, () -> serializer);
     }
 }

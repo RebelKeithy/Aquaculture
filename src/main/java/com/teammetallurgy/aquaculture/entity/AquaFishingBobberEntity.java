@@ -43,13 +43,13 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.event.entity.player.ItemFishedEvent;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.entity.IEntityAdditionalSpawnData;
+import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.PlayMessages;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -136,11 +136,11 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
         if (!level.isClientSide && angler != null && !this.shouldStopFishing(angler)) {
             int rodDamage = 0;
             ItemFishedEvent event = null;
-            if (this.hookedIn != null && !isAdminRod) {
-                this.pullEntity(this.hookedIn);
+            if (this.getHookedIn() != null && !isAdminRod) {
+                this.pullEntity(this.getHookedIn());
                 CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayer) angler, stack, this, Collections.emptyList());
                 level.broadcastEntityEvent(this, (byte) 31);
-                rodDamage = this.hookedIn instanceof ItemEntity ? 3 : 5;
+                rodDamage = this.getHookedIn() instanceof ItemEntity ? 3 : 5;
             } else if ((this.nibble > 0 || isAdminRod) && level instanceof ServerLevel serverLevel)  {
                 LootParams lootParams = (new LootParams.Builder((ServerLevel)this.level())).withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.TOOL, stack).withParameter(LootContextParams.THIS_ENTITY, this).withParameter(LootContextParams.KILLER_ENTITY, this.getOwner()).withParameter(LootContextParams.THIS_ENTITY, this).withLuck((float)this.luck + angler.getLuck()).create(LootContextParamSets.FISHING);
 
@@ -160,7 +160,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 }
                 if (!lootEntries.isEmpty()) {
                     event = new ItemFishedEvent(lootEntries, this.onGround() ? 2 : 1, this);
-                    MinecraftForge.EVENT_BUS.post(event);
+                    NeoForge.EVENT_BUS.post(event);
                     if (event.isCanceled()) {
                         this.discard();
                         return event.getRodDamage();
@@ -172,7 +172,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                         if (this.random.nextDouble() <= this.hook.getDoubleCatchChance()) {
                             List<ItemStack> doubleLoot = getLoot(lootParams, serverLevel);
                             if (!doubleLoot.isEmpty()) {
-                                MinecraftForge.EVENT_BUS.post(new ItemFishedEvent(doubleLoot, 0, this));
+                                NeoForge.EVENT_BUS.post(new ItemFishedEvent(doubleLoot, 0, this));
                                 this.spawnLoot(angler, doubleLoot);
                                 this.playSound(SoundEvents.FISHING_BOBBER_SPLASH, 0.25F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.4F);
                             }
@@ -307,7 +307,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
 
             boolean isMainHandRod = f > 0.0F;
             if (this.currentState == FishHookState.FLYING) {
-                if (this.hookedIn != null) {
+                if (this.getHookedIn() != null) {
                     this.setDeltaMovement(Vec3.ZERO);
                     this.currentState = FishHookState.HOOKED_IN_ENTITY;
                     return;
@@ -322,9 +322,9 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
                 this.checkCollision();
             } else {
                 if (this.currentState == FishHookState.HOOKED_IN_ENTITY) {
-                    if (this.hookedIn != null) {
-                        if (!this.hookedIn.isRemoved() && this.hookedIn.level().dimension() == this.level().dimension()) {
-                            this.setPos(this.hookedIn.getX(), this.hookedIn.getY(0.8D), this.hookedIn.getZ());
+                    if (this.getHookedIn() != null) {
+                        if (!this.getHookedIn().isRemoved() && this.getHookedIn().level().dimension() == this.level().dimension()) {
+                            this.setPos(this.getHookedIn().getX(), this.getHookedIn().getY(0.8D), this.getHookedIn().getZ());
                         } else {
                             this.setHookedEntity(null);
                             this.currentState = FishingHook.FishHookState.FLYING;

@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:boulti",
+    "weight": 10,
+    "minCount": 1,
+    "maxCount": 3
+  },
+  "includeBiomes": ["#neoforge:is_dry"],
+  "excludeBiomes": ["#neoforge:is_cold"],
+  "and": false
+}

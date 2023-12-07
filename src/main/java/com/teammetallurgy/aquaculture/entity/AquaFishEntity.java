@@ -4,6 +4,7 @@ import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.entity.ai.goal.FollowTypeSchoolLeaderGoal;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -60,7 +60,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     @Nonnull
     public ItemStack getBucketItemStack() {
-        return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(ForgeRegistries.ENTITY_TYPES.getKey(this.getType()).toString() + "_bucket")));
+        return new ItemStack(BuiltInRegistries.ITEM.get(new ResourceLocation(BuiltInRegistries.ENTITY_TYPE.getKey(this.getType()).toString() + "_bucket")));
     }
 
     @Override
@@ -96,7 +96,7 @@ public class AquaFishEntity extends AbstractSchoolingFish {
     @Override
     public void playerTouch(@Nonnull Player player) {
         super.playerTouch(player);
-        if (Objects.equals(ForgeRegistries.ENTITY_TYPES.getKey(this.getType()), new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))) {
+        if (Objects.equals(BuiltInRegistries.ENTITY_TYPE.getKey(this.getType()), new ResourceLocation(Aquaculture.MOD_ID, "jellyfish"))) {
             if (this.isAlive()) {
                 if (this.distanceToSqr(player) < 1.0D && player.hurt(this.damageSources().mobAttack(this), 0.5F)) {
                     this.playSound(AquaSounds.JELLYFISH_COLLIDE.get(), 0.5F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);

@@ -7,7 +7,7 @@
   ],
   "key": {
     "I": {
-      "tag": "forge:nuggets/iron"
+      "tag": "neoforge:nuggets/iron"
     },
     "H": {
       "item": "aquaculture:iron_hook"

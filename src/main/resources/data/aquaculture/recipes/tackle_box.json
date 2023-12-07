@@ -7,13 +7,13 @@
   ],
   "key": {
     "I": {
-      "tag": "forge:ingots/iron"
+      "tag": "neoforge:ingots/iron"
     },
     "B": {
-      "tag": "forge:storage_blocks/iron"
+      "tag": "neoforge:storage_blocks/iron"
     },
     "C": {
-      "tag": "forge:chests"
+      "tag": "neoforge:chests"
     },
     "G": {
       "tag": "aquaculture:tackle_box_green"

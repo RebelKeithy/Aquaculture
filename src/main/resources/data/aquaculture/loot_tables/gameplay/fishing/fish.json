@@ -14,14 +14,14 @@
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "include": ["forge:is_cold", "minecraft:is_ocean"],
+                    "include": ["neoforge:is_cold", "minecraft:is_ocean"],
                     "and": true
                   }
                 },
                 {
                   "condition": "aquaculture:biome_tag_check",
                   "predicate": {
-                    "include": ["forge:is_cold", "minecraft:is_beach"],
+                    "include": ["neoforge:is_cold", "minecraft:is_beach"],
                     "and": true
                   }
                 }

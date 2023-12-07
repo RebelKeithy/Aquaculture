@@ -9,10 +9,11 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,11 +23,9 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class Hook {
-    public static final HashMap<String, RegistryObject<Item>> HOOKS = new HashMap<>();
+    public static final HashMap<String, DeferredItem<Item>> HOOKS = new HashMap<>();
     private final String name;
     private final String modID;
-    @Nullable
-    private final RegistryObject<Item> hookItem;
     private final ResourceLocation texture;
     private final ChatFormatting color;
     private final int minCatchable;
@@ -51,26 +50,18 @@ public class Hook {
         this.doubleCatchChance = doubleCatchChance;
         this.catchSound = catchSound;
         this.texture = new ResourceLocation(modID, "textures/entity/rod/hook/" + name + "_hook" + ".png");
-        if (name != null) {
-            this.hookItem = AquaItems.registerWithTab(() -> new HookItem(this), name + "_hook");
-            HOOKS.put(name, hookItem);
-        } else {
-            this.hookItem = null;
-        }
     }
 
     public String getName() {
         return this.name;
     }
 
-    public String getModID() {
-        return this.modID;
-    }
-
     @Nonnull
     public Item getItem() {
-        RegistryObject<Item> hookItem = this.hookItem;
-        return hookItem != null ? hookItem.get() : Items.AIR;
+        for (DeferredItem<Item> hookItem : HOOKS.values()) {
+            return hookItem != null ? hookItem.get() : ItemStack.EMPTY.getItem();
+        }
+        return ItemStack.EMPTY.getItem();
     }
 
     public ResourceLocation getTexture() {

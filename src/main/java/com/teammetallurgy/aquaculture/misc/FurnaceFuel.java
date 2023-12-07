@@ -3,9 +3,9 @@ package com.teammetallurgy.aquaculture.misc;
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaItems;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent;
 
 @Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class FurnaceFuel {

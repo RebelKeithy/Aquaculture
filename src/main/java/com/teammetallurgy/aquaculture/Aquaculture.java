@@ -1,10 +1,12 @@
 package com.teammetallurgy.aquaculture;
 
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
+import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.init.*;
+import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
 import com.teammetallurgy.aquaculture.item.crafting.FishFilletRecipe;
 import com.teammetallurgy.aquaculture.loot.AquaBiomeModifiers;
 import com.teammetallurgy.aquaculture.loot.FishWeightHandler;
@@ -19,17 +21,16 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,9 +40,8 @@ public class Aquaculture {
     public static final boolean IS_DEV = Launcher.INSTANCE.environment().getProperty(Environment.Keys.VERSION.get()).filter(v -> v.equals("MOD_DEV")).isPresent();
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
-    public static LootItemConditionType BIOME_TAG_CHECK;
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Aquaculture.MOD_ID);
-    public static final RegistryObject<CreativeModeTab> GROUP = CREATIVE_TABS.register("tab", () -> new CreativeModeTab.Builder(CreativeModeTab.Row.TOP,0)
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> GROUP = CREATIVE_TABS.register("tab", () -> new CreativeModeTab.Builder(CreativeModeTab.Row.TOP,0)
                     .icon(() -> new ItemStack(AquaItems.IRON_FISHING_ROD.get()))
                     .title(Component.translatable("tabs." + MOD_ID + ".tab"))
                     .displayItems((featureFlagSet, tabOutput) -> {
@@ -64,12 +64,13 @@ public class Aquaculture {
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
+        event.enqueueWork(Hooks::load);
         event.enqueueWork(FishWeightHandler::registerFishData);
         event.enqueueWork(AquaEntities::setSpawnPlacement);
         event.enqueueWork(WormFarmBlock::addCompostables);
         event.enqueueWork(AquaRecipes::registerBrewingRecipes);
         event.enqueueWork(() -> {
-            for (RegistryObject<EntityType<AquaFishEntity>> entityType : FishRegistry.fishEntities) {
+            for (DeferredHolder<EntityType<?>, EntityType<AquaFishEntity>> entityType : FishRegistry.fishEntities) {
                 SpawnPlacements.register(entityType.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
             }
         });
@@ -92,6 +93,7 @@ public class Aquaculture {
         AquaGuis.MENU_DEFERRED.register(modBus);
         FishFilletRecipe.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
         AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register(modBus);
+        ConditionFactory.CONDITION_CODECS.register(modBus);
     }
 
     private void addItemsToTabs(BuildCreativeModeTabContentsEvent event) {

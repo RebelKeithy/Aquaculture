@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:pacific_halibut",
+    "weight": 3,
+    "minCount": 1,
+    "maxCount": 1
+  },
+  "includeBiomes": ["#neoforge:is_cold", "#minecraft:is_beach"],
+  "excludeBiomes": ["#aquaculture:empty"],
+  "and": true
+}

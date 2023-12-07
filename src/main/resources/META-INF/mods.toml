@@ -14,9 +14,9 @@ license="All Rights Reserved"
     Welcome to Aquaculture! An expansion of Minecraft's fishing system.
     '''
 
-[[dependencies.aquaculture]]
-    modId="forge"
+[[dependencies.${mod_id}]]
+    modId="neoforge"
     mandatory=true
-    versionRange="${forge_version_range}"
-    ordering="AFTER"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
     side="BOTH"

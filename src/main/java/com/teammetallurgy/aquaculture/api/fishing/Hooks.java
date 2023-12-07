@@ -1,13 +1,10 @@
 package com.teammetallurgy.aquaculture.api.fishing;
 
-import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.init.AquaSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID) //To get the static registering working
 public class Hooks {
     public static final Hook EMPTY = new Hook.HookBuilder().build();
     //Water
@@ -27,4 +24,6 @@ public class Hooks {
     //public static final Hook QUARTZ = new Hook.HookBuilder("quartz").setFluid(FluidTags.LAVA).setDurabilityChance(0.30).build();
     //public static final Hook SOUL_SAND = new Hook.HookBuilder("soul_sand").setColor(TextFormatting.DARK_GRAY).setFluid(FluidTags.LAVA).setCatchableWindow(40, 70).build();
     //public static final Hook OBSIDIAN_NOTE = new Hook.HookBuilder("obsidian_note").setColor(TextFormatting.LIGHT_PURPLE).setFluid(FluidTags.LAVA).setCatchSound(SoundEvents.BLOCK_LAVA_EXTINGUISH).build();
+
+    public static void load() {}
 }

@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:synodontis",
+    "weight": 20,
+    "minCount": 1,
+    "maxCount": 6
+  },
+  "includeBiomes": ["#neoforge:is_dry"],
+  "excludeBiomes": ["#neoforge:is_cold"],
+  "and": false
+}

@@ -1,0 +1,12 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:bayad",
+    "weight": 6,
+    "minCount": 1,
+    "maxCount": 2
+  },
+  "includeBiomes": ["#neoforge:is_dry"],
+  "excludeBiomes": ["#neoforge:is_cold"],
+  "and": false
+}

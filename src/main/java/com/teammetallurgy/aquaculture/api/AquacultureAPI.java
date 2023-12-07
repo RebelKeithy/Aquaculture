@@ -2,16 +2,18 @@ package com.teammetallurgy.aquaculture.api;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
+import com.teammetallurgy.aquaculture.api.fishing.Hook;
+import com.teammetallurgy.aquaculture.init.AquaItems;
 import com.teammetallurgy.aquaculture.init.FishRegistry;
 import com.teammetallurgy.aquaculture.item.BaitItem;
+import com.teammetallurgy.aquaculture.item.HookItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import javax.annotation.Nonnull;
 
@@ -30,8 +32,14 @@ public class AquacultureAPI {
         return new BaitItem(durability, lureSpeedModifier);
     }
 
-    public static RegistryObject<Item> registerFishMount(@Nonnull String name) {
+    public static DeferredItem<Item> registerFishMount(@Nonnull String name) {
         return FishRegistry.registerFishMount(name);
+    }
+
+    public static DeferredItem<Item> registerHook(Hook hook) {
+        DeferredItem<Item> hookItem = AquaItems.registerWithTab(() -> new HookItem(hook), hook.getName() + "_hook");
+        Hook.HOOKS.put(hook.getName(), hookItem);
+        return hookItem;
     }
 
     public static class Tags {

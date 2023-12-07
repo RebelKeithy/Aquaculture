@@ -2,10 +2,10 @@ package com.teammetallurgy.aquaculture.inventory.container.slot;
 
 import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
@@ -25,7 +25,7 @@ public class SlotFishingRod extends SlotItemHandler {
     @Override
     public void setChanged() { //Save changes to the rod
         ItemStack stack = getItem();
-        this.rodHandler = (ItemStackHandler) stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(AquaFishingRodItem.FishingRodEquipmentHandler.EMPTY.getItems());
+        this.rodHandler = (ItemStackHandler) stack.getCapability(Capabilities.ITEM_HANDLER).orElse(AquaFishingRodItem.FishingRodEquipmentHandler.EMPTY.getItems());
         if (!stack.isEmpty() && stack.hasTag() && stack.getTag() != null && stack.getTag().contains("Inventory")) {
             this.rodHandler.deserializeNBT(stack.getTag().getCompound("Inventory")); //Reload
         }
