@@ -18,7 +18,6 @@ import net.neoforged.neoforge.event.LootTableLoadEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class AquaLootTables {
     //Boxes
     public static final ResourceLocation BOX = register("box/box");
@@ -42,7 +41,7 @@ public class AquaLootTables {
         return BuiltInLootTables.register(new ResourceLocation(Aquaculture.MOD_ID, path));
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
         System.out.println("Loot table load event");
@@ -59,9 +58,9 @@ public class AquaLootTables {
                 }
             }
         }
-    }
+    }*/
 
-    private static LootPoolEntryContainer getInjectEntry(ResourceLocation location, int weight, int quality) {
+    /*private static LootPoolEntryContainer getInjectEntry(ResourceLocation location, int weight, int quality) {
         return LootTableReference.lootTableReference(location).setWeight(weight).setQuality(quality).build();
     }
 
@@ -75,5 +74,5 @@ public class AquaLootTables {
         newLootEntries.add(entry);
 
         pool.entries.addAll(newLootEntries);
-    }
+    }*/
 }

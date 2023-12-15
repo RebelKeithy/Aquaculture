@@ -23,10 +23,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
@@ -118,14 +116,16 @@ public class AquaFishingRodItem extends FishingRodItem {
     @Nonnull
     public static Hook getHookType(@Nonnull ItemStack fishingRod) {
         Hook hook = Hooks.EMPTY;
-        ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ITEM_HANDLER).orElse(AquaFishingRodItem.FishingRodEquipmentHandler.EMPTY.getItems());
-        if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
-            rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
-        }
+        ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ItemHandler.ITEM);
+        if (rodHandler != null) {
+            if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
+                rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
+            }
 
-        ItemStack hookStack = rodHandler.getStackInSlot(0);
-        if (hookStack.getItem() instanceof HookItem) {
-            hook = ((HookItem) hookStack.getItem()).getHookType();
+            ItemStack hookStack = rodHandler.getStackInSlot(0);
+            if (hookStack.getItem() instanceof HookItem) {
+                hook = ((HookItem) hookStack.getItem()).getHookType();
+            }
         }
         return hook;
     }
@@ -146,17 +146,11 @@ public class AquaFishingRodItem extends FishingRodItem {
     }
 
     public static ItemStackHandler getHandler(@Nonnull ItemStack fishingRod) {
-        ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ITEM_HANDLER).orElse(AquaFishingRodItem.FishingRodEquipmentHandler.EMPTY.getItems());
-        if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
+        ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ItemHandler.ITEM);
+        if (rodHandler != null && !fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
             rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
         }
         return rodHandler;
-    }
-
-    @Override
-    @Nullable
-    public ICapabilityProvider initCapabilities(@Nonnull ItemStack stack, @Nullable CompoundTag nbt) {
-        return new FishingRodEquipmentHandler(stack);
     }
 
     @Override
@@ -175,9 +169,8 @@ public class AquaFishingRodItem extends FishingRodItem {
         super.appendHoverText(stack, level, tooltips, tooltipFlag);
     }
 
-    public static class FishingRodEquipmentHandler implements ICapabilityProvider {
+    public static class FishingRodEquipmentHandler { //TODO
         public static final FishingRodEquipmentHandler EMPTY = new FishingRodEquipmentHandler(ItemStack.EMPTY);
-        private final LazyOptional<IItemHandler> holder = LazyOptional.of(this::getItems);
         private final ItemStack stack;
         private final ItemStackHandler items = new ItemStackHandler(4) {
             @Override
@@ -190,8 +183,7 @@ public class AquaFishingRodItem extends FishingRodItem {
                 return switch (slot) {
                     case 0 -> stack.getItem() instanceof HookItem;
                     case 1 -> stack.getItem() instanceof BaitItem;
-                    case 2 ->
-                            stack.is(AquacultureAPI.Tags.FISHING_LINE) && stack.getItem() instanceof DyeableLeatherItem;
+                    case 2 -> stack.is(AquacultureAPI.Tags.FISHING_LINE) && stack.getItem() instanceof DyeableLeatherItem;
                     case 3 -> stack.is(AquacultureAPI.Tags.BOBBER) && stack.getItem() instanceof DyeableLeatherItem;
                     default -> false;
                 };
@@ -205,14 +197,8 @@ public class AquaFishingRodItem extends FishingRodItem {
             }
         };
 
-        FishingRodEquipmentHandler(@Nonnull ItemStack stack) {
+        public FishingRodEquipmentHandler(@Nonnull ItemStack stack) {
             this.stack = stack;
-        }
-
-        @Override
-        @Nonnull
-        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction direction) {
-            return capability == Capabilities.ITEM_HANDLER ? holder.cast() : LazyOptional.empty();
         }
 
         @Nonnull

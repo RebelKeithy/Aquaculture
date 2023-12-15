@@ -3,9 +3,11 @@ package com.teammetallurgy.aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
+import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.init.*;
+import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
 import com.teammetallurgy.aquaculture.item.crafting.FishFilletRecipe;
 import com.teammetallurgy.aquaculture.loot.AquaBiomeModifiers;
@@ -28,6 +30,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -55,6 +59,7 @@ public class Aquaculture {
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
         this.registerDeferredRegistries(modBus);
+        modBus.addListener(this::registerCapabilities);
         modBus.addListener(this::addItemsToTabs);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AquaConfig.spec);
         AquacultureAPI.Tags.init();
@@ -100,5 +105,10 @@ public class Aquaculture {
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             AquaItems.SPAWN_EGGS.forEach(registryObject -> event.accept(new ItemStack(registryObject.get())));
         }
+    }
+
+    public void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, AquaBlockEntities.TACKLE_BOX.get(), (blockEntity, side) -> TackleBoxBlockEntity.createItemHandler(blockEntity));
+        event.registerItem(Capabilities.ItemHandler.ITEM, (stack, context) -> AquaFishingRodItem.getHandler(stack), AquaItems.IRON_FISHING_ROD, AquaItems.GOLD_FISHING_ROD, AquaItems.DIAMOND_FISHING_ROD, AquaItems.NEPTUNIUM_FISHING_ROD);
     }
 }

@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.block;
 
+import com.mojang.serialization.MapCodec;
 import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
@@ -19,10 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -40,7 +38,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.network.NetworkHooks;
 
@@ -49,6 +48,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+    public static final MapCodec<TackleBoxBlock> CODEC = simpleCodec(p -> new TackleBoxBlock());
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape NORTH_SOUTH = Block.box(0.8D, 0.0D, 3.9D, 15.2D, 9.0D, 12.2D);
@@ -62,6 +62,12 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
         return new TackleBoxBlockEntity(pos, state);
+    }
+
+    @Override
+    @Nonnull
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -148,11 +154,13 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     }
 
     @Override
-    public int getAnalogOutputSignal(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos) {
-        BlockEntity tileEntity = world.getBlockEntity(pos);
+    public int getAnalogOutputSignal(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos) {
+        BlockEntity tileEntity = level.getBlockEntity(pos);
         if (tileEntity instanceof TackleBoxBlockEntity) {
-            Optional<Integer> redstone = tileEntity.getCapability(Capabilities.ITEM_HANDLER, null).map(ItemHandlerHelper::calcRedstoneFromInventory);
-            return redstone.orElse(0);
+            IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+            if (handler != null) {
+                return ItemHandlerHelper.calcRedstoneFromInventory(handler);
+            }
         }
         return 0;
     }
@@ -206,7 +214,7 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         ItemStack cloneItemStack = super.getCloneItemStack(state, target, level, pos, player);
         level.getBlockEntity(pos, AquaBlockEntities.TACKLE_BOX.get()).ifPresent((blockEntity) -> {
             blockEntity.saveToItem(cloneItemStack);
@@ -217,16 +225,12 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
     @Override
     public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) {
         if (!level.isClientSide) {
-            this.dropInventory(level, pos);
+            IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+            if (handler != null) {
+                StackHelper.dropInventory(level, pos, handler);
+            }
         }
         super.onBlockExploded(state, level, pos, explosion);
-    }
-
-    private void dropInventory(Level level, BlockPos pos) {
-        BlockEntity tileEntity = level.getBlockEntity(pos);
-        if (tileEntity != null) {
-            tileEntity.getCapability(Capabilities.ITEM_HANDLER, null).ifPresent(handler -> StackHelper.dropInventory(level, pos, handler));
-        }
     }
 
     @Override

@@ -18,6 +18,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -63,8 +65,8 @@ public class TurtleLandEntity extends Animal {
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
+    public boolean canDrownInFluidType(FluidType type) {
+        return type == NeoForgeMod.WATER_TYPE.value() ? false : super.canDrownInFluidType(type);
     }
 
     @Override

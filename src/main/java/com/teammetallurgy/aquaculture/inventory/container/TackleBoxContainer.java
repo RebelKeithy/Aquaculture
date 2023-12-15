@@ -17,7 +17,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -35,7 +34,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
     public TackleBoxContainer(int windowID, BlockPos pos, Inventory playerInventory) {
         super(AquaGuis.TACKLE_BOX.get(), windowID);
         this.tackleBox = (TackleBoxBlockEntity) playerInventory.player.level().getBlockEntity(pos);
-        if (this.tackleBox != null) {
+        /*if (this.tackleBox != null) { //TODO Move to new capability system
             this.tackleBox.startOpen(playerInventory.player);
             this.tackleBox.getCapability(Capabilities.ITEM_HANDLER).ifPresent(handler -> {
                 SlotFishingRod fishingRod = (SlotFishingRod) addSlot(new SlotFishingRod(handler, 0, 117, 21));
@@ -93,7 +92,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
             for (int row = 0; row < 9; ++row) {
                 this.addSlot(new Slot(playerInventory, row, 8 + row * 18, 148));
             }
-        }
+        }*/
     }
 
     @Override

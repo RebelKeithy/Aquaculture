@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.block;
 
+import com.mojang.serialization.MapCodec;
 import com.teammetallurgy.aquaculture.block.blockentity.NeptunesBountyBlockEntity;
 import com.teammetallurgy.aquaculture.init.AquaBlockEntities;
 import net.minecraft.ChatFormatting;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.material.FluidState;
@@ -29,6 +31,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class NeptunesBountyBlock extends ChestBlock {
+    public static final MapCodec<NeptunesBountyBlock> CODEC = simpleCodec(p -> new NeptunesBountyBlock());
 
     public NeptunesBountyBlock() {
         super(Block.Properties.of().mapColor(MapColor.METAL).strength(3.5F, 8.0F).sound(SoundType.METAL), AquaBlockEntities.NEPTUNES_BOUNTY::get);
@@ -37,6 +40,12 @@ public class NeptunesBountyBlock extends ChestBlock {
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
         return new NeptunesBountyBlockEntity(pos, state);
+    }
+
+    @Override
+    @Nonnull
+    public MapCodec<? extends NeptunesBountyBlock> codec() {
+        return CODEC;
     }
 
     @Override

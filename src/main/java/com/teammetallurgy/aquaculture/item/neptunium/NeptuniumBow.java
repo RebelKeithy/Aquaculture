@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -19,19 +20,18 @@ public class NeptuniumBow extends BowItem {
 
     @Override
     @Nonnull
-    public AbstractArrow customArrow(@Nonnull AbstractArrow arrowEntity) {
+    public AbstractArrow customArrow(@Nonnull AbstractArrow arrowEntity, @Nonnull ItemStack stack) {
+        Entity shooter = arrowEntity.getOwner();
         if (arrowEntity.getType() == EntityType.ARROW) {
-            Entity shooter = arrowEntity.getOwner();
             if (shooter instanceof LivingEntity) {
-                return new WaterArrowEntity(arrowEntity.level(), (LivingEntity) shooter);
+                return new WaterArrowEntity(arrowEntity.level(), (LivingEntity) shooter, stack.copyWithCount(1));
             }
         }
         if (arrowEntity.getType() == EntityType.SPECTRAL_ARROW) {
-            Entity shooter = arrowEntity.getOwner();
             if (shooter instanceof LivingEntity) {
-                return new SpectralWaterArrowEntity(arrowEntity.level(), (LivingEntity) shooter);
+                return new SpectralWaterArrowEntity(arrowEntity.level(), (LivingEntity) shooter, stack.copyWithCount(1));
             }
         }
-        return super.customArrow(arrowEntity);
+        return super.customArrow(arrowEntity, stack);
     }
 }

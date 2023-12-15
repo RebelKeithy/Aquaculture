@@ -5,27 +5,23 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "item",
+          "type": "minecraft:item",
           "name": "minecraft:iron_ingot",
-          "entryName": "iron_ingot",
           "weight": 40
         },
         {
-          "type": "item",
+          "type": "minecraft:item",
           "name": "minecraft:gold_ingot",
-          "entryName": "gold_ingot",
           "weight": 30
         },
         {
-          "type": "item",
+          "type": "minecraft:item",
           "name": "minecraft:diamond",
-          "entryName": "diamond",
           "weight": 15
         },
         {
-          "type": "item",
+          "type": "minecraft:item",
           "name": "minecraft:emerald",
-          "entryName": "emerald",
           "weight": 15
         }
       ]

@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.block;
 
+import com.mojang.serialization.MapCodec;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fish.FishData;
 import com.teammetallurgy.aquaculture.init.AquaItems;
@@ -33,9 +34,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class WormFarmBlock extends ComposterBlock {
+    public static final MapCodec<ComposterBlock> CODEC = simpleCodec(p -> new WormFarmBlock());
 
     public WormFarmBlock() {
         super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(0.6F).sound(SoundType.WOOD));
+    }
+
+    @Override
+    @Nonnull
+    public MapCodec<ComposterBlock> codec() {
+        return CODEC;
     }
 
     public static void addCompostables() {
