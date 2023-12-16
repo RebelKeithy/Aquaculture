@@ -1,7 +1,6 @@
 {
   "pools": [
     {
-      "name": "aquaculture:lockbox_loot",
       "rolls": 1,
       "entries": [
         {

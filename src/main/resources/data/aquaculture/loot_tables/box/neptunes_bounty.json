@@ -1,7 +1,6 @@
 {
   "pools": [
     {
-      "name": "aquaculture:neptunes_bounty_junk_first",
       "rolls": 1,
       "entries": [
         {
@@ -12,7 +11,6 @@
       ]
     },
     {
-      "name": "aquaculture:neptunes_bounty_loot",
       "rolls": 1,
       "entries": [
         {
@@ -92,7 +90,6 @@
       ]
     },
     {
-      "name": "aquaculture:neptunes_bounty_junk_last",
       "rolls": 1,
       "entries": [
         {
