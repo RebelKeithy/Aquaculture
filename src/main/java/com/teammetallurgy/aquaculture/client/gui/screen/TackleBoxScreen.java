@@ -21,8 +21,8 @@ public class TackleBoxScreen extends AbstractContainerScreen<TackleBoxContainer>
 
     @Override
     public void render(@Nonnull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
@@ -40,7 +40,7 @@ public class TackleBoxScreen extends AbstractContainerScreen<TackleBoxContainer>
         int y = (this.height - this.imageHeight) / 2;
         guiGraphics.blit(TACKLE_BOX_GUI, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
-        if (this.menu.slotHook.isActive()) { //Only checking one slot, since they're all disabled at the same time
+        if (this.menu.slotHook != null && this.menu.slotHook.isActive()) { //Only checking one slot, since they're all disabled at the same time
             if (this.menu.slotHook.hasItem()) {
                 this.renderEmptySlot(TACKLE_BOX_GUI, x + 105, y + 43, guiGraphics);
             } else {

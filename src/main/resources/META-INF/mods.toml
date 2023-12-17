@@ -16,7 +16,7 @@ license="All Rights Reserved"
 
 [[dependencies.${mod_id}]]
     modId="neoforge"
-    mandatory=true
+    type="required"
     versionRange="${neo_version_range}"
     ordering="NONE"
     side="BOTH"

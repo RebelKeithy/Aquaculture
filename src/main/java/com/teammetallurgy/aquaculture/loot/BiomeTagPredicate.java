@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.loot;
 
+import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.critereon.MinMaxBounds;
@@ -14,6 +15,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.Tags;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,7 +35,7 @@ public record BiomeTagPredicate(Optional<PositionPredicate> position, Optional<L
     public boolean matches(ServerLevel serverLevel, double x, double y, double z) {
         if (this.position.isPresent() && !this.position.get().matches(x, y, z)) {
             return false;
-        } else if (this.include.isPresent() && this.exclude.isPresent() && this.and.isPresent()) {
+        } else {
             BlockPos pos = BlockPos.containing(x, y, z);
             if (serverLevel.isLoaded(pos)) {
                 Biome biome = serverLevel.getBiome(pos).value();
@@ -43,7 +45,7 @@ public record BiomeTagPredicate(Optional<PositionPredicate> position, Optional<L
                 if (resourceKey.isPresent()) {
                     Optional<Holder.Reference<Biome>> biomeHolder = biomeRegistry.getHolder(resourceKey.get());
                     if (biomeHolder.isPresent()) {
-                        CheckType checkType = CheckType.getOrCreate(this.include.get(), this.exclude.get(), this.and.get());
+                        CheckType checkType = CheckType.getOrCreate(this.include.map(Lists::newArrayList).orElseGet(ArrayList::new), this.exclude.map(Lists::newArrayList).orElseGet(ArrayList::new), this.and.orElse(false));
 
                         Set<Holder<Biome>> validBiomes = CACHE.get(checkType);
                         if (validBiomes == null) {
@@ -105,7 +107,7 @@ public record BiomeTagPredicate(Optional<PositionPredicate> position, Optional<L
         return biomeRegistry.getTagOrEmpty(tagKey);
     }
 
-    static record PositionPredicate(MinMaxBounds.Doubles x, MinMaxBounds.Doubles y, MinMaxBounds.Doubles z) {
+    public static record PositionPredicate(MinMaxBounds.Doubles x, MinMaxBounds.Doubles y, MinMaxBounds.Doubles z) {
         public static final Codec<PositionPredicate> CODEC = RecordCodecBuilder.create(
                 p_299107_ -> p_299107_.group(
                                 ExtraCodecs.strictOptionalField(MinMaxBounds.Doubles.CODEC, "x", MinMaxBounds.Doubles.ANY).forGetter(PositionPredicate::x),
@@ -132,7 +134,7 @@ public record BiomeTagPredicate(Optional<PositionPredicate> position, Optional<L
         private final List<TagKey<Biome>> exclude;
         private final boolean and;
 
-        private CheckType(List<TagKey<Biome>> include, List<TagKey<Biome>> exclude, boolean and) {
+        private CheckType(@Nullable List<TagKey<Biome>> include,  List<TagKey<Biome>> exclude, boolean and) {
             this.include = include;
             this.exclude = exclude;
             this.and = and;

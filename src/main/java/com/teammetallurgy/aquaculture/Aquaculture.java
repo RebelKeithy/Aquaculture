@@ -109,6 +109,6 @@ public class Aquaculture {
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, AquaBlockEntities.TACKLE_BOX.get(), (blockEntity, side) -> TackleBoxBlockEntity.createItemHandler(blockEntity));
-        event.registerItem(Capabilities.ItemHandler.ITEM, (stack, context) -> AquaFishingRodItem.getHandler(stack), AquaItems.IRON_FISHING_ROD, AquaItems.GOLD_FISHING_ROD, AquaItems.DIAMOND_FISHING_ROD, AquaItems.NEPTUNIUM_FISHING_ROD);
+        //event.registerItem(Capabilities.ItemHandler.ITEM, (stack, context) -> AquaFishingRodItem.getHandler(stack), AquaItems.IRON_FISHING_ROD, AquaItems.GOLD_FISHING_ROD, AquaItems.DIAMOND_FISHING_ROD, AquaItems.NEPTUNIUM_FISHING_ROD);
     }
 }

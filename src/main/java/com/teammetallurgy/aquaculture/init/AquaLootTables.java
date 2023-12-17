@@ -15,9 +15,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 
+@Mod.EventBusSubscriber(modid = Aquaculture.MOD_ID)
 public class AquaLootTables {
     //Boxes
     public static final ResourceLocation BOX = register("box/box");
@@ -44,12 +45,10 @@ public class AquaLootTables {
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         ResourceLocation name = event.getName();
-        System.out.println("Loot table load event");
-        if (name.equals(BuiltInLootTables.FISHING)) {
+        if (name != null && name.equals(BuiltInLootTables.FISHING)) {
             LootPool pool = event.getTable().getPool("main");
-            System.out.println("Fishing loot table");
             if (pool != null) {
-                System.out.println("POOL PARTY");
+                System.out.println("Aquaculture pool inject"); //TODO Remove
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.NEPTUNIUM_OPTIONS.addNeptunesBountyToLoot.get()) {
@@ -65,14 +64,22 @@ public class AquaLootTables {
     }
 
     private static void addEntry(LootPool pool, LootPoolEntryContainer entry) {
-        ArrayList<LootPoolEntryContainer> newLootEntries = new ArrayList<>(pool.entries);
+        try {
+            Field entries = LootPool.class.getDeclaredField("entries");
+            entries.setAccessible(true);
 
-        if (newLootEntries.stream().anyMatch(e -> e == entry)) {
-            throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
+            ArrayList<LootPoolEntryContainer> lootPoolEntriesArray = new ArrayList<>(pool.entries);
+            ArrayList<LootPoolEntryContainer> newLootEntries = new ArrayList<>(lootPoolEntriesArray);
+
+            if (newLootEntries.stream().anyMatch(e -> e == entry)) {
+                throw new RuntimeException("Attempted to add a duplicate entry to pool: " + entry);
+            }
+
+            newLootEntries.add(entry);
+            entries.set(pool, newLootEntries);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            Aquaculture.LOG.error("Error occurred when attempting to add a new entry, to the fishing loot table");
+            e.printStackTrace();
         }
-
-        newLootEntries.add(entry);
-
-        pool.entries.addAll(newLootEntries);
     }
 }
