@@ -57,20 +57,19 @@ public class TackleBoxBlockEntity extends IItemHandlerBEBase implements MenuProv
         }
     };
     private final ChestLidController lidController = new ChestLidController();
-    public static final BlockCapability<IItemHandler, Direction> ITEM_HANDLER_BLOCK =
-            BlockCapability.createSided(new ResourceLocation(Aquaculture.MOD_ID, "tackle_box_item_handler"), IItemHandler.class);
 
     public TackleBoxBlockEntity(BlockPos pos, BlockState state) {
         super(AquaBlockEntities.TACKLE_BOX.get(), pos, state);
     }
 
+    @Override
     @Nonnull
-    public static IItemHandler createItemHandler(BlockEntity blockEntity) {
+    protected IItemHandler createItemHandler() {
         return new ItemStackHandler(17) {
             @Override
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
-                blockEntity.setChanged();
+                TackleBoxBlockEntity.this.setChanged();
             }
 
             @Override
