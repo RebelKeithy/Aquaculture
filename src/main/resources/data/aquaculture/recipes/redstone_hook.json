@@ -7,7 +7,7 @@
   ],
   "key": {
     "R": {
-      "tag": "neoforge:dusts/redstone"
+      "tag": "forge:dusts/redstone"
     },
     "H": {
       "item": "aquaculture:iron_hook"

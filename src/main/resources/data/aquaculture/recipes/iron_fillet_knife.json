@@ -7,10 +7,10 @@
   ],
   "key": {
     "S": {
-      "tag": "neoforge:rods/wooden"
+      "tag": "forge:rods/wooden"
     },
     "I": {
-      "tag": "neoforge:ingots/iron"
+      "tag": "forge:ingots/iron"
     }	
   },
   "result": {

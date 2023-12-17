@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#neoforge:storage_blocks/neptunium"
+    "#forge:storage_blocks/neptunium"
   ]
 }

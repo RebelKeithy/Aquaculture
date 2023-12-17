@@ -13,10 +13,10 @@
   ],
   "key": {
     "S": {
-      "tag": "neoforge:rods/wooden"
+      "tag": "forge:rods/wooden"
     },
     "I": {
-      "tag": "neoforge:ingots/neptunium"
+      "tag": "forge:ingots/neptunium"
     }	
   },
   "result": {

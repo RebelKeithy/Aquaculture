@@ -7,10 +7,10 @@
   ],
   "key": {
     "I": {
-      "tag": "neoforge:ingots/iron"
+      "tag": "forge:ingots/iron"
     },
     "S": {
-      "tag": "neoforge:string"
+      "tag": "forge:string"
     }
   },
   "result": {

@@ -7,6 +7,6 @@
     "maxCount": 6
   },
   "includeBiomes": ["#minecraft:is_ocean", "#minecraft:is_beach"],
-  "excludeBiomes": ["#neoforge:is_hot"],
+  "excludeBiomes": ["#forge:is_hot"],
   "and": false
 }

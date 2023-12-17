@@ -48,7 +48,6 @@ public class AquaLootTables {
         if (name != null && name.equals(BuiltInLootTables.FISHING)) {
             LootPool pool = event.getTable().getPool("main");
             if (pool != null) {
-                System.out.println("Aquaculture pool inject"); //TODO Remove
                 addEntry(pool, getInjectEntry(FISH, 85, -1));
                 addEntry(pool, getInjectEntry(JUNK, 10, -2));
                 if (AquaConfig.NEPTUNIUM_OPTIONS.addNeptunesBountyToLoot.get()) {
