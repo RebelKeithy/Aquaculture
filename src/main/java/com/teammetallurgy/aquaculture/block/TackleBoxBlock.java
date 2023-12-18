@@ -45,7 +45,6 @@ import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Optional;
 
 public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<TackleBoxBlock> CODEC = simpleCodec(p -> new TackleBoxBlock());
@@ -155,12 +154,9 @@ public class TackleBoxBlock extends BaseEntityBlock implements SimpleWaterlogged
 
     @Override
     public int getAnalogOutputSignal(@Nonnull BlockState state, Level level, @Nonnull BlockPos pos) {
-        BlockEntity tileEntity = level.getBlockEntity(pos);
-        if (tileEntity instanceof TackleBoxBlockEntity) {
-            IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
-            if (handler != null) {
-                return ItemHandlerHelper.calcRedstoneFromInventory(handler);
-            }
+        IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+        if (handler != null) {
+            return ItemHandlerHelper.calcRedstoneFromInventory(handler);
         }
         return 0;
     }

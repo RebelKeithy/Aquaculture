@@ -1,13 +1,11 @@
 package com.teammetallurgy.aquaculture.init;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.api.fishing.Hook;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.entity.FishMountEntity;
 import com.teammetallurgy.aquaculture.entity.FishType;
 import com.teammetallurgy.aquaculture.item.AquaFishBucket;
 import com.teammetallurgy.aquaculture.item.FishMountItem;
-import com.teammetallurgy.aquaculture.item.HookItem;
 import com.teammetallurgy.aquaculture.loot.BiomeTagCheck;
 import com.teammetallurgy.aquaculture.misc.StackHelper;
 import net.minecraft.core.registries.BuiltInRegistries;

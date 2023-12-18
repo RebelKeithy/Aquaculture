@@ -25,9 +25,9 @@ public class SlotFishingRod extends SlotItemHandler {
     @Override
     public void setChanged() { //Save changes to the rod
         ItemStack stack = getItem();
-        this.rodHandler = (ItemStackHandler) stack.getCapability(Capabilities.ItemHandler.ITEM); //TODO Test
-        if (!stack.isEmpty() && stack.hasTag() && stack.getTag() != null && stack.getTag().contains("Inventory")) {
-            this.rodHandler.deserializeNBT(stack.getTag().getCompound("Inventory")); //Reload
+        this.rodHandler = (ItemStackHandler) stack.getCapability(Capabilities.ItemHandler.ITEM);
+        if (!stack.isEmpty() && stack.hasTag() && stack.getTag() != null && stack.getTag().contains("Items")) {
+            this.rodHandler.deserializeNBT(stack.getTag().getCompound("Items")); //Reload
         }
     }
 }

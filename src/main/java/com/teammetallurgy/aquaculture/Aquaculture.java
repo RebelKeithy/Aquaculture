@@ -3,7 +3,6 @@ package com.teammetallurgy.aquaculture;
 import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
-import com.teammetallurgy.aquaculture.block.blockentity.TackleBoxBlockEntity;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
 import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.init.*;
@@ -29,12 +28,13 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,18 +44,18 @@ public class Aquaculture {
     public static final boolean IS_DEV = Launcher.INSTANCE.environment().getProperty(Environment.Keys.VERSION.get()).filter(v -> v.equals("MOD_DEV")).isPresent();
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Aquaculture.MOD_ID);
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> GROUP = CREATIVE_TABS.register("tab", () -> new CreativeModeTab.Builder(CreativeModeTab.Row.TOP,0)
-                    .icon(() -> new ItemStack(AquaItems.IRON_FISHING_ROD.get()))
-                    .title(Component.translatable("tabs." + MOD_ID + ".tab"))
-                    .displayItems((featureFlagSet, tabOutput) -> {
-                        AquaItems.ITEMS_FOR_TAB_LIST.forEach(registryObject -> tabOutput.accept(new ItemStack(registryObject.get())));
-                    }).build()
+    public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> GROUP = CREATIVE_TABS.register("tab", () -> new CreativeModeTab.Builder(CreativeModeTab.Row.TOP, 0)
+            .icon(() -> new ItemStack(AquaItems.IRON_FISHING_ROD.get()))
+            .title(Component.translatable("tabs." + MOD_ID + ".tab"))
+            .displayItems((featureFlagSet, tabOutput) -> {
+                AquaItems.ITEMS_FOR_TAB_LIST.forEach(registryObject -> tabOutput.accept(new ItemStack(registryObject.get())));
+            }).build()
     );
 
-    public Aquaculture() {
+    public Aquaculture(IEventBus modBus) {
         instance = this;
-        final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::setupCommon);
         modBus.addListener(this::setupClient);
         this.registerDeferredRegistries(modBus);
@@ -99,6 +99,7 @@ public class Aquaculture {
         FishFilletRecipe.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
         AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register(modBus);
         ConditionFactory.CONDITION_CODECS.register(modBus);
+        ATTACHMENT_TYPES.register(modBus);
     }
 
     private void addItemsToTabs(BuildCreativeModeTabContentsEvent event) {
@@ -109,6 +110,6 @@ public class Aquaculture {
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, AquaBlockEntities.TACKLE_BOX.get(), (blockEntity, side) -> blockEntity.handler);
-        //event.registerItem(Capabilities.ItemHandler.ITEM, (stack, context) -> AquaFishingRodItem.getHandler(stack), AquaItems.IRON_FISHING_ROD, AquaItems.GOLD_FISHING_ROD, AquaItems.DIAMOND_FISHING_ROD, AquaItems.NEPTUNIUM_FISHING_ROD);
+        event.registerItem(Capabilities.ItemHandler.ITEM, (stack, context) -> AquaFishingRodItem.ROD_EQUIPMENT, AquaItems.IRON_FISHING_ROD.get(), AquaItems.GOLD_FISHING_ROD.get(), AquaItems.DIAMOND_FISHING_ROD.get(), AquaItems.NEPTUNIUM_FISHING_ROD.get());
     }
 }

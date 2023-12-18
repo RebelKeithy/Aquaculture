@@ -1,12 +1,10 @@
 package com.teammetallurgy.aquaculture.inventory.container.slot;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -44,9 +42,7 @@ public class SlotHidable extends SlotItemHandler {
     public void setChanged() { //Save changes to the rod
         ItemStack stack = this.fishingRod.getItem();
         if (!stack.isEmpty()) {
-            CompoundTag tag = stack.getOrCreateTag();
-            tag.put("Inventory", ((ItemStackHandler) getItemHandler()).serializeNBT());
-            stack.setTag(tag);
+            stack.setTag(this.fishingRod.rodHandler.serializeNBT());
         }
     }
 }

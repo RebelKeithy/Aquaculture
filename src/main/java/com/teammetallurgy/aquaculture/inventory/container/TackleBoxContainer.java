@@ -20,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -42,38 +41,42 @@ public class TackleBoxContainer extends AbstractContainerMenu {
             this.tackleBox.startOpen(player);
             IItemHandler tackleBoxCapability = player.level().getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
             if (tackleBoxCapability != null) {
-                /*SlotFishingRod fishingRod = (SlotFishingRod) addSlot(new SlotFishingRod(tackleBoxCapability, 0, 117, 21)); //TODO Move to new capability system
-                this.slotHook = this.addSlot(new SlotHidable(fishingRod, 0, 106, 44) {
-                    @Override
-                    public boolean mayPlace(@Nonnull ItemStack stack) {
-                        return stack.getItem() instanceof HookItem && super.mayPlace(stack);
-                    }
-                });
-                this.slotBait = this.addSlot(new SlotHidable(fishingRod, 1, 129, 44) {
-                    @Override
-                    public boolean mayPlace(@Nonnull ItemStack stack) {
-                        return stack.getItem() instanceof BaitItem && super.mayPlace(stack);
-                    }
+                SlotFishingRod fishingRodSlot = (SlotFishingRod) addSlot(new SlotFishingRod(tackleBoxCapability, 0, 117, 21));
 
-                    @Override
-                    public boolean mayPickup(Player player) {
-                        return false;
-                    }
-                });
-                this.slotLine = this.addSlot(new SlotHidable(fishingRod, 2, 106, 67) {
-                    @Override
-                    public boolean mayPlace(@Nonnull ItemStack stack) {
-                        boolean isDyeable = stack.getItem() instanceof DyeableLeatherItem;
-                        return stack.is(AquacultureAPI.Tags.FISHING_LINE) && isDyeable && super.mayPlace(stack);
-                    }
-                });
-                this.slotBobber = this.addSlot(new SlotHidable(fishingRod, 3, 129, 67) {
-                    @Override
-                    public boolean mayPlace(@Nonnull ItemStack stack) {
-                        boolean isDyeable = stack.getItem() instanceof DyeableLeatherItem;
-                        return stack.is(AquacultureAPI.Tags.BOBBER) && isDyeable && super.mayPlace(stack);
-                    }
-                });*/
+                ItemStack fishingRod = tackleBoxCapability.getStackInSlot(0);
+                if (!fishingRod.isEmpty()) {
+                    this.slotHook = this.addSlot(new SlotHidable(fishingRodSlot, 0, 106, 44) {
+                        @Override
+                        public boolean mayPlace(@Nonnull ItemStack stack) {
+                            return stack.getItem() instanceof HookItem && super.mayPlace(stack);
+                        }
+                    });
+                    this.slotBait = this.addSlot(new SlotHidable(fishingRodSlot, 1, 129, 44) {
+                        @Override
+                        public boolean mayPlace(@Nonnull ItemStack stack) {
+                            return stack.getItem() instanceof BaitItem && super.mayPlace(stack);
+                        }
+
+                        @Override
+                        public boolean mayPickup(Player player) {
+                            return false;
+                        }
+                    });
+                    this.slotLine = this.addSlot(new SlotHidable(fishingRodSlot, 2, 106, 67) {
+                        @Override
+                        public boolean mayPlace(@Nonnull ItemStack stack) {
+                            boolean isDyeable = stack.getItem() instanceof DyeableLeatherItem;
+                            return stack.is(AquacultureAPI.Tags.FISHING_LINE) && isDyeable && super.mayPlace(stack);
+                        }
+                    });
+                    this.slotBobber = this.addSlot(new SlotHidable(fishingRodSlot, 3, 129, 67) {
+                        @Override
+                        public boolean mayPlace(@Nonnull ItemStack stack) {
+                            boolean isDyeable = stack.getItem() instanceof DyeableLeatherItem;
+                            return stack.is(AquacultureAPI.Tags.BOBBER) && isDyeable && super.mayPlace(stack);
+                        }
+                    });
+                }
 
                 //Tackle Box
                 for (int column = 0; column < collumns; ++column) {
