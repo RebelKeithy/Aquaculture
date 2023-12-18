@@ -44,7 +44,6 @@ public class Aquaculture {
     public static final boolean IS_DEV = Launcher.INSTANCE.environment().getProperty(Environment.Keys.VERSION.get()).filter(v -> v.equals("MOD_DEV")).isPresent();
     public final static String MOD_ID = "aquaculture";
     public static final Logger LOG = LogManager.getLogger(MOD_ID);
-    public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> GROUP = CREATIVE_TABS.register("tab", () -> new CreativeModeTab.Builder(CreativeModeTab.Row.TOP, 0)
             .icon(() -> new ItemStack(AquaItems.IRON_FISHING_ROD.get()))
@@ -99,7 +98,6 @@ public class Aquaculture {
         FishFilletRecipe.IRECIPE_SERIALIZERS_DEFERRED.register(modBus);
         AquaBiomeModifiers.BIOME_MODIFIER_SERIALIZERS_DEFERRED.register(modBus);
         ConditionFactory.CONDITION_CODECS.register(modBus);
-        ATTACHMENT_TYPES.register(modBus);
     }
 
     private void addItemsToTabs(BuildCreativeModeTabContentsEvent event) {
@@ -110,6 +108,6 @@ public class Aquaculture {
 
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, AquaBlockEntities.TACKLE_BOX.get(), (blockEntity, side) -> blockEntity.handler);
-        event.registerItem(Capabilities.ItemHandler.ITEM, (stack, context) -> AquaFishingRodItem.ROD_EQUIPMENT, AquaItems.IRON_FISHING_ROD.get(), AquaItems.GOLD_FISHING_ROD.get(), AquaItems.DIAMOND_FISHING_ROD.get(), AquaItems.NEPTUNIUM_FISHING_ROD.get());
+        event.registerItem(Capabilities.ItemHandler.ITEM, (stack, context) -> new AquaFishingRodItem.FishingRodEquipmentHandler(stack), AquaItems.IRON_FISHING_ROD.get(), AquaItems.GOLD_FISHING_ROD.get(), AquaItems.DIAMOND_FISHING_ROD.get(), AquaItems.NEPTUNIUM_FISHING_ROD.get());
     }
 }

@@ -39,7 +39,7 @@ public class TackleBoxContainer extends AbstractContainerMenu {
         this.tackleBox = (TackleBoxBlockEntity) player.level().getBlockEntity(pos);
         if (this.tackleBox != null) {
             this.tackleBox.startOpen(player);
-            IItemHandler tackleBoxCapability = player.level().getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+             IItemHandler tackleBoxCapability = player.level().getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
             if (tackleBoxCapability != null) {
                 SlotFishingRod fishingRodSlot = (SlotFishingRod) addSlot(new SlotFishingRod(tackleBoxCapability, 0, 117, 21));
 
