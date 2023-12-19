@@ -114,20 +114,21 @@ public class AquaFishingRodItem extends FishingRodItem {
     @Nonnull
     public static Hook getHookType(@Nonnull ItemStack fishingRod) {
         Hook hook = Hooks.EMPTY;
-        ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ItemHandler.ITEM);
+        /*ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ItemHandler.ITEM);
         if (rodHandler != null) {
             if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
                 rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
                 if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null) {
-                    System.out.println("getHookType deserialize");
                     rodHandler.deserializeNBT(fishingRod.getTag()); //Reload
                 }
             }
+        }*/
 
-            ItemStack hookStack = rodHandler.getStackInSlot(0);
-            if (hookStack.getItem() instanceof HookItem) {
-                hook = ((HookItem) hookStack.getItem()).getHookType();
-            }
+        ItemStack hookStack = getHandler(fishingRod).getStackInSlot(0);
+        System.out.println("HOOK STACK, BEFORE CHECK: " + hookStack.getDisplayName());
+        if (hookStack.getItem() instanceof HookItem) {
+            System.out.println("SET HOOK STACK");
+            hook = ((HookItem) hookStack.getItem()).getHookType();
         }
         return hook;
     }
@@ -149,9 +150,12 @@ public class AquaFishingRodItem extends FishingRodItem {
 
     public static ItemStackHandler getHandler(@Nonnull ItemStack fishingRod) {
         ItemStackHandler rodHandler = (ItemStackHandler) fishingRod.getCapability(Capabilities.ItemHandler.ITEM);
-        if (rodHandler != null && !fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
-            System.out.println("getHandler deserialize");
-            rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
+        if (rodHandler == null) {
+            rodHandler = FishingRodEquipmentHandler.EMPTY;
+        } else {
+            if (!fishingRod.isEmpty() && fishingRod.hasTag() && fishingRod.getTag() != null && fishingRod.getTag().contains("Inventory")) {
+                rodHandler.deserializeNBT(fishingRod.getTag().getCompound("Inventory")); //Reload
+            }
         }
         return rodHandler;
     }
@@ -202,7 +206,6 @@ public class AquaFishingRodItem extends FishingRodItem {
             CompoundTag tag = this.stack.getOrCreateTag();
             tag.put("Inventory", this.serializeNBT());
             this.stack.setTag(tag);
-            System.out.println("FishingRodEquipmentHandler onContentsChanged");
         }
     }
 }

@@ -7,7 +7,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -54,10 +54,8 @@ public class Hook {
 
     @Nonnull
     public Item getItem() {
-        for (DeferredItem<Item> hookItem : HOOKS.values()) {
-            return hookItem != null ? hookItem.get() : ItemStack.EMPTY.getItem();
-        }
-        return ItemStack.EMPTY.getItem();
+        DeferredItem<Item> hookItem = HOOKS.get(this.getName());
+        return hookItem != null ? hookItem.get() : Items.AIR;
     }
 
     public ResourceLocation getTexture() {
