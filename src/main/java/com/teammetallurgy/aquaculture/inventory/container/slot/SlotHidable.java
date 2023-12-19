@@ -1,5 +1,6 @@
 package com.teammetallurgy.aquaculture.inventory.container.slot;
 
+import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -10,6 +11,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class SlotHidable extends SlotItemHandler {
     private final SlotFishingRod fishingRod;
@@ -21,7 +23,7 @@ public class SlotHidable extends SlotItemHandler {
 
     @Override
     public IItemHandler getItemHandler() {
-        return this.fishingRod.rodHandler;
+        return Objects.requireNonNullElse(this.fishingRod.rodHandler, AquaFishingRodItem.FishingRodEquipmentHandler.EMPTY);
     }
 
     @Override

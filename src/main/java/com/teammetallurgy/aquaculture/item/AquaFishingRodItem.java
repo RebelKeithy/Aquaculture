@@ -173,6 +173,7 @@ public class AquaFishingRodItem extends FishingRodItem {
     }
 
     public static class FishingRodEquipmentHandler extends ItemStackHandler {
+        public static final FishingRodEquipmentHandler EMPTY = new FishingRodEquipmentHandler(ItemStack.EMPTY);
         private final ItemStack stack;
 
         public FishingRodEquipmentHandler(ItemStack stack) {
