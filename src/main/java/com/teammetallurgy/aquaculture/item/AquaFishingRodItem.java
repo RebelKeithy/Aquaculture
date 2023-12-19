@@ -125,9 +125,7 @@ public class AquaFishingRodItem extends FishingRodItem {
         }*/
 
         ItemStack hookStack = getHandler(fishingRod).getStackInSlot(0);
-        System.out.println("HOOK STACK, BEFORE CHECK: " + hookStack.getDisplayName());
         if (hookStack.getItem() instanceof HookItem) {
-            System.out.println("SET HOOK STACK");
             hook = ((HookItem) hookStack.getItem()).getHookType();
         }
         return hook;

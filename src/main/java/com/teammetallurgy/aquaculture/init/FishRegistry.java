@@ -77,7 +77,7 @@ public class FishRegistry {
     }
 
     @SubscribeEvent
-    public static void addFishEntity0Attributes(EntityAttributeCreationEvent event) {
+    public static void addFishEntityAttributes(EntityAttributeCreationEvent event) {
         for (DeferredHolder<EntityType<?>, EntityType<AquaFishEntity>> entityType : fishEntities) {
             event.put(entityType.get(), AbstractFish.createAttributes().build());
         }

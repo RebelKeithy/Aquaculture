@@ -1,10 +1,7 @@
 package com.teammetallurgy.aquaculture.init;
 
 import com.teammetallurgy.aquaculture.Aquaculture;
-import com.teammetallurgy.aquaculture.entity.AquaFishingBobberEntity;
-import com.teammetallurgy.aquaculture.entity.SpectralWaterArrowEntity;
-import com.teammetallurgy.aquaculture.entity.TurtleLandEntity;
-import com.teammetallurgy.aquaculture.entity.WaterArrowEntity;
+import com.teammetallurgy.aquaculture.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
@@ -14,6 +11,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -58,10 +56,15 @@ public class AquaEntities {
         return ENTITY_DEFERRED.register(name, () -> builder.get().build(location.toString()));
     }
 
-    public static void setSpawnPlacement() {
-        SpawnPlacements.register(BOX_TURTLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::checkAnimalSpawnRules);
-        SpawnPlacements.register(ARRAU_TURTLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::checkAnimalSpawnRules);
-        SpawnPlacements.register(STARSHELL_TURTLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::checkAnimalSpawnRules);
+    @SubscribeEvent
+    public static void setSpawnPlacement(SpawnPlacementRegisterEvent event) {
+        event.register(BOX_TURTLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+        event.register(ARRAU_TURTLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+        event.register(STARSHELL_TURTLE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TurtleLandEntity::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
+
+        for (DeferredHolder<EntityType<?>, EntityType<AquaFishEntity>> entityType : FishRegistry.fishEntities) {
+            event.register(entityType.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere, SpawnPlacementRegisterEvent.Operation.AND);
+        }
     }
 
     @SubscribeEvent

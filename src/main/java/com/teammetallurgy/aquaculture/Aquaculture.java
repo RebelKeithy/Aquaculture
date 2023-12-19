@@ -4,7 +4,6 @@ import com.teammetallurgy.aquaculture.api.AquacultureAPI;
 import com.teammetallurgy.aquaculture.api.fishing.Hooks;
 import com.teammetallurgy.aquaculture.block.WormFarmBlock;
 import com.teammetallurgy.aquaculture.client.ClientHandler;
-import com.teammetallurgy.aquaculture.entity.AquaFishEntity;
 import com.teammetallurgy.aquaculture.init.*;
 import com.teammetallurgy.aquaculture.item.AquaFishingRodItem;
 import com.teammetallurgy.aquaculture.item.crafting.ConditionFactory;
@@ -16,12 +15,9 @@ import cpw.mods.modlauncher.Environment;
 import cpw.mods.modlauncher.Launcher;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
@@ -68,14 +64,8 @@ public class Aquaculture {
     private void setupCommon(FMLCommonSetupEvent event) {
         event.enqueueWork(Hooks::load);
         event.enqueueWork(FishWeightHandler::registerFishData);
-        event.enqueueWork(AquaEntities::setSpawnPlacement);
         event.enqueueWork(WormFarmBlock::addCompostables);
         event.enqueueWork(AquaRecipes::registerBrewingRecipes);
-        event.enqueueWork(() -> {
-            for (DeferredHolder<EntityType<?>, EntityType<AquaFishEntity>> entityType : FishRegistry.fishEntities) {
-                SpawnPlacements.register(entityType.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, AquaFishEntity::canSpawnHere);
-            }
-        });
         if (AquaConfig.BASIC_OPTIONS.aqFishToBreedCats.get()) {
             event.enqueueWork(FishRegistry::addCatBreeding);
         }
