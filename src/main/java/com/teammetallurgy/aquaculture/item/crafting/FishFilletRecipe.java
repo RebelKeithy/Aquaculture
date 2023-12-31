@@ -47,7 +47,7 @@ public class FishFilletRecipe extends CustomRecipe {
                     }
                     stack = slotStack;
                 } else {
-                    if (!(slotStack.is(AquacultureAPI.Tags.FILLET_KNIFE) && (slotStack.isDamageableItem() || isKnifeNeptunium(slotStack.getItem())) && slotStack.getItem() instanceof TieredItem)) {
+                    if (!(slotStack.is(AquacultureAPI.Tags.KNIVES) && (slotStack.isDamageableItem() || isKnifeNeptunium(slotStack.getItem())) && slotStack.getItem() instanceof TieredItem)) {
                         return false;
                     }
                     list.add(slotStack);
@@ -73,7 +73,7 @@ public class FishFilletRecipe extends CustomRecipe {
                     }
                     fish = stackSlot.copy();
                 } else {
-                    if (!(stackSlot.is(AquacultureAPI.Tags.FILLET_KNIFE))) {
+                    if (!(stackSlot.is(AquacultureAPI.Tags.KNIVES))) {
                         return ItemStack.EMPTY;
                     }
                     knife = item;
@@ -100,7 +100,7 @@ public class FishFilletRecipe extends CustomRecipe {
         NonNullList<ItemStack> list = NonNullList.withSize(craftingInventory.getContainerSize(), ItemStack.EMPTY);
         for (int i = 0; i < list.size(); ++i) {
             ItemStack stack = craftingInventory.getItem(i);
-            if (stack.is(AquacultureAPI.Tags.FILLET_KNIFE)) {
+            if (stack.is(AquacultureAPI.Tags.KNIVES)) {
                 ItemStack knife = stack.copy();
                 if (!isKnifeNeptunium(knife.getItem())) {
                     if (knife.hurt(1, RandomSource.create(), null)) {
