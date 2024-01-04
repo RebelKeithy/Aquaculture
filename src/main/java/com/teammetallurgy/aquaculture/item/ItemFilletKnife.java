@@ -41,7 +41,7 @@ public class ItemFilletKnife extends SwordItem {
     public boolean canApplyAtEnchantingTable(@Nonnull ItemStack stack, Enchantment enchantment) {
         return super.canApplyAtEnchantingTable(stack, enchantment) && canApplyEnchantment(enchantment);
     }
-    
+
     private boolean canApplyEnchantment(Enchantment enchantment) {
         return enchantment != Enchantments.MOB_LOOTING && enchantment != Enchantments.SWEEPING_EDGE;
     }

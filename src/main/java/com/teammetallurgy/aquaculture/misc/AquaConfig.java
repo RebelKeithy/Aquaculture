@@ -19,6 +19,7 @@ public class AquaConfig {
         public ModConfigSpec.IntValue messageInABottleAmount;
         public ModConfigSpec.BooleanValue debugMode;
         public ModConfigSpec.BooleanValue showFilletRecipesInJEI;
+        public ModConfigSpec.IntValue fishSpawnLevelModifier;
 
         BasicOptions(ModConfigSpec.Builder builder) {
             builder.push(BASIC_OPTIONS);
@@ -28,6 +29,7 @@ public class AquaConfig {
             messageInABottleAmount = builder.defineInRange("Amount of Message In A Bottle messages. Used to add additional custom messages", 29, 0, 255);
             debugMode = builder.define("Enable debug mode? (Enables additional logging)", false);
             showFilletRecipesInJEI = builder.define("Show Fillet recipes in JEI?", true);
+            fishSpawnLevelModifier = builder.defineInRange("How many blocks below sea level Aquaculture fish can spawn", 13, -63, 0);
             builder.pop();
         }
     }
