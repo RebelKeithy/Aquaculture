@@ -15,8 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -45,43 +43,29 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.ToolActions;
-import net.neoforged.neoforge.entity.IEntityAdditionalSpawnData;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.network.NetworkHooks;
-import net.neoforged.neoforge.network.PlayMessages;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class AquaFishingBobberEntity extends FishingHook implements IEntityAdditionalSpawnData {
+public class AquaFishingBobberEntity extends FishingHook implements IEntityWithComplexSpawn {
     private final Random lavaTickRand = new Random();
-    private final Hook hook;
-    private final ItemStack fishingLine;
-    private final ItemStack bobber;
-    private final ItemStack fishingRod;
-    private final int luck;
+    private Hook hook;
+    private ItemStack fishingLine;
+    private ItemStack bobber;
+    private ItemStack fishingRod;
+    private int luck;
 
-    public AquaFishingBobberEntity(PlayMessages.SpawnEntity spawnPacket, Level world) {
-        super(world.getPlayerByUUID(spawnPacket.getAdditionalData().readUUID()), world, 0, 0);
-        FriendlyByteBuf buf = spawnPacket.getAdditionalData();
-        this.luck = buf.readInt();
-        String hookName = buf.readUtf();
-        if (hookName.isEmpty() || hookName == null) {
-            this.hook = Hooks.EMPTY;
-        } else {
-            Item hookItem = Hook.HOOKS.get(hookName).get();
-            this.hook = ((HookItem) hookItem).getHookType();
-        }
-        this.fishingLine = buf.readItem();
-        this.bobber = buf.readItem();
-        this.fishingRod = buf.readItem();
+    public AquaFishingBobberEntity(EntityType<? extends AquaFishingBobberEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public AquaFishingBobberEntity(Player player, Level world, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod) {
-        super(player, world, luck, lureSpeed);
+    public AquaFishingBobberEntity(Player player, Level level, int luck, int lureSpeed, @Nonnull Hook hook, @Nonnull ItemStack fishingLine, @Nonnull ItemStack bobber, @Nonnull ItemStack rod) {
+        super(player, level, luck, lureSpeed);
         this.luck = luck;
         player.fishing = this;
         this.hook = hook;
@@ -120,12 +104,6 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
     @Nonnull
     public EntityType<?> getType() {
         return AquaEntities.BOBBER.get();
-    }
-
-    @Override
-    @Nonnull
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
@@ -494,11 +472,7 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
     }
 
     @Override
-    public void writeSpawnData(FriendlyByteBuf buffer) {
-        Player player = this.getPlayerOwner();
-        if (player != null) {
-            buffer.writeUUID(player.getUUID());
-        }
+    public void writeSpawnData(@Nonnull FriendlyByteBuf buffer) {
         buffer.writeInt(this.luck);
         buffer.writeUtf(this.hook.getName() == null ? "" : this.hook.getName());
         buffer.writeItem(this.fishingLine);
@@ -507,6 +481,17 @@ public class AquaFishingBobberEntity extends FishingHook implements IEntityAddit
     }
 
     @Override
-    public void readSpawnData(FriendlyByteBuf additionalData) {
+    public void readSpawnData(@Nonnull FriendlyByteBuf buf) {
+        this.luck = buf.readInt();
+        String hookName = buf.readUtf();
+        if (hookName.isEmpty() || hookName == null) {
+            this.hook = Hooks.EMPTY;
+        } else {
+            Item hookItem = Hook.HOOKS.get(hookName).get();
+            this.hook = ((HookItem) hookItem).getHookType();
+        }
+        this.fishingLine = buf.readItem();
+        this.bobber = buf.readItem();
+        this.fishingRod = buf.readItem();
     }
 }

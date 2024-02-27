@@ -3,7 +3,7 @@ plugins {
 	id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.57'
+    id 'net.neoforged.gradle.userdev' version '7.0.80'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -57,10 +57,9 @@ runs {
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
-    //compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-    //compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    //runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
-    //compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${minecraft_version}:${ct_version}")
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    compileOnly "com.blamejared.crafttweaker:CraftTweaker-forge-${minecraft_version}:${ct_version}"
 }
 
 tasks.withType(ProcessResources).configureEach {
