@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld_rod",
+    "textures": {
+        "layer0": "aquaculture:item/diamond_fishing_rod_cast"
+    }
+}

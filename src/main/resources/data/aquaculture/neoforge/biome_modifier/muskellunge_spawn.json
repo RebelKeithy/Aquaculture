@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:muskellunge",
+    "weight": 3,
+    "count": 1
+  },
+  "includeBiomes": ["#aquaculture:empty"],
+  "excludeBiomes": ["#c:is_ocean", "#c:is_beach", "#c:is_hot", "#c:is_desert", "#c:is_jungle"],
+  "and": false
+}

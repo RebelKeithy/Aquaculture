@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GIG",
+    "ICI",
+    "IBI"
+  ],
+  "key": {
+    "I": "#c:ingots/iron",
+    "B": "#c:storage_blocks/iron",
+    "C": "#c:chests",
+    "G": "#aquaculture:tackle_box_green"
+  },
+  "result": {
+    "id": "aquaculture:tackle_box"
+  }
+}

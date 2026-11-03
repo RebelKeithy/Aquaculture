@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:tuna",
+    "weight": 1,
+    "count": 1
+  },
+  "includeBiomes": ["#c:is_ocean", "#c:is_beach"],
+  "excludeBiomes": ["#aquaculture:empty"],
+  "and": false
+}

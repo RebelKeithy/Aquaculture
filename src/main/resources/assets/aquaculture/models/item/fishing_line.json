@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "aquaculture:item/fishing_line",
+        "layer1": "aquaculture:item/fishing_spool"
+    }
+}

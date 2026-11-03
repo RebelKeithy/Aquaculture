@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "C",
+    "S",
+    "C"
+  ],
+  "key": {
+    "C": "minecraft:clay_ball",
+    "S": "minecraft:nautilus_shell"
+  },
+  "result": {
+    "id": "aquaculture:bobber"
+  }
+}

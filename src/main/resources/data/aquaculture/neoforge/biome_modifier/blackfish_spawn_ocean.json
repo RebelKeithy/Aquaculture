@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:blackfish",
+    "weight": 13,
+    "count": {"type": "minecraft:uniform", "min_inclusive": 1, "max_inclusive": 4}
+  },
+  "includeBiomes": ["#c:is_cold", "#c:is_ocean"],
+  "excludeBiomes": ["#aquaculture:empty"],
+  "and": true
+}

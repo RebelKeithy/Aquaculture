@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": [
+    "aquaculture:gold_fishing_rod",
+    "aquaculture:gold_fillet_knife"
+  ],
+  "result": {
+    "id": "minecraft:gold_nugget"
+  },
+  "experience": 0.1,
+  "cookingtime": 100
+}

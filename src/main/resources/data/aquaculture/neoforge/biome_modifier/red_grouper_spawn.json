@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:red_grouper",
+    "weight": 6,
+    "count": {"type": "minecraft:uniform", "min_inclusive": 1, "max_inclusive": 2}
+  },
+  "includeBiomes": ["#c:is_ocean", "#c:is_beach"],
+  "excludeBiomes": ["#aquaculture:empty"],
+  "and": false
+}

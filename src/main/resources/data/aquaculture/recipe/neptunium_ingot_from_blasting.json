@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": [
+    "aquaculture:neptunium_axe",
+    "aquaculture:neptunium_boots",
+    "aquaculture:neptunium_chestplate",
+    "aquaculture:neptunium_fillet_knife",
+    "aquaculture:neptunium_fishing_rod",
+    "aquaculture:neptunium_helmet",
+    "aquaculture:neptunium_hoe",
+    "aquaculture:neptunium_leggings",
+    "aquaculture:neptunium_pickaxe",
+    "aquaculture:neptunium_shovel",
+    "aquaculture:neptunium_sword",
+    "aquaculture:neptunium_bow"
+  ],
+  "result": {
+    "id": "aquaculture:neptunium_ingot"
+  },
+  "experience": 0.5,
+  "cookingtime": 200
+}

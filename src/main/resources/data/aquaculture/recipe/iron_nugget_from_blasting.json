@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": [
+    "aquaculture:iron_fishing_rod",
+    "aquaculture:iron_fillet_knife"
+  ],
+  "result": {
+    "id": "minecraft:iron_nugget"
+  },
+  "experience": 0.1,
+  "cookingtime": 100
+}

@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "aquaculture:neptunium_items_enabled",
+      "value": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " NS",
+    "N S",
+    " NS"
+  ],
+  "key": {
+    "N": "#c:ingots/neptunium",
+    "S": "#c:strings"
+  },
+  "result": {
+    "id": "aquaculture:neptunium_bow"
+  }
+}

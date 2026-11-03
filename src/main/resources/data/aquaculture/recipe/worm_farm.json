@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "F F",
+    "FDF",
+    "###"
+  ],
+  "key": {
+    "F": "#minecraft:wooden_fences",
+    "D": "minecraft:dirt",
+    "#": "#minecraft:planks"
+  },
+  "result": {
+    "id": "aquaculture:worm_farm"
+  }
+}

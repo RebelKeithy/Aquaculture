@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    " IS",
+    "T S"
+  ],
+  "key": {
+    "S": "#c:strings",
+    "T": "#c:rods/wooden",
+    "I": "#c:ingots/iron"
+  },
+  "result": {
+    "id": "aquaculture:iron_fishing_rod"
+  }
+}

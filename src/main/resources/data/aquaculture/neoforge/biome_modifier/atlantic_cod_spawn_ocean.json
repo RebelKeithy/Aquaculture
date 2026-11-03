@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:atlantic_cod",
+    "weight": 5,
+    "count": 1
+  },
+  "includeBiomes": ["#c:is_cold", "#c:is_ocean"],
+  "excludeBiomes": ["#aquaculture:empty"],
+  "and": true
+}

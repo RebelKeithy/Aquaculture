@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:red_shrooma",
+    "weight": 26,
+    "count": {"type": "minecraft:uniform", "min_inclusive": 1, "max_inclusive": 8}
+  },
+  "includeBiomes": ["#c:is_mushroom"],
+  "excludeBiomes": ["#aquaculture:empty"],
+  "and": false
+}

@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:minnow",
+    "weight": 18,
+    "count": {"type": "minecraft:uniform", "min_inclusive": 1, "max_inclusive": 5}
+  },
+  "includeBiomes": ["#aquaculture:empty"],
+  "excludeBiomes": ["#c:is_ocean", "#c:is_beach", "#c:is_desert", "#c:is_jungle"],
+  "and": false
+}

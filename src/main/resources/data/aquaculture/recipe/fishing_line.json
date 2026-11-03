@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SIS",
+    " S "
+  ],
+  "key": {
+    "I": "#c:ingots/iron",
+    "S": "#c:strings"
+  },
+  "result": {
+    "id": "aquaculture:fishing_line"
+  }
+}

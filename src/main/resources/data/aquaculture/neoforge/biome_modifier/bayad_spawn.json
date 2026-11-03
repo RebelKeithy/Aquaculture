@@ -1,0 +1,11 @@
+{
+  "type": "aquaculture:fish_spawn",
+  "spawn": {
+    "type": "aquaculture:bayad",
+    "weight": 6,
+    "count": {"type": "minecraft:uniform", "min_inclusive": 1, "max_inclusive": 2}
+  },
+  "includeBiomes": ["#c:is_dry"],
+  "excludeBiomes": ["#c:is_cold"],
+  "and": false
+}

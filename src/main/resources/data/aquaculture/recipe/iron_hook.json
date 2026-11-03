@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    "I I",
+    " I "
+  ],
+  "key": {
+    "I": "#c:nuggets/iron"
+  },
+  "result": {
+    "id": "aquaculture:iron_hook"
+  }
+}

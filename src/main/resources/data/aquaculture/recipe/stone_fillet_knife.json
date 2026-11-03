@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  C",
+    " C ",
+    "S  "
+  ],
+  "key": {
+    "S": "#c:rods/wooden",
+    "C": "#minecraft:stone_tool_materials"
+  },
+  "result": {
+    "id": "aquaculture:stone_fillet_knife"
+  }
+}
